@@ -1,0 +1,466 @@
+﻿
+
+
+
+# terrains
+state_trait_the_northeast_china_plain = {
+	icon = "gfx/interface/icons/state_trait_icons/great_plains.dds"
+	
+	modifier = {
+		state_infrastructure_mult = 0.1
+	}
+}
+
+state_trait_the_north_china_plain = {
+	icon = "gfx/interface/icons/state_trait_icons/great_plains.dds"
+	
+	modifier = {
+		building_group_bg_agriculture_throughput_add = 0.1
+		state_infrastructure_add = 10
+		state_infrastructure_mult = 0.1
+	}
+}
+
+state_trait_yangtze_plain = {
+	icon = "gfx/interface/icons/state_trait_icons/great_plains.dds"
+	
+	modifier = {
+		state_infrastructure_add = 20
+		state_infrastructure_mult = 0.2
+	}
+}
+
+state_trait_altai_mountains = {
+	icon = "gfx/interface/icons/state_trait_icons/mountain.dds"
+
+	modifier = {
+		state_construction_mult = -0.2
+		state_infrastructure_mult = -0.2
+		state_market_access_price_impact = -0.1
+	}
+}
+
+state_trait_tianshan_mountains = {
+	icon = "gfx/interface/icons/state_trait_icons/mountain.dds"
+
+	modifier = {
+		state_construction_mult = -0.2
+		state_infrastructure_mult = -0.2
+		state_market_access_price_impact = -0.1
+	}
+}
+
+state_trait_himalayas_mountains = {
+	icon = "gfx/interface/icons/state_trait_icons/mountain.dds"
+
+	modifier = {
+		state_construction_mult = -0.25
+		state_infrastructure_mult = -0.25
+		state_market_access_price_impact = -0.15
+	}
+}
+
+state_trait_hengduan_mountains = {
+	icon = "gfx/interface/icons/state_trait_icons/mountain.dds"
+
+	modifier = {
+		state_construction_mult = -0.2
+		state_infrastructure_mult = -0.2
+		state_market_access_price_impact = -0.05
+	}
+}
+
+state_trait_taihang_mountains = {
+	icon = "gfx/interface/icons/state_trait_icons/mountain.dds"
+
+	modifier = {
+		state_infrastructure_mult = -0.1
+		state_market_access_price_impact = -0.05
+	}
+}
+
+state_trait_yunnan_kweichow_plateau = {
+	icon = "gfx/interface/icons/state_trait_icons/mountain.dds"
+
+	modifier = {
+		state_construction_mult = -0.1
+		state_infrastructure_mult = -0.1
+		state_market_access_price_impact = -0.05
+	}
+}
+
+state_trait_qinghai_xizang_plateau = {
+	icon = "gfx/interface/icons/state_trait_icons/mountain.dds"
+
+	modifier = {
+		state_construction_mult = -0.2
+		state_infrastructure_mult = -0.2
+		state_market_access_price_impact = -0.1
+	}
+}
+
+state_trait_zhejiang_fujian_hills = {
+	icon = "gfx/interface/icons/state_trait_icons/resources_lumber.dds"
+
+	modifier = {
+		building_group_bg_logging_throughput_add = 0.15
+		state_infrastructure_mult = -0.1
+		state_market_access_price_impact = -0.05
+	}
+}
+
+
+
+
+
+
+
+
+# bays
+state_trait_guangzhou_bay = {
+	icon = "gfx/interface/icons/state_trait_icons/natural_harbors.dds"
+	
+	modifier = {
+		building_shipyards_throughput_add = 0.25
+		building_military_shipyards_throughput_add = 0.1
+		state_building_port_max_level_add = 20
+		state_building_naval_base_max_level_add = 10
+	}
+}
+
+state_trait_dalian_bay = {
+	icon = "gfx/interface/icons/state_trait_icons/natural_harbors.dds"
+	
+	modifier = {
+		building_shipyards_throughput_add = 0.1
+		building_military_shipyards_throughput_add = 0.25
+		state_building_port_max_level_add = 10
+		state_building_naval_base_max_level_add = 20
+	}
+}
+
+state_trait_qingdao_bay = {
+	icon = "gfx/interface/icons/state_trait_icons/natural_harbors.dds"
+	
+	modifier = {
+		building_shipyards_throughput_add = 0.1
+		building_military_shipyards_throughput_add = 0.1
+		state_building_port_max_level_add = 10
+		state_building_naval_base_max_level_add = 20
+	}
+}
+
+state_trait_shanghai_bay = {
+	icon = "gfx/interface/icons/state_trait_icons/natural_harbors.dds"
+	
+	modifier = {
+		building_shipyards_throughput_add = 0.2
+		state_building_port_max_level_add = 10
+	}
+}
+
+
+
+
+
+
+
+
+
+
+# rivers
+state_trait_Amur_songhua_river = {
+	icon = "gfx/interface/icons/state_trait_icons/river.dds"
+	
+	modifier = {
+		state_infrastructure_add = 20
+		state_market_access_price_impact = 0.05
+	}
+}
+
+state_trait_liao_river = {
+	icon = "gfx/interface/icons/state_trait_icons/river.dds"
+	
+	modifier = {
+		state_infrastructure_add = 10
+	}
+}
+
+state_trait_yellow_river = {
+	icon = "gfx/interface/icons/state_trait_icons/river.dds"
+	
+	modifier = {
+		state_infrastructure_add = 15
+	}
+}
+
+state_trait_yangtze_river = {
+	icon = "gfx/interface/icons/state_trait_icons/river.dds"
+	
+	modifier = {
+		state_infrastructure_add = 40
+		state_market_access_price_impact = 0.05
+	}
+}
+
+state_trait_pearl_river = {
+	icon = "gfx/interface/icons/state_trait_icons/river.dds"
+	
+	modifier = {
+		state_infrastructure_add = 15
+		state_market_access_price_impact = 0.05
+	}
+}
+
+state_trait_beijing_hangzhou_grand_canal = {
+	icon = "gfx/interface/icons/building_icons/panama_canal.dds"
+	
+	modifier = {
+		state_infrastructure_add = 25
+		state_market_access_price_impact = 0.05
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+# soils
+state_trait_the_northeast_phaeozem = {
+	icon = "gfx/interface/icons/state_trait_icons/good_soils.dds"
+	
+	modifier = {
+		building_group_bg_agriculture_throughput_add = 0.25
+		state_migration_pull_mult = 0.25
+	}
+}
+
+state_trait_hulunbuir_grassland = {
+	icon = "gfx/interface/icons/state_trait_icons/resources_grazing.dds"
+	
+	modifier = {
+		building_group_bg_ranching_throughput_add = 0.3
+	}
+}
+
+state_trait_the_loess_plateau = {
+	icon = "gfx/interface/icons/state_trait_icons/good_soils.dds"
+	
+	modifier = {
+		building_group_bg_agriculture_throughput_add = 0.15
+		building_group_bg_plantations_throughput_add = 0.15
+		state_construction_mult = -0.05
+		state_infrastructure_mult = -0.05
+	}
+}
+
+state_trait_hetao_oasis = {
+	icon = "gfx/interface/icons/state_trait_icons/resources_grazing.dds"
+	
+	modifier = {
+		building_group_bg_agriculture_throughput_add = 0.2
+		building_group_bg_ranching_throughput_add = 0.2
+		state_migration_pull_mult = 0.1
+	}
+}
+
+state_trait_taklamakan_oasis = {
+	icon = "gfx/interface/icons/state_trait_icons/good_soils.dds"
+	
+	modifier = {
+		building_group_bg_agriculture_throughput_add = 0.1
+		building_group_bg_plantations_throughput_add = 0.2
+	}
+}
+
+state_trait_ili_valley = {
+	icon = "gfx/interface/icons/state_trait_icons/good_soils.dds"
+	
+	modifier = {
+		building_group_bg_agriculture_throughput_add = 0.2
+		state_migration_pull_mult = 0.1
+	}
+}
+
+state_trait_gobi_desert = {
+	icon = "gfx/interface/icons/state_trait_icons/dry_climate.dds"
+	  
+	modifier = {
+        building_group_bg_ranching_throughput_add = -0.1
+		building_group_bg_agriculture_throughput_add = -0.2
+		building_group_bg_plantations_throughput_add = -0.2
+		state_migration_pull_mult = -0.2
+		state_construction_mult = -0.25
+		state_infrastructure_mult = -0.25
+		state_market_access_price_impact = -0.05
+    }
+}
+
+state_trait_taklamakan_desert = {
+	icon = "gfx/interface/icons/state_trait_icons/dry_climate.dds"
+	
+	modifier = {
+        building_group_bg_ranching_throughput_add = -0.1
+		building_group_bg_agriculture_throughput_add = -0.2
+		building_group_bg_plantations_throughput_add = -0.2
+		state_migration_pull_mult = -0.1
+		state_construction_mult = -0.25
+		state_infrastructure_mult = -0.25
+		state_market_access_price_impact = -0.05
+    }
+}
+
+state_trait_the_red_basin = {
+	icon = "gfx/interface/icons/state_trait_icons/good_soils.dds"
+	
+	modifier = {
+		building_group_bg_agriculture_throughput_add = 0.15
+		building_group_bg_plantations_throughput_add = 0.15
+		state_infrastructure_mult = 0.1
+		state_market_access_price_impact = -0.05
+	}
+}
+
+state_trait_the_yunmeng_pengli_marsh = {
+	icon = "gfx/interface/icons/state_trait_icons/good_soils.dds"
+	
+	modifier = {
+		building_group_bg_agriculture_throughput_add = 0.1
+	}
+}
+
+state_trait_the_pearl_delta = {
+	icon = "gfx/interface/icons/state_trait_icons/swamp.dds"
+	
+	modifier = {
+		building_group_bg_plantations_throughput_add = 0.2
+	}
+}
+
+
+
+
+
+
+# climates
+state_trait_plateau_monsoon_climate = {
+	icon = "gfx/interface/icons/state_trait_icons/resources_exotic.dds"
+	modifier = {
+		building_group_bg_plantations_throughput_add = 0.5
+		state_migration_pull_mult = 0.15
+	}
+}
+
+
+
+
+
+
+
+# natural resources
+state_trait_the_northeast_forests = {
+	icon = "gfx/interface/icons/state_trait_icons/resources_lumber.dds"
+	
+	modifier = {
+		building_group_bg_logging_throughput_add = 0.1
+	}
+}
+
+state_trait_nanhai_fishery = {
+	icon = "gfx/interface/icons/state_trait_icons/resources_fish.dds"
+	
+	modifier = {
+		building_group_bg_fishing_throughput_add = 0.2
+	}
+}
+
+state_trait_zhoushan_fishery = {
+	icon = "gfx/interface/icons/state_trait_icons/resources_fish.dds"
+	
+	modifier = {
+		building_group_bg_fishing_throughput_add = 0.3
+	}
+}
+
+state_trait_the_datong_coal = {
+	icon = "gfx/interface/icons/state_trait_icons/resources_ore.dds"
+	
+	modifier = {
+		building_coal_mine_throughput_add = 0.2
+	}
+}
+
+state_trait_kaiping_coalfield = {
+    icon = "gfx/interface/icons/state_trait_icons/resources_ore.dds"
+	
+	modifier = {
+		building_coal_mine_throughput_add = 0.1
+	}
+}
+
+state_trait_the_sanxia_dam = {
+	icon = "gfx/interface/icons/state_trait_icons/waterfall.dds"
+	
+	modifier = {
+		goods_output_electricity_mult = 0.5
+	}
+}
+
+state_trait_the_sichuan_dams = {
+	icon = "gfx/interface/icons/state_trait_icons/waterfall.dds"
+	
+	modifier = {
+		goods_output_electricity_mult = 0.35
+	}
+}
+
+
+
+
+
+
+
+
+# economies
+state_trait_the_guangxi_sugarcane = {
+	icon = "gfx/interface/icons/building_icons/sugar_plantation.dds"
+	
+	modifier = {
+		building_group_bg_sugar_plantations_throughput_add = 0.2
+	}
+}
+
+state_trait_the_suhang_textile = {
+	icon = "gfx/interface/icons/building_icons/textile_industry.dds"
+	
+	modifier = {
+		building_textile_mills_throughput_add = 0.2
+	}
+}
+
+state_trait_jingdezhen_ceramics = {
+	icon = "gfx/interface/icons/building_icons/glassworks.dds"
+	
+	modifier = {
+		building_glassworks_throughput_add = 0.2
+	}
+}
+
+state_trait_anhui_xuan_paper = {
+	icon = "gfx/interface/icons/building_icons/paper_mills.dds"
+	
+	modifier = {
+		building_paper_mills_throughput_add = 0.2
+	}
+}
+
+
+
+
+

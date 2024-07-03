@@ -1,0 +1,7 @@
+﻿STATES = {
+	s:STATE_WEST_BORNEO = {
+		add_homeland = cu:hakka
+		add_homeland = cu:min
+		add_homeland = cu:yue
+	}
+}

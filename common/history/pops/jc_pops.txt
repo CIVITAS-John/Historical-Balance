@@ -1,0 +1,36 @@
+﻿POPS = {
+	s:STATE_WEST_BORNEO = {
+		region_state:LAN = {
+			create_pop = {
+				culture = bornean
+				religion = animist
+				size = 32000
+			}
+			create_pop = {
+				culture = dayak
+				religion = animist
+				size = 9000
+			}
+			create_pop = {
+				culture = dayak
+				religion = sunni
+				size = 6700
+			}
+			create_pop = {
+				culture = hakka
+				religion = confucian
+				size = 26000
+			}
+			create_pop = {
+				culture = min
+				religion = mahayana
+				size = 11000
+			}
+			create_pop = {
+				culture = han
+				religion = confucian
+				size = 6000
+			}
+		}
+	}
+}
