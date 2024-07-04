@@ -1,0 +1,18 @@
+default_building_subsistence_china = {
+	texture = "gfx/interface/icons/production_method_icons/subsistence_farming.dds"
+	
+	building_modifiers = {
+		workforce_scaled = { 
+			goods_output_grain_add = 0.8
+			goods_output_meat_add = 0.1
+			goods_output_fabric_add = 0.4
+			goods_output_wood_add = 0.4
+			goods_output_tea_add = 0.05
+			goods_output_silk_add = 0.05
+		}
+
+		level_scaled = {
+			building_employment_peasants_add = 5000
+		}
+	}
+}

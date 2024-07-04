@@ -71,3 +71,23 @@ taiping_taiping_rebellion = { #This is temporary
 	state_radicals_from_discrimination_mult = 0.15
 	building_training_rate_mult = 1
 }
+
+modifier_china_state_evangelisation = {
+	icon = gfx/interface/icons/timed_modifier_icons/modifier_flag_negative.dds
+	state_conversion_mult = -0.5
+	state_radicals_from_discrimination_mult = 0.2
+	country_tech_spread_add = 1
+}
+
+modifier_chi_missionary_hospitals = {
+	icon = gfx/interface/icons/timed_modifier_icons/modifier_flag_positive.dds
+	state_conversion_mult = -0.5
+	state_mortality_mult = -0.1
+}
+
+modifier_chi_missionary_schools = {
+	icon = gfx/interface/icons/timed_modifier_icons/modifier_flag_positive.dds
+	state_conversion_mult = -0.5
+	state_education_access_add = 0.1
+	country_tech_spread_add = 1
+}
