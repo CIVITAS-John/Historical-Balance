@@ -1,1 +1,10 @@
-﻿
+﻿LAN = {
+	color = { 141  89  174 }
+	
+	country_type = unrecognized
+	
+	tier = principality
+	
+	cultures = { hakka min yue }
+	capital = STATE_WEST_BORNEO
+}

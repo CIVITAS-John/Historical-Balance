@@ -152,3 +152,4 @@ pm_arc_welded_buildings = {
 
 	required_input_goods = electricity
 }
+
