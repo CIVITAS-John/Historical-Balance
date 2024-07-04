@@ -1,1 +1,48 @@
-﻿
+﻿GLOBAL = {
+	c:CHI ?= {
+		add_radicals = {
+			value = medium_radicals
+			culture = cu:min
+		}
+		
+		add_radicals = {
+			value = medium_radicals
+			culture = cu:yue
+		}
+		
+		add_radicals = {
+			value = medium_radicals
+			culture = cu:hakka
+		}
+		
+		add_radicals = {
+			value = medium_radicals
+			culture = cu:miao
+		}
+		
+		add_radicals = {
+			value = medium_radicals
+			culture = cu:zhuang
+		}
+		
+		add_radicals = {
+			value = medium_radicals
+			culture = cu:yuanzhumin
+		}
+		
+		add_radicals = {
+			value = medium_radicals
+			culture = cu:yi
+		}
+		
+		add_radicals = {
+			value = medium_radicals
+			religion = sunni
+		}
+
+		set_variable = {
+			name = china_warlord_explosion
+			value = 6
+		}
+	}
+}

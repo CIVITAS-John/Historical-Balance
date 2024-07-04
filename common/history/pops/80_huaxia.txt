@@ -344,11 +344,11 @@
 		region_state:CHI = {
 			create_pop = {
 				culture = han # nanfaren
-				size = 8075000
+				size = 8575000
 			}
 			create_pop = {
 				culture = han # nanfaren
-				size = 3025000
+				size = 3525000
 				religion = mahayana
 			}
 			create_pop = {
@@ -361,7 +361,7 @@
 		region_state:CHI = {
 			create_pop = {
 				culture = han # nanfaren
-				size = 9575000
+				size = 8575000
 			}
 			create_pop = {
 				culture = han # nanfaren
