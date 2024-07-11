@@ -4,7 +4,7 @@
 			create_pop = {
 				culture = bornean
 				religion = animist
-				size = 32000
+				size = 12000
 			}
 			create_pop = {
 				culture = dayak
@@ -24,12 +24,12 @@
 			create_pop = {
 				culture = min
 				religion = mahayana
-				size = 11000
+				size = 16000
 			}
 			create_pop = {
 				culture = han
 				religion = confucian
-				size = 6000
+				size = 9000
 			}
 		}
 	}

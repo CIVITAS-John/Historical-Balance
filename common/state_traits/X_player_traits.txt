@@ -343,11 +343,6 @@ state_trait_the_pearl_delta = {
 	}
 }
 
-
-
-
-
-
 # climates
 state_trait_plateau_monsoon_climate = {
 	icon = "gfx/interface/icons/state_trait_icons/resources_exotic.dds"

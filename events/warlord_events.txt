@@ -1,0 +1,2922 @@
+namespace = warlord_china_events
+
+warlord_china_events.100 = { #Split china up into warlord states
+	type = country_event
+	placement = root
+	duration = 3
+
+	title = warlord_china_events.100.t
+	desc = warlord_china_events.100.d
+	flavor = warlord_china_events.100.f
+
+	event_image = {
+		video = "gfx/event_pictures/unspecific_armored_train.bk2"
+	}
+
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+	on_opened_soundeffect = "event:/SFX/Events/unspecific/armored_train"
+
+	icon = "gfx/interface/icons/event_icons/event_fire.dds"
+
+	trigger = {
+		exists = c:CHI
+		this = c:CHI
+		NOT = { has_global_variable = china_shatters }
+	}
+
+	immediate = {
+		set_global_variable = china_shatters
+		set_variable = chinese_central_government
+		set_strategy = ai_strategy_industrial_expansion
+		set_strategy = ai_strategy_unify_china
+        activate_law = law_type:law_no_social_security
+        activate_law = law_type:law_no_colonial_affairs
+        activate_law = law_type:law_no_home_affairs
+
+		if = {
+			limit = { exists = s:STATE_HUNAN.region_state:CHI }
+			create_country = {
+				tag = HNA
+				origin = this
+				state = s:STATE_HUNAN.region_state:CHI
+
+				on_created = {
+					warlord_setup_effect = yes
+					set_variable = warlord_state
+					activate_law = law_type:law_per_capita_based_taxation
+					activate_law = law_type:law_no_social_security
+                    activate_law = law_type:law_no_colonial_affairs
+                    activate_law = law_type:law_no_home_affairs
+					random_list = {
+						4 = { }
+						1 = {
+							set_strategy = ai_strategy_unify_china
+						}
+					}
+				}
+			}
+			c:HNA = { save_scope_as = scope_HNA }
+			s:STATE_HUNAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:HNA
+							}
+						}
+					}
+					add_claim = c:HNA 
+				}
+			}
+			s:STATE_EASTERN_HUBEI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:HNA
+							}
+						}
+					}
+					add_claim = c:HNA 
+				}
+			}
+			s:STATE_WESTERN_HUBEI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:HNA
+							}
+						}
+					}
+					add_claim = c:HNA 
+				}
+			}
+		}
+
+		if = {
+			limit = { exists = s:STATE_GUANGXI.region_state:CHI }
+			create_country = { #Guangxi
+				tag = GNG
+				origin = this
+				state = s:STATE_GUANGXI.region_state:CHI
+
+				on_created = {
+					warlord_setup_effect = yes
+					set_variable = warlord_state
+					activate_law = law_type:law_no_social_security
+                    activate_law = law_type:law_no_colonial_affairs
+                    activate_law = law_type:law_no_home_affairs
+					random_list = {
+						4 = { }
+						1 = {
+							set_strategy = ai_strategy_unify_china
+						}
+					}
+				}
+			}
+			c:GNG = { save_scope_as = scope_GNG }
+			s:STATE_GUANGXI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:GNG
+							}
+						}
+					}
+					add_claim = c:GNG 
+				}
+			}
+			s:STATE_GUANGDONG = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:GNG
+							}
+						}
+					}
+					add_claim = c:GNG 
+				}
+			}
+			s:STATE_SHAOZHOU = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:GNG
+							}
+						}
+					}
+					add_claim = c:GNG 
+				}
+			}
+			s:STATE_HUNAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:GNG
+							}
+						}
+					}
+					add_claim = c:GNG 
+				}
+			}
+			s:STATE_HUNAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:GNG
+							}
+						}
+					}
+					add_claim = c:GNG
+				}
+			}		
+			s:STATE_EASTERN_HUBEI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:GNG
+							}
+						}
+					}
+					add_claim = c:GNG
+				}
+			}	
+			s:STATE_WESTERN_HUBEI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:GNG
+							}
+						}
+					}
+					add_claim = c:GNG
+				}
+			}	
+		}
+
+		if = {
+			limit = { exists = s:STATE_ZHILI.region_state:CHI }
+			create_country = { #Zhili Clique
+				tag = ZHI
+				origin = this
+				state = s:STATE_ZHILI.region_state:CHI
+
+				on_created = {
+					warlord_setup_effect = yes
+					set_variable = warlord_state
+					activate_law = law_type:law_no_social_security
+                    activate_law = law_type:law_no_colonial_affairs
+                    activate_law = law_type:law_no_home_affairs
+					random_list = {
+						3 = { }
+						2 = {
+							set_strategy = ai_strategy_unify_china
+						}
+					}
+				}
+			}
+			c:ZHI = { save_scope_as = scope_ZHI }
+			s:STATE_ZHILI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:ZHI
+							}
+						}
+					}
+					add_claim = c:ZHI 
+				}
+			}
+			if = {
+				limit = { exists = s:STATE_WESTERN_HUBEI.region_state:CHI }
+				s:STATE_WESTERN_HUBEI.region_state:CHI = { set_state_owner = c:ZHI set_state_type = incorporated }
+			}
+			s:STATE_WESTERN_HUBEI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:ZHI
+							}
+						}
+					}
+					add_claim = c:ZHI 
+				}
+			}
+			if = {
+				limit = { exists = s:STATE_EASTERN_HUBEI.region_state:CHI }
+				s:STATE_EASTERN_HUBEI.region_state:CHI = { set_state_owner = c:ZHI set_state_type = incorporated }
+			}
+			s:STATE_EASTERN_HUBEI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:ZHI
+							}
+						}
+					}
+					add_claim = c:ZHI 
+				}
+			}
+			if = {
+				limit = { exists = s:STATE_JIANGXI.region_state:CHI }
+				s:STATE_JIANGXI.region_state:CHI = { set_state_owner = c:ZHI set_state_type = incorporated }
+			}
+			s:STATE_JIANGXI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:ZHI
+							}
+						}
+					}
+					add_claim = c:ZHI 
+				}
+			}
+			if = {
+				limit = { exists = s:STATE_JIANGSU.region_state:CHI }
+				s:STATE_JIANGSU.region_state:CHI = { set_state_owner = c:ZHI set_state_type = incorporated }
+			}
+			s:STATE_JIANGSU = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:ZHI
+							}
+						}
+					}
+					add_claim = c:ZHI 
+				}
+			}
+			if = {
+				limit = { exists = s:STATE_NANJING.region_state:CHI }
+				s:STATE_NANJING.region_state:CHI = { set_state_owner = c:ZHI set_state_type = incorporated }
+			}
+			s:STATE_NANJING = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:ZHI
+							}
+						}
+					}
+					add_claim = c:ZHI 
+				}
+			}
+			if = {
+				limit = { exists = s:STATE_HENAN.region_state:CHI }
+				s:STATE_HENAN.region_state:CHI = { set_state_owner = c:ZHI set_state_type = incorporated }
+			}
+			s:STATE_HENAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:ZHI
+							}
+						}
+					}
+					add_claim = c:ZHI 
+				}
+			}
+			if = {
+				limit = {
+					AND = {
+						exists = s:STATE_HINGGAN.region_state:CHI
+						exists = s:STATE_CHAHAR
+					}
+				}
+				s:STATE_HINGGAN.region_state:CHI = { set_state_owner = c:ZHI set_state_type = incorporated }
+			}
+			s:STATE_HINGGAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:ZHI
+							}
+						}
+					}
+					add_claim = c:ZHI 
+				}
+			}
+			s:STATE_CHAHAR = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:ZHI
+							}
+						}
+					}
+					add_claim = c:ZHI 
+				}
+			}
+			s:STATE_JEHOL = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:ZHI
+							}
+						}
+					}
+					add_claim = c:ZHI 
+				}
+			}
+			s:STATE_BEIJING = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:ZHI
+							}
+						}
+					}
+					add_claim = c:ZHI 
+				}
+			}
+			s:STATE_SHANDONG = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:ZHI
+							}
+						}
+					}
+					add_claim = c:ZHI 
+				}
+			}
+			s:STATE_XIAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:ZHI
+							}
+						}
+					}
+					add_claim = c:ZHI 
+				}
+			}
+			s:STATE_NORTHERN_ANHUI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:ZHI
+							}
+						}
+					}
+					add_claim = c:ZHI 
+				}
+			}
+			s:STATE_SOUTHERN_ANHUI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:ZHI
+							}
+						}
+					}
+					add_claim = c:ZHI 
+				}
+			}
+			s:STATE_SUZHOU = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:ZHI
+							}
+						}
+					}
+					add_claim = c:ZHI 
+				}
+			}
+			s:STATE_FUJIAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:ZHI
+							}
+						}
+					}
+					add_claim = c:ZHI 
+				}
+			}
+			s:STATE_HUNAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:ZHI
+							}
+						}
+					}
+					add_claim = c:ZHI 
+				}
+			}
+			s:STATE_SICHUAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:ZHI
+							}
+						}
+					}
+					add_claim = c:ZHI 
+				}
+			}
+			s:STATE_CHONGQING = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:ZHI
+							}
+						}
+					}
+					add_claim = c:ZHI 
+				}
+			}
+			s:STATE_NINGXIA = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:ZHI
+							}
+						}
+					}
+					add_claim = c:ZHI 
+				}
+			}
+			s:STATE_GANSU = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:ZHI
+							}
+						}
+					}
+					add_claim = c:ZHI 
+				}
+			}
+		}
+
+		if = {
+			limit = { exists = s:STATE_SOUTHERN_ANHUI.region_state:CHI }
+			create_country = { #Anhui Clique
+				tag = AHU
+				origin = this
+				state = s:STATE_SOUTHERN_ANHUI.region_state:CHI
+
+				on_created = {
+					warlord_setup_effect = yes
+					set_variable = warlord_state
+				}
+			}
+			c:AHU = { save_scope_as = scope_AHU }
+			s:STATE_SOUTHERN_ANHUI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:AHU
+							}
+						}
+					}
+					add_claim = c:AHU
+				}
+			}
+			if = {
+				limit = { exists = s:STATE_NORTHERN_ANHUI.region_state:CHI }
+				s:STATE_NORTHERN_ANHUI.region_state:CHI = { set_state_owner = c:AHU set_state_type = incorporated }
+			}
+			s:STATE_NORTHERN_ANHUI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:AHU
+							}
+						}
+					}
+					add_claim = c:AHU
+				}
+			}
+			if = {
+				limit = { exists = s:STATE_ZHEJIANG.region_state:CHI }
+				s:STATE_ZHEJIANG.region_state:CHI = { set_state_owner = c:AHU set_state_type = incorporated }
+			}
+			s:STATE_ZHEJIANG = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:AHU
+							}
+						}
+					}
+					add_claim = c:AHU 
+				}
+			}
+			if = {
+				limit = { exists = s:STATE_FUJIAN.region_state:CHI }
+				s:STATE_FUJIAN.region_state:CHI = { set_state_owner = c:AHU set_state_type = incorporated }
+			}
+			s:STATE_FUJIAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:AHU
+							}
+						}
+					}
+					add_claim = c:AHU
+				}
+			}
+			if = {
+				limit = { exists = s:STATE_FORMOSA.region_state:CHI }
+				s:STATE_FORMOSA.region_state:CHI = { set_state_owner = c:AHU set_state_type = incorporated }
+			}
+			s:STATE_FORMOSA = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:AHU
+							}
+						}
+					}
+					add_claim = c:AHU
+				}
+			}
+			if = {
+				limit = { exists = s:STATE_SUZHOU.region_state:CHI }
+				s:STATE_SUZHOU.region_state:CHI = { set_state_owner = c:AHU set_state_type = incorporated }
+			}
+			s:STATE_SUZHOU = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:AHU
+							}
+						}
+					}
+					add_claim = c:AHU 
+				}
+			}
+			if = {
+				limit = { exists = s:STATE_CHAHAR.region_state:CHI }
+				s:STATE_CHAHAR.region_state:CHI = { set_state_owner = c:AHU set_state_type = incorporated }
+			}
+			s:STATE_CHAHAR = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:AHU
+							}
+						}
+					}
+					add_claim = c:AHU 
+				}
+			}
+			if = {
+				limit = { exists = s:STATE_JEHOL.region_state:CHI }
+				s:STATE_JEHOL.region_state:CHI = { set_state_owner = c:AHU set_state_type = incorporated }
+			}
+			s:STATE_JEHOL = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:AHU
+							}
+						}
+					}
+					add_claim = c:AHU 
+				}
+			}
+			s:STATE_JEHOL = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:AHU
+							}
+						}
+					}
+					add_claim = c:AHU 
+				}
+			}
+			s:STATE_BEIJING = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:AHU
+							}
+						}
+					}
+					add_claim = c:AHU
+				}
+			}
+			s:STATE_ULIASTAI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:AHU
+							}
+						}
+					}
+					add_claim = c:AHU
+				}
+			}
+			s:STATE_URGA = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:AHU
+							}
+						}
+					}
+					add_claim = c:AHU
+				}
+			}
+			s:STATE_ZHILI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:AHU
+							}
+						}
+					}
+					add_claim = c:AHU
+				}
+			}
+			s:STATE_HENAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:AHU
+							}
+						}
+					}
+					add_claim = c:AHU
+				}
+			}
+			s:STATE_JIANGSU = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:AHU
+							}
+						}
+					}
+					add_claim = c:AHU
+				}
+			}
+			s:STATE_NANJING = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:AHU
+							}
+						}
+					}
+					add_claim = c:AHU
+				}
+			}
+			s:STATE_EASTERN_HUBEI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:AHU
+							}
+						}
+					}
+					add_claim = c:AHU
+				}
+			}
+			s:STATE_WESTERN_HUBEI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:AHU
+							}
+						}
+					}
+					add_claim = c:AHU
+				}
+			}
+			s:STATE_JIANGXI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:AHU
+							}
+						}
+					}
+					add_claim = c:AHU
+				}
+			}
+			s:STATE_SHANDONG = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:AHU
+							}
+						}
+					}
+					add_claim = c:AHU
+				}
+			}
+			s:STATE_XIAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:AHU
+							}
+						}
+					}
+					add_claim = c:AHU
+				}
+			}
+			s:STATE_NINGXIA = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:AHU
+							}
+						}
+					}
+					add_claim = c:AHU
+				}
+			}
+			s:STATE_GANSU = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:AHU
+							}
+						}
+					}
+					add_claim = c:AHU
+				}
+			}
+			s:STATE_SICHUAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:AHU
+							}
+						}
+					}
+					add_claim = c:AHU
+				}
+			}
+			s:STATE_CHONGQING = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:AHU
+							}
+						}
+					}
+					add_claim = c:AHU
+				}
+			}
+			s:STATE_HUNAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:AHU
+							}
+						}
+					}
+					add_claim = c:AHU
+				}
+			}
+			s:STATE_HINGGAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:AHU
+							}
+						}
+					}
+					add_claim = c:AHU
+				}
+			}
+			s:STATE_ALXA = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:AHU
+							}
+						}
+					}
+					add_claim = c:AHU
+				}
+			}
+		}
+
+		if = {
+			limit = { exists = s:STATE_SHENGJING.region_state:CHI }
+			create_country = { #Fengtian Clique
+				tag = MCH
+				origin = this
+				state = s:STATE_SHENGJING.region_state:CHI
+
+				on_created = {
+					warlord_setup_effect = yes
+					set_variable = warlord_state
+					activate_law = law_type:law_no_social_security
+                    activate_law = law_type:law_no_colonial_affairs
+                    activate_law = law_type:law_no_home_affairs
+					random_list = {
+						3 = {
+                            set_strategy = ai_strategy_resource_expansion
+                        }
+						2 = {
+							set_strategy = ai_strategy_industrial_expansion
+						}
+					}
+					random_list = {
+						3 = { }
+						2 = {
+							set_strategy = ai_strategy_unify_china
+						}
+					}
+				}
+			}
+			c:MCH = { save_scope_as = scope_MCH }
+			s:STATE_NANJING = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:MCH
+							}
+						}
+					}
+					add_claim = c:MCH
+				}
+			}
+			if = {
+				limit = { exists = s:STATE_NORTHERN_MANCHURIA.region_state:CHI }
+				s:STATE_NORTHERN_MANCHURIA.region_state:CHI = { set_state_owner = c:MCH set_state_type = incorporated }
+			}
+			s:STATE_NORTHERN_MANCHURIA = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:MCH
+							}
+						}
+					}
+					add_claim = c:MCH
+				}
+			}
+			if = {
+				limit = { exists = s:STATE_SOUTHERN_MANCHURIA.region_state:CHI }
+				s:STATE_SOUTHERN_MANCHURIA.region_state:CHI = { set_state_owner = c:MCH set_state_type = incorporated }
+			}
+			s:STATE_SOUTHERN_MANCHURIA = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:MCH
+							}
+						}
+					}
+					add_claim = c:MCH
+				}
+			}
+			if = {
+				limit = { exists = s:STATE_OUTER_MANCHURIA.region_state:CHI }
+				s:STATE_OUTER_MANCHURIA.region_state:CHI = { set_state_owner = c:MCH set_state_type = incorporated }
+			}
+			if = {
+				limit = { exists = s:STATE_AMUR.region_state:CHI }
+				s:STATE_AMUR.region_state:CHI = { set_state_owner = c:MCH set_state_type = incorporated }
+			}
+			if = {
+				limit = { exists = s:STATE_SAKHALIN.region_state:CHI }
+				s:STATE_SAKHALIN.region_state:CHI = { set_state_owner = c:MCH set_state_type = incorporated }
+			}
+			s:STATE_BEIJING = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:MCH
+							}
+						}
+					}
+					add_claim = c:MCH
+				}
+			}
+			s:STATE_ZHILI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:MCH
+							}
+						}
+					}
+					add_claim = c:MCH
+				}
+			}
+			s:STATE_SHANDONG = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:MCH
+							}
+						}
+					}
+					add_claim = c:MCH
+				}
+			}
+			s:STATE_HINGGAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:MCH
+							}
+						}
+					}
+					add_claim = c:MCH
+				}
+			}
+			s:STATE_NORTHERN_ANHUI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:MCH
+							}
+						}
+					}
+					add_claim = c:MCH
+				}
+			}
+			s:STATE_SOUTHERN_ANHUI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:MCH
+							}
+						}
+					}
+					add_claim = c:MCH
+				}
+			}
+			s:STATE_JIANGSU = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:MCH
+							}
+						}
+					}
+					add_claim = c:MCH
+				}
+			}
+			s:STATE_NANJING = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:MCH
+							}
+						}
+					}
+					add_claim = c:MCH
+				}
+			}
+			s:STATE_SUZHOU = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:MCH
+							}
+						}
+					}
+					add_claim = c:MCH
+				}
+			}
+			s:STATE_ZHEJIANG = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:MCH
+							}
+						}
+					}
+					add_claim = c:MCH
+				}
+			}
+			s:STATE_JEHOL = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:MCH
+							}
+						}
+					}
+					add_claim = c:MCH
+				}
+			}
+			s:STATE_CHAHAR = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:MCH
+							}
+						}
+					}
+					add_claim = c:MCH
+				}
+			}
+		}
+
+		if = {
+			limit = { exists = s:STATE_SHANXI.region_state:CHI }
+			create_country = {  #Shanxi
+				tag = SHN
+				origin = this
+				state = s:STATE_SHANXI.region_state:CHI
+
+				on_created = {
+					warlord_setup_effect = yes
+					set_variable = warlord_state
+					activate_law = law_type:law_no_social_security
+                    activate_law = law_type:law_no_colonial_affairs
+                    activate_law = law_type:law_no_home_affairs
+					random_list = {
+						3 = {
+                            set_strategy = ai_strategy_resource_expansion
+                        }
+						2 = {
+							set_strategy = ai_strategy_industrial_expansion
+						}
+					}
+					random_list = {
+						4 = { }
+						1 = {
+							set_strategy = ai_strategy_unify_china
+						}
+					}
+				}
+			}
+			c:SHN = { save_scope_as = scope_SHN }
+			s:STATE_SHANXI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:SHN
+							}
+						}
+					}
+					add_claim = c:SHN
+				}
+			}
+			s:STATE_HINGGAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:SHN
+							}
+						}
+					}
+					add_claim = c:SHN
+				}
+			}
+			s:STATE_BEIJING = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:SHN
+							}
+						}
+					}
+					add_claim = c:SHN
+				}
+			}
+			s:STATE_ZHILI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:SHN
+							}
+						}
+					}
+					add_claim = c:SHN
+				}
+			}
+			s:STATE_XIAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:SHN
+							}
+						}
+					}
+					add_claim = c:SHN
+				}
+			}
+		}
+
+		if = {
+			limit = { exists = s:STATE_TIANSHAN.region_state:CHI }
+			create_country = {  #Xinjiang Clique
+				tag = XIN
+				origin = this
+				state = s:STATE_TIANSHAN.region_state:CHI
+
+				on_created = {
+					warlord_setup_effect = yes
+					set_variable = warlord_state
+					activate_law = law_type:law_no_social_security
+                    activate_law = law_type:law_no_colonial_affairs
+                    activate_law = law_type:law_no_home_affairs
+                    set_strategy = ai_strategy_resource_expansion
+				}
+			}
+			c:XIN = { save_scope_as = scope_XIN }
+			s:STATE_TIANSHAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:XIN
+							}
+						}
+					}
+					add_claim = c:XIN
+				}
+			}
+			if = {
+				limit = { exists = s:STATE_DZUNGARIA.region_state:CHI }
+				s:STATE_DZUNGARIA.region_state:CHI = { set_state_owner = c:XIN set_state_type = incorporated }
+			}
+			s:STATE_DZUNGARIA = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:XIN
+							}
+						}
+					}
+					add_claim = c:XIN
+				}
+			}
+			if = {
+				limit = { exists = s:STATE_JETISY.region_state:CHI }
+				s:STATE_JETISY.region_state:CHI = { set_state_owner = c:XIN set_state_type = incorporated }
+			}
+			if = {
+				limit = { exists = s:STATE_KIRGHIZIA.region_state:CHI }
+				s:STATE_KIRGHIZIA.region_state:CHI = { set_state_owner = c:XIN set_state_type = incorporated }
+			}
+			
+		}
+
+		if = {
+			limit = { exists = s:STATE_YUNNAN.region_state:CHI }
+			create_country = {  #Yunnan
+				tag = YUN
+				origin = this
+				state = s:STATE_YUNNAN.region_state:CHI
+
+				on_created = {
+					warlord_setup_effect = yes
+					set_variable = warlord_state
+					activate_law = law_type:law_no_social_security
+                    activate_law = law_type:law_no_colonial_affairs
+                    activate_law = law_type:law_no_home_affairs
+					set_strategy = ai_strategy_resource_expansion
+					random_list = {
+						4 = { }
+						1 = {
+							set_strategy = ai_strategy_unify_china
+						}
+					}
+				}
+			}
+			c:YUN = { save_scope_as = scope_YUN }
+			s:STATE_YUNNAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:YUN
+							}
+						}
+					}
+					add_claim = c:YUN
+				}
+			}
+			s:STATE_GUIZHOU = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:YUN
+							}
+						}
+					}
+					add_claim = c:YUN
+				}
+			}
+			s:STATE_GUANGXI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:YUN
+							}
+						}
+					}
+					add_claim = c:YUN
+				}
+			}
+			s:STATE_HUNAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:YUN
+							}
+						}
+					}
+					add_claim = c:YUN
+				}
+			}
+			s:STATE_SICHUAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:YUN
+							}
+						}
+					}
+					add_claim = c:YUN
+				}
+			}
+			s:STATE_XIKANG = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:YUN
+							}
+						}
+					}
+					add_claim = c:YUN
+				}
+			}
+			s:STATE_CHONGQING = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:YUN
+							}
+						}
+					}
+					add_claim = c:YUN
+				}
+			}
+			s:STATE_EASTERN_HUBEI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:YUN
+							}
+						}
+					}
+					add_claim = c:YUN
+				}
+			}
+			s:STATE_WESTERN_HUBEI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:YUN
+							}
+						}
+					}
+					add_claim = c:YUN
+				}
+			}
+			s:STATE_XIAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:YUN
+							}
+						}
+					}
+					add_claim = c:YUN
+				}
+			}
+			s:STATE_LHASA = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:YUN
+							}
+						}
+					}
+					add_claim = c:YUN
+				}
+			}
+			s:STATE_NGARI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:YUN
+							}
+						}
+					}
+					add_claim = c:YUN
+				}
+			}
+		}
+
+		if = {
+			limit = { exists = s:STATE_GUIZHOU.region_state:CHI }
+			create_country = { #Guizhou
+				tag = GUI
+				origin = this
+				state = s:STATE_GUIZHOU.region_state:CHI
+
+				on_created = {
+					warlord_setup_effect = yes
+					set_variable = warlord_state
+				}
+			}
+			c:GUI = { save_scope_as = scope_GUI }
+			s:STATE_GUIZHOU = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:GUI
+							}
+						}
+					}
+					add_claim = c:GUI
+				}
+			}
+			s:STATE_CHONGQING = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:GUI
+							}
+						}
+					}
+					add_claim = c:GUI
+				}
+			}
+			s:STATE_HUNAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:GUI
+							}
+						}
+					}
+					add_claim = c:GUI
+				}
+			}
+		}
+
+		if = {
+			limit = { exists = s:STATE_GUANGDONG.region_state:CHI }
+			create_country = { #Guangdong
+				tag = YUE
+				origin = this
+				state = s:STATE_GUANGDONG.region_state:CHI
+
+				on_created = {
+					warlord_setup_effect = yes
+					set_variable = warlord_state
+					activate_law = law_type:law_no_social_security
+                    activate_law = law_type:law_no_colonial_affairs
+                    activate_law = law_type:law_no_home_affairs
+					set_strategy = ai_strategy_industrial_expansion
+					random_list = {
+						3 = { }
+						2 = {
+							set_strategy = ai_strategy_unify_china
+						}
+					}
+				}
+			}
+			c:YUE = { save_scope_as = scope_YUE }
+			if = {
+				limit = { exists = s:STATE_SHAOZHOU.region_state:CHI }
+				s:STATE_SHAOZHOU.region_state:CHI = { set_state_owner = c:YUE set_state_type = incorporated }
+			}
+			s:STATE_GUANGDONG = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:YUE
+							}
+						}
+					}
+					add_claim = c:YUE
+				}
+			}
+			s:STATE_GUANGXI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:YUE
+							}
+						}
+					}
+					add_claim = c:YUE
+				}
+			}
+			s:STATE_SHAOZHOU = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:YUE
+							}
+						}
+					}
+					add_claim = c:YUE
+				}
+			}
+			s:STATE_FUJIAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:YUE
+							}
+						}
+					}
+					add_claim = c:YUE
+				}
+			}
+			s:STATE_JIANGXI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:YUE
+							}
+						}
+					}
+					add_claim = c:YUE
+				}
+			}
+			s:STATE_HUNAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:YUE
+							}
+						}
+					}
+					add_claim = c:YUE
+				}
+			}
+			s:STATE_ZHEJIANG = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:YUE
+							}
+						}
+					}
+					add_claim = c:YUE
+				}
+			}
+			s:STATE_NORTHERN_ANHUI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:YUE
+							}
+						}
+					}
+					add_claim = c:YUE
+				}
+			}
+			s:STATE_SOUTHERN_ANHUI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:YUE
+							}
+						}
+					}
+					add_claim = c:YUE
+				}
+			}	
+			s:STATE_NANJING = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:YUE
+							}
+						}
+					}
+					add_claim = c:YUE
+				}
+			}
+			s:STATE_SUZHOU = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:YUE
+							}
+						}
+					}
+					add_claim = c:YUE
+				}
+			}
+			s:STATE_JIANGSU = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:YUE
+							}
+						}
+					}
+					add_claim = c:YUE
+				}
+			}
+			s:STATE_HUNAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:YUE
+							}
+						}
+					}
+					add_claim = c:YUE
+				}
+			}
+			s:STATE_EASTERN_HUBEI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:YUE
+							}
+						}
+					}
+					add_claim = c:YUE
+				}
+			}
+			s:STATE_WESTERN_HUBEI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:YUE
+							}
+						}
+					}
+					add_claim = c:YUE
+				}
+			}
+			s:STATE_HENAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:YUE
+							}
+						}
+					}
+					add_claim = c:YUE
+				}
+			}
+			s:STATE_ZHILI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:YUE
+							}
+						}
+					}
+					add_claim = c:YUE
+				}
+			}
+			s:STATE_BEIJING = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:YUE
+							}
+						}
+					}
+					add_claim = c:YUE
+				}
+			}
+		}
+
+		if = {
+			limit = { exists = s:STATE_SICHUAN.region_state:CHI }
+			create_country = {
+				tag = XIK
+				origin = this
+				state = s:STATE_SICHUAN.region_state:CHI
+
+				on_created = {
+					warlord_setup_effect = yes
+					set_variable = warlord_state
+					activate_law = law_type:law_no_social_security
+                    activate_law = law_type:law_no_colonial_affairs
+                    activate_law = law_type:law_no_home_affairs
+					random_list = {
+						3 = {
+                            set_strategy = ai_strategy_resource_expansion
+                        }
+						2 = {
+							set_strategy = ai_strategy_industrial_expansion
+						}
+					}
+					random_list = {
+						3 = { }
+						2 = {
+							set_strategy = ai_strategy_unify_china
+						}
+					}
+				}
+			}
+			c:XIK = { save_scope_as = scope_XIK }
+			if = {
+				limit = { exists = s:STATE_XIKANG.region_state:CHI }
+				s:STATE_XIKANG.region_state:CHI = { set_state_owner = c:XIK set_state_type = incorporated }
+			}
+			s:STATE_XIKANG = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:XIK
+							}
+						}
+					}
+					add_claim = c:XIK
+				}
+			}
+			s:STATE_LHASA = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:XIK
+							}
+						}
+					}
+					add_claim = c:XIK
+				}
+			}
+			s:STATE_URGA = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:XIK
+							}
+						}
+					}
+					add_claim = c:XIK
+				}
+			}
+			s:STATE_SICHUAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:XIK
+							}
+						}
+					}
+					add_claim = c:XIK
+				}
+			}
+			s:STATE_CHONGQING = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:XIK
+							}
+						}
+					}
+					add_claim = c:XIK
+				}
+			}
+		}
+
+		if = {
+			limit = { exists = s:STATE_CHONGQING.region_state:CHI }
+			create_country = {
+				tag = SIH
+				origin = this
+				state = s:STATE_CHONGQING.region_state:CHI
+
+				on_created = {
+					warlord_setup_effect = yes
+					set_variable = warlord_state
+					activate_law = law_type:law_no_social_security
+                    activate_law = law_type:law_no_colonial_affairs
+                    activate_law = law_type:law_no_home_affairs
+					random_list = {
+						3 = {
+                            set_strategy = ai_strategy_resource_expansion
+                        }
+						2 = {
+							set_strategy = ai_strategy_industrial_expansion
+						}
+					}
+					random_list = {
+						3 = { }
+						2 = {
+							set_strategy = ai_strategy_unify_china
+						}
+					}
+				}
+			}
+			c:SIH = { save_scope_as = scope_SIH }
+			s:STATE_XIKANG = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:SIH
+							}
+						}
+					}
+					add_claim = c:SIH
+				}
+			}
+			s:STATE_SICHUAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:SIH
+							}
+						}
+					}
+					add_claim = c:SIH
+				}
+			}
+			s:STATE_WESTERN_HUBEI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:SIH
+							}
+						}
+					}
+					add_claim = c:SIH
+				}
+			}
+		}
+		else_if = {
+			limit = { exists = s:STATE_CHONGQING.region_state:CHI }
+			create_country = {
+				tag = SIH
+				origin = this
+				state = s:STATE_CHONGQING.region_state:CHI
+
+				on_created = {
+					warlord_setup_effect = yes
+					set_variable = warlord_state
+					activate_law = law_type:law_no_social_security
+                    activate_law = law_type:law_no_colonial_affairs
+                    activate_law = law_type:law_no_home_affairs
+					random_list = {
+						3 = {
+                            set_strategy = ai_strategy_resource_expansion
+                        }
+						2 = {
+							set_strategy = ai_strategy_industrial_expansion
+						}
+					}
+					random_list = {
+						3 = { }
+						2 = {
+							set_strategy = ai_strategy_unify_china
+						}
+					}
+				}
+			}
+			c:SIH = { save_scope_as = scope_SIH }
+			s:STATE_XIKANG = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:SIH
+							}
+						}
+					}
+					add_claim = c:SIH
+				}
+			}
+			s:STATE_SICHUAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:SIH
+							}
+						}
+					}
+					add_claim = c:SIH
+				}
+			}
+			s:STATE_CHONGQING = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:SIH
+							}
+						}
+					}
+					add_claim = c:SIH
+				}
+			}
+			s:STATE_WESTERN_HUBEI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:SIH
+							}
+						}
+					}
+					add_claim = c:SIH
+				}
+			}
+		}
+
+
+		if = {
+			limit = { exists = s:STATE_SHANDONG.region_state:CHI }
+			create_country = {
+				tag = SHA
+				origin = this
+				state = s:STATE_SHANDONG.region_state:CHI
+
+				on_created = {
+					warlord_setup_effect = yes
+					set_variable = warlord_state
+					activate_law = law_type:law_no_social_security
+                    activate_law = law_type:law_no_colonial_affairs
+                    activate_law = law_type:law_no_home_affairs
+					random_list = {
+						3 = {
+                            set_strategy = ai_strategy_resource_expansion
+                        }
+						2 = {
+							set_strategy = ai_strategy_industrial_expansion
+						}
+					}
+					random_list = {
+						4 = { }
+						1 = {
+							set_strategy = ai_strategy_unify_china
+						}
+					}
+				}
+			}
+			c:SHA = { save_scope_as = scope_SHA }
+			s:STATE_SHANDONG = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:SHA
+							}
+						}
+					}
+					add_claim = c:SHA
+				}
+			}
+			s:STATE_ZHILI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:SHA
+							}
+						}
+					}
+					add_claim = c:SHA
+				}
+			}
+			s:STATE_NORTHERN_ANHUI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:SHA
+							}
+						}
+					}
+					add_claim = c:SHA
+				}
+			}
+			s:STATE_SOUTHERN_ANHUI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:SHA
+							}
+						}
+					}
+					add_claim = c:SHA
+				}
+			}
+			s:STATE_JIANGSU = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:SHA
+							}
+						}
+					}
+					add_claim = c:SHA
+				}
+			}
+			s:STATE_NANJING = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:SHA
+							}
+						}
+					}
+					add_claim = c:SHA
+				}
+			}
+			s:STATE_SUZHOU = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:SHA
+							}
+						}
+					}
+					add_claim = c:SHA
+				}
+			}
+			s:STATE_HENAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:SHA
+							}
+						}
+					}
+					add_claim = c:SHA
+				}
+			}
+		}
+
+		if = {
+			limit = { exists = s:STATE_XIAN.region_state:CHI }
+			create_country = {
+				tag = XIB
+				origin = this
+				state = s:STATE_XIAN.region_state:CHI
+
+				on_created = {
+					warlord_setup_effect = yes
+					set_variable = warlord_state
+					activate_law = law_type:law_no_social_security
+                    activate_law = law_type:law_no_colonial_affairs
+                    activate_law = law_type:law_no_home_affairs
+					random_list = {
+						3 = { }
+						2 = {
+							set_strategy = ai_strategy_unify_china
+						}
+					}
+				}
+			}
+			c:XIB = { save_scope_as = scope_XIB }
+			s:STATE_XIAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:XIB
+							}
+						}
+					}
+					add_claim = c:XIB
+				}
+			}
+			s:STATE_GANSU = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:XIB
+							}
+						}
+					}
+					add_claim = c:XIB
+				}
+			}
+			s:STATE_ALXA = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:XIB
+							}
+						}
+					}
+					add_claim = c:XIB
+				}
+			}
+			if = {
+				limit = { exists = s:STATE_NINGXIA.region_state:CHI }
+				s:STATE_NINGXIA.region_state:CHI = { set_state_owner = c:XIB set_state_type = incorporated }
+			}
+			s:STATE_NINGXIA = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:XIB
+							}
+						}
+					}
+					add_claim = c:XIB
+				}
+			}
+			if = {
+				limit = { exists = s:STATE_HINGGAN.region_state:CHI }
+				s:STATE_HINGGAN.region_state:CHI = { set_state_owner = c:XIB set_state_type = incorporated }
+			}
+			s:STATE_QINGHAI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:XIB
+							}
+						}
+					}
+					add_claim = c:XIB
+				}
+			}
+			s:STATE_BEIJING = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:XIB
+							}
+						}
+					}
+					add_claim = c:XIB
+				}
+			}
+			s:STATE_ZHILI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:XIB
+							}
+						}
+					}
+					add_claim = c:XIB
+				}
+			}
+			s:STATE_ULIASTAI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:XIB
+							}
+						}
+					}
+					add_claim = c:XIB
+				}
+			}
+			s:STATE_URGA = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:XIB
+							}
+						}
+					}
+					add_claim = c:XIB
+				}
+			}
+			s:STATE_HENAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:XIB
+							}
+						}
+					}
+					add_claim = c:XIB
+				}
+			}
+			s:STATE_SHANDONG = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:XIB
+							}
+						}
+					}
+					add_claim = c:XIB
+				}
+			}
+			s:STATE_EASTERN_HUBEI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:XIB
+							}
+						}
+					}
+					add_claim = c:XIB
+				}
+			}
+			s:STATE_WESTERN_HUBEI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:XIB
+							}
+						}
+					}
+					add_claim = c:XIB
+				}
+			}
+			s:STATE_HINGGAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:XIB
+							}
+						}
+					}
+					add_claim = c:XIB
+				}
+			}
+			s:STATE_CHAHAR = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:XIB
+							}
+						}
+					}
+					add_claim = c:XIB
+				}
+			}
+		}
+
+		if = {
+			limit = { exists = s:STATE_QINGHAI.region_state:CHI }
+			create_country = {
+				tag = XSM
+				origin = this
+				state = s:STATE_QINGHAI.region_state:CHI
+
+				on_created = {
+					warlord_setup_effect = yes
+					set_variable = warlord_state
+					activate_law = law_type:law_no_social_security
+                    activate_law = law_type:law_no_colonial_affairs
+                    activate_law = law_type:law_no_home_affairs
+                    set_strategy = ai_strategy_resource_expansion
+					random_list = {
+						4 = { }
+						1 = {
+							set_strategy = ai_strategy_unify_china
+						}
+					}
+				}
+			}
+			c:XSM = { save_scope_as = scope_XSM }
+			s:STATE_QINGHAI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:XSM
+							}
+						}
+					}
+					add_claim = c:XSM
+				}
+			}
+			s:STATE_NINGXIA = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:XSM
+							}
+						}
+					}
+					add_claim = c:XSM
+				}
+			}
+			s:STATE_GANSU = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:XSM
+							}
+						}
+					}
+					add_claim = c:XSM
+				}
+			}
+			s:STATE_ALXA = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:XSM
+							}
+						}
+					}
+					add_claim = c:XSM
+				}
+			}
+		}
+
+		if = {
+			limit = { exists = s:STATE_ALXA.region_state:CHI }
+			create_country = {
+				tag = NIM
+				origin = this
+				state = s:STATE_ALXA.region_state:CHI
+
+				on_created = {
+					warlord_setup_effect = yes
+					set_variable = warlord_state
+					activate_law = law_type:law_no_social_security
+                    activate_law = law_type:law_no_colonial_affairs
+                    activate_law = law_type:law_no_home_affairs
+					random_list = {
+						3 = {
+                            set_strategy = ai_strategy_resource_expansion
+                        }
+						2 = {
+							set_strategy = ai_strategy_industrial_expansion
+						}
+					}
+					random_list = {
+						3 = { }
+						2 = {
+							set_strategy = ai_strategy_unify_china
+						}
+					}
+				}
+			}
+			c:NIM = { save_scope_as = scope_NIM }
+			if = {
+				limit = { exists = s:STATE_GANSU.region_state:CHI }
+				s:STATE_GANSU.region_state:CHI = { set_state_owner = c:NIM set_state_type = incorporated }
+			}
+			s:STATE_ALXA = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:NIM
+							}
+						}
+					}
+					add_claim = c:NIM
+				}
+			}
+			s:STATE_NINGXIA = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:NIM
+							}
+						}
+					}
+					add_claim = c:NIM
+				}
+			}
+			s:STATE_GANSU = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:NIM
+							}
+						}
+					}
+					add_claim = c:NIM
+				}
+			}
+			s:STATE_QINGHAI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:NIM
+							}
+						}
+					}
+					add_claim = c:NIM
+				}
+			}
+		}
+
+		if = {
+			limit = { exists = s:STATE_ULIASTAI.region_state:CHI }
+			create_country = {
+				tag = MGL
+				origin = this
+				state = s:STATE_ULIASTAI.region_state:CHI
+
+				on_created = {
+					activate_law = law_type:law_autocracy 
+					activate_law = law_type:law_monarchy
+					activate_law = law_type:law_peasant_levies
+					activate_law = law_type:law_land_based_taxation
+					activate_law = law_type:law_no_social_security
+                    activate_law = law_type:law_no_colonial_affairs
+                    activate_law = law_type:law_no_home_affairs
+				}
+			}
+			c:MGL = { save_scope_as = scope_MGL }
+			if = {
+				limit = { exists = s:STATE_URGA.region_state:CHI }
+				s:STATE_URGA.region_state:CHI = { set_state_owner = c:MGL set_state_type = incorporated }
+			}
+			s:STATE_ULIASTAI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:MGL
+							}
+						}
+					}
+					add_claim = c:MGL
+				}
+			}
+			s:STATE_URGA = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:MGL
+							}
+						}
+					}
+					add_claim = c:MGL
+				}
+			}
+			s:STATE_ALXA = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:MGL
+							}
+						}
+					}
+					add_claim = c:MGL
+				}
+			}
+			s:STATE_HINGGAN = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:MGL
+							}
+						}
+					}
+					add_claim = c:MGL
+				}
+			}
+			s:STATE_JEHOL = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:MGL
+							}
+						}
+					}
+					add_claim = c:MGL
+				}
+			}
+			s:STATE_CHAHAR = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:MGL
+							}
+						}
+					}
+					add_claim = c:MGL
+				}
+			}
+		}
+
+		if = {
+			limit = { exists = s:STATE_LHASA.region_state:CHI }
+			create_country = {
+				tag = TIB
+				origin = this
+				state = s:STATE_ULIASTAI.region_state:CHI
+
+				on_created = {
+					activate_law = law_type:law_autocracy 
+					activate_law = law_type:law_law_theocracy
+					activate_law = law_type:law_peasant_levies
+					activate_law = law_type:law_land_based_taxation
+					activate_law = law_type:law_no_social_security
+                    activate_law = law_type:law_no_colonial_affairs
+                    activate_law = law_type:law_no_home_affairs
+				}
+			}
+			c:MGL = { save_scope_as = scope_TIB }
+			if = {
+				limit = { exists = s:STATE_URGA.region_state:CHI }
+				s:STATE_URGA.region_state:CHI = { set_state_owner = c:TIB set_state_type = incorporated }
+			}
+			s:STATE_LHASA = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:TIB
+							}
+						}
+					}
+					add_claim = c:TIB
+				}
+			}
+			s:STATE_URGA = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:TIB
+							}
+						}
+					}
+					add_claim = c:TIB
+				}
+			}
+			s:STATE_XIKANG = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:TIB
+							}
+						}
+					}
+					add_claim = c:TIB
+				}
+			}
+		}
+
+		if = {
+			limit = { exists = s:STATE_TUVA.region_state:CHI }
+			create_country = {
+				tag = TUV
+				origin = this
+				state = s:STATE_TUVA.region_state:CHI
+
+				on_created = {
+					activate_law = law_type:law_autocracy 
+					activate_law = law_type:law_monarchy
+					activate_law = law_type:law_peasant_levies
+					activate_law = law_type:law_land_based_taxation
+					activate_law = law_type:law_no_social_security
+                    activate_law = law_type:law_no_colonial_affairs
+                    activate_law = law_type:law_no_home_affairs
+				}
+			}
+			c:TUV = { save_scope_as = scope_TUV }
+			s:STATE_TUVA = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:TUV
+							}
+						}
+					}
+					add_claim = c:TUV
+				}
+			}
+		}
+
+		if = {
+			limit = { exists = s:STATE_ALTAI.region_state:CHI }
+			create_country = {
+				tag = ALI
+				origin = this
+				state = s:STATE_ALTAI.region_state:CHI
+
+				on_created = {
+					activate_law = law_type:law_autocracy 
+					activate_law = law_type:law_monarchy
+					activate_law = law_type:law_peasant_levies
+					activate_law = law_type:law_land_based_taxation
+					activate_law = law_type:law_no_social_security
+                    activate_law = law_type:law_no_colonial_affairs
+                    activate_law = law_type:law_no_home_affairs
+				}
+			}
+			c:ALI = { save_scope_as = scope_ALI }
+			s:STATE_ALTAI = { 
+				if = {
+					limit = {
+						any_scope_state = {
+							NOT = {
+								owner = c:ALI
+							}
+						}
+					}
+					add_claim = c:ALI
+				}
+			}
+		}
+
+		every_subject_or_below = {
+			make_independent = yes
+		}
+
+		every_country = {
+			limit = {
+				has_variable = warlord_state
+			}
+			create_character = {
+				ruler = yes
+				interest_group = ig_armed_forces
+				traits = {
+				}
+			}
+		}
+
+		every_state = {
+			limit = {
+				owner = { has_variable = warlord_state }
+			}
+			state_region = {
+				add_claim = c:CHI
+			}
+		}
+
+		random_country = {
+			limit = {
+				has_variable = warlord_state
+				NOR = {
+					has_variable = var_warlord_two
+					has_variable = var_warlord_three
+					has_variable = var_warlord_four 
+				}
+			}
+			save_scope_as = scope_random_warlord_one
+			set_variable = var_warlord_one
+		}
+
+		random_country = {
+			limit = {
+				has_variable = warlord_state
+				NOR = {
+					has_variable = var_warlord_one
+					has_variable = var_warlord_three
+					has_variable = var_warlord_four
+				}
+			}
+			save_scope_as = scope_random_warlord_two
+			set_variable = var_warlord_two
+		}
+
+		random_country = {
+			limit = {
+				has_variable = warlord_state
+				NOR = {
+					has_variable = var_warlord_one
+					has_variable = var_warlord_two
+					has_variable = var_warlord_four
+				}
+			}
+			save_scope_as = scope_random_warlord_three
+			set_variable = var_warlord_three
+		}
+
+		random_country = {
+			limit = {
+				has_variable = warlord_state
+				NOR = {
+					has_variable = var_warlord_one
+					has_variable = var_warlord_two
+					has_variable = var_warlord_three
+				}
+			}
+			save_scope_as = scope_random_warlord_four
+			set_variable = var_warlord_four
+		}
+
+			
+	}
+
+	option = {
+		hidden_effect = {
+			every_country = {
+				limit = {
+					has_variable = warlord_state
+				}
+				create_character = {
+					ruler = yes
+					interest_group = ig_armed_forces
+					traits = {
+					}
+				}
+			}
+		}
+		name = warlord_china_events.100.ab
+		trigger = {
+			exists = scope:scope_random_warlord_one
+			is_player = yes
+		}
+		play_as = scope:scope_random_warlord_one
+	}
+
+	option = {
+		hidden_effect = {
+			every_country = {
+				limit = {
+					has_variable = warlord_state
+				}
+				create_character = {
+					ruler = yes
+					interest_group = ig_armed_forces
+					traits = {
+					}
+				}
+			}
+		}
+		name = warlord_china_events.100.b
+		trigger = {
+			exists = scope:scope_random_warlord_two
+			is_player = yes
+		}
+		play_as = scope:scope_random_warlord_two
+	}
+
+	option = {
+		hidden_effect = {
+			every_country = {
+				limit = {
+					has_variable = warlord_state
+				}
+				create_character = {
+					ruler = yes
+					interest_group = ig_armed_forces
+					traits = {
+					}
+				}
+			}
+		}
+		name = warlord_china_events.100.c
+		trigger = {
+			exists = scope:scope_random_warlord_three
+			is_player = yes
+		}
+		play_as = scope:scope_random_warlord_three
+	}
+
+	option = {
+		hidden_effect = {
+			every_country = {
+				limit = {
+					has_variable = warlord_state
+				}
+				create_character = {
+					ruler = yes
+					interest_group = ig_armed_forces
+					traits = {
+					}
+				}
+			}
+		}
+		name = warlord_china_events.100.aa
+		trigger = {
+			exists = scope:scope_random_warlord_four
+			is_player = yes
+		}
+		play_as = scope:scope_random_warlord_four
+	}
+
+	option = {
+		hidden_effect = {
+			every_country = {
+				limit = {
+					has_variable = warlord_state
+				}
+				create_character = {
+					ruler = yes
+					interest_group = ig_armed_forces
+					traits = {
+					}
+				}
+			}
+		}
+		default_option = yes
+		name = warlord_china_events.100.a
+	}
+
+	option = {
+		hidden_effect = {
+			every_country = {
+				limit = {
+					has_variable = warlord_state
+				}
+				create_character = {
+					ruler = yes
+					interest_group = ig_armed_forces
+					traits = {
+					}
+				}
+			}
+			every_country = {
+				limit = {
+					OR = {
+						has_variable = warlord_state
+						has_variable = chinese_central_government
+					}
+				}
+				set_country_type = recognized
+			}
+		}
+		name = warlord_china_events.100.dd
+	}
+}

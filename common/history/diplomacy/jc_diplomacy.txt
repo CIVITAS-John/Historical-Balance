@@ -24,5 +24,17 @@ DIPLOMACY = {
 			country = c:NEP
 			type = tributary
 		}
+		create_diplomatic_pact = {
+			country = c:TIB
+			type = exempt_from_service
+		}
+		create_diplomatic_pact = {
+			country = c:BHU
+			type = exempt_from_service
+		}
+		create_diplomatic_pact = {
+			country = c:NEP
+			type = exempt_from_service
+		}
 	}
 }

@@ -1,4 +1,3 @@
-
 bg_construction = {
 	parent_group = bg_public_infrastructure
 

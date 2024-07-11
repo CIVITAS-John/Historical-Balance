@@ -5,6 +5,6 @@
 	
 	tier = principality
 	
-	cultures = { hakka min yue }
+	cultures = { hakka min yue bornean }
 	capital = STATE_WEST_BORNEO
 }

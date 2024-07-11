@@ -14,6 +14,7 @@ transportation = {
 	cost = 30
 	category = staple
 	tradeable = no
+	local = no
 
 	prestige_factor = 4
 	
@@ -25,6 +26,7 @@ electricity = {
 	cost = 30
 	category = staple
 	tradeable = no
+	local = no
 	
 	prestige_factor = 5
 	
