@@ -75,6 +75,12 @@ fh_tungning_country_setup = {
 
 	fh_tungning_lanfang_setup = yes
 	s:STATE_FORMOSA.region_state:TWG ?= { fh_tungning_formosa_setup = yes }
+	create_character = { template = fh_chen_zhaowen_petty_bourgeoisie }
+	create_character = { template = fh_xu_wenjing_intelligentsia }
+	create_character = { template = fh_luo_jingde_devout }
+	create_character = { template = fh_samuel_talavan_agitator }
+	create_character = { template = fh_yang_jingyuan_industrialists }
+	create_character = { template = fh_zhu_yucheng_magnate }
 	fh_tungning_army_setup = yes
 	fh_tungning_fleet_setup = yes
 
@@ -132,6 +138,14 @@ fh_tungning_formosa_setup = {
 		}
 		change_pop_religion = { target = rel:catholic value = 0.10 }
 	}
+	# A few Siraya congregations survived the end of Dutch rule in this timeline.
+	every_scope_pop = {
+		limit = {
+			has_pop_culture = yuanzhumin
+			has_pop_religion = animist
+		}
+		change_pop_religion = { target = rel:protestant value = 0.005 }
+	}
 	create_pop = { culture = korean size = 3000 }
 	create_pop = { culture = japanese size = 2000 }
 
@@ -143,10 +157,30 @@ fh_tungning_formosa_setup = {
 		reserves = 1
 		activate_production_methods = { "pm_forest_glass" "pm_ceramics" "pm_manual_glassblowing" }
 	}
-	create_building = { building = building_paper_mill level = 1 reserves = 1 }
+	create_building = {
+		building = building_paper_mill
+		add_ownership = {
+			building = { type = building_financial_district country = c:TWG region = STATE_FORMOSA levels = 1 }
+		}
+		reserves = 1
+	}
 	create_building = { building = building_shipyard level = 1 reserves = 1 }
 	create_building = { building = building_arms_industry level = 1 reserves = 1 }
-	create_building = { building = building_textile_mill level = 1 reserves = 1 }
+	create_building = {
+		building = building_textile_mill
+		add_ownership = {
+			building = { type = building_financial_district country = c:TWG region = STATE_FORMOSA levels = 1 }
+		}
+		reserves = 1
+	}
+	create_building = {
+		building = building_trade_center
+		add_ownership = {
+			building = { type = building_financial_district country = c:TWG region = STATE_FORMOSA levels = 2 }
+		}
+		reserves = 1
+		activate_production_methods = { "pm_trade_center" "pm_trade_center_trade_quantity_normal" }
+	}
 	create_building = { building = building_logging_camp level = 1 reserves = 1 }
 	create_building = { building = building_university level = 1 reserves = 1 }
 	create_building = { building = building_government_administration level = 2 reserves = 1 }
@@ -203,6 +237,13 @@ fh_tungning_fleet_setup = {
 	create_ship = { type = ship_type:ship_type_frigate fleet = scope:fh_tungning_opening_fleet name = fh_tungning_ship_3 }
 	create_ship = { type = ship_type:ship_type_frigate fleet = scope:fh_tungning_opening_fleet name = fh_tungning_ship_4 }
 	create_ship = { type = ship_type:ship_type_frigate fleet = scope:fh_tungning_opening_fleet name = fh_tungning_ship_5 }
+	create_character = {
+		template = fh_shi_jichang_admiral
+		save_scope_as = fh_tungning_opening_admiral
+	}
+	scope:fh_tungning_opening_admiral ?= {
+		transfer_to_formation = scope:fh_tungning_opening_fleet
+	}
 
 	# Match the vanilla starting allowance for fifteen ships and one shipyard.
 	add_supply_ships = 208

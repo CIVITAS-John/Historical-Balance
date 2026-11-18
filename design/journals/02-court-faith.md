@@ -2,6 +2,8 @@
 
 The Zheng court embraced Catholicism to secure Manila’s help. In 1836 Tungning is still officially Catholic and has Freedom of Conscience. The court can keep its Christian ties or return to an ancestral tradition.
 
+The opening audience introduces Xu Wenjing, a Catholic scholar descended from Xu Guangqi; Father Luo Jingde, who leads the Devout; and Samuel Talavan, who speaks for Sinkan’s Protestant congregations.
+
 ## Opening effects
 
 - **Conversions on hold:** Apply **−75% conversion speed** in Tungning’s states while the debate is open. Existing Catholic status alone does not ease the restriction.
@@ -45,14 +47,16 @@ Roll a **10%** chance each quarter to draw one eligible event, then start a shar
 
 | Event and trigger | +5 toward Christianity | −5 toward ancestral traditions |
 | --- | --- | --- |
-| **Mission-school dispute:** Freedom of Conscience and at least 3% Catholic population in Taiwan | Open mission classrooms (Taiwan education access +3 percentage points) | Fund classical tutors (Taiwan qualifications +3%) |
-| **A chaplain from Manila:** Active Manila Compact | Receive the chaplain (Taiwan trade advantage +3%) | Send a secular delegation (influence +3%) |
-| **The printing house:** A Taiwan university under either Freedom of Conscience or Total Separation | Print translations for the missions (technology spread +3%) | Print classical readers (Taiwan qualifications +3%) |
+| **Mission-school dispute:** Freedom of Conscience and at least 3% Catholic population in Taiwan. Luo petitions for classrooms; Xu argues that mission pupils should also study the classics. | Open mission classrooms (Taiwan education access +3 percentage points) | Fund classical tutors (Taiwan qualifications +3%) |
+| **A chaplain from Manila:** Active Manila Compact. Luo welcomes the visiting chaplain. | Receive the chaplain (Taiwan trade advantage +3%) | Send a secular delegation (influence +3%) |
+| **The printing house:** A Taiwan university under either Freedom of Conscience or Total Separation. Talavan brings Siraya readers to the university press; Xu makes the case for printing them. | Print translations for the missions (technology spread +3%) | Print classical readers (Taiwan qualifications +3%) |
 | **The academy’s appeal:** Governing Landowners or State Religion | Admit mission graduates to exams (Taiwan qualifications +3%) | Keep the classical examinations (bureaucracy +3%) |
 | **A temple school endowment:** At least 10% Mahayana Buddhist population in Taiwan | Invite missions to match the endowment (Taiwan education access +3 percentage points) | Recognize temple schools (Taiwan qualifications +3%) |
 | **The civil oath:** Total Separation | Permit a voluntary Christian blessing (influence +3%) | Permit voluntary ancestral rites (authority +3%) |
 
 Apply Taiwan conditions and modifiers to the state Tungning actually owns; skip local effects if it no longer owns a state there.
+
+Find the named speakers by their character templates, as in the opening audience. Use them only if they are alive and still in Tungning. If a speaker is unavailable, use an unnamed priest, scholar, or congregation delegate. The figures do not change event eligibility or count as nomination sponsors on their own.
 
 ## Settlement
 

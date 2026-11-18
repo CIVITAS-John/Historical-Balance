@@ -47,6 +47,16 @@ fh_tungning.2 = {
 
 	title = fh_tungning.2.t
 	desc = fh_tungning.2.d
+	flavor = {
+		triggered_desc = {
+			trigger = {
+				exists = scope:fh_xu_wenjing
+				exists = scope:fh_luo_jingde
+				exists = scope:fh_samuel_talavan
+			}
+			desc = fh_tungning.2.f
+		}
+	}
 
 	event_image = { video = "asia_farmers_market" }
 	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
@@ -54,6 +64,21 @@ fh_tungning.2 = {
 	trigger = {
 		c:TWG ?= this
 		has_variable = fh_tungning_bootstrapped
+	}
+
+	immediate = {
+		random_scope_character = {
+			limit = { has_template = fh_xu_wenjing_intelligentsia is_character_alive = yes }
+			save_scope_as = fh_xu_wenjing
+		}
+		random_scope_character = {
+			limit = { has_template = fh_luo_jingde_devout is_character_alive = yes }
+			save_scope_as = fh_luo_jingde
+		}
+		random_scope_character = {
+			limit = { has_template = fh_samuel_talavan_agitator is_character_alive = yes }
+			save_scope_as = fh_samuel_talavan
+		}
 	}
 
 	option = {

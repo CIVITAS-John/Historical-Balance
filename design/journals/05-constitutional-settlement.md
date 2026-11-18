@@ -70,7 +70,7 @@ For each route, maintain the listed ongoing requirements for six consecutive mon
 
 - **Requires:** Independence, Monarchy, the current mainland foothold, and legitimacy of at least 60.
 - **If a requirement is lost:** Pause the journal and reset the streak.
-- **Enthronement:** Enthrone the living Zhu claimant already selected, or use one scripted fictional claimant if none exists.
+- **Enthronement:** Prefer Zhu Yucheng, the starting Prince of Ningjing, if he is alive and still in Tungning. Identify him by the character variable `fh_tungning_ming_claimant` and recheck his eligibility at completion. Use one scripted Zhu cadet if he is unavailable.
 - **Effects:** Display **Southern Ming** and grant +10 prestige for five years. Transfer no land and leave the capital in place.
 
 ### A Mandate of Our Own — Zheng dynasty

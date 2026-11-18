@@ -7,6 +7,109 @@
 	culture = cu:min
 	religion = rel:catholic
 	interest_group = ig_landowners
+	ideology = ideology_royalist
+	home_region = STATE_FORMOSA
+}
+
+# Descendant of Chen Yonghua, who negotiated the withdrawal from Manila.
+fh_chen_zhaowen_petty_bourgeoisie = {
+	first_name = fh_chen_zhaowen
+	last_name = Chen
+	birth_date = 1795.8.14
+	ig_leader = yes
+	culture = cu:min
+	religion = rel:confucian
+	interest_group = ig_petty_bourgeoisie
+	ideology = ideology_reformer
+	home_region = STATE_FORMOSA
+	traits = { basic_diplomat }
+}
+
+# A fictional descendant of the Ming scholar and Catholic convert Xu Guangqi.
+fh_xu_wenjing_intelligentsia = {
+	first_name = fh_xu_wenjing
+	last_name = Xu
+	historical = yes
+	birth_date = 1793.4.10
+	ig_leader = yes
+	culture = cu:han
+	religion = rel:catholic
+	interest_group = ig_intelligentsia
+	ideology = ideology_reformer
+	home_region = STATE_FORMOSA
+	traits = { erudite }
+}
+
+# An Anping priest trained in Manila.
+fh_luo_jingde_devout = {
+	first_name = fh_luo_jingde
+	last_name = Luo
+	historical = yes
+	birth_date = 1786.9.20
+	ig_leader = yes
+	culture = cu:min
+	religion = rel:catholic
+	interest_group = ig_devout
+	ideology = ideology_moderate
+	home_region = STATE_FORMOSA
+	traits = { pious }
+}
+
+# A Siraya schoolmaster from Sinkan whose congregation kept the Reformed faith.
+fh_samuel_talavan_agitator = {
+	first_name = Samuel
+	last_name = fh_talavan
+	historical = yes
+	birth_date = 1800.2.18
+	role = character_role_agitator
+	culture = cu:yuanzhumin
+	religion = rel:protestant
+	interest_group = ig_intelligentsia
+	ideology = ideology_reformer
+	home_region = STATE_FORMOSA
+	traits = { literary }
+}
+
+# Descendant of Shi Lang, who stayed in Zheng service.
+fh_shi_jichang_admiral = {
+	first_name = fh_shi_jichang
+	last_name = Shi
+	birth_date = 1790.3.18
+	is_admiral = yes
+	culture = cu:min
+	religion = rel:catholic
+	interest_group = ig_armed_forces
+	ideology = ideology_royalist
+	home_region = STATE_FORMOSA
+	traits = { experienced_naval_commander }
+}
+
+# Descendant of Yang Ying, Koxinga's revenue and provisioning official.
+fh_yang_jingyuan_industrialists = {
+	first_name = fh_yang_jingyuan
+	last_name = Yang
+	birth_date = 1798.11.2
+	ig_leader = yes
+	culture = cu:min
+	religion = rel:catholic
+	interest_group = ig_industrialists
+	ideology = ideology_market_liberal
+	home_region = STATE_FORMOSA
+	traits = { meticulous }
+}
+
+# A fictional cadet of the Ming imperial house who holds Zhu Shugui's title.
+fh_zhu_yucheng_magnate = {
+	first_name = fh_zhu_yucheng
+	last_name = Zhu
+	birth_date = 1804.6.6
+	noble = yes
+	role = character_role_magnate
+	culture = cu:min
+	religion = rel:confucian
+	interest_group = ig_landowners
 	ideology = ideology_traditionalist
 	home_region = STATE_FORMOSA
+	holding_type = building_manor_house
+	on_created = { set_variable = fh_tungning_ming_claimant }
 }
