@@ -28,27 +28,28 @@ The objectives are **Fujian**, **Guangdong**, and **Zhejiang**. Check each Victo
   - −1 while Qing embargoes Tungning.
   - −1 while Qing has a cordial relationship with Tungning, or above.
   - −1 while Tungning uses at least 75% of its credit (`scaled_debt`).
-  - -1 while Tungning is at a war and is not with Qing.
-  - +1 while the Armed Forces is in government.
-  - +1 while a Jingoist leads any government groups.
+  - −1 while Tungning is at war and not fighting Qing.
+  - +1 while the Ming Estates are in government.
+  - +1 if the Army and Fleet are in government with a mainland-first leader; −1 with a southern-expedition leader; zero otherwise.
+  - +1 while a Jingoist leads another governing group. The Army and Fleet use only their own stance rule.
   - +1 while Qing is at a war.
   - +1 while Qing has a cold relationship with Tungning, or below.
 
 ### Court actions
 
-Both actions share a six-month cooldown. The starting government can use either while the embargo holds. If several groups qualify for an action, apply approval once to the named supporter.
+Both actions share a six-month cooldown. The starting government can use either while the embargo holds. For each action, use the first eligible sponsor below. Skip any approval effect if its target is absent.
 
 - **Read the Ming Memorials**
-  - **Requires:** Governing groups led by a Jingoist, Royalist, or Traditionalist.
+  - **Requires:** The governing Ming Estates, governing mainland-first Army and Fleet, or another governing group led by a Jingoist, Royalist, or Traditionalist (highest clout, fixed order on ties).
   - **Balance:** +12.
   - **Approval:** +2 for the supporter for six months.
-  - **Disapproval:**: -2 for the other side for six months.
+  - **Disapproval:** −2 for the Maritime Houses for six months.
   - **Modifier:** +5% military goods costs for six months.
 - **Hear the Strait Merchants**
-  - **Requires:** Governing Industrialists or Petite Bourgeoisie; any governing Pacifist or Market Liberal leader; or governing Landowners while Qing’s embargo is in force.
+  - **Requires:** The governing Maritime Houses, governing Petite Bourgeoisie, governing southern-expedition Army and Fleet, another governing group led by a Pacifist or Market Liberal (highest clout, fixed order on ties), or the governing Ming Estates while Qing’s embargo is in force.
   - **Balance:** −12.
   - **Approval:** +2 for the supporter for six months.
-  - **Disapproval:**: -2 for the other side for six months.
+  - **Disapproval:** −2 for the Ming Estates for six months; skip that penalty if they sponsored the action to protect their exports.
   - **Modifier:** +10% trade advantage in Taiwan for six months.
 
 ### Court events
@@ -59,7 +60,7 @@ Both actions share a six-month cooldown. The starting government can use either 
 1. Canton merchants sharing a favor
 2. Fujian officials proposes a deal
 3. Tongning merchants petitioning
-4. Young officers clamoring for action
+4. Young officers clamoring for action: a mainland-first leader asks for a Fujian expedition (+5 if heard); a southern-expedition leader asks to keep the squadron in the south (−5 if heard). Refusing moves the bar the other way. Skip this event under a neutral leader and recheck the stance when answered.
 5. Mainland refugees asking for liberation
 6. Ming royal family's petition
 
@@ -68,7 +69,7 @@ Both actions share a six-month cooldown. The starting government can use either 
 - Record `reclaim` and `mainland_settled` and close the journal.
 - Add Tungning claims on any of the three regions that do not already meet the foothold rule.
 - If Qing still exists, reduce relations by 60 points, down to the vanilla floor.
-- Open [The Return to the Mainland](06-mainland-reconquest.md#opening) and start [mobilization](06-mainland-reconquest.md#mobilization-after-reassertion) once, including when a foothold prompted the decision. Give the Armed Forces and Landowners +5 approval and the Industrialists −5; boost army and navy combat readiness and reduce investment pool contributions by 50% for the duration.
+- Open [The Return to the Mainland](06-mainland-reconquest.md#opening) and start [mobilization](06-mainland-reconquest.md#mobilization-after-reassertion) once, including when a foothold prompted the decision. Give the Ming Estates +5 approval and the Maritime Houses −5. Give the Army and Fleet +5 under a mainland-first leader, −2 under a southern-expedition leader, or no approval change under a neutral leader. Boost army and navy combat readiness and reduce investment pool contributions by 50% for the duration.
 - Unlock [Press the Mainland Claims](06-mainland-reconquest.md#decision-press-the-mainland-claims) to pursue the outstanding coastal claims.
 - When mobilization ends, unlock the constitutional debate. Reassertion makes the Ming route possible; it does not choose a dynasty.
 
@@ -87,7 +88,7 @@ Both actions share a six-month cooldown. The starting government can use either 
 
 - On ratification, refusal, expiry, or an unavailable deal, record `renounce` and `mainland_settled` and close the journal. A canceled offer due to reconquest does not count as renunciation.
 - Remove Tungning’s claims on Fujian, Guangdong, and Zhejiang.
-- For three years, give the Industrialists +2 approval and the Armed Forces −2.
+- For three years, give the Maritime Houses +2 approval. Give the Army and Fleet −2 under a mainland-first leader, +2 under a southern-expedition leader, or no approval change under a neutral leader. Read the stance at the decision; succession does not rewrite effects already granted.
 - Unlock the constitutional debate with the Ming track permanently closed.
 - On refusal, expiry, or failure to agree, record the reason and leave existing diplomacy intact.
 - **Taiping abandonment:** Use the same domestic outcome without making another Qing offer. Also permanently close the scripted foothold, reunification, and Taiping-aid routes. This leaves ordinary diplomacy and war goals available.

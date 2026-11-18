@@ -2,6 +2,8 @@
 
 Dutch merchants and naval stations threaten Tungning’s route to West Borneo and its southern tributaries. Tungning can buy time for its fleet or force the Dutch to yield in a diplomatic play.
 
+The Maritime Houses want to protect their southern concessions and win new outlets. They prefer funded escorts and a naval demonstration that keeps cargo moving. Southern-expedition officers want the fleet to contest the Dutch openly; mainland-first officers object to committing ships needed across the strait.
+
 ## Opening
 
 - **Entry:** `fh_je_southern_passage`. Open after the day-eight diplomacy retry if Tungning still holds at least one of the grants below and there is a Dutch rival.
@@ -28,8 +30,8 @@ At **100 pressure** or the **fifth anniversary**, check for success before conce
 
 ## Actions
 
-- **Fund the Convoys:** Spend 5% of the gold reserve cap from cash to remove 12 pressure. Requires enough cash and has a 12-month cooldown. The purchase cannot move the deadline.
-- **Challenge the Dutch:** Requires an active interest in Indonesia, no default, and naval projection at least as high as the Dutch comparison and at least 120% of Tungning’s opening projection. Once per journal, reduce relations with the rival by 20 and start the naval demonstration. For one year, give the Armed Forces +2 approval and the Industrialists −2, and raise military goods costs by 5%.
+- **Fund the Convoys:** Spend 5% of the gold reserve cap from cash to remove 12 pressure and give the Maritime Houses +2 approval for six months. Requires enough cash and has a 12-month cooldown. The purchase cannot move the deadline.
+- **Challenge the Dutch:** Requires an active interest in Indonesia, no default, and naval projection at least as high as the Dutch comparison and at least 120% of Tungning’s opening projection. Once per journal, reduce relations with the rival by 20 and start the naval demonstration. For one year, give the Maritime Houses −2 approval for risking trade and the Army and Fleet +2 under a southern-expedition leader, −2 under a mainland-first leader, or zero under a neutral leader. Raise military goods costs by 5%.
 
 ## Events
 
@@ -38,7 +40,7 @@ Each quarter, roll a 10% chance to draw one eligible event. Start a shared 12-mo
 | Event | Eligible while | Choices |
 | --- | --- | --- |
 | Merchants ask for escorts | Tungning still owns a tracked Lanfang parcel | Escort the ships (−5 pressure, +5% military goods costs) or leave the merchants to arrange their own passage (+5 pressure, +5% trade advantage in Tungning’s West Borneo state). |
-| Dutch fleet called away | The rival or its Dutch overlord is fighting in another war | Use the opening (−5 pressure, +5% military goods costs) or keep ships on their usual routes (+5 pressure, +2 Industrialist approval). |
+| Dutch fleet called away | The rival or its Dutch overlord is fighting in another war | Use the opening (−5 pressure, +5% military goods costs) or keep ships on their usual routes (+5 pressure, +2 Maritime Houses approval). |
 
 Event modifiers last six months. Recheck eligibility when the event is answered.
 
@@ -50,7 +52,7 @@ Event modifiers last six months. Recheck eligibility when the event is answered.
 
 ## Outcomes
 
-- **Secure:** Keep the remaining holdings and gain +10 prestige for five years. Tungning’s West Borneo state gains +5% trade advantage for five years if still held.
+- **Secure:** Keep the remaining holdings and gain +10 prestige for five years. Tungning’s West Borneo state gains +5% trade advantage for five years if still held. Record the grants actually kept at victory for the [Zheng mandate](05-constitutional-settlement.md#zheng-dynasty); it checks current ownership or direct overlordship afterward.
 - **Concede:** Recheck the rival and holdings. Release recorded courts still held as direct tributaries as independent countries. Transfer only recorded parcels Tungning still owns to the qualifying rival.
 - **Close without concessions:** If Tungning loses all opening holdings, or no Dutch rival still qualifies, close without further penalties or rewards.
 
@@ -59,6 +61,6 @@ Surviving holdings become eligible for [the Southern Compact](07-reunification-o
 ## AI and static checks
 
 - Prioritize building enough naval strength to challenge. Fund convoys when they can buy enough time for a realistic demonstration. Challenge when the fleet can sustain it and the treasury can absorb the cost.
-- Favor a legal territorial play when the Dutch side is busy elsewhere and Tungning can contest the likely opponents. Keep normal war costs and eligibility. Becoming Qing’s tributary may limit the war route; it does not trigger concessions or block the demonstration.
+- Favor a legal territorial play when the Dutch side is busy elsewhere and Tungning can contest the likely opponents. A governing southern-expedition leader increases the AI’s preference for a challenge or play; a mainland-first leader favors convoys if mobilizing across the strait. Keep normal war costs and eligibility. Becoming Qing’s tributary may limit the war route; it does not trigger concessions or block the demonstration.
 - Trace changes in pressure and rival, partial loss, loss of all holdings, a tributary changing overlord, and a conflict continuing past the deadline. Check that only an enforced qualifying goal wins.
 - Setup: `common/scripted_effects/fh_tungning_diplomacy.txt` and `common/scripted_effects/fh_tungning_setup.txt`. Vanilla: `common/journal_entries/02_brazil_navy.txt` (projection), `common/on_actions/00_code_on_actions.txt` (enforced goals), and `common/scripted_effects/00_chris_scripted_effects.txt` (province transfers).
