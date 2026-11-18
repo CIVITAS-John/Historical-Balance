@@ -15,47 +15,65 @@ The objectives are **Fujian**, **Guangdong**, and **Zhejiang**. Check each Victo
 
 ## Court balance
 
-- **Entry:** `fh_je_mainland_claim`, starting at **45/100**.
-- **Endpoints:** **0** opens renunciation; **100** reasserts the claim. Check after every point change. The AI uses the same rules.
-- **Deadline:** On the fifth anniversary, choose the nearer endpoint. A tie goes to renunciation. The deadline still applies if court actions keep the bar near the middle.
+- **Entry:** `fh_je_mainland_claim`, starting at **90/200**.
+- **Endpoints:** **0** opens renunciation; **200** reasserts the claim. Check after every point change. The AI uses the same rules.
+- **Deadline:** On the 10th anniversary, choose the nearer endpoint. A tie goes to renunciation. The deadline still applies if court actions keep the bar near the middle.
 - **Monthly drift:**
   - −1 while Qing embargoes Tungning.
+  - −1 while Qing has a cordial relationship with Tungning, or above.
   - −1 while Tungning uses at least 75% of its credit (`scaled_debt`).
-  - +1 while a Jingoist leads the Armed Forces and they are in government.
+  - -1 while Tungning is at a war and is not with Qing.
+  - +1 while the Armed Forces is in government.
+  - +1 while a Jingoist leads any government groups.
+  - +1 while Qing is at a war.
+  - +1 while Qing has a cold relationship with Tungning, or below.
 
 ### Court actions
 
 Both actions share a six-month cooldown. The starting government can use either while the embargo holds. If several groups qualify for an action, apply approval once to the named supporter.
 
 - **Read the Ming Memorials**
-  - **Requires:** Governing Landowners under Monarchy, or governing Armed Forces led by a Jingoist or Royalist.
+  - **Requires:** Governing groups led by a Jingoist, Royalist, or Traditionalist.
   - **Balance:** +12.
   - **Approval:** +2 for the supporter for six months.
-  - **Modifier:** +5% naval goods costs for six months.
+  - **Disapproval:**: -2 for the other side for six months.
+  - **Modifier:** +5% military goods costs for six months.
 - **Hear the Strait Merchants**
   - **Requires:** Governing Industrialists or Petite Bourgeoisie; any governing Pacifist or Market Liberal leader; or governing Landowners while Qing’s embargo is in force.
   - **Balance:** −12.
   - **Approval:** +2 for the supporter for six months.
-  - **Modifier:** +5% trade capacity in Taiwan for six months.
+  - **Disapproval:**: -2 for the other side for six months.
+  - **Modifier:** +10% trade advantage in Taiwan for six months.
 
 ### Court events
 
-- **Roll:** Each quarter, a 20% chance to draw one eligible event.
-- **Merchant petition:** Qing’s embargo is in force and Tungning uses more than 75% of its credit.
-- **Retired officers’ petition:** The fleet has grown by at least two warships.
-- **Refugee memorial:** Qing-controlled Fujian has at least 15% turmoil.
-- **Effects:** Each event offers a choice between +4 and −4 and starts a 12-month event cooldown.
-- **Expiry:** An unanswered event has no effect. Once a stance is chosen or a Qing offer is pending, outstanding court events cannot change the balance.
+- **Roll:** Each quarter, a 10% chance to draw one eligible event.
+- **Effects:** Each event offers a choice between +5 and 5, with a minor timed modifiers, and starts a 12-month event cooldown.
+
+1. Canton merchants sharing a favor
+2. Fujian officials proposes a deal
+3. Tongning merchants petitioning
+4. Young officers clamoring for action
+5. Mainland refugees asking for liberation
+6. Ming royal family's petition
 
 ## Reassert the claim
 
 - Record `reclaim` and `mainland_settled` and close the journal.
 - Add Tungning claims on any of the three regions that do not already meet the foothold rule.
 - If Qing still exists, reduce relations by 60 points, down to the vanilla floor.
-- For three years, give the Armed Forces and Landowners +2 approval and the Industrialists −2.
-- Leave the embargo in place. Start no war.
-- Unlock the constitutional debate. Reassertion makes the Ming route possible; it does not choose a dynasty.
+- Should change AI strategy to build more military.
+- For three years:
+  - Give the Armed Forces and Landowners +5 approval and the Industrialists -5.
+  - Boost land offense, defense, morale recovery, while making investment pool -50%.
+  - The modifier stops once the Qing war is started and completed.
+  - If the modifier stops without a Qing war happened, add a negative event with timed modifiers.
+- Once the modifier is gone:
+  - Unlock the constitutional debate. Reassertion makes the Ming route possible; it does not choose a dynasty.
+- Enables a decision to declare war on Qing for the three provinces without infamy.
+  - AI should use it when Qing is at war or has significant internal turmoil, plus when it has army.
 - If a foothold prompted the decision, open the reconquest journal in the same check.
+  - Add the timed modifier.
 
 ## Renounce the claim
 
