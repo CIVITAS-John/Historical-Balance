@@ -1,68 +1,61 @@
 # The Southern Passage
 
-Dutch merchants and naval stations threaten Tungning’s southern routes. If the kingdom cannot protect them, it may lose the holdings the routes serve.
+Dutch merchants and naval stations threaten Tungning’s route to West Borneo and its southern tributaries. Tungning can buy time for its fleet or force the Dutch to yield in a diplomatic play.
 
-## Opening and holdings
+## Opening
 
-- **Entry:** `fh_je_southern_passage`.
-- **Requires:** After the day-eight diplomacy retry, a Dutch rival and at least one opening holding.
-- **Tributaries:** Record only Sintang, Selangor, and Bulungan that the setup granted and that remain direct Tungning subjects.
-- **Parcels:** Record only the original Lanfang parcels that the setup acquired: `x1C7417`, `x2A3D46`, and `xE02CB6`.
-- **Rival:** Track the Dutch East Indies (`DEI`). If it disappears, substitute the Netherlands only if it now owns land in West Java.
-- **Tracking:** Record which holdings setup actually granted, then keep that list fixed. If neither Dutch country qualifies, close without concessions or a victory reward.
+- **Entry:** `fh_je_southern_passage`. Open after the day-eight diplomacy retry if Tungning still holds at least one of the grants below and there is a Dutch rival.
+- **Holdings:** Record only grants made by the opening setup that Tungning still holds: Sintang, Selangor, and Bulungan as direct tributaries, and the Lanfang parcels `x1C7417`, `x2A3D46`, and `xE02CB6`. Keep that list fixed.
+- **Rival:** Track the Dutch East Indies (`DEI`). If it ceases to exist, switch to the Netherlands only if it owns land in West Java. If neither qualifies, close without concessions or a victory reward.
 
 ## Dutch pressure
 
-- **Starting pressure:** 10/100. Notify the player at 50 and 75.
-- **Monthly drift:** +2 normally, +1 if the Dutch side has higher effective naval projection, and +1 if Tungning is in default.
-- **Dutch projection:** Use the DEI’s naval power projection. If the Netherlands is its overlord, use the higher of the DEI’s projection and 25% of the Netherlands’ projection. If the Netherlands is the rival directly, use 25% of its projection.
-- **Tungning projection:** Record its opening naval power projection for the challenge.
-- **Deadline:** At 100 pressure or the fifth anniversary, concede unless a success condition or the active conflict hold applies. The deadline still applies below 100.
+Start at **10/100** and warn at **50** and **75**. Apply monthly changes together and keep pressure between 0 and 100.
+
+| Monthly change | Condition |
+| --- | --- |
+| +1 | Ongoing Dutch pressure |
+| +1 | Effective Dutch naval projection exceeds Tungning’s |
+| +1 | Tungning is in default or uses at least 75% of its credit |
+| +1 | The tracked rival embargoes Tungning |
+| −1 | Relations with the tracked rival are at least +20 |
+| −1 | The rival or its Dutch overlord is fighting in another war; count this once |
+
+Use the DEI’s naval power projection, or 25% of the Netherlands’ if that is higher and the Netherlands is its overlord. When the Netherlands is the rival directly, use 25% of its projection. Record Tungning’s opening projection for the challenge.
+
+At **100 pressure** or the **fifth anniversary**, check for success before concessions. Reaching zero buys breathing room. The deadline still applies.
 
 ## Actions
 
-- **Fund the Convoys**
-  - **Requires:** At least 5% of the gold reserve cap in cash, and no active cooldown.
-  - **Cost:** Spend 5% of the gold reserve cap from cash.
-  - **Effects:** Reduce pressure by 12 and start a 12-month cooldown. The deadline stays in place. Tell the player this buys time without securing the passage.
-- **Challenge the Dutch**
-  - **Requires:** An active interest in Indonesia, no default, and naval projection at least as high as the Dutch comparison and at least 120% of Tungning’s opening projection.
-  - **Effects:** Reduce relations with the local rival by 20 once and unlock the naval demonstration.
+- **Fund the Convoys:** Spend 5% of the gold reserve cap from cash to remove 12 pressure. Requires enough cash and has a 12-month cooldown. The purchase cannot move the deadline.
+- **Challenge the Dutch:** Requires an active interest in Indonesia, no default, and naval projection at least as high as the Dutch comparison and at least 120% of Tungning’s opening projection. Once per journal, reduce relations with the rival by 20 and start the naval demonstration. For one year, give the Armed Forces +2 approval and the Industrialists −2, and raise military goods costs by 5%.
+
+## Events
+
+Each quarter, roll a 10% chance to draw one eligible event. Start a shared 12-month event cooldown on draw. Ignore unanswered events and any response once a conflict hold begins or the journal closes.
+
+| Event | Eligible while | Choices |
+| --- | --- | --- |
+| Merchants ask for escorts | Tungning still owns a tracked Lanfang parcel | Escort the ships (−5 pressure, +5% military goods costs) or leave the merchants to arrange their own passage (+5 pressure, +5% trade advantage in Tungning’s West Borneo state). |
+| Dutch fleet called away | The rival or its Dutch overlord is fighting in another war | Use the opening (−5 pressure, +5% military goods costs) or keep ships on their usual routes (+5 pressure, +2 Industrialist approval). |
+
+Event modifiers last six months. Recheck eligibility when the event is answered.
 
 ## Ways to secure the passage
 
-- **Naval demonstration**
-  - After declaring the challenge, meet its interest, projection, and fiscal requirements at 12 consecutive monthly checks.
-  - Losing an opening holding after the challenge begins resets the streak. At least one holding must survive.
-- **Enforced war goal**
-  - Tungning must press and enforce a native war goal against the tracked rival or its Dutch overlord.
-  - The goal must transfer a state held by that rival in Indonesia or compel recognition of Tungning’s independence, where the goal is legal.
-  - The challenge button is optional for this route. An unrelated victory or white peace does not count.
-- **Active conflict hold**
-  - At the deadline or 100 pressure, defer concessions only if Tungning and the tracked Dutch side are already opponents in a diplomatic play or war.
-  - Record that specific play and reassess when it ends. A qualifying enforced goal can still win.
-  - A new play, challenge, or convoy purchase cannot extend the hold.
+- **Naval demonstration:** After the challenge, meet its interest, projection, and default checks at 12 consecutive monthly checks. A lost opening holding resets the streak. At least one holding must survive.
+- **Enforced goal:** Tungning must enforce a native goal that wins a state held by the tracked rival in Indonesia or enforces Tungning’s independence from the tracked Dutch side if it is Tungning’s direct overlord. The challenge is optional. White peace and victories over unrelated targets do not count.
+- **Conflict at the deadline:** If Tungning and the tracked Dutch side are already opponents in a play or war when concessions would fall due, wait for that specific conflict. During the hold, only a qualifying enforced goal can win. Stop pressure changes and the demonstration, and suspend actions. No later play extends the hold.
 
 ## Outcomes
 
-### Secure the passage
-
-- Keep the remaining holdings.
-- Gain +10 prestige for five years.
-- Gain +5% trade capacity in Tungning’s West Borneo state for five years, if still held.
-- Grant no new territory, subjects, or guarantees.
-
-### Concede the passage
-
-- If all tracked holdings are already gone, close as already lost with no additional penalty.
-- Recheck the Dutch rival before applying concessions. If it no longer qualifies, close without forfeiture.
-- Release only tracked courts that are still direct Tungning tributaries. Do not make them Dutch subjects by script.
-- Transfer only tracked Lanfang parcels that Tungning still owns to the qualifying Dutch rival, one at a time.
+- **Secure:** Keep the remaining holdings and gain +10 prestige for five years. Tungning’s West Borneo state gains +5% trade advantage for five years if still held.
+- **Concede:** Recheck the rival and holdings. Release recorded courts still held as direct tributaries as independent countries. Transfer only recorded parcels Tungning still owns to the qualifying rival.
+- **Close without concessions:** If Tungning loses all opening holdings, or no Dutch rival still qualifies, close without further penalties or rewards.
 
 ## AI and static checks
 
-- Qing tributary status does not trigger loss. Native subject rules may limit war choices; the naval demonstration remains available.
-- The AI challenges when it can afford to. It funds convoys only when they can buy enough time for an achievable demonstration.
-- Verify no opening holdings, a switch from the DEI to direct Dutch rule, partial cession, a subject that has changed overlord, and an enforced goal versus an unrelated victory.
-- Setup references: `common/scripted_effects/fh_tungning_diplomacy.txt` and `common/scripted_effects/fh_tungning_setup.txt`.
-- Vanilla references: `common/journal_entries/02_brazil_navy.txt` (naval projection), `common/on_actions/00_code_on_actions.txt` (enforced war goals), and `common/scripted_effects/00_chris_scripted_effects.txt` (individual province cession).
+- Prioritize building enough naval strength to challenge. Fund convoys when they can buy enough time for a realistic demonstration. Challenge when the fleet can sustain it and the treasury can absorb the cost.
+- Favor a legal territorial play when the Dutch side is busy elsewhere and Tungning can contest the likely opponents. Keep normal war costs and eligibility. Becoming Qing’s tributary may limit the war route; it does not trigger concessions or block the demonstration.
+- Trace changes in pressure and rival, partial loss, loss of all holdings, a tributary changing overlord, and a conflict continuing past the deadline. Check that only an enforced qualifying goal wins.
+- Setup: `common/scripted_effects/fh_tungning_diplomacy.txt` and `common/scripted_effects/fh_tungning_setup.txt`. Vanilla: `common/journal_entries/02_brazil_navy.txt` (projection), `common/on_actions/00_code_on_actions.txt` (enforced goals), and `common/scripted_effects/00_chris_scripted_effects.txt` (province transfers).
