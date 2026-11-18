@@ -37,6 +37,7 @@ Event modifiers last six months. An event cannot sign an agreement, grant territ
 ## Outcomes, AI, and static checks
 
 - **Success:** Grant +10 prestige for five years and recap direct rule or rule through Manila. On expiry, close without a territorial penalty. End any journal preparations when the entry closes.
+- **Later rule:** Philippine holdings still under Tungning become eligible for [the Southern Compact](07-reunification-of-china.md#the-home-and-southern-settlements) once this journal closes.
 - **AI:** Start with envoys or legal agreements when relations make cooperation plausible. Consider a play when Manila is distracted by war or turmoil, Tungning can field land and naval forces, and likely third-party intervention is manageable. Recheck interests, eligibility, finances, and existing diplomacy before committing. Other journals do not gate Manila.
 - **Display:** Show deadline, progress toward each route, and concrete blockers such as rank, missing interests, subject restrictions, or a third-party overlord.
 - **Verify:** Spanish rule, independent Manila, a third-party handover, renewed Spanish authority, expired preparations, successful submission, and conquest that extinguishes `PHI`.

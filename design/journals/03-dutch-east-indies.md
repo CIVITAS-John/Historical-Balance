@@ -54,6 +54,8 @@ Event modifiers last six months. Recheck eligibility when the event is answered.
 - **Concede:** Recheck the rival and holdings. Release recorded courts still held as direct tributaries as independent countries. Transfer only recorded parcels Tungning still owns to the qualifying rival.
 - **Close without concessions:** If Tungning loses all opening holdings, or no Dutch rival still qualifies, close without further penalties or rewards.
 
+Surviving holdings become eligible for [the Southern Compact](07-reunification-of-china.md#the-home-and-southern-settlements) once this dispute ends. The compact does not revisit concessions or return lost holdings.
+
 ## AI and static checks
 
 - Prioritize building enough naval strength to challenge. Fund convoys when they can buy enough time for a realistic demonstration. Challenge when the fleet can sustain it and the treasury can absorb the cost.

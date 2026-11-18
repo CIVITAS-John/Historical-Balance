@@ -5,7 +5,7 @@ Once the mainland settlement is complete, the court can build a mandate for a re
 ## Opening
 
 - **Entry:** `fh_je_constitutional_settlement`.
-- **Requires:** Final renunciation, with or without a Qing deal, or reassertion followed by the [end of mobilization](06-mainland-reconquest.md#mobilization-after-reassertion). Neither a pending Qing offer nor an active mobilization opens the debate.
+- **Requires:** Final renunciation, including abandonment at the Taiping fork, or reassertion followed by the [end of mobilization](06-mainland-reconquest.md#mobilization-after-reassertion). A pending Qing offer, an unanswered Taiping fork, or an active mobilization keeps the debate closed.
 - **Display:** Show all three bars. After final renunciation, show the Ming bar at zero and explain the permanent lock.
 - **Subjects:** The Republic and Zheng routes are available to a Qing tributary. A constitutional change does not end the relationship or remove other subject restrictions.
 - **Opening effect:** The rival mandates give Tungning **−5 base legitimacy** while the debate is open. Remove the penalty on ratification, before checking the follow-up’s legitimacy requirement.
@@ -71,7 +71,7 @@ For each route, maintain the listed ongoing requirements for six consecutive mon
 - **Requires:** Independence, Monarchy, the current mainland foothold, and legitimacy of at least 60.
 - **If a requirement is lost:** Pause the journal and reset the streak.
 - **Enthronement:** Prefer Zhu Yucheng, the starting Prince of Ningjing, if he is alive and still in Tungning. Identify him by the character variable `fh_tungning_ming_claimant` and recheck his eligibility at completion. Use one scripted Zhu cadet if he is unavailable.
-- **Effects:** Display **Southern Ming** and grant +10 prestige for five years. Transfer no land and leave the capital in place.
+- **Effects:** Display **Southern Ming** and grant +10 prestige for five years. Transfer no land. The [separate capital audiences](07-reunification-of-china.md#where-the-government-sits) determine where the court sits.
 
 ### A Mandate of Our Own — Zheng dynasty
 

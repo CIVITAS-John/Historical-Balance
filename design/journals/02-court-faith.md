@@ -64,6 +64,8 @@ Adopt the winning side’s latest nomination. Without one, keep the current stat
 
 The court changes the official faith once. It does not change laws, directly convert Pops, or rewrite treaties. Apply approval and domestic effects for three years, using interest group leaders as they were before the change. Apply relations once to each surviving partner.
 
+[Taiping negotiations](08-taiping-rebellion.md#bargain-with-the-heavenly-kingdom) use the current official faith even while this debate is open. A nomination has no diplomatic effect before settlement.
+
 | Faith | Approval | Domestic effect | Relations with Spain and the Philippines |
 | --- | --- | --- | --- |
 | Catholic (`rel:catholic`) | Catholic Devout +2 | Taiwan: +5% trade advantage | +10 each |
