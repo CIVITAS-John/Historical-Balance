@@ -23,6 +23,8 @@ Start at **10/100** and warn at **50** and **75**. Apply monthly changes togethe
 | +1 | The tracked rival embargoes Tungning |
 | −1 | Relations with the tracked rival are at least +20 |
 | −1 | The rival or its Dutch overlord is fighting in another war; count this once |
+| −1 | The Tungning trade center at West Borneo is higher than any of Dutch East Indies' |
+| −1 | Tungning has a defense pact is guaranteed independence by Britain or East India Company |
 
 Use the DEI’s naval power projection, or 25% of the Netherlands’ if that is higher and the Netherlands is its overlord. When the Netherlands is the rival directly, use 25% of its projection. Record Tungning’s opening projection for the challenge.
 
@@ -30,8 +32,8 @@ At **100 pressure** or the **fifth anniversary**, check for success before conce
 
 ## Actions
 
-- **Fund the Convoys:** Spend 5% of the gold reserve cap from cash to remove 12 pressure and give the Maritime Houses +2 approval for six months. Requires enough cash and has a 12-month cooldown. The purchase cannot move the deadline.
-- **Challenge the Dutch:** Requires an active interest in Indonesia, no default, and naval projection at least as high as the Dutch comparison and at least 120% of Tungning’s opening projection. Once per journal, reduce relations with the rival by 20 and start the naval demonstration. For one year, give the Maritime Houses −2 approval for risking trade and the Army and Fleet +2 under a southern-expedition leader, −2 under a mainland-first leader, or zero under a neutral leader. Raise military goods costs by 5%.
+- **Policy Challenge:** <!-- -12 pressure with 12mo cooldown. -100% export tariff, +2 maritime approval for 12 months -->
+- **Military Challenge:** Requires an active interest in Indonesia, no default, and naval projection at least as high as the Dutch comparison and at least 120% of Tungning’s opening projection. Once per journal, reduce relations with the rival by 20 and start the naval demonstration. For one year, give the Maritime Houses −2 approval for risking trade and the Army and Fleet +2 under a southern-expedition leader, −2 under a mainland-first leader, or zero under a neutral leader. During the demonstration, raise naval goods costs by 25%.
 
 ## Events
 
@@ -46,14 +48,14 @@ Event modifiers last six months. Recheck eligibility when the event is answered.
 
 ## Ways to secure the passage
 
-- **Naval demonstration:** After the challenge, meet its interest, projection, and default checks at 12 consecutive monthly checks. A lost opening holding resets the streak. At least one holding must survive.
-- **Enforced goal:** Tungning must enforce a native goal that wins a state held by the tracked rival in Indonesia or enforces Tungning’s independence from the tracked Dutch side if it is Tungning’s direct overlord. The challenge is optional. White peace and victories over unrelated targets do not count.
+- **Naval demonstration:** After the challenge, meet its interest, projection, and default checks at 24 consecutive monthly checks. A lost opening holding resets the streak. At least one holding must survive.
+- **Enforced goal:** Tungning must enforce a native goal that wins a state held by the tracked rival, or humiliation, in Indonesia. The challenge is optional. White peace and victories over unrelated targets do not count.
 - **Conflict at the deadline:** If Tungning and the tracked Dutch side are already opponents in a play or war when concessions would fall due, wait for that specific conflict. During the hold, only a qualifying enforced goal can win. Stop pressure changes and the demonstration, and suspend actions. No later play extends the hold.
 
 ## Outcomes
 
 - **Secure:** Keep the remaining holdings and gain +10 prestige for five years. Tungning’s West Borneo state gains +5% trade advantage for five years if still held. Record the grants actually kept at victory for the [Zheng mandate](05-constitutional-settlement.md#zheng-dynasty); it checks current ownership or direct overlordship afterward.
-- **Concede:** Recheck the rival and holdings. Release recorded courts still held as direct tributaries as independent countries. Transfer only recorded parcels Tungning still owns to the qualifying rival.
+- **Concede:** Recheck the rival and holdings. Transfer SEA holdings, tributaries, vassals to DEI. Transfer only recorded parcels Tungning still owns to the qualifying rival.
 - **Close without concessions:** If Tungning loses all opening holdings, or no Dutch rival still qualifies, close without further penalties or rewards.
 
 Surviving holdings become eligible for [the Southern Compact](07-reunification-of-china.md#the-home-and-southern-settlements) once this dispute ends. The compact does not revisit concessions or return lost holdings.

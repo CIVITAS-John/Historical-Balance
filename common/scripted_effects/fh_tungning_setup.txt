@@ -153,7 +153,7 @@ fh_tungning_formosa_setup = {
 	create_building = { building = building_silk_plantation level = 1 reserves = 1 }
 	create_building = {
 		building = building_glassworks
-		level = 1
+		level = 2
 		reserves = 1
 		activate_production_methods = { "pm_forest_glass" "pm_ceramics" "pm_manual_glassblowing" }
 	}
@@ -166,6 +166,18 @@ fh_tungning_formosa_setup = {
 	}
 	create_building = { building = building_shipyard level = 1 reserves = 1 }
 	create_building = { building = building_arms_industry level = 1 reserves = 1 }
+	create_building = {
+		building = building_tooling_workshop
+		level = 1
+		reserves = 1
+		activate_production_methods = { "pm_crude_tools" }
+	}
+	create_building = {
+		building = building_artillery_foundry
+		level = 1
+		reserves = 1
+		activate_production_methods = { "pm_cannons" }
+	}
 	create_building = {
 		building = building_textile_mill
 		add_ownership = {
@@ -181,7 +193,18 @@ fh_tungning_formosa_setup = {
 		reserves = 1
 		activate_production_methods = { "pm_trade_center" "pm_trade_center_trade_quantity_normal" }
 	}
-	create_building = { building = building_logging_camp level = 1 reserves = 1 }
+	create_building = {
+		building = building_logging_camp
+		level = 2
+		reserves = 1
+		activate_production_methods = { "pm_saw_mills" "pm_hardwood" }
+	}
+	create_building = {
+		building = building_coal_mine
+		level = 1
+		reserves = 1
+		activate_production_methods = { "pm_picks_and_shovels_building_coal_mine" }
+	}
 	create_building = { building = building_university level = 1 reserves = 1 }
 	create_building = { building = building_government_administration level = 2 reserves = 1 }
 	create_building = {

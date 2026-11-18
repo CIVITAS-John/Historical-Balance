@@ -1,6 +1,7 @@
 ﻿# Invoked once in Tungning scope, after the vanilla bookmark is initialized.
 fh_tungning_diplomacy = {
 	fh_tungning_tributary_pacts = yes
+	fh_tungning_hue_supply_accord = yes
 
 	if = {
 		limit = { c:DEI ?= { is_country_alive = yes } }
@@ -69,12 +70,97 @@ fh_tungning_diplomacy = {
 # Ownership and treaty checks prevent duplicating the initial setup.
 fh_tungning_diplomacy_retry = {
 	fh_tungning_tributary_pacts = yes
+	fh_tungning_hue_supply_accord = yes
 	fh_tungning_busan_lease = yes
 	p:xC3F34F.state ?= {
 		if = {
 			limit = { owner = c:TWG }
 			fh_tungning_busan_market = yes
 			fh_tungning_busan_trade_facilities = yes
+		}
+	}
+}
+
+fh_tungning_hue_supply_accord = {
+	if = {
+		limit = {
+			NOT = { has_variable = fh_tungning_hue_accord_signed }
+			c:DAI ?= {
+				is_country_alive = yes
+				is_junior_in_customs_union = no
+				has_port_country = yes
+				country_has_isolationism = no
+				market.owner = c:DAI
+			}
+			is_junior_in_customs_union = no
+			has_port_country = yes
+			country_has_isolationism = no
+			market.owner = c:TWG
+			is_market_reachable_for_trade = c:DAI.market
+			OR = {
+				supply_network_strength >= 0.75
+				is_adjacent_to_country = c:DAI
+			}
+			NOT = {
+				any_scope_treaty = {
+					binds = c:DAI
+					any_scope_article = { has_type = trade_privilege source_country = c:DAI }
+				}
+			}
+		}
+		ordered_scope_fleet = {
+			order_by = num_ships
+			position = 0
+			check_range_bounds = no
+			save_scope_as = fh_hue_export_fleet
+		}
+		if = {
+			limit = { exists = scope:fh_hue_export_fleet }
+			create_treaty = {
+				name = fh_tungning_treaty_hue_supply
+				first_country = c:DAI
+				second_country = c:TWG
+				is_draft = no
+				binding_period = { years = 5 }
+				articles_to_create = {
+					{ article = trade_privilege source_country = c:DAI target_country = c:TWG }
+					{
+						article = goods_transfer
+						source_country = c:TWG
+						target_country = c:DAI
+						inputs = { { goods = g:artillery } { quantity = 5 } }
+					}
+				}
+			}
+			if = {
+				limit = {
+					any_scope_treaty = {
+						binds = c:DAI
+						any_scope_article = { has_type = trade_privilege source_country = c:DAI }
+						any_scope_article = {
+							has_type = goods_transfer
+							source_country = c:TWG
+							input_goods = g:artillery
+						}
+					}
+				}
+				set_variable = fh_tungning_hue_accord_signed
+				# Deliver ships built for export without taking them from the starting fleet.
+				create_ship = {
+					type = ship_type:ship_type_frigate
+					fleet = scope:fh_hue_export_fleet
+					name = fh_hue_frigate_1
+					save_scope_as = fh_hue_frigate_1
+				}
+				create_ship = {
+					type = ship_type:ship_type_frigate
+					fleet = scope:fh_hue_export_fleet
+					name = fh_hue_frigate_2
+					save_scope_as = fh_hue_frigate_2
+				}
+				scope:fh_hue_frigate_1 ?= { set_ship_owner_multiple = c:DAI }
+				scope:fh_hue_frigate_2 ?= { set_ship_owner_multiple = c:DAI }
+			}
 		}
 	}
 }
@@ -138,6 +224,12 @@ fh_tungning_manila_compact = {
 				{ article = trade_privilege source_country = c:TWG target_country = c:SPA }
 				{ article = foreign_investment_rights source_country = c:TWG target_country = c:SPA }
 				{ article = military_assistance source_country = c:SPA target_country = c:TWG }
+				{
+					article = goods_transfer
+					source_country = c:TWG
+					target_country = c:SPA
+					inputs = { { goods = g:porcelain } { quantity = 5 } }
+				}
 			}
 		}
 	}
@@ -151,6 +243,12 @@ fh_tungning_manila_compact = {
 			articles_to_create = {
 				{ article = trade_privilege source_country = c:TWG target_country = c:SPA }
 				{ article = military_assistance source_country = c:SPA target_country = c:TWG }
+				{
+					article = goods_transfer
+					source_country = c:TWG
+					target_country = c:SPA
+					inputs = { { goods = g:porcelain } { quantity = 5 } }
+				}
 			}
 		}
 	}
