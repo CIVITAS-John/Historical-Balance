@@ -1,33 +1,103 @@
 # The Claim Across the Strait
 
-The court must decide whether it still speaks for the Ming cause. In 1836, Qing already claims Taiwan, starts at −35 relations with Tungning, and embargoes it (`common/scripted_effects/fh_tungning_setup.txt:183–189`).
+The court must decide whether Tungning still speaks for the Ming cause. In 1836, Qing claims Taiwan, starts at −35 relations with Tungning, and embargoes it (`common/scripted_effects/fh_tungning_setup.txt`, lines 183–189).
+
+## Mainland foothold
+
+The objectives are **Fujian**, **Guangdong**, and **Zhejiang**. Check each Victoria 3 state region separately.
+
+- **Counts:** Tungning directly owns all land in the region apart from treaty-port enclaves. It must own ordinary land in the region.
+- **Exempt:** Actual treaty-port enclaves can remain in foreign hands. A designated port province held as ordinary territory is still required.
+- **Does not count:** A treaty port alone, any other partial holding, occupation without ownership, or land held by a Tungning subject.
+- **While the claim is unresolved:** The first foothold immediately settles the claim as **Reassert**, regardless of the bar or deadline. Check ownership before resolving a bar endpoint, deadline, or Qing response.
+- **After the claim is settled:** A first foothold still opens [The Return to the Mainland](06-mainland-reconquest.md). It does not change the recorded stance or any ratified treaty.
+- **Shared check:** Use the same ownership rule for the follow-up and the [Ming restoration track](05-constitutional-settlement.md#ming-restoration). Use state-region ownership and actual treaty-port state status; a port marker alone does not identify an enclave.
 
 ## Court balance
 
-`fh_je_mainland_claim` begins at **45/100**. **0** means renounce the claim; **100** means reclaim. On every point change, the court immediately commits at either endpoint. A fifth anniversary deadline commits to the nearer endpoint; an exact tie defaults to renunciation. AI takes the same endpoints.
+- **Entry:** `fh_je_mainland_claim`, starting at **45/100**.
+- **Endpoints:** **0** opens renunciation; **100** reasserts the claim. Check after every point change. The AI uses the same rules.
+- **Deadline:** On the fifth anniversary, choose the nearer endpoint. A tie goes to renunciation. The deadline still applies if court actions keep the bar near the middle.
+- **Monthly drift:**
+  - −1 while Qing embargoes Tungning.
+  - −1 while Tungning uses at least 75% of its credit (`scaled_debt`).
+  - +1 while a Jingoist leads the Armed Forces and they are in government.
 
-| Source | Change |
-| --- | --- |
-| Each month with the Qing embargo or Tungning using at least 75% of its credit (`scaled_debt`) | −1 each |
-| Each month with a Jingoist leader of the Armed Forces in government, or with Tungning holding a full mainland objective region | +1 each |
-| **Read the Ming Memorials**: governing Landowners under Monarchy, or governing Armed Forces led by a Jingoist or Royalist | +12; gives the acting group +2 approval and raises naval goods costs by 5% for six months |
-| **Hear the Strait Merchants**: governing Industrialists or Petite Bourgeoisie, any governing Pacifist or Market Liberal leader, or governing Landowners facing the embargo | −12; gives the acting group +2 approval and local trade capacity +5% in Taiwan for six months |
+### Court actions
 
-Court actions share a six-month cooldown. The starting government can use either action while the embargo holds, but persistently high debt makes reconciliation harder to resist. The court can keep balances close but cannot delay the fifth anniversary. If several groups qualify for the same action, the named supporter receives the effect once.
+Both actions share a six-month cooldown. The starting government can use either while the embargo holds. If several groups qualify for an action, apply approval once to the named supporter.
 
-Each quarter, roll a 20% chance to draw one eligible event: merchant petitions while embargoed and above the credit threshold, retired officers’ petitions after the fleet grows by two warships, or a refugee memorial when Qing-controlled Fujian has at least 15% turmoil. Each offers a ±4 choice and starts a 12-month event cooldown. An unanswered event expires without moving the bar. An event still open at settlement can no longer change its course.
+- **Read the Ming Memorials**
+  - **Requires:** Governing Landowners under Monarchy, or governing Armed Forces led by a Jingoist or Royalist.
+  - **Balance:** +12.
+  - **Approval:** +2 for the supporter for six months.
+  - **Modifier:** +5% naval goods costs for six months.
+- **Hear the Strait Merchants**
+  - **Requires:** Governing Industrialists or Petite Bourgeoisie; any governing Pacifist or Market Liberal leader; or governing Landowners while Qing’s embargo is in force.
+  - **Balance:** −12.
+  - **Approval:** +2 for the supporter for six months.
+  - **Modifier:** +5% trade capacity in Taiwan for six months.
 
-## The two outcomes
+### Court events
 
-**Reassert the claim.** Add Tungning claims to Fujian, Guangdong, and Zhejiang where Tungning does not already own the full region. If Qing is alive, reduce current Qing relations by **60 points** down to the vanilla floor; no war starts and the embargo stays as it is. For three years give the Armed Forces and Landowners +2 approval and the Industrialists −2. Record the mainland stance as `reclaim` and finish the journal immediately. This makes the Ming path possible later; it does not pick the dynasty.
+- **Roll:** Each quarter, a 20% chance to draw one eligible event.
+- **Merchant petition:** Qing’s embargo is in force and Tungning uses more than 75% of its credit.
+- **Retired officers’ petition:** The fleet has grown by at least two warships.
+- **Refugee memorial:** Qing-controlled Fujian has at least 15% turmoil.
+- **Effects:** Each event offers a choice between +4 and −4 and starts a 12-month event cooldown.
+- **Expiry:** An unanswered event has no effect. Once a stance is chosen or a Qing offer is pending, outstanding court events cannot change the balance.
 
-**Renounce the claim.** Immediately record `renounce` and remove any Tungning claims on the three objective regions. For three years give the Industrialists +2 approval and the Armed Forces −2. Qing’s offer exchanges the renunciation for direct tributary status, **half the normal tribute** and five years of **Qing → Tungning trade privileges**. Remove Qing’s embargo and raise Qing relations to at least +30 on ratification. Preserve Tungning’s colonial holdings and direct subjects. Keep separate markets where needed so the article works; the agreement grants Tungning access, not the reverse. Qing’s claim on Taiwan remains.
+## Reassert the claim
 
-- With eligible AI Qing, ratify immediately. If Qing is player controlled, the offer expires after 90 days, defaulting to refusal. Tungning’s renunciation is already final while the offer is pending.
-- If Qing is gone, at war with Tungning, lacks the rank or country type to take a tributary, or Tungning serves another overlord, finish with renunciation and no treaty. Refusal or timeout likewise leaves the existing diplomacy intact. State the reason in the journal. For an existing direct Qing tributary, reuse the relationship. Never transfer a third party’s subject by script.
-- If the subject and discount are legal but a trade article is blocked (for example by full Isolationism or another market arrangement the mod cannot undo), Qing’s offer does not ratify. Show the reason before the endpoint where possible; do not present a lesser deal as full settlement. Treat an equivalent existing directed article as fulfilling the condition.
-- Use the scoped vanilla tribute multiplier for the discount so the deal works without the DLC-gated subject interaction. Apply −50% to Tungning’s contribution only while it is a direct Qing tributary under this agreement; 20% becomes nominally 10% before other modifiers. Recheck and remove the discount on a change of overlord or subject type.
+- Record `reclaim` and `mainland_settled` and close the journal.
+- Add Tungning claims on any of the three regions that do not already meet the foothold rule.
+- If Qing still exists, reduce relations by 60 points, down to the vanilla floor.
+- For three years, give the Armed Forces and Landowners +2 approval and the Industrialists −2.
+- Leave the embargo in place. Start no war.
+- Unlock the constitutional debate. Reassertion makes the Ming route possible; it does not choose a dynasty.
+- If a foothold prompted the decision, open the reconquest journal in the same check.
 
-Use one pending offer and one ratification effect for AI, a player response, and expiry. On acceptance, recheck rank, peace, tribute, markets, and article eligibility, including changes that would result from becoming a tributary. Consume the offer before applying effects. Record the existing embargo, pacts, and market arrangement; then remove the embargo, establish or reuse the tributary, secure Tungning’s own market if needed, and create or reuse the directed article. Verify the resulting pacts before applying the discount and relations reward. If a script effect cannot produce the terms, roll back only changes this offer made, restoring the embargo if still legal, and leave the stance as renounced without a deal. A later response or timeout has no effect once the offer is consumed.
+## Renounce the claim
 
-Set `mainland_settled` on reassertion, ratification, refusal, expiry, or no possible agreement. The constitutional journal checks this flag rather than the bar value. Test normal 1836 ratification, a human Qing response, no valid Qing deal, the embargo already gone, and a subject breaking away after the discount. Vanilla references: `common/subject_types/00_subject_types.txt:127–177`, `common/diplomatic_actions/24_subject_tributary.txt:11–26`, `common/modifier_type_definitions/00_modifier_types.txt:232–239`, and `common/treaty_articles/25_trade_privilege.txt:34–65`. Qing’s starting Canton System is distinct from full Isolationism.
+### Offer and response
+
+- **Opening:** Close the court debate and make at most one offer. Renunciation remains provisional until the offer is resolved.
+- **AI Qing:** Ratify immediately if eligible.
+- **Player-controlled Qing:** Allow 90 days to respond. Expiry counts as refusal.
+- **No deal:** Finish with renunciation if Qing no longer exists, is at war with Tungning, lacks the rank or country type to take a tributary, or cannot grant all terms. Also decline if Tungning serves another overlord. Reuse an existing direct Qing tributary relationship; never transfer a third party’s subject by script.
+- **Blocked trade article:** Show why the full offer is unavailable before the endpoint where possible. Full Isolationism or an incompatible market arrangement can block ratification. An equivalent existing directed article fulfills this term.
+- **Conquest while pending:** If Tungning gains a foothold before ratification, cancel the offer and reassert the claim. Any later response or timeout has no effect.
+
+### Effects of final renunciation
+
+- On ratification, refusal, expiry, or an unavailable deal, record `renounce` and `mainland_settled` and close the journal. A canceled offer due to reconquest does not count as renunciation.
+- Remove Tungning’s claims on Fujian, Guangdong, and Zhejiang.
+- For three years, give the Industrialists +2 approval and the Armed Forces −2.
+- Unlock the constitutional debate with the Ming track permanently closed.
+- On refusal, expiry, or failure to agree, record the reason and leave existing diplomacy intact.
+
+### Terms on ratification
+
+- Make Tungning a direct Qing tributary or reuse that relationship.
+- Halve the normal tribute with the scoped vanilla multiplier, which does not require the DLC subject interaction. A nominal 20% becomes 10% before other modifiers. Keep the discount only while Tungning is a direct Qing tributary under this agreement.
+- Grant five years of **Qing → Tungning trade privileges**. Keep separate markets as needed so Tungning receives the access.
+- Remove Qing’s embargo and raise relations to at least +30.
+- Preserve Tungning’s colonial holdings and direct subjects, and Qing’s claim on Taiwan.
+
+### Ratification sequence
+
+Use one offer handler for AI acceptance, player responses, and expiry. Ignore later responses or timeouts once the offer has been consumed or canceled.
+
+1. Recheck rank, peace, tribute, markets, and article eligibility, including the expected effects of becoming a tributary.
+2. Consume the pending offer and record the current embargo, pacts, and market arrangement.
+3. Remove the embargo, establish or reuse the tributary relationship, secure a separate market for Tungning if needed, and create or reuse the directed article.
+4. Verify the resulting pacts before applying the discount and relations change. If a term fails, roll back only this offer’s changes, restore the embargo if still legal, and finalize renunciation without a deal.
+5. Recheck the tribute discount when the overlord or subject type changes.
+
+## Static checks
+
+- Trace each bar endpoint, the deadline and tie, and a foothold that takes precedence over them.
+- Trace an eligible AI deal, player acceptance and refusal, expiry, an invalid offer, and ratification with no existing embargo.
+- Check that a foothold cancels a pending offer once and has no effect on a finalized deal.
+- Check that breaking the tributary relationship removes the discount.
+- Vanilla references: `common/subject_types/00_subject_types.txt`, `common/diplomatic_actions/24_subject_tributary.txt`, `common/modifier_type_definitions/00_modifier_types.txt`, and `common/treaty_articles/25_trade_privilege.txt`. Qing’s Canton System is distinct from full Isolationism.

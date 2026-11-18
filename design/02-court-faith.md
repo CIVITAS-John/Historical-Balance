@@ -1,33 +1,78 @@
 # The Faith of the Court
 
-Tungning starts with a Catholic court and Freedom of Conscience (`common/scripted_effects/fh_tungning_setup.txt:37,68,123–133`). The debate concerns the court’s public faith. Its decision changes the state religion; religious laws and the faith of existing Pops are separate.
+Tungning starts Catholic, under Freedom of Conscience (`common/scripted_effects/fh_tungning_setup.txt`, lines 37 and 68). This debate sets the court’s public faith. It changes the state religion without changing religious laws or converting Pops.
 
 ## Court balance
 
-`fh_je_court_faith` begins at **60/100**. **0** restores an ancestral tradition; **100** embraces Christianity. A threshold commits on the same tick. At the fifth anniversary the nearer end is forced, with a tie preserving the current faith’s side; if the current state religion fits neither side, a tie goes to the ancestral side.
+- **Entry:** `fh_je_court_faith`, starting at **60/100**.
+- **Endpoints:** **0** restores an ancestral tradition; **100** embraces Christianity. Resolve as soon as the balance reaches either end.
+- **Deadline:** On the fifth anniversary, choose the nearer endpoint. A tie favors the current state religion’s side. If it fits neither side, choose the ancestral side.
+- **Monthly drift:**
+  - +1 while the Manila Compact is active.
+  - +1 while a Christian leads the Devout and they are in government.
+  - −1 while a Confucian or Mahayana Buddhist leads the Devout and they are in government.
+  - −1 under State Religion if the state religion is Confucian or Mahayana Buddhist.
+- **Scope:** Check the Devout leader’s faith separately from the state religion. Freedom of Conscience and Total Separation give no drift by themselves.
 
-| Source | Change |
-| --- | --- |
-| An active Manila Compact or a Christian Devout in government | +1 per month each |
-| A Confucian or Mahayana Devout in government; or State Religion with a Confucian or Mahayana state religion | −1 per month each |
-| **Hear the Missions**: favors a nominated Catholic or Protestant settlement, with eligibility below | +12 |
-| **Consult the Academies and Temples**: favors a nominated Confucian or Mahayana settlement, with eligibility below | −12 |
+## Nominations
 
-Use the Devout leader’s faith to identify the governing Devout, independently from the state religion. The church law and current religious population shape event eligibility. No passive law bonus comes from Freedom of Conscience or Total Separation alone.
+- **Availability:** Until the court settles. All four options share a six-month cooldown.
+- **Effects:** Record the nominated faith for its side and give the named supporter +2 approval for six months. Skip approval if the only sponsor is external or popular.
+- **Persistence:** A nomination remains valid if its sponsor later stops qualifying.
 
-Each side has two public nominations, usable while its bar is unresolved. A nomination records that side’s preferred faith, takes its ±12 action, and gives the named supporter +2 approval for six months. All four nominations share a six-month cooldown. The cadence makes a sustained ancestral campaign viable even with the Manila Compact in force. Protestant petitions can come from Reformers or Market Liberals in government, or from governing Intelligentsia under Freedom of Conscience or Total Separation if Taiwan has a university. Mahayana petitions can come from Traditionalists in government or a Mahayana share of at least 10% in Taiwan. Catholic nominations can come from the Devout or a live Manila Compact; Confucian nominations can come from Traditionalists or governing Landowners. Where there is only an external or popular sponsor, skip IG approval. Eligibility limits the action, not a previously valid recorded nomination.
+- **Hear the Missions** (+12)
+  - **Catholic:** Requires the Devout or an active Manila Compact.
+  - **Protestant:** Requires a Reformer or Market Liberal in government, or all three of the following: governing Intelligentsia, a university in Taiwan, and Freedom of Conscience or Total Separation.
+- **Consult the Academies and Temples** (−12)
+  - **Confucian:** Requires a Traditionalist or governing Landowners.
+  - **Mahayana Buddhist:** Requires a Traditionalist in government or a Mahayana Buddhist share of at least 10% in Taiwan.
 
-At a threshold, adopt the nominated faith for that side immediately. If there is none, preserve the current faith when it belongs to the winning side; otherwise use **Catholic** or **Confucian**, respectively. The bar and event tooltips show what settlement will occur.
+## Court events
 
-Each quarter, roll a 20% chance to draw one eligible event: a mission-school dispute under Freedom of Conscience with at least 3% Catholic population in Taiwan, an appeal from academies under State Religion, or a petition for a civil oath under Total Separation. Choices move the bar by 4 points; the civil oath can instead reduce Devout approval by 1 for a year and leave the bar still. An event starts a 12-month event cooldown, expires without effect if unanswered, and loses any ability to change the bar once the court settles.
+- **Roll:** Each quarter, a 20% chance to draw one eligible event.
+- **Mission-school dispute:** Freedom of Conscience and at least 3% Catholic population in Taiwan.
+- **Academy appeal:** State Religion.
+- **Civil oath petition:** Total Separation.
+- **Effects:** Each event offers a choice between +4 and −4. The civil oath can instead leave the bar unchanged and give the Devout −1 approval for one year.
+- **Cooldown and expiry:** Each event starts a 12-month cooldown. Unanswered events expire without effect; once the court settles, events cannot move the bar.
 
-## Denominations
+## Settlement
 
-| Settlement | Political base and three-year effect |
-| --- | --- |
-| **Catholic** (`rel:catholic`) | Catholic Devout +2 approval; Taiwan trade capacity +5%. Improve relations with Spain and the Philippines by 10 each, if alive; existing accords continue. |
-| **Protestant** (`rel:protestant`) | Reformers/Market Liberals in government +2 approval, Catholic Devout −2; technology spread +5%. Spain and the Philippines each lose 10 relations if alive. |
-| **Confucian** (`rel:confucian`) | Traditionalists in government +2 approval, Christian Devout −2; bureaucracy +5%. Spain and the Philippines each lose 10 relations if alive. |
-| **Mahayana Buddhist** (`rel:mahayana`) | Mahayana Devout +2 approval, Christian Devout −2; +5% workforce qualifications in Taiwan. Spain and the Philippines each lose 10 relations if alive. |
+- Adopt the winning side’s last nomination. Without a nomination, keep the current faith if it belongs to that side. Otherwise default to **Catholic** or **Confucian**, respectively.
+- Show the expected settlement in bar and event tooltips.
+- Identify approval recipients before changing the state religion. Skip a recipient if the group or leader does not exist.
+- Apply the approval and domestic effects below for three years. Apply relation changes once, to Spain and the Philippines separately if they still exist.
+- Keep existing treaties, including the Manila Compact. A later religious law change does not restart the journal.
 
-Apply approval only if the described group or leader exists; evaluate at settlement, using pre-settlement supporter scopes so a religious change cannot misidentify the opposition. Existing treaty terms remain enforceable; the event affects goodwill, not the validity of the signed Manila Compact. A later clerical law change remains legal and does not restart the journal. Verify the two defaults, all four mapped religion keys, simultaneous claims/faith resolutions, and that changes to religion do not rewrite laws or convert Pops. Vanilla: `common/religions/religion.txt:1–7,65–83`, `events/bic_breakup.txt:105–117`, and `common/laws/00_church_and_state.txt:5,473,563`.
+### Catholic (`rel:catholic`)
+
+- Catholic Devout: +2 approval.
+- Taiwan: +5% trade capacity.
+- Spain and the Philippines: +10 relations each.
+
+### Protestant (`rel:protestant`)
+
+- Governing Reformers or Market Liberals: +2 approval.
+- Catholic Devout: −2 approval.
+- Tungning: +5% technology spread.
+- Spain and the Philippines: −10 relations each.
+
+### Confucian (`rel:confucian`)
+
+- Governing Traditionalists: +2 approval.
+- Christian Devout: −2 approval.
+- Tungning: +5% bureaucracy.
+- Spain and the Philippines: −10 relations each.
+
+### Mahayana Buddhist (`rel:mahayana`)
+
+- Mahayana Devout: +2 approval.
+- Christian Devout: −2 approval.
+- Taiwan: +5% workforce qualifications.
+- Spain and the Philippines: −10 relations each.
+
+## Static checks
+
+- Verify the two defaults, all four religion keys, and simultaneous settlement of the claim and faith debates.
+- Check that settlement leaves religious laws, Pops, and treaty terms unchanged.
+- Vanilla references: `common/religions/religion.txt`, `events/bic_breakup.txt`, and `common/laws/00_church_and_state.txt`.
