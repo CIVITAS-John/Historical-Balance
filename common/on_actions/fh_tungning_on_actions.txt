@@ -1,0 +1,60 @@
+﻿on_game_started = {
+	on_actions = { fh_tungning_bookmark_setup }
+}
+
+fh_tungning_bookmark_setup = {
+	trigger = { game_date = 1836.1.1 }
+
+	effect = {
+		c:CHI ?= {
+			if = {
+				limit = { is_country_alive = yes }
+				fh_tungning_setup = yes
+			}
+		}
+		c:TWG ?= {
+			if = {
+				limit = {
+					is_country_alive = yes
+					has_variable = fh_tungning_bootstrapped
+					NOT = { has_variable = fh_tungning_diplomacy_initialized }
+				}
+				set_variable = fh_tungning_diplomacy_initialized
+				fh_tungning_diplomacy = yes
+				trigger_event = { id = fh_tungning.3 days = 8 }
+			}
+		}
+	}
+}
+
+on_game_started_after_lobby = {
+	on_actions = { fh_tungning_opening }
+}
+
+fh_tungning_opening = {
+	effect = {
+		c:TWG ?= {
+			if = {
+				limit = {
+					is_country_alive = yes
+					has_variable = fh_tungning_bootstrapped
+				}
+				if = {
+					limit = { is_player = yes }
+					trigger_event = { id = fh_tungning.2 popup = yes }
+				}
+				else = {
+					c:CHI ?= {
+						if = {
+							limit = {
+								is_country_alive = yes
+								is_player = yes
+							}
+							trigger_event = { id = fh_tungning.1 popup = yes }
+						}
+					}
+				}
+			}
+		}
+	}
+}

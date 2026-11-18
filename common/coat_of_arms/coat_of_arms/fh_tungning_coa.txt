@@ -1,0 +1,15 @@
+﻿TWG = {
+	pattern = "pattern_solid.tga"
+	color1 = "red"
+
+	colored_emblem = {
+		texture = "ce_circle.dds"
+		color1 = "yellow"
+		instance = { scale = { 0.65 0.65 } }
+	}
+	colored_emblem = {
+		texture = "ce_cross_patty.dds"
+		color1 = "red"
+		instance = { scale = { 0.36 0.36 } }
+	}
+}

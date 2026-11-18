@@ -1,0 +1,200 @@
+﻿# Invoked in Qing scope once after vanilla bookmark history.
+fh_tungning_setup = {
+	if = {
+		limit = {
+			is_country_alive = yes
+			owns_entire_state_region = STATE_FORMOSA
+			exists = s:STATE_FORMOSA.region_state:CHI
+			NOT = { c:TWG ?= { is_country_alive = yes } }
+		}
+		create_country = {
+			tag = TWG
+			origin = this
+			state = s:STATE_FORMOSA.region_state:CHI
+			on_created = {
+				fh_tungning_country_setup = yes
+			}
+		}
+
+		if = {
+			limit = {
+				c:TWG ?= { has_variable = fh_tungning_bootstrapped }
+			}
+			fh_tungning_qing_setup = yes
+		}
+	}
+}
+
+fh_tungning_country_setup = {
+	set_country_type = unrecognized
+	if = {
+		limit = { is_subject = yes }
+		make_independent = yes
+	}
+
+	set_capital = STATE_FORMOSA
+	set_market_capital = STATE_FORMOSA
+	set_state_religion = rel:catholic
+	if = {
+		limit = { country_has_primary_culture = cu:manchu }
+		remove_primary_culture = cu:manchu
+	}
+	if = {
+		limit = { NOT = { country_has_primary_culture = cu:min } }
+		add_primary_culture = cu:min
+	}
+	if = {
+		limit = { NOT = { country_has_primary_culture = cu:han } }
+		add_primary_culture = cu:han
+	}
+	if = {
+		limit = { NOT = { country_has_primary_culture = cu:hakka } }
+		add_primary_culture = cu:hakka
+	}
+
+	# Ensure the vanilla Qing baseline even if country creation does not
+	# copy its entire technology list. Qing receives Paddle Steamer later.
+	effect_starting_technology_tier_4_tech = yes
+	add_technology_researched = urban_planning
+	add_technology_researched = sericulture
+	add_technology_researched = academia
+	add_technology_researched = law_enforcement
+	add_technology_researched = mandatory_service
+	add_technology_researched = line_infantry
+	add_technology_researched = empiricism
+	add_technology_researched = colonization
+	activate_law = law_type:law_monarchy
+	activate_law = law_type:law_autocracy
+	activate_law = law_type:law_freedom_of_conscience
+	activate_law = law_type:law_mercantilism
+	activate_law = law_type:law_colonial_resettlement
+	set_institution_investment_level = { institution = institution_colonial_affairs level = 1 }
+	set_ruling_interest_groups = { ig_landowners }
+	create_character = { template = fh_zheng_wenhai_ruler }
+
+	fh_tungning_lanfang_setup = yes
+	s:STATE_FORMOSA.region_state:TWG ?= { fh_tungning_formosa_setup = yes }
+	fh_tungning_fleet_setup = yes
+
+	add_modifier = {
+		name = fh_tungning_fading_maritime_prestige
+		years = 10
+		is_decaying = yes
+	}
+	clear_debt = yes
+	add_treasury = {
+		value = gold_reserves
+		min = 0
+		multiply = -1
+	}
+	add_treasury = {
+		value = gold_reserves_limit
+		multiply = -0.35
+	}
+	set_variable = fh_tungning_bootstrapped
+}
+
+fh_tungning_lanfang_setup = {
+	s:STATE_WEST_BORNEO.region_state:LAN ?= { save_scope_as = fh_tungning_lanfang_state }
+	if = {
+		limit = {
+			c:LAN ?= {
+				is_country_alive = yes
+				any_scope_state = { count = 1 }
+				OR = {
+					is_subject = no
+					is_subject_of = c:CHI
+				}
+			}
+			exists = scope:fh_tungning_lanfang_state
+			scope:fh_tungning_lanfang_state.num_provinces = 3
+			p:x1C7417 ?= { owner = c:LAN }
+			p:x2A3D46 ?= { owner = c:LAN }
+			p:xE02CB6 ?= { owner = c:LAN }
+		}
+		scope:fh_tungning_lanfang_state = {
+			set_state_owner = c:TWG
+			set_state_type = unincorporated
+		}
+	}
+}
+
+fh_tungning_formosa_setup = {
+	set_state_type = incorporated
+	state_region = { add_resource_potential = building_silk_plantation }
+
+	every_scope_pop = {
+		limit = {
+			OR = { has_pop_culture = han has_pop_culture = min }
+			NOT = { has_pop_religion = catholic }
+		}
+		change_pop_religion = { target = rel:catholic value = 0.10 }
+	}
+	create_pop = { culture = korean size = 3000 }
+	create_pop = { culture = japanese size = 2000 }
+
+	# create_building retains any higher level supplied by another mod.
+	create_building = { building = building_silk_plantation level = 1 reserves = 1 }
+	create_building = {
+		building = building_glassworks
+		level = 1
+		reserves = 1
+		activate_production_methods = { "pm_forest_glass" "pm_ceramics" "pm_manual_glassblowing" }
+	}
+	create_building = { building = building_paper_mill level = 1 reserves = 1 }
+	create_building = { building = building_shipyard level = 1 reserves = 1 }
+	create_building = { building = building_arms_industry level = 1 reserves = 1 }
+	create_building = { building = building_textile_mill level = 1 reserves = 1 }
+	create_building = { building = building_logging_camp level = 1 reserves = 1 }
+	create_building = { building = building_university level = 1 reserves = 1 }
+	create_building = { building = building_government_administration level = 2 reserves = 1 }
+	create_building = {
+		building = building_naval_administration
+		level = 3
+		reserves = 1
+		activate_production_methods = { "pm_simple_sailor_recruitment" }
+	}
+}
+
+fh_tungning_fleet_setup = {
+	create_military_formation = {
+		type = fleet
+		hq_region = sr:region_south_china
+		name = fh_tungning_fleet
+		save_scope_as = fh_tungning_opening_fleet
+	}
+	create_ship = {
+		type = ship_type:ship_type_frigate
+		fleet = scope:fh_tungning_opening_fleet
+		name = fh_tungning_ship_1
+		save_scope_as = fh_tungning_flagship
+	}
+	scope:fh_tungning_flagship ?= { set_as_flagship = yes }
+	create_ship = { type = ship_type:ship_type_frigate fleet = scope:fh_tungning_opening_fleet name = fh_tungning_ship_2 }
+	create_ship = { type = ship_type:ship_type_frigate fleet = scope:fh_tungning_opening_fleet name = fh_tungning_ship_3 }
+	create_ship = { type = ship_type:ship_type_frigate fleet = scope:fh_tungning_opening_fleet name = fh_tungning_ship_4 }
+	create_ship = { type = ship_type:ship_type_frigate fleet = scope:fh_tungning_opening_fleet name = fh_tungning_ship_5 }
+
+	# Match the vanilla starting allowance for five ships and one shipyard.
+	add_supply_ships = 128
+}
+
+fh_tungning_qing_setup = {
+	s:STATE_FORMOSA = { add_claim = c:CHI }
+	set_relations = { country = c:TWG value = -35 }
+	add_technology_researched = paddle_steamer
+
+	ordered_scope_fleet = {
+		order_by = num_ships
+		position = 0
+		check_range_bounds = no
+		save_scope_as = fh_tungning_qing_fleet
+	}
+	if = {
+		limit = { exists = scope:fh_tungning_qing_fleet }
+		create_ship = { type = ship_type:ship_type_frigate fleet = scope:fh_tungning_qing_fleet name = fh_qing_ship_1 }
+		create_ship = { type = ship_type:ship_type_frigate fleet = scope:fh_tungning_qing_fleet name = fh_qing_ship_2 }
+		create_ship = { type = ship_type:ship_type_frigate fleet = scope:fh_tungning_qing_fleet name = fh_qing_ship_3 }
+		add_supply_ships = 24
+	}
+}

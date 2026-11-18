@@ -1,10 +1,10 @@
 {
-  "name" : "Historical Balance",
+  "name" : "Tungning: The Crown Across the Strait",
   "id" : "",
-  "version" : "",
-  "supported_game_version" : "",
-  "short_description" : "",
-  "tags" : [],
+  "version" : "0.1.0",
+  "supported_game_version" : "1.15.*",
+  "short_description" : "An independent Kingdom of Tungning in 1836, with a Qing opening choice and new treaties across the South China Sea.",
+  "tags" : ["Alternative History"],
   "relationships" : [],
   "game_custom_data" : {
     "multiplayer_synchronized" : true

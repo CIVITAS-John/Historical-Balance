@@ -1,0 +1,12 @@
+﻿fh_zheng_wenhai_ruler = {
+	first_name = fh_zheng_wenhai
+	last_name = Zheng
+	birth_date = 1791.5.9
+	female = no
+	ruler = yes
+	culture = cu:min
+	religion = rel:catholic
+	interest_group = ig_landowners
+	ideology = ideology_traditionalist
+	home_region = STATE_FORMOSA
+}

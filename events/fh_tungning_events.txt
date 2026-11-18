@@ -1,0 +1,77 @@
+﻿namespace = fh_tungning
+
+fh_tungning.1 = {
+	type = country_event
+	placement = root
+
+	title = fh_tungning.1.t
+	desc = fh_tungning.1.d
+
+	event_image = { video = "asia_farmers_market" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	trigger = {
+		c:CHI ?= this
+		is_player = yes
+		c:TWG ?= {
+			is_country_alive = yes
+			has_variable = fh_tungning_bootstrapped
+			is_player = no
+		}
+	}
+
+	option = {
+		name = fh_tungning.1.a
+		default_option = yes
+	}
+
+	option = {
+		name = fh_tungning.1.b
+		trigger = {
+			is_player = yes
+			c:TWG ?= {
+				is_country_alive = yes
+				has_variable = fh_tungning_bootstrapped
+				is_player = no
+			}
+		}
+		play_as = c:TWG
+		c:TWG = { trigger_event = { id = fh_tungning.2 popup = yes } }
+		ai_chance = { base = 0 }
+	}
+}
+
+fh_tungning.2 = {
+	type = country_event
+	placement = root
+
+	title = fh_tungning.2.t
+	desc = fh_tungning.2.d
+
+	event_image = { video = "asia_farmers_market" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	trigger = {
+		c:TWG ?= this
+		has_variable = fh_tungning_bootstrapped
+	}
+
+	option = {
+		name = fh_tungning.2.a
+		default_option = yes
+	}
+}
+
+# Opening ranks and markets may take their first weekly update to settle.
+fh_tungning.3 = {
+	type = country_event
+	hidden = yes
+
+	trigger = {
+		c:TWG ?= this
+		is_country_alive = yes
+		has_variable = fh_tungning_diplomacy_initialized
+	}
+
+	immediate = { fh_tungning_diplomacy_retry = yes }
+}

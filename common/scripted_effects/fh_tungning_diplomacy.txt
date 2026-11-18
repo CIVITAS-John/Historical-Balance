@@ -1,0 +1,247 @@
+﻿# Invoked once in Tungning scope, after the vanilla bookmark is initialized.
+fh_tungning_diplomacy = {
+	fh_tungning_tributary_pacts = yes
+
+	if = {
+		limit = { c:DEI ?= { is_country_alive = yes } }
+		set_relations = { country = c:DEI value = -35 }
+	}
+	if = {
+		limit = { c:BIC ?= { is_country_alive = yes } }
+		set_relations = { country = c:BIC value = 0 }
+	}
+	if = {
+		limit = { c:PHI ?= { is_country_alive = yes } }
+		set_relations = { country = c:PHI value = 40 }
+
+		# Manila normally trades through Spain's market. Only conclude a
+		# separate arrangement if a playset gives Manila its own market.
+		if = {
+			limit = {
+				c:PHI = {
+					market.owner = c:PHI
+					is_junior_in_customs_union = no
+					country_has_isolationism = no
+				}
+			}
+			create_treaty = {
+				name = fh_tungning_treaty_manila_trade
+				first_country = c:TWG
+				second_country = c:PHI
+				is_draft = no
+				binding_period = { years = 5 }
+				articles_to_create = {
+					{ article = trade_privilege source_country = c:TWG target_country = c:PHI }
+				}
+			}
+		}
+	}
+	if = {
+		limit = { c:SPA ?= { is_country_alive = yes } }
+		set_relations = { country = c:SPA value = 30 }
+		fh_tungning_manila_compact = yes
+	}
+	if = {
+		limit = {
+			c:JAP ?= {
+				is_country_alive = yes
+				is_junior_in_customs_union = no
+				country_has_isolationism = no
+			}
+		}
+		# Japan's Sakoku law still permits this arrangement, as at Dejima.
+		create_treaty = {
+			name = fh_tungning_treaty_nagasaki_license
+			first_country = c:JAP
+			second_country = c:TWG
+			is_draft = no
+			binding_period = { years = 5 }
+			articles_to_create = {
+				{ article = trade_privilege source_country = c:JAP target_country = c:TWG }
+			}
+		}
+	}
+
+	fh_tungning_busan_lease = yes
+}
+
+# The first weekly update can refresh rank and market data for a new tag.
+# Ownership and treaty checks prevent duplicating the initial setup.
+fh_tungning_diplomacy_retry = {
+	fh_tungning_tributary_pacts = yes
+	fh_tungning_busan_lease = yes
+	p:xC3F34F.state ?= {
+		if = {
+			limit = { owner = c:TWG }
+			fh_tungning_busan_market = yes
+			fh_tungning_busan_trade_facilities = yes
+		}
+	}
+}
+
+fh_tungning_tributary_pacts = {
+	if = {
+		limit = {
+			is_subject = no
+			is_country_type = unrecognized
+			country_rank >= rank_value:unrecognized_regional_power
+		}
+		fh_tungning_make_tributary = { SUBJECT = c:STG }
+		fh_tungning_make_tributary = { SUBJECT = c:SEL }
+		fh_tungning_make_tributary = { SUBJECT = c:BLG }
+	}
+}
+
+fh_tungning_make_tributary = {
+	if = {
+		limit = {
+			$SUBJECT$ ?= {
+				is_country_alive = yes
+				is_subject = no
+				NOT = { is_country_type = decentralized }
+				country_rank < c:TWG.country_rank
+			}
+		}
+		create_diplomatic_pact = { country = $SUBJECT$ type = tributary }
+	}
+}
+
+fh_tungning_manila_compact = {
+	if = {
+		limit = {
+			OR = {
+				has_dlc_feature = foreign_investment
+				has_dlc_feature = mp1_treaties
+			}
+		}
+		c:SPA = {
+			if = {
+				limit = {
+					NOT = {
+						has_strategic_region_interest_tier = {
+							strategic_region = sr:region_south_china
+							value >= interest_tier_effect_can_sign_foreign_investment_rights_min_tier
+						}
+					}
+				}
+				# Engaged starts at 1000 involvement; keep the boost local.
+				add_involvement = { strategic_region = sr:region_south_china value = 1100 }
+			}
+		}
+		create_treaty = {
+			name = fh_tungning_treaty_manila_compact
+			first_country = c:TWG
+			second_country = c:SPA
+			is_draft = no
+			binding_period = { years = 5 }
+			articles_to_create = {
+				{ article = trade_privilege source_country = c:TWG target_country = c:SPA }
+				{ article = foreign_investment_rights source_country = c:TWG target_country = c:SPA }
+				{ article = military_assistance source_country = c:SPA target_country = c:TWG }
+			}
+		}
+	}
+	else = {
+		create_treaty = {
+			name = fh_tungning_treaty_manila_compact
+			first_country = c:TWG
+			second_country = c:SPA
+			is_draft = no
+			binding_period = { years = 5 }
+			articles_to_create = {
+				{ article = trade_privilege source_country = c:TWG target_country = c:SPA }
+				{ article = military_assistance source_country = c:SPA target_country = c:TWG }
+			}
+		}
+	}
+}
+
+fh_tungning_busan_lease = {
+	if = {
+		limit = {
+			c:KOR ?= {
+				OR = {
+					market.owner = c:KOR
+					AND = {
+						is_direct_subject_of = c:CHI
+						market = c:CHI.market
+					}
+				}
+			}
+			NOT = {
+				any_scope_treaty = {
+					binds = c:KOR
+					any_scope_article = {
+						has_type = treaty_port
+						input_state ?= { state_region = s:STATE_BUSAN }
+					}
+				}
+			}
+			p:xC3F34F.state ?= {
+				owner = c:KOR
+				state_region = s:STATE_BUSAN
+				controls_treaty_port_province = yes
+				is_treaty_port = no
+			}
+			# These three Korean land provinces border the marked port.
+			OR = {
+				p:x31D000.state ?= { owner = c:KOR is_incorporated = yes }
+				p:x9BA8B5.state ?= { owner = c:KOR is_incorporated = yes }
+				p:x305080.state ?= { owner = c:KOR is_incorporated = yes }
+			}
+		}
+
+		fh_tungning_busan_market = yes
+		create_treaty = {
+			name = fh_tungning_treaty_busan_lease
+			first_country = c:KOR
+			second_country = c:TWG
+			is_draft = no
+			binding_period = { years = 25 }
+			articles_to_create = {
+				{
+					article = treaty_port
+					source_country = c:KOR
+					target_country = c:TWG
+					inputs = { { state = p:xC3F34F.state } }
+				}
+			}
+		}
+		p:xC3F34F.state ?= {
+			if = {
+				limit = { owner = c:TWG }
+				fh_tungning_busan_trade_facilities = yes
+			}
+		}
+	}
+}
+
+fh_tungning_busan_market = {
+	# The lease belongs to the donor's market. Preserve the political
+	# tributary relationship, but keep the port out of Qing's market.
+	c:CHI ?= {
+		if = {
+			limit = {
+				c:KOR ?= { is_direct_subject_of = c:CHI market = c:CHI.market }
+				NOT = { has_diplomatic_pact = { who = c:KOR type = grant_own_market } }
+			}
+			create_diplomatic_pact = { country = c:KOR type = grant_own_market }
+		}
+	}
+}
+
+fh_tungning_busan_trade_facilities = {
+	if = {
+		limit = { NOT = { has_building = building_port } }
+		create_building = { building = building_port level = 1 reserves = 1 }
+	}
+	if = {
+		limit = { NOT = { has_building = building_trade_center } }
+		create_building = {
+			building = building_trade_center
+			level = 1
+			reserves = 1
+			activate_production_methods = { "pm_trade_center" "pm_trade_center_trade_quantity_limited" }
+		}
+	}
+}

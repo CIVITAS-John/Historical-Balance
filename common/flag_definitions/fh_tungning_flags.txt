@@ -1,0 +1,7 @@
+﻿TWG = {
+	flag_definition = {
+		coa = TWG
+		subject_canton = TWG
+		priority = 1
+	}
+}

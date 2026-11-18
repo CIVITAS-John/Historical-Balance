@@ -1,0 +1,3 @@
+﻿fh_tungning_fading_maritime_prestige = {
+	country_prestige_add = 30
+}
