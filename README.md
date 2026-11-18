@@ -8,7 +8,7 @@ Enable **Tungning: The Crown Across the Strait** in a playset and start a **new 
 
 The Busan outpost is secret in the story. The game displays it as a treaty port, so it follows normal rules for rank and market access. Under the Manila Compact, Tungning gives Spain trade privileges and ships five porcelain per week in return for military assistance. Investment rights are included when the relevant DLC feature is available.
 
-Đại Nam starts with Standardized Examinations. Under the Huế Supply Accord, Đại Nam grants Tungning trade privileges in exchange for two frigates and five artillery per week. Taiwan has two glassworks and two logging camps, plus a tooling workshop, a cannon foundry, and a coal mine.
+Joseon starts with Yangban Administration; Đại Nam starts with Standardized Examinations. Under the Huế Supply Accord, Đại Nam grants Tungning trade privileges in exchange for two frigates and five artillery per week. Taiwan has two glassworks and two logging camps, plus a tooling workshop, a cannon foundry, and a coal mine.
 
 Qing begins with an embargo on Tungning and a small Catholic minority in Fujian. Every six months, Fujian, Guangdong, and Zhejiang can see departures. Unemployment and turmoil raise the odds; Zhejiang and prosperous, calm provinces have lower odds. Taiwan is favored for Fujianese departures, but eligible ports around the Pacific and in the Americas can also receive migrants. Under Closed Borders, a limited group can slip out. When the borders permit migration, the event can start a normal mass migration for the province’s main culture. Victoria 3 draws those migrants from the source country as a whole. After a departure, the originating province has a four-year cooldown.
 

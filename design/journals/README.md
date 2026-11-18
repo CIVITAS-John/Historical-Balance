@@ -2,6 +2,8 @@
 
 Design drafts for Tungning’s campaigns, set in the world described in [storyline.md](../../storyline.md). Numbers are starting balance targets.
 
+The [timed aftermath plan](outcome-modifiers.md) lists the proposed modifier and duration for every final outcome, including early closures and the three constitutional follow-ups.
+
 | Entry | Opens | Resolves into |
 | --- | --- | --- |
 | [The Claim Across the Strait](01-mainland-claim.md) | 1836 | Reassert, renounce, or face a final choice when Taiping rises |

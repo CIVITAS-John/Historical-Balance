@@ -16,6 +16,15 @@ fh_tungning_bookmark_setup = {
 				activate_law = law_type:law_fh_standardized_examinations
 			}
 		}
+		c:KOR ?= {
+			if = {
+				limit = {
+					is_country_alive = yes
+					has_law = law_type:law_appointed_bureaucrats
+				}
+				activate_law = law_type:law_fh_yangban_administration
+			}
+		}
 		c:CHI ?= {
 			if = {
 				limit = { is_country_alive = yes }
