@@ -2,7 +2,7 @@
 
 Design drafts for Tungning’s campaigns, set in the world described in [storyline.md](../../storyline.md). Numbers are starting balance targets.
 
-The [timed aftermath plan](outcome-modifiers.md) lists the proposed modifier and duration for every final outcome, including early closures and the three constitutional follow-ups.
+The [aftermath tables](outcome-modifiers.md) hold the immediate effects and timed modifiers for every final outcome, including early closures and the three constitutional follow-ups.
 
 | Entry | Opens | Resolves into |
 | --- | --- | --- |
@@ -53,7 +53,7 @@ These are the five existing Victoria 3 interest groups with Tungning-specific na
 - **Ownership:** Check the mainland foothold after relevant changes (`on_state_owner_change`, `on_state_created`) and on a country pulse. Recheck on load or when a scheduled event arrives. Use current treaty-port state status; check the foothold before resolving an unsettled claim.
 - **Bars and events:** Apply action and event changes immediately and sum routine drift monthly. Mainland resolves at its endpoints; a faith endpoint opens the final church law audience and freezes the faith bar. The Taiping fork freezes the mainland bar and constitutional mandates unlock ratification actions. Court events cannot resolve during a pending offer, fork, or audience, or after their journal closes.
 - **Display:** Show what moves each bar, what each choice costs, when temporary effects end, and why an action is blocked.
-- **Persistence:** Track mainland stance, Qing offer, Taiping conflict and terms, mobilization, foothold registration, and proclamation separately. Track seat preparations and ratified charters against their actual holder. Record each outcome before granting rewards and clear temporary effects when their conditions end.
+- **Persistence:** Track mainland stance, Qing offer, Taiping conflict and terms, mobilization, foothold registration, and proclamation separately. Track seat preparations and ratified charters against their actual holder. Use the shared [settlement and aftermath rules](outcome-modifiers.md#implementation-order) for closing effects.
 - **Compatibility:** Keep vanilla interest group IDs, laws, religions, country tags, and subjects. The faith journal uses a Tungning-only change restriction in the vanilla Church and State law group; see the [law plan](../law-plan.md#implementation-and-checks). Customize Tungning’s presentation and assign only scoped traits or ideology additions. Add the coastal claim play and listen for Taiping from appended on-actions. A player or AI decision starts or joins a play; journals alone do not start wars.
 
 1. Add the names, traits, colonial ideology, and officer stance helpers to Tungning’s [setup](../../common/scripted_effects/fh_tungning_setup.txt), with the Catholic profile refreshed only by faith settlement. Vanilla references: `common/interest_group_traits/`, `events/india_events/princely_state_creation.txt`, and `common/on_actions/00_code_on_actions.txt` (new group leader).

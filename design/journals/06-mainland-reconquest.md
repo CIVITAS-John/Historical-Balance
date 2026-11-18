@@ -24,9 +24,11 @@ The first task is to establish a government on the mainland that can survive the
 
 ## Consolidate the foothold
 
-Choose **Register the Mainland Administration** once any one qualifying coastal region has two staffed levels of Government Administration, no enemy occupation, and **at most 20% actual turmoil at three consecutive monthly checks**. Recheck current readiness when the player registers. Progress resets if Tungning loses its full ownership, staffing, security, or calm before the third check. The other two regions carry over into [The Reunification of China](07-reunification-of-china.md).
+Choose **Register the Mainland Administration** once any one qualifying coastal region has two staffed levels of Government Administration, no enemy occupation, and **at most 20% actual turmoil at three consecutive monthly checks**. Progress resets if Tungning loses its full ownership, staffing, security, or calm before the third check. The other two regions carry over into [The Reunification of China](07-reunification-of-china.md).
 
-Registration records completion once and opens reunification and the [capital discussions](07-reunification-of-china.md#where-the-government-sits). It does not incorporate the state, move the capital, or grant more land. If Tungning later loses every foothold, the completed entry stays closed and reunification pauses national actions until one is recovered. Legal coastal recovery plays remain available. The original claim still settles on ownership alone; it does not wait for this administration to be ready.
+The action opens a confirmation to enter the local rolls or require a common format. If several regions qualify, use the first in Fujian, Guangdong, Zhejiang order. Remember that state and recheck its readiness on confirmation. If it no longer qualifies, drop the choice and wait for the action to become available again. The AI uses the local rolls unless the School of Practical Learning is in government and the state has at most 10% turmoil. Both choices preserve earlier magistrates’ agreements.
+
+Record completion once, apply the chosen [registration aftermath](outcome-modifiers.md#return-to-the-mainland), and open reunification and the [capital discussions](07-reunification-of-china.md#where-the-government-sits). It does not incorporate the state, move the capital, or grant more land. If Tungning later loses every foothold, the completed entry stays closed and reunification pauses national actions until one is recovered. Legal coastal recovery plays remain available. The original claim still settles on ownership alone; it does not wait for this administration to be ready.
 
 ## Settle the newly held states
 

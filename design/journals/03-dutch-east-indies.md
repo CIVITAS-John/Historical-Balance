@@ -8,7 +8,7 @@ The Maritime Houses want to protect their southern concessions and win new outle
 
 - **Entry:** `fh_je_southern_passage`. Open after the day-eight diplomacy retry if Tungning still holds at least one of the grants below and there is a Dutch rival.
 - **Holdings:** Record only grants made by the opening setup that Tungning still holds: Sintang, Selangor, and Bulungan as direct tributaries, and the Lanfang parcels `x1C7417`, `x2A3D46`, and `xE02CB6`. Keep that list fixed.
-- **Rival:** Track the Dutch East Indies (`DEI`). If it ceases to exist, switch to the Netherlands only if it owns land in West Java. If neither qualifies, close without concessions or a victory reward.
+- **Rival:** Track the Dutch East Indies (`DEI`). If it ceases to exist, switch to the Netherlands only if it owns land in West Java. If neither qualifies, resolve the journal under the outcome priority below.
 - **Opening effect:** Dutch competition gives Tungning’s West Borneo state **−10% trade advantage** while the journal is open and Tungning still holds a tracked Lanfang parcel. Remove the penalty when the journal closes or the state no longer qualifies.
 
 ## Dutch pressure
@@ -42,9 +42,9 @@ Each quarter, roll a 10% chance to draw one eligible event. Start a shared 12-mo
 | Event | Eligible while | Choices |
 | --- | --- | --- |
 | Merchants ask for escorts | Tungning still owns a tracked Lanfang parcel | Escort the ships (−5 pressure, +5% military goods costs) or leave the merchants to arrange their own passage (+5 pressure, +5% trade advantage in Tungning’s West Borneo state). |
-| Dutch fleet called away | The rival or its Dutch overlord is fighting in another war | Use the opening (−5 pressure, +5% military goods costs) or keep ships on their usual routes (+5 pressure, +2 Maritime Houses approval). |
+| Dutch fleet called away | The rival or its Dutch overlord is fighting in another war | Send out the squadron (−5 pressure, −10 relations with the rival immediately, +5% military goods costs for one year) or keep ships on their usual routes (+5 pressure, +2 Maritime Houses approval for six months). |
 
-Event modifiers last six months. Recheck eligibility when the event is answered.
+Event modifiers last six months unless an option gives a different term. Recheck eligibility when the event is answered.
 
 ## Ways to secure the passage
 
@@ -54,9 +54,12 @@ Event modifiers last six months. Recheck eligibility when the event is answered.
 
 ## Outcomes
 
-- **Secure:** Keep the remaining holdings and gain +10 prestige for five years. Tungning’s West Borneo state gains +5% trade advantage for five years if still held. Record the grants actually kept at victory for the [Zheng mandate](05-constitutional-settlement.md#zheng-dynasty); it checks current ownership or direct overlordship afterward.
-- **Concede:** Recheck the rival and holdings. Transfer SEA holdings, tributaries, vassals to DEI. Transfer only recorded parcels Tungning still owns to the qualifying rival.
-- **Close without concessions:** If Tungning loses all opening holdings, or no Dutch rival still qualifies, close without further penalties or rewards.
+Choose the matching [Southern Passage aftermath](outcome-modifiers.md#southern-passage) after checking the following outcomes in order.
+
+- **Secure:** In the same peace, check an enforced goal against the recorded rival before reacting to losing grants or the rival disappearing. A demonstration still requires a surviving grant. If both routes qualify at once, use the enforced goal. Record the grants actually kept at victory for the [Zheng mandate](05-constitutional-settlement.md#zheng-dynasty); it checks current ownership or direct overlordship afterward.
+- **Lose all grants:** Without a victory, close without concessions if all recorded grants are lost. A later victory cannot reopen the entry.
+- **Lose the rival:** If a grant survives, check the Dutch fallback before closing without concessions. A valid fallback lets the journal continue to the next check.
+- **Concede:** At the pressure limit, deadline, or end of the recorded conflict, apply the concession rule to the qualifying rival. The proposed transfer scope still needs a decision: all Southeast Asian holdings, tributaries, and vassals, or only tracked parcels Tungning still owns.
 
 Surviving holdings become eligible for [the Southern Compact](07-reunification-of-china.md#the-home-and-southern-settlements) once this dispute ends. The compact does not revisit concessions or return lost holdings.
 

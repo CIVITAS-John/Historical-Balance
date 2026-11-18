@@ -55,21 +55,21 @@ Both actions share a six-month cooldown. The starting government can use either 
 ### Court events
 
 - **Roll:** Each quarter, a 10% chance to draw one eligible event.
-- **Effects:** Each event offers a choice between +5 and −5, with minor timed modifiers, and starts a 12-month event cooldown.
+- **Effects:** Each event offers choices of +5 or −5 to the bar and starts a 12-month event cooldown. Let a stronger intervention trade a longer preparatory effect for a larger immediate reaction. These effects apply on response; only a result that settles the claim grants the linked aftermath.
 
 1. Canton merchants sharing a favor
 2. Fujian officials proposes a deal
 3. Tongning merchants petitioning
-4. Young officers clamoring for action: a mainland-first leader asks for a Fujian expedition (+5 if heard); a southern-expedition leader asks to keep the squadron in the south (−5 if heard). Refusing moves the bar the other way. Skip this event under a neutral leader and recheck the stance when answered.
+4. Young officers clamoring for action: a mainland-first leader asks for a Fujian expedition (+5 if heard); a southern-expedition leader asks to keep the squadron in the south (−5 if heard). Backing the officers publicly follows their preferred direction, immediately removes 2% radicals among Army and Fleet supporters, and adds 10% naval power projection and 5% military goods costs for one year. Refusing the petition moves the bar the other way and gives the group −2 approval for six months. Skip this event under a neutral leader and recheck the stance when answered.
 5. Mainland refugees asking for liberation
 6. Ming royal family's petition
 
 ## Reassert the claim
 
-- Record `reclaim` and `mainland_settled` and close the journal.
+- When a court action or event answer would reach 200, let its confirmation offer a measured declaration or a public challenge. Use the measured declaration on monthly progress or qualifying ownership. At the Taiping fork, offer both versions of reassertion in the existing choice. The AI prefers a public challenge only with a mainland-first Army and Fleet in government and enough credit room (under 75% of credit used, out of default).
+- Record `reclaim` and `mainland_settled`, close the journal, and apply the chosen [mainland aftermath](outcome-modifiers.md#mainland-claim).
 - Add Tungning claims on any of the three regions that do not already meet the foothold rule.
-- If Qing still exists, reduce relations by 60 points, down to the vanilla floor.
-- Open [The Return to the Mainland](06-mainland-reconquest.md#opening) and start [mobilization](06-mainland-reconquest.md#mobilization-after-reassertion) once, including when a foothold prompted the decision. Give the Ming Estates +5 approval and the Maritime Houses −5. Give the Army and Fleet +5 under a mainland-first leader, −2 under a southern-expedition leader, or no approval change under a neutral leader. Boost army and navy combat readiness and reduce investment pool contributions by 50% for the duration.
+- Open [The Return to the Mainland](06-mainland-reconquest.md#opening) and start [mobilization](06-mainland-reconquest.md#mobilization-after-reassertion) once, including when a foothold prompted the decision. Boost army and navy combat readiness and reduce investment pool contributions by 50% for the duration.
 - Unlock [Press the Mainland Claims](06-mainland-reconquest.md#decision-press-the-mainland-claims) to pursue the outstanding coastal claims.
 - When mobilization ends, unlock the constitutional debate. Reassertion makes the Ming route possible; it does not choose a dynasty.
 
@@ -88,10 +88,10 @@ Both actions share a six-month cooldown. The starting government can use either 
 
 - On ratification, refusal, expiry, or an unavailable deal, record `renounce` and `mainland_settled` and close the journal. A canceled offer due to reconquest does not count as renunciation.
 - Remove Tungning’s claims on Fujian, Guangdong, and Zhejiang.
-- For three years, give the Maritime Houses +2 approval. Give the Army and Fleet −2 under a mainland-first leader, +2 under a southern-expedition leader, or no approval change under a neutral leader. Read the stance at the decision; succession does not rewrite effects already granted.
+- Apply the matching [renunciation aftermath](outcome-modifiers.md#mainland-claim) after the offer’s final status is known.
 - Unlock the constitutional debate with the Ming track permanently closed.
 - On refusal, expiry, or failure to agree, record the reason and leave existing diplomacy intact.
-- **Taiping abandonment:** Use the same domestic outcome without making another Qing offer. Also permanently close the scripted foothold, reunification, and Taiping-aid routes. This leaves ordinary diplomacy and war goals available.
+- **Taiping abandonment:** Use the fork’s renunciation result without making another Qing offer. Also permanently close the scripted foothold, reunification, and Taiping-aid routes. This leaves ordinary diplomacy and war goals available.
 
 ### Terms on ratification
 

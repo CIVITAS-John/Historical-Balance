@@ -1,118 +1,139 @@
-# Timed aftermath for Tungning’s journal entries
+# Aftermath for Tungning’s journal entries
 
-Every resolved Tungning journal entry gives the country one named, timed aftermath. A success, compromise, or defeat should leave a visible effect even when no land changes hands. This covers the eight entries in the [journal index](README.md) and all three constitutional follow-ups. Values are proposed starting points; existing rewards are kept where they already do the job.
+This page defines the immediate effects and timed modifiers for all eight [journal entries](README.md) and their three constitutional follow-ups. The individual entries define how the outcomes are reached. Values are starting balance targets.
 
-An entry resolves when its final decision or result is recorded. Waiting for a response, pausing a progress bar, or failing a prerequisite does not start an aftermath. A country that did not enter a journal gets no modifier, and an annexed Tungning has no recipient. The founding country carries its effects through a change of name or tag.
+Record the result, apply its immediate effects once, and start one named national modifier and any listed state companion. Apply legacy approval effects where specified. A pending offer or audience, a suspended journal, and a failed prerequisite grant nothing. An unopened entry or an annexed Tungning has no recipient. The founding country keeps its aftermath through a change of name or tag.
+
+Where the final event offers a choice of tone, show the immediate effect and duration on each option. An assertive choice rallies its backers for longer but draws more opposition; a measured choice usually gives up time or strength for a quieter settlement. Where the route already sets the tone, report the actual result instead. A closing option never starts a war or overrides the entry’s laws, treaties, or land rules.
+
+Radical changes are one-time adjustments using the vanilla small (2%), medium (5%), and large (10%) values, applied to the named population only. A minus removes existing radicals; it does not add loyalists. Unless a state is named, target Pops under Tungning’s rule, never its subjects. When targeting an interest group, count its supporters at resolution and skip missing groups. Do not target the same group or faith twice with the same reaction.
 
 ## [Mainland claim](01-mainland-claim.md#reassert-the-claim)
 
-| Final result | Modifier on Tungning | Duration | What happens alongside it |
+| Final result | Modifier on Tungning | Duration | Immediate effects |
 | --- | --- | --- | --- |
-| Reassert by choice, ownership, or the Taiping fork | **Mandate Reaffirmed:** +10 base legitimacy | 5 years (declining) | - Many radicals among supportive groups, + Some radicals among unsupportive groups |
-| Qing accord ratified or equivalent terms verified | **The Strait Settlement:** +10% influence, +10% trade advantage | 5 years | - Many radicals among supportive groups, + Some radicals among unsupportive groups |
-| Renounce after refusal, expiry, an unavailable deal, or failed ratification | **An Unanswered Accord:** −10% influence | 2 years | + Many radicals among supportive groups |
-| Explicitly abandon the cause at the Taiping fork | **The Island Comes First:** +10% trade advantage | 2 years | + Some radicals among supportive groups |
+| **Reassert: measured declaration**. Default for ownership or monthly progress. | **Mandate Reaffirmed:** +10 base legitimacy | 5 years, declining | −10% radicals among backers of the claim; +2% among backers of accommodation. Qing relations −30. |
+| **Reassert: public challenge**. Available at an action or event choice that reaches reassertion, including at the Taiping fork. | **Mandate Reaffirmed:** +10 base legitimacy | 7 years, declining | −10% radicals among backers of the claim; +5% among backers of accommodation. Qing relations −60. |
+| Qing accord ratified or equivalent terms verified | **The Strait Settlement:** +10% influence, +10% trade advantage | 5 years | −10% radicals among backers of accommodation; +2% among backers of the claim. |
+| Renounce after refusal, expiry, an unavailable deal, or failed ratification | **An Unanswered Accord:** −10% influence | 2 years | +10% radicals among backers of accommodation; no relations change. |
+| Explicitly abandon the claim at the Taiping fork | **The Island Comes First:** +10% trade advantage | 2 years | +2% radicals among backers of the claim. |
+
+The Ming Estates and mainland-first Army and Fleet back the claim. The Maritime Houses and southern-expedition Army and Fleet back accommodation. A neutral officer leader places the Army and Fleet in neither camp. Qing relations changes apply only while Qing exists.
+
+On either reassertion, give the Ming Estates +5 approval and the Maritime Houses −5 for the mobilization term. Give the Army and Fleet +5 under a mainland-first leader, −2 under a southern-expedition leader, or zero otherwise. On any renunciation, give the Maritime Houses +2 for three years and give the Army and Fleet −2 under a mainland-first leader, +2 under a southern-expedition leader, or zero otherwise. Read the officer stance at resolution; succession does not rewrite the effects.
 
 ## [Court faith](02-court-faith.md#settlement)
 
-| Final result | Modifier on Tungning | Duration | What happens alongside it |
-| --- | --- | --- | --- |
-| Catholic settlement | **The Manila Connection:** +3 prestige; also +5% trade advantage in Tungning’s Taiwan state while held | 3 years | Keep the existing local advantage; the country bonus applies even if Taiwan is lost. |
-| Protestant settlement | **The Translators’ Press:** +5% technology spread | 3 years | Existing domestic reward. |
-| Confucian settlement | **The Academies Restored:** +5% bureaucracy | 3 years | Existing domestic reward. |
-| Mahayana settlement | **Patronage of the Temples:** +3 prestige; also +5% qualifications in Tungning’s Taiwan state while held | 3 years | Keep the existing local qualifications effect; the country bonus applies even if Taiwan is lost. |
-| Interrupted by a forced change of church law or removal of the Articles | **The Broken Audience:** −5% bureaucracy | 1 year | Clear the conversion penalty and unlock church law. Keep the externally imposed result. No settlement approval or relations changes. |
+The adopted faith selects the modifier. The church law decision selects its duration and the one-time radical changes. Recognition here determines the event reaction. It does not change Pop religions or replace native acceptance calculations.
 
-The four church law choices use the same aftermath table. The faith actually adopted determines the modifier, including when timeout or a newly illegal switch defaults to keeping the Articles. Keep the existing approval, relations, and one-year opposition rules separately. A pending audience grants nothing.
+| Adopted faith | Modifier on Tungning | Approval for 3 years | Immediate relations with Spain and the Philippines |
+| --- | --- | --- | --- |
+| Catholic | **The Manila Connection:** +10 prestige; also +10% trade advantage in Tungning’s Taiwan state | Catholic Missions +2 | +10 each |
+| Protestant | **The Translators’ Press:** +15% technology spread | Reformed Congregations +2; a governing Reformer or Market Liberal +2 | −10 each |
+| Confucian | **The Academies Restored:** +10% bureaucracy | Ritual Academies +2; the governing Ming Estates or a governing Traditionalist +2 | −10 each |
+| Mahayana Buddhist | **Patronage of the Temples:** +10 prestige; also +15% qualifications in Tungning’s Taiwan state | Buddhist Temples +2 | −10 each |
+
+Use the government and leaders from before the switch to find the eligible additional sponsor. Pick the highest clout with a fixed tie order, and apply Devout approval only once. Apply relations only to surviving partners. The one-time religious reaction below replaces the old movement radicalization penalty for displacing the Catholic Missions.
+
+| Church law decision | Faiths recognized at settlement | Immediate radicals | Duration |
+| --- | --- | --- | --- |
+| **Keep the Articles** | All congregations, including Indigenous faiths | −2% among recognized Pops | 3 years |
+| **Repeal the Articles** | Adopted faith and faiths sharing one of its religious traits under Freedom of Conscience | −5% among recognized Pops; +2% among unrecognized Pops | 4 years |
+| **Establish the settled faith** | Adopted faith alone | −10% among recognized Pops; +5% among unrecognized Pops | 5 years |
+| **Separate church and state** | All congregations on equal terms | −5% among recognized Pops | 2 years |
+
+Keep and Separate leave no unrecognized group to penalize. Use the actual settled faith and law choice, including **Keep** after timeout or a newly illegal switch. An external interruption instead gives **The Broken Audience** (−10% bureaucracy for 1 year) and +2% radicals among Pops of the official faith immediately before the interruption. It gives no recognition, approval, or relations effects from a negotiated settlement.
 
 ## [Southern Passage](03-dutch-east-indies.md#outcomes)
 
-| Final result | Modifier on Tungning | Duration | What happens alongside it |
+| Final result | Modifier on Tungning | Duration | Immediate effects |
 | --- | --- | --- | --- |
-| Secure by demonstration or enforced goal | **The Southern Route Secured:** +10 prestige; also +5% trade advantage in Tungning’s West Borneo state while it holds an eligible recorded parcel | 5 years | Existing victory reward. Record which grants survived for the Zheng mandate. |
-| Concede at the limit, deadline, or end of the recorded conflict | **Dutch Demands Prevail:** −5 prestige | 2 years | Run the existing concession rules. No additional transfers from the modifier. |
-| Lose all recorded opening grants before a victory | **Southern Outposts Lost:** −5 prestige | 1 year | Close without scripted concessions. |
-| No rival qualifies after checking the Dutch fallback, with a grant still held | **Pressure Relieved:** +5 prestige | 1 year | Close without transfers or a secured-passage record. |
-
-Check Southern Passage success before deadline concessions. In a single peace settlement, adjudicate a qualifying enforced goal against the recorded rival before reacting to any loss of grants or disappearance of the rival from that same peace. The naval demonstration still requires a surviving grant. If the entry had already closed for loss of all grants, a later victory cannot reopen it. Without a victory, loss of all tracked grants takes priority over the disappearance of the rival. A valid Dutch fallback keeps the journal running.
+| Secure by naval demonstration | **The Southern Route Secured:** +15 prestige; also +10% trade advantage in Tungning’s West Borneo state while Tungning holds a tracked parcel there | 4 years | −5% radicals among Maritime Houses supporters; +5 relations with the rival if it survives. |
+| Secure by enforced goal against the recorded rival | **The Southern Route Secured:** +20 prestige; also +15% trade advantage in eligible West Borneo | 6 years | −5% radicals among southern-expedition Army and Fleet supporters; +2% among Maritime Houses supporters. |
+| Concede at the pressure limit, deadline, or end of the recorded conflict | **Dutch Demands Prevail:** −10 prestige | 3 years | +5% radicals among Maritime Houses supporters and southern-expedition Army and Fleet supporters. |
+| Lose all recorded opening grants before a victory | **Southern Outposts Lost:** −10 prestige | 2 years | +5% radicals among Maritime Houses supporters. |
+| No rival qualifies after checking the Dutch fallback, with a grant still held | **Pressure Relieved:** +10 prestige | 2 years | −2% radicals among Maritime Houses supporters. |
 
 ## [Manila](04-philippines.md#outcomes-ai-and-static-checks)
 
-| Final result | Modifier on Tungning | Duration | What happens alongside it |
+| Final result | Modifier on Tungning | Duration | Immediate effects |
 | --- | --- | --- | --- |
-| Submission or conquest | **The Manila Settlement:** +10 prestige | 5 years | Existing reward for either route. Record whether Manila was brought under direct or subject rule. |
-| Eight-year window runs out, or the recorded deadline conflict ends without success | **A Missed Crossing:** −5 prestige | 1 year | No territorial penalty. The clock can expire during suspension. |
-
-Verify success before suspending or expiring the entry, including conquest that extinguishes `PHI`. Only the tracked qualifying conflict can extend the deadline. Visibility before the independence clock starts does not count as an expired opportunity.
+| Peaceful submission through a legal agreement | **The Manila Settlement:** +15 prestige | 4 years | −5% radicals among Tungning’s Maritime Houses supporters; +10 relations with the Philippines. |
+| Submission by enforced goal or qualifying conquest | **The Manila Settlement:** +20 prestige | 6 years | −5% radicals among Tungning’s southern-expedition Army and Fleet supporters; +2% among Tungning’s Maritime Houses supporters. |
+| Opportunity expires, including after a qualifying deadline conflict ends without success | **A Missed Crossing:** −10 prestige | 2 years | +2% radicals among southern-expedition Army and Fleet supporters. |
 
 ## [Constitutional debate](05-constitutional-settlement.md#ratification)
 
-| Final result | Modifier on Tungning | Duration | What happens alongside it |
+| Final event choice, for any eligible mandate | Modifier on Tungning | Duration | Immediate effects |
 | --- | --- | --- | --- |
-| Ratify any of the three mandates | **A Mandate Ratified:** +5% influence | 1 year | Remove the debate’s legitimacy penalty and open the chosen follow-up. This reward does not help meet its legitimacy threshold. |
+| Ratify as a negotiated compact | **A Mandate Ratified:** +10% influence | 2 years | −2% radicals among supporters of the winning mandate and its rivals. |
+| Proclaim a decisive mandate | **A Mandate Ratified:** +10% influence | 4 years | −5% radicals among supporters of the winning mandate; +2% among its rivals. |
+
+For these reactions, use the School of Practical Learning for the Republic, the Ming Estates for Ming, and the Army and Fleet for Zheng, regardless of who endorsed the action. The modifier gives no legitimacy toward the follow-up’s threshold.
 
 ## [The Taiwan Convention](05-constitutional-settlement.md#the-taiwan-convention--republic)
 
-| Final result | Modifier on Tungning | Duration | What happens alongside it |
+| Final result | Modifier on Tungning | Duration | Immediate effects |
 | --- | --- | --- | --- |
-| Complete the republican settlement | **The Convention’s Confidence:** +5 base legitimacy | 5 years | Existing reward. |
+| Complete the republican settlement | **The Convention’s Confidence:** +10 base legitimacy | 5 years | −5% radicals among School of Practical Learning supporters; +2% among Ming Estates supporters. |
 
 ## [The Southern Court Reborn](05-constitutional-settlement.md#the-southern-court-reborn--ming-restoration)
 
-| Final result | Modifier on Tungning | Duration | What happens alongside it |
+| Final result | Modifier on Tungning | Duration | Immediate effects |
 | --- | --- | --- | --- |
-| Install the Zhu crown and Zheng cabinet | **The Southern Court Reborn:** +10 prestige | 5 years | Existing reward. |
+| Install the Zhu crown and Zheng cabinet | **The Southern Court Reborn:** +20 prestige | 5 years | −5% radicals among supporters of the Ming Estates and of the bloc that supplies the First Minister; count the Estates only once if they supply him. |
 
 ## [A Mandate of Our Own](05-constitutional-settlement.md#a-mandate-of-our-own--zheng-dynasty)
 
-| Final result | Modifier on Tungning | Duration | What happens alongside it |
+| Final result | Modifier on Tungning | Duration | Immediate effects |
 | --- | --- | --- | --- |
-| Confirm the Zheng monarchy | **A Mandate of Our Own:** +5 base legitimacy and +5% bureaucracy | 5 years | Existing reward. |
+| Confirm the Zheng monarchy | **A Mandate of Our Own:** +10 base legitimacy and +10% bureaucracy | 5 years | −5% radicals among Army and Fleet supporters; +2% among School of Practical Learning supporters. |
 
 ## [Return to the Mainland](06-mainland-reconquest.md#consolidate-the-foothold)
 
-| Final result | Modifier on Tungning | Duration | What happens alongside it |
+| First registration event | Modifier on Tungning | Duration | Immediate effects |
 | --- | --- | --- | --- |
-| Register the first mainland administration | **The Mainland Registers:** +3% bureaucracy | 2 years | Countrywide benefit from the common registers; no incorporation or local tax change. Register only once, even if several regions qualify. |
+| Enter the local rolls as they stand | **The Mainland Registers:** +10% bureaucracy | 2 years | −5% radicals in the newly registered state. |
+| Require a common register | **The Mainland Registers:** +10% bureaucracy | 4 years | −5% radicals among School of Practical Learning supporters in other Tungning states; +2% among Pops in the registered state. |
+
+Either version records the same foothold. Local offices and tax terms from earlier agreements stand.
 
 ## [Reunification](07-reunification-of-china.md#proclaim-the-settlement)
 
-| Final result | Modifier on Tungning | Duration | What happens alongside it |
+| Final result | Modifier on Tungning | Duration | Immediate effects |
 | --- | --- | --- | --- |
-| Proclaim direct or chartered union | **The Reunification Settlement:** +15 prestige and +5 base legitimacy | 5 years | Existing reward for either union. No new claims or force transfers. |
+| Charter a union that counts one or more chartered provinces toward the core | **The Reunification Settlement:** +20 prestige and +10 base legitimacy | 5 years | −5% radicals among Ming Estates supporters. |
+| Proclaim a directly administered union, with the entire required core held directly | **The Reunification Settlement:** +25 prestige and +10 base legitimacy | 7 years | −5% radicals among School of Practical Learning supporters; +2% among Ming Estates supporters. |
 
 ## [The Enemy of Our Enemy](08-taiping-rebellion.md#collect-the-promises)
 
-Open this entry automatically if the mandatory fork is needed. If Tungning has already reasserted, offer the optional audience during the war and open the entry only if Tungning requests it. Staying out without requesting that audience gives no modifier. An earlier ordinary renunciation skips the entry entirely.
+Use the first matching result. Test verified aid, actual benefits, and signed obligations using the journal’s [rules for collecting promises](08-taiping-rebellion.md#collect-the-promises).
 
-Resolve the entry once, after the fork, the recorded war, and any applicable 90-day cession reply. An explicit abandonment at the fork ends it immediately. A refused or expired first offer is not final while a revision is available. If the war ends before the mandatory fork is answered, keep the fork; choosing to reassert afterward resolves to **An Opening Lost** without reviving wartime aid.
+| Final result | Modifier on Tungning | Duration | Immediate effects |
+| --- | --- | --- | --- |
+| **Abandon at the fork** | **Squadrons Stand Down:** −10% military goods costs | 2 years | −2% radicals among Maritime Houses supporters. |
+| **Broken pact:** either side explicitly repudiates a signed accord, or a cession reply refuses or expires with an earned, legal transfer still due | **Promises Broken:** −10% influence | 3 years | +5% radicals among mainland-first Army and Fleet supporters. |
+| **Expanded terms fulfilled with a southern transfer** | **The Strait Bargain Honored:** +20 prestige | 5 years | −10% radicals among mainland-first Army and Fleet supporters; +2% among Maritime Houses supporters. |
+| **Terms fulfilled without an expanded southern transfer**, including an ordinary pact with coastal transfers | **The Strait Bargain Honored:** +10 prestige | 3 years | −5% radicals among Maritime Houses supporters. |
+| **Partial settlement:** verified aid and a tangible benefit, with terms left unfulfilled | **The Bargain in Part:** +5 prestige | 2 years | +2% radicals among mainland-first Army and Fleet supporters. |
+| **No return on aid:** verified aid with no tangible benefit | **The Cost of Intervention:** −10 prestige | 2 years | +5% radicals among Maritime Houses supporters. |
+| **No bargain or no aid:** no ratified pact or no verified aid | **An Opening Lost:** −5% influence | 1 year | +2% radicals among mainland-first Army and Fleet supporters. |
 
-| Final result | Modifier on Tungning | Duration |
-| --- | --- | --- |
-| **Abandon at the fork** | **Squadrons Stand Down:** −5% military goods cost | 1 year |
-| **Broken pact:** a party explicitly repudiates a signed accord, or the cession reply refuses or times out while an earned transfer is still legal | **Promises Broken:** −5% influence | 2 years |
-| **Terms fulfilled:** Tungning met its commitments and received at least one tangible benefit; all signed benefits were delivered or otherwise satisfied | **The Strait Bargain Honored:** +5 prestige; instead +10 prestige if the earned expanded terms actually transferred an agreed southern state | 3 years |
-| **Partial settlement:** Tungning made a verified contribution and received a tangible benefit, but some terms went unfulfilled, such as legally blocked cessions or incomplete heavy commitments | **The Bargain in Part:** +3 prestige | 18 months |
-| **No return on aid:** Tungning made a verified contribution under the pact but received no tangible benefit, for example after early peace or Taiping defeat | **The Cost of Intervention:** −5 prestige | 1 year |
-| **No bargain or no aid:** no pact was ratified, or Tungning made no verified contribution | **An Opening Lost:** −3% influence | 1 year |
-
-Classify in that order. Abandonment is final alongside the mainland claim’s separate renunciation outcome. A missed delivery, military defeat, or an ineligible transfer is not a voluntary breach. Record recognition actually given under the pact, trade actually activated, and states actually transferred. Count valid trade still in force or trade that ran its agreed term and expired naturally. A never-activated or prematurely canceled article is not a fulfilled term. Count land Tungning acquired independently as settled for the schedule without treating it as a transfer or benefit from the pact.
-
-Up-front recognition and trade can stand without giving prestige for an undelivered Tungning contribution. Use the aid journal’s verification rules; sending a promise or clicking to join a play alone is not delivery. A fulfilled bargain with no land transferred, including an empty southern schedule, earns +5 prestige when its commitments are met. If the heavy commitments fall short, award at most the partial settlement. Preserve valid terms and record blocked or refused cessions. None of these modifiers grants a treaty, a state, or a new war.
+A fulfilled pact requires completed commitments from Tungning, at least one tangible benefit received, and every signed benefit delivered or otherwise satisfied. Missing aid, a defeat, or a legally blocked cession does not on its own count as a breach. Shortfalls on heavy commitments cannot qualify for either fulfilled result. Abandonment closes the mainland claim as well; apply each entry’s distinct effects once.
 
 ## Implementation order
 
-The constitutional debate, its three follow-ups, Return to the Mainland, and Reunification have no deadline. Loss of readiness resets or pauses progress under the existing rules. A later lost foothold, cabinet vacancy, or change of regime can affect eligibility or presentation without undoing or repeating a recorded outcome. Mobilization’s no-war and defeat penalties, magistrates’ compacts, resettlement projects, capital preparations, and home and southern policies still use their own terms. They are not journal closers.
+Opening effects, interim event responses, mobilization, magisterial compacts, resettlement, and capital or local policies keep their own terms.
 
-1. Add namespaced definitions in `common/static_modifiers/` and localized names and descriptions. Use a single national modifier for each result, with a separate optional state modifier for the local components above. Use native `add_modifier` with an explicit duration. Use decay for Mandate Reaffirmed; keep the other modifiers at full strength until expiry. The installed examples use `country_prestige_add`, `country_legitimacy_base_add`, `country_influence_mult`, `country_bureaucracy_mult`, `country_tech_spread_mult`, `country_military_goods_cost_mult`, `state_trade_advantage_mult`, and `state_pop_qualifications_mult`.
-2. Give each entry one guarded settlement path. Validate the trigger and current owner; complete necessary treaty or territorial checks before choosing the result. Guard the transaction against reentry while transfers are in progress. Persist the actual outcome before applying its modifiers, clear opening and preparation effects, and finalize through the same handler for manual choices, AI choices, deadlines, and ownership callbacks. Use native `outcome` blocks on the recorded results. Use tracked deadlines for holds and audiences because native `timeout` closes the entry immediately. Once an entry starts, use internal suspension for waits and a visible outcome for forced closure. Set `transferable = no` and `can_revolution_inherit = no`: a regime or tag change on the same founding country keeps the entry, but a separate successor country does not inherit it or open a new copy. For the faith audience, enter a guarded settlement phase and lift the lock before rechecking a requested law switch. The approved change must not trigger the forced interruption handler. Set the faith, record the result, and conclude through its outcome. Keep the terminal record after expiry. A delayed event, repeated pulse, or load must never regrant the modifier.
-3. Apply local companions only to Tungning’s state containing eligible ordinary Taiwan land or a retained tracked West Borneo parcel. Use the original expiry; end the local effect on loss of eligibility and never restart it after recapture. Clear it on transfer or scope change so another country cannot inherit it. National effects run for their full terms. Modifiers from different journals may coexist: for example, the mainland claim and Taiping fork close two entries on abandonment, and a constitutional ratification may overlap its completed follow-up. Opening penalties, treaties, and ongoing agreements keep their own lifetimes.
-4. Show the name, value, recipient, and expiry in the resolution tooltip or recap. Where a result depends on an unconfirmed response, show the possible aftermaths instead of promising a result. Align the individual drafts’ outcome sections and obsolete “without penalty or reward” language with these tables when wiring the entries.
+1. Add namespaced definitions in `common/static_modifiers/` and localized names and descriptions. Use a single national modifier for each result, with a separate optional state modifier for the local components above. Use native `add_modifier` with an explicit duration. Use `is_decaying = yes` for Mandate Reaffirmed; keep other modifiers at full strength until expiry. For nationwide trade advantage, include `state_trade_advantage_mult` in the country modifier, as in vanilla `modifier_relations_with_west`. Use a state companion only where a specific state is named.
+2. Give each entry one guarded settlement path. Validate the trigger and current owner; complete necessary treaty or territorial checks before choosing the result. Guard the transaction against reentry while transfers are in progress. Persist the actual result and chosen or derived variant before granting any immediate effects or starting modifiers. Clear opening and preparation effects and use the same handler for manual choices, AI choices, deadlines, and ownership callbacks. Use native `outcome` blocks on the recorded results. Use tracked deadlines for holds and audiences because native `timeout` closes the entry immediately. Once an entry starts, use internal suspension for waits and a visible outcome for forced closure. Set `transferable = no` and `can_revolution_inherit = no`: a regime or tag change on the same founding country keeps the entry, but a separate successor country does not inherit it or open a new copy. For the faith audience, enter a guarded settlement phase and lift the lock before rechecking a requested law switch. The approved change must not trigger the forced interruption handler. Snapshot pre-settlement sponsors, apply the actual law and faith, then record both before applying the reaction. Keep the terminal record after expiry. A delayed event, repeated pulse, or load must never repeat the immediate effects or restart the modifier.
+3. Apply local companions only to Tungning’s state containing eligible ordinary Taiwan land or a retained tracked West Borneo parcel. Eligibility is checked only for the local effect. Use the original expiry; end the local effect on loss of eligibility and never restart it after recapture. Clear it on transfer or scope change so another country cannot inherit it. National effects run for their full terms. Modifiers from different journals may coexist: for example, the mainland claim and Taiping fork close two entries on abandonment, and a constitutional ratification may overlap its completed follow-up. Opening penalties, treaties, and ongoing agreements keep their own lifetimes.
+4. Show the immediate reactions and the name, strength, recipient, and duration of each modifier in the option or recap. Where another country’s response is pending, show the possible aftermaths.
 
 ## Static verification and limits
 
-- Trace at least one closing branch for every row, plus all three mandate ratifications and all four church law choices. Assert one national modifier per closed journal, zero for blocked or suspended entries, and at most one eligible local companion. Check a missing Taiwan or West Borneo recipient, a transfer during the term, and a recapture; the country reward must stay and the local one must not transfer or restart.
+- Trace each outcome and tone, all three mandate ratifications, and the four faiths with each legal church law choice. Check Keep on timeout and an illegal switch, external interruption, and a nonofficial Indigenous religion under broad and narrow recognition. Verify one application of the immediate effects, one national modifier per closure, zero awards while blocked or suspended, and at most one eligible local companion. Check a missing Taiwan or West Borneo recipient, a transfer during the term, and a recapture; the country reward must stay and the local one must not transfer or restart.
 - Trace simultaneous callbacks: ownership acquired while offers are pending, a Southern Passage peace that enforces a valid goal while changing the rival or losing the last grant, Manila conquest eliminating `PHI`, and the Taiping war ending with a delayed fork or cession reply. Check a full expanded cession, partially blocked transfers, up-front trade without aid, natural trade expiry before peace, heavy aid not earned, and a legal cession refused or unanswered. Verify that the recorded outcome takes precedence over late responses and cannot repeat after expiry or reload.
-- Verify keys and timing syntax against installed vanilla `common/modifier_type_definitions/00_modifier_types.txt` (lines 106, 181, 348, 526, 979, 1355, 1451, 1781), `common/journal_entries/journal_entries.md:137` (native outcomes), and `common/journal_entries/06_philippines_je.txt:154` (timed failure). The mod already attaches a timed country modifier in [Tungning setup](../../common/scripted_effects/fh_tungning_setup.txt#L88). Run `git diff --check` and standalone Tiger after scripting. Follow [AGENTS.md](../../AGENTS.md): no game or launcher runs.
+- Verify modifier keys in vanilla `common/modifier_type_definitions/00_modifier_types.txt` and outcomes in `common/journal_entries/journal_entries.md`. For radicals, see vanilla `common/script_values/event_values.txt`, `events/law_events/welfare_laws_events.txt` (religion), `events/law_events/single_party_state_laws.txt` (interest groups), and `events/balkans_events/montenegro_events.txt` (negative adjustment). The mod already attaches a timed country modifier in [Tungning setup](../../common/scripted_effects/fh_tungning_setup.txt#L88). Run `git diff --check` and standalone Tiger after scripting. Follow [AGENTS.md](../../AGENTS.md): no game or launcher runs.
 
-The plan covers the mod’s Tungning chain. Vanilla journals, event-only choices, their existing treaty terms and land rules, and new deadlines or failure states are outside its scope. In particular, the [Southern Passage concession draft](03-dutch-east-indies.md#outcomes) needs a separate ruling on which holdings and subjects it transfers; the aftermath applies once to whichever concession rule is approved.
+The plan covers the mod’s Tungning chain. Vanilla journals, existing treaty terms and land rules, and new closure deadlines or failure states are outside its scope. Apply the Southern Passage concession aftermath once under whichever [concession rule](03-dutch-east-indies.md#outcomes) is approved.

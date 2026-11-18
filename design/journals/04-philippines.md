@@ -22,10 +22,10 @@ Each quarter during the open window, roll a 10% chance to draw one eligible even
 | Event | Eligible while Tungning is at peace with Manila and… | Choices |
 | --- | --- | --- |
 | Manila merchants seek a new partner | Relations are at least +20 | Welcome the delegation (+5 relations, −5% bureaucracy) or leave trade to private brokers (+2 Maritime Houses approval). |
-| Officers report an opening | Manila is fighting another war or turmoil in its Manila state is at least 15% | Send observers (−5 relations, +5% naval invasion efficiency, +5% military goods costs) or reassure Manila (+5 relations). |
+| Officers report an opening | Manila is fighting another war or turmoil in its Manila state is at least 15% | Send observers (−5 relations immediately; +5% naval invasion efficiency and +5% military goods costs for one year) or reassure Manila (+5 relations immediately; +5% influence for six months). |
 | Missionaries cross the strait | Tungning is Catholic and the Devout are the Catholic Missions | Offer church-run schools (+5 relations, +2 Catholic Missions approval, −2 School of Practical Learning approval) or invite the mission’s teachers to work through the public schools (+2 School of Practical Learning approval). Both sides want the new teachers; the dispute is over who runs the schools. |
 
-Event modifiers last six months. An event cannot sign an agreement, grant territory, or start a play.
+Event modifiers last six months unless an option gives a different term. An event cannot sign an agreement, grant territory, or start a play.
 
 ## Establish Tungning rule
 
@@ -36,7 +36,7 @@ Event modifiers last six months. An event cannot sign an agreement, grant territ
 
 ## Outcomes, AI, and static checks
 
-- **Success:** Grant +10 prestige for five years and recap direct rule or rule through Manila. On expiry, close without a territorial penalty. End any journal preparations when the entry closes.
+- **Resolution:** Check success before suspension or expiry, including conquest that extinguishes `PHI`. Record whether submission came through an agreement or an enforced goal, or whether Tungning took direct rule. Apply the [Manila aftermath](outcome-modifiers.md#manila) from that result. If the clock runs out during suspension or the tracked deadline conflict ends unsuccessfully, close without a territorial penalty. Visibility before the window starts is not an expired opportunity. End journal preparations at closure.
 - **Later rule:** Philippine holdings still under Tungning become eligible for [the Southern Compact](07-reunification-of-china.md#the-home-and-southern-settlements) once this journal closes.
 - **AI:** Start with envoys or legal agreements when relations make cooperation plausible. A governing southern-expedition leader gives more weight to preparing a crossing and a legal play; mainland-first leadership favors keeping the ships at hand for a mainland mobilization. Consider a play when Manila is distracted by war or turmoil, Tungning can field land and naval forces, and likely third-party intervention is manageable. Recheck interests, eligibility, finances, and existing diplomacy before committing. Other journals do not gate Manila.
 - **Display:** Show deadline, progress toward each route, and concrete blockers such as rank, missing interests, subject restrictions, or a third-party overlord.

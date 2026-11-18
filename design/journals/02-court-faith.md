@@ -6,18 +6,18 @@ The opening audience introduces Xu Wenjing, a Catholic scholar of the Confucian 
 
 ## Opening effects
 
-- **Yongli Articles:** Start with a native amendment on **Freedom of Conscience**. Its religious acceptance scores are **+20/+15/+10/+5** for the state faith, a shared religious trait, a shared trait group, or no match. Vanilla scores are +20/+15/+5/0. The wage penalty for faiths other than the official one falls from **−5% to −2%**. Other effects of Freedom of Conscience remain in place. See the [law comparison](../law-plan.md#proposed-laws-against-vanilla).
+- **Yongli Articles:** Start with the [Yongli amendment to Freedom of Conscience](../law-plan.md#proposed-laws-against-vanilla). Its −50% conversion speed continues while the amendment is in force.
 - **Church law on hold:** Block voluntary and imposed enactment in the Church and State law group, and block repeal of the Articles, until settlement or interruption. This applies to the same founding country if it restores the Ming; restoration neither ends nor restarts the debate. Keep other law groups available.
-- **Conversions on hold:** Apply **−75% conversion speed** in Tungning’s states while the debate is open. Existing Catholic status alone does not ease the restriction.
-- **Catholic preference:** If Catholicism is the latest faith explicitly nominated, ease the penalty to **−35%**. A new nomination for any other faith restores the full penalty. This does not change which nomination each side would adopt on winning.
-- **Ends:** Remove the penalty when the court settles or the debate is interrupted. Apply it only in states Tungning owns; ordinary laws still determine who can convert.
+- **Conversions on hold:** While the debate is open, add a temporary **−25% conversion speed** in Tungning’s states, for **−75%** from the journal and Articles together. Existing Catholic status alone does not ease the restriction.
+- **Catholic preference:** If Catholicism is the latest faith explicitly nominated, use a temporary **+15% conversion speed** instead, for **−35%** from the journal and Articles together. A new nomination for any other faith restores the full penalty. This does not change which nomination each side would adopt on winning.
+- **Ends:** Remove the journal’s temporary conversion modifier when the court settles or the debate is interrupted. Apply it only in states Tungning owns; ordinary laws still determine who can convert.
 
 ## Court balance
 
 - **Entry:** `fh_je_court_faith`, starting at **120/200** after the Articles are in place at the 1836 opening.
 - **Endpoints:** **0** restores an ancestral tradition; **200** endorses Christianity. Check after each action, event choice, or monthly drift.
 - **Deadline:** On the tenth anniversary, choose the nearer endpoint. At **100**, favor the current state religion’s side; if it belongs to neither side, favor the ancestral side.
-- **Interruption:** If a forced regime change or external script replaces Freedom of Conscience or removes the Articles, close without a settlement. Cancel pending choices and clear the lock and conversion penalty. Keep the resulting law and faith; do not reopen the debate or apply settlement rewards.
+- **Interruption:** If a forced regime change or external script replaces Freedom of Conscience or removes the Articles, close without a settlement. Cancel pending choices and clear the lock and temporary conversion modifier. Keep the resulting law and faith and apply only the [interruption aftermath](outcome-modifiers.md#court-faith).
 - **Monthly drift:** Add all applicable effects:
   - +1 while the Manila Compact with Spain is active.
   - +1 while the Catholic Missions are in government.
@@ -43,11 +43,11 @@ The four nominations share a six-month cooldown. Give the qualifying domestic sp
 
 ## Court events
 
-Roll a **10%** chance each quarter to draw one eligible event, then start a shared 12-month cooldown. Responses move the bar without replacing a nomination. Their modifiers last six months. Recheck eligibility on response and discard pending events after 30 days or when the settlement audience opens.
+Roll a **10%** chance each quarter to draw one eligible event, then start a shared 12-month cooldown. Responses move the bar without replacing a nomination. Their modifiers last six months unless an option gives a different term. Recheck eligibility on response and discard pending events after 30 days or when the settlement audience opens.
 
 | Event and trigger | +5 toward Christianity | −5 toward ancestral traditions |
 | --- | --- | --- |
-| **Mission-school dispute:** At least 3% Catholic population in Taiwan. Luo petitions for classrooms; Xu argues that mission pupils should also study the classics. | Open mission classrooms (Taiwan education access +3 percentage points) | Fund classical tutors (Taiwan qualifications +3%) |
+| **Mission-school dispute:** At least 3% Catholic population in Taiwan. Luo petitions for classrooms; Xu argues that mission pupils should also study the classics. | Put the missions in charge (remove 2% radicals among Catholic Pops in Tungning’s Taiwan and add 2% among all other faiths there; Taiwan education access +5 percentage points for one year) | Fund classical tutors (Taiwan qualifications +3% for six months) |
 | **A chaplain from Manila:** Active Manila Compact. Luo welcomes the visiting chaplain. | Receive the chaplain (Taiwan trade advantage +3%) | Send a secular delegation (influence +3%) |
 | **The printing house:** A Taiwan university. Talavan brings Siraya readers to the university press; Xu makes the case for printing them. | Print translations for the missions (technology spread +3%) | Print classical readers (Taiwan qualifications +3%) |
 | **The academy’s appeal:** Governing Ming Estates. | Admit mission graduates to exams (Taiwan qualifications +3%) | Keep the classical examinations (bureaucracy +3%) |
@@ -61,7 +61,7 @@ Find the named speakers by their character templates, as in the opening audience
 
 At either endpoint or the deadline, record the winning side’s latest nomination as the faith to adopt at settlement. Without one, use the current state religion if it is one of that side’s two choices. Otherwise use **Catholicism** or **Confucianism**, respectively. Show the likely faith in the journal.
 
-Open a **30-day settlement audience** and freeze the bar, nominations, and court events. Keep the church law lock and conversion penalty in place during the audience. Show the settled faith with each choice; any of the four faiths can be paired with any legal choice below.
+Open a **30-day settlement audience** and freeze the bar, nominations, and court events. Keep the church law lock and temporary conversion modifier in place during the audience. Show the proposed faith and the [recognition, immediate effects, and duration](outcome-modifiers.md#court-faith) with each choice. Any of the four faiths can be paired with any legal choice below.
 
 | Choice | Church law after settlement |
 | --- | --- |
@@ -70,28 +70,21 @@ Open a **30-day settlement audience** and freeze the bar, nominations, and court
 | **Establish the settled faith** | Remove the Articles and adopt vanilla **State Religion**, if legal. |
 | **Separate church and state** | Remove the Articles and adopt vanilla **Total Separation**, if legal. Check Empiricism, Theocracy, religious power bloc leadership, and incompatible school laws. |
 
-**Keep the Articles** is the timeout and the AI’s default when it has no strong reason to change. Show switches only when they meet native prerequisites apart from the journal lock. On response, recheck that the Articles are still in force. Record the terminal outcome and close the debate before applying effects. With the lock lifted, check native availability again before removing the Articles or switching laws. If a switch is no longer legal, keep the Articles. An external replacement instead interrupts the audience.
+**Keep the Articles** is the timeout and the AI’s default when it has no strong reason to change. Show switches only when they meet native prerequisites apart from the journal lock. On response, recheck that the Articles are still in force. Guard the settlement against callbacks and lift the lock before rechecking native availability. If the requested switch is no longer legal, keep the Articles. An external replacement before settlement interrupts the audience.
 
 Apply any church law change before setting the official faith. Leave unrelated enactments alone. Then update the [Devout name and traits](README.md#interest-groups) and recalculate Pop support. If the incumbent Devout leader’s personal faith does not match the result, appoint a living representative of the new faith from Tungning’s Devout, or create a matching delegate if needed. A Sinkan pastor can represent the Reformed congregations; Talavan remains a schoolmaster. Luo and other incumbents keep their personal faiths and may leave the leadership without being expelled. Ordinary succession resumes afterward.
 
-Use the groups and leaders present before the change to identify the sponsors. If the Catholic Missions are displaced and were not marginalized, express their opposition as **+10% radicals from political movements in Tungning’s Taiwan for one year**. Apply approval and domestic effects for three years and relations once to each surviving partner. Settlement does not directly convert Pops or rewrite treaties. If active Confucian Academies lose their required official faith, use the [school law fallback](../law-plan.md#proposed-laws-against-vanilla) and preserve investment where schools remain active.
+If active Confucian Academies lose their required official faith, use the [school law fallback](../law-plan.md#proposed-laws-against-vanilla) and preserve investment where schools remain active. Record the actual law choice and adopted faith, conclude the journal, and apply the [faith aftermath](outcome-modifiers.md#court-faith) once. The settlement does not rewrite treaties.
 
 [Taiping negotiations](08-taiping-rebellion.md#bargain-with-the-heavenly-kingdom) use the current official faith even while this debate is open. A nomination has no diplomatic effect before settlement.
 
-| Faith | Approval | Domestic effect | Relations with Spain and the Philippines |
-| --- | --- | --- | --- |
-| Catholic (`rel:catholic`) | Catholic Missions +2 | Taiwan: +5% trade advantage | +10 each |
-| Protestant (`rel:protestant`) | Reformed Congregations +2; governing Reformers or Market Liberals +2 | Tungning: +5% technology spread | −10 each |
-| Confucian (`rel:confucian`) | Ritual Academies +2; governing Ming Estates or governing Traditionalists +2 | Tungning: +5% bureaucracy | −10 each |
-| Mahayana Buddhist (`rel:mahayana`) | Buddhist Temples +2 | Taiwan: +5% qualifications | −10 each |
-
-Where several groups qualify for the same approval in the table, use the highest clout and a fixed order for ties. Apply the approval only once to the Devout even if they also meet a sponsor condition.
+Use `rel:catholic`, `rel:protestant`, `rel:confucian`, and `rel:mahayana` for the four possible official faiths.
 
 ## Static checks
 
 - Trace both endpoints, a deadline tie, the two default faiths, and each nominated faith. Include a sponsor leaving government and a pending event when the audience opens.
-- Check the conversion penalty at opening, after each type of nomination, during the audience, and after settlement or interruption. State transfers must not leave the penalty with another country.
-- Verify that neither ordinary enactment, imposed enactment, nor repeal can bypass the lock during debate or audience. Restore the Ming in both phases without resetting progress. Force a replacement law and confirm the entry closes without awards or a second law change.
+- Check the combined conversion effects at opening, after each type of nomination, and during the audience. At settlement or interruption, remove the journal effect and retain the Articles’ effect only if the amendment remains. State transfers must not leave the journal effect with another country.
+- Verify that neither ordinary enactment, imposed enactment, nor repeal can bypass the lock during debate or audience. Restore the Ming in both phases without resetting progress. Force a replacement law and confirm only the interruption aftermath applies, without a second law change.
 - Trace Keep, Repeal, both eligible and blocked switches, and audience timeout. Exercise a choice that becomes illegal and verify it keeps the Articles. Leave the Manila Compact, Pop religions, and unrelated laws or enactments intact except for the school law fallback.
 - Show the Catholic Missions throughout nominations and the audience, then check the Devout name, leader, traits, and support after all four faith outcomes. Trace an unavailable Luo and an already matching incumbent. Keep other countries’ Devout unchanged.
 - Check that the Spanish compact and Qing tributary terms alter drift only while active. The faith journal runs alongside the mainland debate and can settle independently of it.

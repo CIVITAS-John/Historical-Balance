@@ -65,18 +65,18 @@ Each quarter, roll a 10% chance to draw one eligible petition. Petitions share a
 
 - **Threshold:** A mandate at 200 unlocks its **Ratify** action while it remains eligible. There is no forced choice or deadline.
 - **Recommendation:** If several mandates are ready, highlight the last explicit endorsement if it is ready. Otherwise prefer Zheng, then Republic, then Ming.
-- **Selection:** Recheck the mandate and its requirements, record the route, and open its follow-up once. The AI favors an eligible route whose follow-up fits its laws, government, and holdings.
+- **Selection:** Offer a negotiated compact or a decisive proclamation for the selected mandate. Recheck eligibility when confirmed, record the route and tone, apply the [ratification aftermath](outcome-modifiers.md#constitutional-debate), and open the follow-up once. The AI favors a route that fits its laws, government, and holdings; default to a compact unless the winning mandate leads each rival by at least 50 points.
 
 ## Follow-up journals
 
-For each route, maintain the listed ongoing requirements for six consecutive months. Reset the streak when any of them fails. Recheck eligibility before granting one-time completion effects.
+For each route, maintain the listed ongoing requirements for six consecutive months. Reset the streak when any of them fails. Recheck eligibility before recording completion. Each follow-up uses its own aftermath; the ratification tone does not change its requirements or effects.
 
 ### The Taiwan Convention — Republic
 
 - **Requires:** Parliamentary Republic or Presidential Republic enacted through normal law play.
 - **Requires:** Wealth Voting, Census Voting, or Universal Suffrage.
 - **Requires:** Legitimacy of at least 60.
-- **Effects:** Display **Republic of Tungning** while a valid republican law is active. Grant +5 base legitimacy for five years.
+- **Effects:** Display **Republic of Tungning** while a valid republican law is active. Apply [The Taiwan Convention’s aftermath](outcome-modifiers.md#the-taiwan-convention) on completion.
 - **Continuity:** Keep the same playable country, subjects, treaties, religion, and surviving claims.
 
 ### The Southern Court Reborn — Ming restoration
@@ -86,14 +86,14 @@ For each route, maintain the listed ongoing requirements for six consecutive mon
 - **A Zhu crown:** Prefer the living, local Prince Zhu Yucheng (`fh_tungning_ming_claimant`); otherwise prepare a Zhu cadet once. Make Zhu the monarch. Remove any non-Zhu heir from the line of succession without exiling them, and use an eligible Zhu heir or prepare a Zhu cadet for that role. Mark the Zhu dynasty for native inheritance so future heirs belong to the same house. In the charter and court events the monarch presides at ceremonies and represents the state; he does not claim the personal authority of the old imperial throne.
 - **A Zheng cabinet:** Have the Zheng incumbent step down by agreement if one reigns. Use that adult Zheng as **First Minister** if still eligible after the handover; otherwise choose a living adult Zheng in Tungning (prefer the outgoing Zheng heir if eligible) or create one cadet. Record the dynastic office separately from the native ruler. Assign the First Minister to the stronger bloc as its actual interest group leader. The other Zheng branch can still join the coalition normally; one character cannot head both groups. Save the outgoing ruler and heir and prepare both offices before the transfer. If the handover removes the intended minister from play, use the prepared cabinet fallback without repeating the enthronement. Neither house changes personal faith.
 - **The rites:** A settled Confucian court can present the ancestral rites as public ceremonies. Mahayana delegates can attend under their own patronage. Under Christianity the Zhu can keep them as dynastic ceremonies without requiring church participation. If faith is undecided, defer that description to the faith settlement; the charter does not convert the court, monarch, or cabinet.
-- **After ratification:** Use **Southern Ming** while a Zhu crown or its native regency and a qualifying constitutional Monarchy are in force. Grant +10 prestige for five years once. Use a persistent constitutional decision and status text to represent the Zheng First Minister as head of government; use vanilla ruler, government composition, and votes for actual authority. If the minister dies, leaves the country, loses the group leadership, or his bloc leaves government, mark the office vacant. Allow a new appointment only when the more powerful eligible bloc, measured as at the founding, is in government. Do not reshuffle a serving minister on a routine clout change. If the laws or crown cease to qualify, suspend the charter name and appointments without repeating the enthronement or reward. Territorial loss after the settlement does not automatically dethrone the Zhu. No land transfers; the [capital audiences](07-reunification-of-china.md#where-the-government-sits) decide where the court sits.
+- **After ratification:** Use **Southern Ming** while a Zhu crown or its native regency and a qualifying constitutional Monarchy are in force. Apply [The Southern Court Reborn’s aftermath](outcome-modifiers.md#the-southern-court-reborn) on completion. Use a persistent constitutional decision and status text to represent the Zheng First Minister as head of government; use vanilla ruler, government composition, and votes for actual authority. If the minister dies, leaves the country, loses the group leadership, or his bloc leaves government, mark the office vacant. Allow a new appointment only when the more powerful eligible bloc, measured as at the founding, is in government. Do not reshuffle a serving minister on a routine clout change. If the laws or crown cease to qualify, suspend the charter name and appointments without repeating the enthronement or reward. Territorial loss after the settlement does not automatically dethrone the Zhu. No land transfers; the [capital audiences](07-reunification-of-china.md#where-the-government-sits) decide where the court sits.
 
 ### A Mandate of Our Own — Zheng dynasty
 
 - **Requires:** Monarchy and Appointed or Elected Bureaucrats.
 - **Requires:** At least three Government Administration levels in Tungning’s Taiwan and legitimacy of at least 60.
 - **Succession:** Confirm the crown with a living Zheng monarch. If there is a Zheng heir but another monarch reigns, wait for succession. If there is no eligible Zheng heir, offer a fictional Zheng cadet once without removing the incumbent.
-- **Effects:** Display **Kingdom of Tungning** and grant +5 base legitimacy and +5% bureaucracy for five years.
+- **Effects:** Display **Kingdom of Tungning** and apply [A Mandate of Our Own’s aftermath](outcome-modifiers.md#a-mandate-of-our-own) on completion.
 - **Limits:** Grant no mainland claims and leave the Ming lock in place.
 
 ## Static checks
