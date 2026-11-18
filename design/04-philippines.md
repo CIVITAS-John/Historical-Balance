@@ -1,0 +1,21 @@
+# The Manila Question
+
+Tungning can press for rule over the Philippines after Spain can no longer speak for Manila. The journal creates an opportunity to act through diplomacy and war, with no automatic Philippine surrender or scripted transfer.
+
+## Opening
+
+`fh_je_manila_question` becomes visible when the Philippines (`PHI`) is alive, controls **Manila city** (`p:x0D8236`), and Spain no longer appears anywhere in its overlord chain. Spain transferring its colony to another country shows a blocked journal until the Philippines is independent. Spain annexing the colony outright does not open the journal. A surviving Philippine government that loses Manila before the opening must regain it first. Keep the opening check independent from the mainland and constitutional journals.
+
+The first time the independent Philippines meets those conditions, record an **eight-year opportunity**. Spain taking Manila back under its authority, or another state taking over Manila or the Philippine government, suspends new actions. The deadline still runs and cannot be restarted by a new independence. Once the deadline passes, ordinary diplomacy remains available without journal rewards.
+
+## Courses of action
+
+- **Send envoys to Manila.** Requires an active interest in Indonesia, peace with the Philippines, and +20 relations. A five-year trade or investment agreement through normal diplomacy can support the story, but does not complete the journal. A Catholic Tungning gets one +10 relations audience if it lacks an existing Philippine accord. No creed is required for the journal.
+- **Seek submission.** Become the direct overlord of the Philippine government through a legal native play or a native peaceful subject arrangement where one actually exists. Unrecognized Tungning can press the Make Tributary play when rank permits; recognized Tungning can pursue a protectorate when eligible. Completion requires a direct relationship between Tungning and `PHI` and `PHI` still holding Manila. Leave the Philippine tag and other vanilla content intact.
+- **Take the islands.** Use normal state conquest. When the opportunity opens, record the set of provinces then owned by the Philippines in Luzon and the Visayas. If the Philippines controlled both Manila (`x0D8236`) and Cebu (`xD2CA4A`) when the opportunity opened, Tungning must own both cities and **more than half** that set to complete direct rule. If the Philippines lacked Cebu at that point, require Manila and the same majority only. Local rulers’ parcels that the Philippines never held are not required, and Mindanao is not a mandatory target. Only real ownership counts; occupation does not.
+
+The journal displays both end conditions and explains when rank, lack of an interest, Tungning’s subject status, or a third-party overlord prevents a diplomatic play. A play can qualify only if Tungning initiated it against independent `PHI` during the open window and it targets Philippine subjugation or territory. A qualifying play in progress at the deadline can finish; store that play’s identity and do not extend the window for another. For conquest, require both the ownership condition and a corresponding enforced goal in that play. Record the goal before the tag/ownership gates are checked so taking Manila and extinguishing `PHI` in the same settlement can count. Ordinary ownership gained from an unrelated country without a qualifying Philippine goal cannot complete the entry.
+
+**Success:** +10 prestige for five years and a recap saying whether Tungning rules through Manila or directly. **Expiry:** no territorial penalty. Native AI diplomacy can qualify; specialized AI plans to acquire the Philippines are out of scope. No action breaks a live truce or rewrites an existing treaty.
+
+Vanilla references: `common/history/diplomacy/00_subject_relationships.txt:11–28` (Spanish colony), `common/journal_entries/06_philippines_je.txt:222–262` (real independence), `map_data/state_regions/12_indonesia.txt:459–506` (Luzon and Visayas), and `common/diplomatic_plays/00_diplomatic_plays.txt:104–127,424–479` (native plays). Verify Spanish subject, independent Manila, transfer to a third party, reintegration by Spain, a legal subject win, and a completed conquest that extinguishes `PHI`.
