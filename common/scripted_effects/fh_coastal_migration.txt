@@ -1,0 +1,117 @@
+﻿# Invoked in the coastal state after its semiannual roll succeeds.
+fh_coastal_migration_try = {
+	save_scope_as = fh_coastal_origin
+	owner = { save_scope_as = fh_coastal_origin_country }
+	if = {
+		limit = { state_region = s:STATE_FUJIAN }
+		cu:min = { save_scope_as = fh_coastal_culture }
+	}
+	else_if = {
+		limit = { state_region = s:STATE_GUANGDONG }
+		cu:yue = { save_scope_as = fh_coastal_culture }
+	}
+	else = {
+		cu:han = { save_scope_as = fh_coastal_culture }
+	}
+
+	if = {
+		limit = {
+			"population_by_culture(scope:fh_coastal_culture)" >= 100000
+			owner = {
+				NOT = { is_mass_migration_origin_of_culture = scope:fh_coastal_culture }
+			}
+		}
+		fh_coastal_migration_find_destination = yes
+		if = {
+			limit = { exists = scope:fh_coastal_destination }
+			if = {
+				limit = { owner = { has_law_or_variant = law_type:law_closed_borders } }
+				# A small group can slip out without opening the national border.
+				random_scope_pop = {
+					limit = {
+						culture = scope:fh_coastal_culture
+						strata = lower
+						NOT = { is_pop_type = slaves }
+						workforce >= 500
+						workforce <= 5000
+						dependents <= 10000
+					}
+					save_scope_as = fh_coastal_passengers
+				}
+				if = {
+					limit = { exists = scope:fh_coastal_passengers }
+					scope:fh_coastal_passengers = { move_pop = scope:fh_coastal_destination }
+					fh_coastal_migration_finish = { EVENT = fh_coastal_migration.2 }
+				}
+			}
+			else = {
+				# The engine keys a mass migration by country and culture.
+				scope:fh_coastal_destination = {
+					create_mass_migration = {
+						origin = scope:fh_coastal_origin_country
+						culture = scope:fh_coastal_culture
+					}
+				}
+				if = {
+					limit = {
+						scope:fh_coastal_destination = {
+							is_mass_migration_target_for_culture = scope:fh_coastal_culture
+						}
+					}
+					fh_coastal_migration_finish = { EVENT = fh_coastal_migration.1 }
+				}
+			}
+		}
+	}
+}
+
+fh_coastal_migration_find_destination = {
+	# A familiar route gets the first chance, if the island can take arrivals.
+	random = {
+		chance = {
+			value = 30
+			if = {
+				limit = { state_region = s:STATE_FUJIAN }
+				add = 25
+			}
+		}
+		s:STATE_FORMOSA.region_state:TWG ?= {
+			if = {
+				limit = { fh_coastal_migration_eligible_destination = yes }
+				save_scope_as = fh_coastal_destination
+			}
+		}
+	}
+	if = {
+		limit = { NOT = { exists = scope:fh_coastal_destination } }
+		random_country = {
+			limit = {
+				is_country_alive = yes
+				any_scope_state = { fh_coastal_migration_eligible_destination = yes }
+			}
+			ordered_scope_state = {
+				limit = { fh_coastal_migration_eligible_destination = yes }
+				order_by = migration_pull
+				position = 0
+				check_range_bounds = no
+				save_scope_as = fh_coastal_destination
+			}
+		}
+	}
+}
+
+fh_coastal_migration_finish = {
+	state_region = {
+		set_variable = { name = fh_coastal_migration_cooldown years = 4 }
+	}
+	if = {
+		limit = { owner = { is_player = yes } }
+		trigger_event = { id = $EVENT$ popup = yes }
+	}
+	scope:fh_coastal_destination = {
+		if = {
+			limit = { owner = { is_player = yes } }
+			trigger_event = { id = $EVENT$ popup = yes }
+		}
+	}
+}

@@ -1,0 +1,22 @@
+﻿fh_coastal_migration_eligible_destination = {
+	is_coastal = yes
+	OR = {
+		is_in_geographic_region = geographic_region_east_asia
+		is_in_geographic_region = geographic_region_south_east_asia
+		is_in_geographic_region = geographic_region_oceania
+		is_in_geographic_region = geographic_region_pacific_coast
+		is_in_geographic_region = geographic_region_central_america
+		is_in_geographic_region = geographic_region_south_america
+	}
+	state_is_eligible_as_mass_migration_target = yes
+	is_mass_migration_target = no
+	migration_pull >= scope:fh_coastal_origin.migration_pull
+	owner = {
+		NOR = {
+			this = scope:fh_coastal_origin_country
+			market = scope:fh_coastal_origin_country.market
+			has_law_or_variant = law_type:law_closed_borders
+		}
+		scope:fh_coastal_culture = { culture_can_have_mass_migration_to_country = prev }
+	}
+}

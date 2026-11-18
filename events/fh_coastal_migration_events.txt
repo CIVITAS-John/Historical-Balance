@@ -1,0 +1,27 @@
+﻿namespace = fh_coastal_migration
+
+fh_coastal_migration.1 = {
+	type = state_event
+	placement = root
+	title = fh_coastal_migration.1.t
+	desc = fh_coastal_migration.1.d
+	event_image = { video = "asia_poor_people_moving" }
+
+	option = {
+		name = fh_coastal_migration.a
+		default_option = yes
+	}
+}
+
+fh_coastal_migration.2 = {
+	type = state_event
+	placement = root
+	title = fh_coastal_migration.2.t
+	desc = fh_coastal_migration.2.d
+	event_image = { video = "asia_poor_people_moving" }
+
+	option = {
+		name = fh_coastal_migration.a
+		default_option = yes
+	}
+}

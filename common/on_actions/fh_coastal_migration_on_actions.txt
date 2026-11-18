@@ -1,0 +1,46 @@
+﻿on_half_yearly_pulse_state = {
+	on_actions = { fh_coastal_migration_pulse }
+}
+
+fh_coastal_migration_pulse = {
+	trigger = {
+		OR = {
+			state_region = s:STATE_FUJIAN
+			state_region = s:STATE_GUANGDONG
+			state_region = s:STATE_ZHEJIANG
+		}
+		is_largest_state_in_region = yes
+		is_coastal = yes
+		state_population >= 500000
+		state_region = { NOT = { has_variable = fh_coastal_migration_cooldown } }
+	}
+
+	effect = {
+		random = {
+			chance = {
+				value = 2
+				if = {
+					limit = { state_unemployment_rate >= 0.05 }
+					multiply = 3
+				}
+				if = {
+					limit = { turmoil >= 0.15 }
+					multiply = 3
+				}
+				if = {
+					limit = { state_region = s:STATE_ZHEJIANG }
+					multiply = 0.5
+				}
+				if = {
+					limit = {
+						turmoil < 0.10
+						state_unemployment_rate < 0.03
+						average_sol >= 12
+					}
+					multiply = 0.5
+				}
+			}
+			fh_coastal_migration_try = yes
+		}
+	}
+}

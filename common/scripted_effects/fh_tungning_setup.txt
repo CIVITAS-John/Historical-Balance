@@ -67,6 +67,7 @@ fh_tungning_country_setup = {
 	activate_law = law_type:law_autocracy
 	activate_law = law_type:law_freedom_of_conscience
 	activate_law = law_type:law_mercantilism
+	activate_law = law_type:law_migration_controls
 	activate_law = law_type:law_colonial_resettlement
 	set_institution_investment_level = { institution = institution_colonial_affairs level = 1 }
 	set_ruling_interest_groups = { ig_landowners }
@@ -182,7 +183,23 @@ fh_tungning_fleet_setup = {
 fh_tungning_qing_setup = {
 	s:STATE_FORMOSA = { add_claim = c:CHI }
 	set_relations = { country = c:TWG value = -35 }
+	if = {
+		limit = { NOT = { has_diplomatic_pact = { who = c:TWG type = embargo } } }
+		create_diplomatic_pact = { country = c:TWG type = embargo }
+	}
 	add_technology_researched = paddle_steamer
+
+	# Returning families and merchants account for a small minority on the
+	# mainland. Convert existing Pops so the bookmark population stays intact.
+	s:STATE_FUJIAN.region_state:CHI ?= {
+		every_scope_pop = {
+			limit = {
+				has_pop_culture = min
+				NOT = { has_pop_religion = catholic }
+			}
+			change_pop_religion = { target = rel:catholic value = 0.002 }
+		}
+	}
 
 	ordered_scope_fleet = {
 		order_by = num_ships
