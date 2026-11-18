@@ -75,6 +75,7 @@ fh_tungning_country_setup = {
 
 	fh_tungning_lanfang_setup = yes
 	s:STATE_FORMOSA.region_state:TWG ?= { fh_tungning_formosa_setup = yes }
+	fh_tungning_army_setup = yes
 	fh_tungning_fleet_setup = yes
 
 	add_modifier = {
@@ -157,12 +158,39 @@ fh_tungning_formosa_setup = {
 	}
 }
 
+fh_tungning_army_setup = {
+	create_military_formation = {
+		type = army
+		hq_region = sr:region_south_china
+		name = fh_tungning_army
+		combat_unit = {
+			type = unit_type:combat_unit_type_low_tier_marines
+			state_region = s:STATE_FORMOSA
+			count = 5
+		}
+		combat_unit = {
+			type = unit_type:combat_unit_type_line_infantry
+			state_region = s:STATE_FORMOSA
+			count = 8
+		}
+		combat_unit = {
+			type = unit_type:combat_unit_type_cannon_artillery
+			state_region = s:STATE_FORMOSA
+			count = 2
+		}
+	}
+}
+
 fh_tungning_fleet_setup = {
 	create_military_formation = {
 		type = fleet
 		hq_region = sr:region_south_china
 		name = fh_tungning_fleet
 		save_scope_as = fh_tungning_opening_fleet
+		ship = {
+			type = ship_type:ship_type_early_troop_ship
+			count = 10
+		}
 	}
 	create_ship = {
 		type = ship_type:ship_type_frigate
@@ -176,8 +204,8 @@ fh_tungning_fleet_setup = {
 	create_ship = { type = ship_type:ship_type_frigate fleet = scope:fh_tungning_opening_fleet name = fh_tungning_ship_4 }
 	create_ship = { type = ship_type:ship_type_frigate fleet = scope:fh_tungning_opening_fleet name = fh_tungning_ship_5 }
 
-	# Match the vanilla starting allowance for five ships and one shipyard.
-	add_supply_ships = 128
+	# Match the vanilla starting allowance for fifteen ships and one shipyard.
+	add_supply_ships = 208
 }
 
 fh_tungning_qing_setup = {
@@ -211,7 +239,6 @@ fh_tungning_qing_setup = {
 		limit = { exists = scope:fh_tungning_qing_fleet }
 		create_ship = { type = ship_type:ship_type_frigate fleet = scope:fh_tungning_qing_fleet name = fh_qing_ship_1 }
 		create_ship = { type = ship_type:ship_type_frigate fleet = scope:fh_tungning_qing_fleet name = fh_qing_ship_2 }
-		create_ship = { type = ship_type:ship_type_frigate fleet = scope:fh_tungning_qing_fleet name = fh_qing_ship_3 }
-		add_supply_ships = 24
+		add_supply_ships = 16
 	}
 }

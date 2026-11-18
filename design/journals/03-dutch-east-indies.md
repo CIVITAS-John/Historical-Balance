@@ -7,6 +7,7 @@ Dutch merchants and naval stations threaten Tungning’s route to West Borneo an
 - **Entry:** `fh_je_southern_passage`. Open after the day-eight diplomacy retry if Tungning still holds at least one of the grants below and there is a Dutch rival.
 - **Holdings:** Record only grants made by the opening setup that Tungning still holds: Sintang, Selangor, and Bulungan as direct tributaries, and the Lanfang parcels `x1C7417`, `x2A3D46`, and `xE02CB6`. Keep that list fixed.
 - **Rival:** Track the Dutch East Indies (`DEI`). If it ceases to exist, switch to the Netherlands only if it owns land in West Java. If neither qualifies, close without concessions or a victory reward.
+- **Opening effect:** Dutch competition gives Tungning’s West Borneo state **−10% trade advantage** while the journal is open and Tungning still holds a tracked Lanfang parcel. Remove the penalty when the journal closes or the state no longer qualifies.
 
 ## Dutch pressure
 

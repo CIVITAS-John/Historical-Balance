@@ -2,6 +2,12 @@
 
 The Zheng court embraced Catholicism to secure Manila’s help. In 1836 Tungning is still officially Catholic and has Freedom of Conscience. The court can keep its Christian ties or return to an ancestral tradition.
 
+## Opening effects
+
+- **Conversions on hold:** Apply **−75% conversion speed** in Tungning’s states while the debate is open. Existing Catholic status alone does not ease the restriction.
+- **Catholic preference:** If Catholicism is the latest faith explicitly nominated, ease the penalty to **−35%**. A new nomination for any other faith restores the full penalty. This does not change which nomination each side would adopt on winning.
+- **Ends:** Remove the penalty when the court settles. Apply it only in states Tungning owns; ordinary laws still determine who can convert.
+
 ## Court balance
 
 - **Entry:** `fh_je_court_faith`, starting at **120/200**.
@@ -64,6 +70,7 @@ The court changes the official faith once. It does not change laws, directly con
 ## Static checks
 
 - Trace both endpoints, a deadline tie, the two defaults, and each nominated faith. Include a sponsor leaving government and an event expiring after settlement.
+- Check conversion at opening, after a Catholic nomination, after a different nomination, and after settlement. State transfers must not leave the penalty with another country.
 - Check that the Spanish compact and Qing tributary terms alter drift only while active. The faith journal runs alongside the mainland debate and can settle independently of it.
 - Verify that settlement leaves laws, Pops, and the Manila Compact intact. Ordinary law effects still apply under the new state religion.
 - References: `common/scripted_effects/fh_tungning_setup.txt` and `common/scripted_effects/fh_tungning_diplomacy.txt`; vanilla `common/religions/religion.txt`, `common/laws/00_church_and_state.txt`, `common/modifier_type_definitions/00_modifier_types.txt`, `common/journal_entries/07_japanese_religion.txt` (local faith shares), and `events/bic_breakup.txt` (state religion changes).

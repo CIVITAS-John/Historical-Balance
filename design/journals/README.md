@@ -23,6 +23,7 @@ Design drafts for Tungning’s campaigns, set in the world described in [storyli
 
 - **Files:** Add entries in `common/journal_entries/`, bars in `common/scripted_progress_bars/`, and actions in `common/scripted_buttons/`. Add namespaced localization, events, effects, triggers, and modifiers alongside them.
 - **Scope:** Run the chain for the living `TWG` created by this mod. Start the court debates after setup and record the actual southern holdings after the existing day-eight diplomacy retry.
+- **Opening effects:** Apply the mainland, faith, southern, and constitutional modifiers when their relevant phase opens. Show them in the journal and remove them when that phase ends or a state no longer qualifies. Keep the starting forces in the 1836 setup so reopening a journal cannot grant them again.
 - **Ownership:** Check the mainland foothold after relevant changes (`on_state_owner_change`, `on_state_created`) and on a country pulse. Recheck on load or when a scheduled event arrives. Use current treaty-port state status; check the foothold before resolving an unsettled claim.
 - **Bars and events:** Apply action and event changes immediately and sum routine drift monthly. Mainland and faith resolve at their endpoints; constitutional mandates unlock ratification actions. Expired choices have no effect. A pending Qing offer or a resolved journal cannot receive old court events.
 - **Display:** Show what moves each bar, what each choice costs, when temporary effects end, and why an action is blocked.

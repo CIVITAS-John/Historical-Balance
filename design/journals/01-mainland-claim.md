@@ -1,6 +1,12 @@
 # The Claim Across the Strait
 
-The court must decide whether Tungning still speaks for the Ming cause. In 1836, Qing claims Taiwan, starts at −35 relations with Tungning, and embargoes it (`common/scripted_effects/fh_tungning_setup.txt`, lines 183–189).
+The court must decide whether Tungning still speaks for the Ming cause. In 1836, Qing claims Taiwan, starts at −35 relations with Tungning, and embargoes it.
+
+## Opening effects
+
+- **Starting forces:** Tungning has ten early troopships and five frigates, plus five marine, eight line infantry, and two cannon artillery battalions raised in Taiwan. Qing has three frigates. These are part of the [1836 setup](../../common/scripted_effects/fh_tungning_setup.txt).
+- **Disputed mandate:** While the court debates the claim, Tungning gets **−10 base legitimacy** and **−50% naval goods costs**. Established suppliers keep the fleet provisioned cheaply, but maintaining the army and paying both services still strain the indebted treasury.
+- **Ends:** Remove both effects when the court reasserts or opens renunciation talks. The Qing offer and the reassertion mobilization have their own effects.
 
 ## Mainland foothold
 
@@ -114,6 +120,7 @@ Use one offer handler for AI acceptance, player responses, and expiry. Ignore la
 
 ## Static checks
 
+- Check that either endpoint removes both opening effects, including while an offer is pending. The naval discount must not reduce army goods costs or military wages.
 - Trace each bar endpoint, the deadline and tie, and a foothold that takes precedence over them.
 - Trace an eligible AI deal, player acceptance and refusal, expiry, an invalid offer, and ratification with no existing embargo.
 - Check that a foothold cancels a pending offer once and has no effect on a finalized deal.

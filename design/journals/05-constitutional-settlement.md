@@ -8,6 +8,7 @@ Once the mainland settlement is complete, the court can build a mandate for a re
 - **Requires:** Final renunciation, with or without a Qing deal, or reassertion followed by the [end of mobilization](06-mainland-reconquest.md#mobilization-after-reassertion). Neither a pending Qing offer nor an active mobilization opens the debate.
 - **Display:** Show all three bars. After final renunciation, show the Ming bar at zero and explain the permanent lock.
 - **Subjects:** The Republic and Zheng routes are available to a Qing tributary. A constitutional change does not end the relationship or remove other subject restrictions.
+- **Opening effect:** The rival mandates give Tungning **−5 base legitimacy** while the debate is open. Remove the penalty on ratification, before checking the follow-up’s legitimacy requirement.
 
 ## Mandates
 
