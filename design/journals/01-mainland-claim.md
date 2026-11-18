@@ -71,9 +71,10 @@ Both actions share a six-month cooldown. The starting government can use either 
 - Should change AI strategy to build more military.
 - For three years:
   - Give the Armed Forces and Landowners +5 approval and the Industrialists -5.
-  - Boost land offense, defense, morale recovery, while making investment pool -50%.
+  - Boost land/naval offense, defense, morale recovery, while making investment pool -50%.
   - The modifier stops once the Qing war is started and completed.
   - If the modifier stops without a Qing war happened, add a negative event with timed modifiers.
+  - If the war fails, add another negative event with timed modifiers.
 - Once the modifier is gone:
   - Unlock the constitutional debate. Reassertion makes the Ming route possible; it does not choose a dynasty.
 - Enables a decision to declare war on Qing for the three provinces without infamy.
