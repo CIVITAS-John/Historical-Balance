@@ -1,0 +1,51 @@
+﻿fh_zhu_chengyuan_cadet = {
+	first_name = fh_zhu_chengyuan
+	last_name = Zhu
+	age = 32
+	female = no
+	noble = yes
+	culture = cu:min
+	religion = rel:confucian
+	interest_group = ig_landowners
+	ideology = ideology_traditionalist
+	on_created = { set_variable = { name = dynasty_var value = flag:fh_house_zhu } }
+}
+
+fh_zhu_yunming_cadet = {
+	first_name = fh_zhu_yunming
+	last_name = Zhu
+	age = 16
+	female = no
+	noble = yes
+	culture = cu:min
+	religion = rel:confucian
+	interest_group = ig_landowners
+	ideology = ideology_moderate
+	on_created = { set_variable = { name = dynasty_var value = flag:fh_house_zhu } }
+}
+
+fh_zheng_jingwen_cadet = {
+	first_name = fh_zheng_jingwen
+	last_name = Zheng
+	age = 37
+	female = no
+	noble = yes
+	culture = cu:min
+	religion = rel:catholic
+	interest_group = ig_landowners
+	ideology = ideology_moderate
+	on_created = { set_variable = { name = dynasty_var value = flag:fh_house_zheng } }
+}
+
+fh_zheng_mingde_cadet = {
+	first_name = fh_zheng_mingde
+	last_name = Zheng
+	age = 17
+	female = no
+	noble = yes
+	culture = cu:min
+	religion = rel:catholic
+	interest_group = ig_landowners
+	ideology = ideology_royalist
+	on_created = { set_variable = { name = dynasty_var value = flag:fh_house_zheng } }
+}

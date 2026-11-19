@@ -1,0 +1,14 @@
+﻿fh_constitution_ming_limit_status = {
+	type = country
+	random_valid = no
+
+	text = {
+		trigger = { fh_constitution_ming_unlocked = no }
+		localization_key = fh_constitution_ming_permanent_lock
+	}
+	text = {
+		trigger = { fh_constitution_ming_eligible = no }
+		localization_key = fh_constitution_ming_temporary_cap
+	}
+	text = { localization_key = fh_constitution_ming_has_no_cap }
+}

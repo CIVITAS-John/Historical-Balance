@@ -1,0 +1,105 @@
+﻿# Recover a lost journal only in the surviving founding country.
+on_monthly_pulse_country = {
+	on_actions = { fh_constitution_lifecycle }
+}
+
+fh_constitution_lifecycle = {
+	trigger = {
+		OR = {
+			fh_constitution_can_open = yes
+			fh_constitution_debate_missing = yes
+			fh_constitution_followup_missing = yes
+			AND = {
+				has_modifier = fh_constitution_debate_penalty
+				fh_constitution_debate_open = no
+			}
+		}
+	}
+	effect = {
+		if = {
+			limit = { fh_constitution_can_open = yes }
+			fh_constitution_open = yes
+		}
+		else_if = {
+			limit = { fh_constitution_debate_missing = yes }
+			remove_variable = fh_constitution_ratification
+			remove_variable = fh_constitution_petition
+			fh_constitution_show_debate = yes
+		}
+		else_if = {
+			limit = { fh_constitution_followup_missing = yes }
+			remove_variable = fh_constitution_streak
+			remove_variable = fh_constitution_streak_timer
+			fh_constitution_show_followup = yes
+			fh_constitution_check_followup = yes
+		}
+		if = {
+			limit = {
+				has_modifier = fh_constitution_debate_penalty
+				fh_constitution_debate_open = no
+			}
+			remove_modifier = fh_constitution_debate_penalty
+		}
+	}
+}
+
+on_government_reformed = {
+	on_actions = { fh_constitution_review_country }
+}
+
+on_law_activated = {
+	on_actions = { fh_constitution_review_owner }
+}
+
+on_ig_resigned_government = {
+	on_actions = { fh_constitution_review_owner }
+}
+
+on_new_ruler = {
+	on_actions = { fh_constitution_review_owner }
+}
+
+on_become_subject = {
+	on_actions = { fh_constitution_review_country }
+}
+
+on_state_owner_change = {
+	on_actions = { fh_constitution_review_region }
+}
+
+on_state_created = {
+	on_actions = { fh_constitution_review_region }
+}
+
+fh_constitution_review_country = {
+	trigger = {
+		OR = {
+			fh_constitution_debate_open = yes
+			fh_constitution_followup_active = yes
+		}
+	}
+	effect = { fh_constitution_review = yes }
+}
+
+fh_constitution_review_owner = {
+	trigger = { owner ?= { fh_constitution_followup_active = yes } }
+	effect = { owner = { fh_constitution_check_followup = yes } }
+}
+
+fh_constitution_review_region = {
+	trigger = {
+		global_var:fh_tungning_founder ?= {
+			OR = {
+				fh_constitution_debate_open = yes
+				fh_constitution_followup_active = yes
+			}
+		}
+		OR = {
+			state_region = s:STATE_FORMOSA
+			state_region = s:STATE_FUJIAN
+			state_region = s:STATE_GUANGDONG
+			state_region = s:STATE_ZHEJIANG
+		}
+	}
+	effect = { global_var:fh_tungning_founder ?= { fh_constitution_review = yes } }
+}

@@ -115,6 +115,7 @@ fh_mainland_finish_mobilization = {
 			}
 			trigger_event = { id = fh_mainland_mobilization.2 popup = yes }
 		}
+		fh_constitution_try_open = yes
 	}
 }
 

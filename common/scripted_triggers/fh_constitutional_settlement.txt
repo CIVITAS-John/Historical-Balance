@@ -1,0 +1,244 @@
+﻿fh_constitution_claim_resolved = {
+	fh_is_tungning_founder = yes
+	has_variable = fh_constitutional_debate_unlocked
+	OR = {
+		has_variable = fh_mainland_claim_renounced
+		AND = {
+			has_variable = fh_mainland_claim_reasserted
+			has_variable = fh_mainland_mobilization_started
+		}
+	}
+	NOR = {
+		has_variable = fh_strait_offer_pending
+		has_variable = fh_strait_ratification_in_progress
+		has_variable = fh_taiping_fork_pending
+		has_variable = fh_mainland_mobilizing
+	}
+}
+
+fh_constitution_can_open = {
+	fh_constitution_claim_resolved = yes
+	NOT = { has_variable = fh_constitution_started }
+}
+
+fh_constitution_debate_missing = {
+	fh_constitution_claim_resolved = yes
+	has_variable = fh_constitution_started
+	NOR = {
+		has_variable = fh_constitution_route
+		has_journal_entry = fh_je_constitutional_settlement
+	}
+}
+
+fh_constitution_debate_open = {
+	fh_is_tungning_founder = yes
+	has_journal_entry = fh_je_constitutional_settlement
+	NOT = { has_variable = fh_constitution_route }
+}
+
+fh_constitution_endorsement_open = {
+	fh_constitution_debate_open = yes
+	custom_tooltip = {
+		text = fh_constitution_endorsement_cooldown_tt
+		NOT = { has_variable = fh_constitution_endorsement_cooldown }
+	}
+}
+
+fh_constitution_civic_sponsor = {
+	custom_tooltip = {
+		text = fh_constitution_civic_sponsor_tt
+		OR = {
+			ig:ig_intelligentsia ?= { is_in_government = yes }
+			ig:ig_trade_unions ?= { is_in_government = yes }
+		}
+	}
+}
+
+fh_constitution_zhu_sponsor = {
+	custom_tooltip = {
+		text = fh_constitution_zhu_sponsor_tt
+		OR = {
+			ig:ig_landowners ?= { is_in_government = yes }
+			AND = {
+				fh_constitution_ritual_academies = yes
+				ig:ig_devout ?= { is_in_government = yes }
+			}
+		}
+	}
+}
+
+fh_constitution_zheng_sponsor = {
+	custom_tooltip = {
+		text = fh_constitution_zheng_sponsor_tt
+		OR = {
+			ig:ig_armed_forces ?= { is_in_government = yes }
+			ig:ig_landowners ?= { is_in_government = yes }
+		}
+	}
+}
+
+fh_constitution_republic_ready = { var:fh_constitution_republic ?= 200 }
+fh_constitution_ming_ready = {
+	var:fh_constitution_ming ?= 200
+	fh_constitution_ming_eligible = yes
+}
+fh_constitution_zheng_ready = { var:fh_constitution_zheng ?= 200 }
+
+fh_constitution_ai_endorsement_open = {
+	NOR = {
+		has_variable = fh_constitution_ratification
+		fh_constitution_republic_ready = yes
+		fh_constitution_ming_ready = yes
+		fh_constitution_zheng_ready = yes
+	}
+}
+
+fh_constitution_ratification_open = {
+	fh_constitution_debate_open = yes
+	custom_tooltip = {
+		text = fh_constitution_ratification_pending_tt
+		NOT = { has_variable = fh_constitution_ratification }
+	}
+}
+
+fh_constitution_choose_tone = {
+	fh_constitution_debate_open = yes
+	var:fh_constitution_ratification ?= $ROUTE$
+	$READY$ = yes
+}
+
+fh_constitution_ratification_valid = {
+	OR = {
+		fh_constitution_choose_tone = { ROUTE = 1 READY = fh_constitution_republic_ready }
+		fh_constitution_choose_tone = { ROUTE = 2 READY = fh_constitution_ming_ready }
+		fh_constitution_choose_tone = { ROUTE = 3 READY = fh_constitution_zheng_ready }
+	}
+}
+
+fh_constitution_petition_available = {
+	fh_constitution_debate_open = yes
+	NOR = {
+		has_variable = fh_constitution_ratification
+		has_variable = fh_constitution_petition_cooldown
+	}
+}
+
+fh_constitution_petition_valid = {
+	fh_constitution_debate_open = yes
+	NOT = { has_variable = fh_constitution_ratification }
+	var:fh_constitution_petition ?= $PETITION$
+	$ELIGIBLE$ = yes
+}
+
+fh_constitution_zheng_officers = { ig:ig_armed_forces ?= { is_in_government = yes } }
+
+fh_constitution_zheng_admin = {
+	has_building_levels_in_state_region = {
+		region = STATE_FORMOSA
+		building = building_government_administration
+		levels >= 3
+	}
+}
+
+fh_constitution_republic_franchise = {
+	OR = {
+		has_law_or_variant = law_type:law_wealth_voting
+		fh_constitution_civic_electorate = yes
+	}
+}
+
+fh_constitution_republic_conditions = {
+	fh_constitution_republic_law = yes
+	fh_constitution_republic_franchise = yes
+	government_legitimacy >= 60
+}
+
+fh_constitution_ming_conditions = {
+	fh_constitution_ming_eligible = yes
+	has_law_or_variant = law_type:law_monarchy
+	fh_constitution_voting_law = yes
+	government_legitimacy >= 60
+	fh_constitution_ming_coalition = yes
+}
+
+fh_constitution_zheng_conditions = {
+	has_law_or_variant = law_type:law_monarchy
+	OR = {
+		has_law_or_variant = law_type:law_appointed_bureaucrats
+		has_law_or_variant = law_type:law_elected_bureaucrats
+	}
+	fh_constitution_zheng_admin = yes
+	government_legitimacy >= 60
+	fh_constitution_zheng_crown = yes
+}
+
+fh_constitution_followup_pending = {
+	fh_is_tungning_founder = yes
+	has_variable = fh_constitution_route
+	NOR = {
+		has_variable = fh_constitution_founding_in_progress
+		has_variable = fh_constitution_followup_complete
+	}
+}
+
+fh_constitution_has_followup_journal = {
+	OR = {
+		has_journal_entry = fh_je_taiwan_convention
+		has_journal_entry = fh_je_southern_court_reborn
+		has_journal_entry = fh_je_mandate_of_our_own
+	}
+}
+
+fh_constitution_followup_active = {
+	fh_constitution_followup_pending = yes
+	fh_constitution_has_followup_journal = yes
+}
+
+fh_constitution_followup_missing = {
+	fh_constitution_followup_pending = yes
+	fh_constitution_has_followup_journal = no
+}
+
+fh_constitution_followup_conditions = {
+	OR = {
+		AND = {
+			var:fh_constitution_route ?= 1
+			fh_constitution_republic_conditions = yes
+		}
+		AND = {
+			var:fh_constitution_route ?= 2
+			fh_constitution_ming_conditions = yes
+		}
+		AND = {
+			var:fh_constitution_route ?= 3
+			fh_constitution_zheng_conditions = yes
+		}
+	}
+}
+
+fh_constitution_recommend_zheng = {
+	fh_constitution_zheng_ready = yes
+	NAND = {
+		var:fh_constitution_last_endorsement ?= 1
+		fh_constitution_republic_ready = yes
+	}
+	NAND = {
+		var:fh_constitution_last_endorsement ?= 2
+		fh_constitution_ming_ready = yes
+	}
+}
+
+fh_constitution_recommend_republic = {
+	fh_constitution_republic_ready = yes
+	fh_constitution_recommend_zheng = no
+	NAND = {
+		var:fh_constitution_last_endorsement ?= 2
+		fh_constitution_ming_ready = yes
+	}
+}
+
+fh_constitution_recommend_ming = {
+	fh_constitution_ming_ready = yes
+	fh_constitution_recommend_republic = no
+	fh_constitution_recommend_zheng = no
+}

@@ -1,0 +1,12 @@
+﻿fh_constitution_monthly_drift = {
+	change_variable = { name = fh_constitution_republic add = fh_constitution_republic_drift }
+	change_variable = { name = fh_constitution_ming add = fh_constitution_ming_drift }
+	change_variable = { name = fh_constitution_zheng add = fh_constitution_zheng_drift }
+	fh_constitution_clamp_mandates = yes
+}
+
+fh_constitution_clamp_mandates = {
+	clamp_variable = { name = fh_constitution_republic min = 0 max = 200 }
+	clamp_variable = { name = fh_constitution_ming min = 0 max = fh_constitution_ming_cap }
+	clamp_variable = { name = fh_constitution_zheng min = 0 max = 200 }
+}

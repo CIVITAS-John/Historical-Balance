@@ -1,0 +1,306 @@
+﻿fh_constitution_try_open = {
+	if = {
+		limit = { fh_constitution_can_open = yes }
+		fh_constitution_open = yes
+	}
+}
+
+fh_constitution_open = {
+	set_variable = fh_constitution_started
+	fh_constitution_initialize_zheng_dynasty = yes
+	set_variable = { name = fh_constitution_republic value = 30 }
+	set_variable = { name = fh_constitution_ming value = 0 }
+	if = {
+		limit = { fh_constitution_ming_unlocked = yes }
+		set_variable = { name = fh_constitution_ming value = 50 }
+	}
+	set_variable = { name = fh_constitution_zheng value = 70 }
+	set_variable = { name = fh_constitution_quarter value = 0 }
+	fh_constitution_show_debate = yes
+}
+
+fh_constitution_show_debate = {
+	add_journal_entry = { type = fh_je_constitutional_settlement }
+	if = {
+		limit = {
+			has_journal_entry = fh_je_constitutional_settlement
+			NOT = { has_modifier = fh_constitution_debate_penalty }
+		}
+		add_modifier = { name = fh_constitution_debate_penalty }
+	}
+	fh_constitution_refresh_mandates = yes
+}
+
+# Country variables are authoritative; a bar just displays the current total.
+fh_constitution_refresh_mandates = {
+	fh_constitution_clamp_mandates = yes
+	je:fh_je_constitutional_settlement ?= {
+		set_bar_progress = { name = fh_constitution_republic_bar value = prev.var:fh_constitution_republic }
+		set_bar_progress = { name = fh_constitution_ming_bar value = prev.var:fh_constitution_ming }
+		set_bar_progress = { name = fh_constitution_zheng_bar value = prev.var:fh_constitution_zheng }
+	}
+}
+
+fh_constitution_endorse = {
+	if = {
+		limit = {
+			fh_constitution_endorsement_open = yes
+			$SPONSOR$ = yes
+			$ELIGIBLE$ = yes
+		}
+		set_variable = { name = fh_constitution_endorsement_cooldown months = 6 }
+		set_variable = { name = fh_constitution_last_endorsement value = $ROUTE$ }
+		change_variable = { name = $MANDATE$ add = 12 }
+		change_variable = { name = $RIVAL_1$ subtract = 5 }
+		change_variable = { name = $RIVAL_2$ subtract = 5 }
+		if = {
+			limit = { ig:$FIRST$ ?= { is_in_government = yes } }
+			ig:$FIRST$ ?= { add_modifier = { name = fh_constitution_endorsement_approval months = 6 } }
+		}
+		else = {
+			ig:$SECOND$ ?= { add_modifier = { name = fh_constitution_endorsement_approval months = 6 } }
+		}
+		ig:$OPPONENT$ ?= { add_modifier = { name = fh_constitution_endorsement_disapproval months = 6 } }
+		fh_constitution_refresh_mandates = yes
+	}
+}
+
+fh_constitution_debate_monthly = {
+	if = {
+		limit = { fh_constitution_debate_open = yes }
+		fh_constitution_monthly_drift = yes
+		fh_constitution_refresh_mandates = yes
+		change_variable = { name = fh_constitution_quarter add = 1 }
+		if = {
+			limit = { var:fh_constitution_quarter >= 3 }
+			set_variable = { name = fh_constitution_quarter value = 0 }
+			if = {
+				limit = { fh_constitution_petition_available = yes }
+				random = {
+					chance = 10
+					random_list = {
+						1 = {
+							trigger = { fh_constitution_civic_electorate = yes }
+							fh_constitution_open_petition = { PETITION = 11 }
+						}
+						1 = {
+							trigger = { fh_constitution_ming_eligible = yes }
+							fh_constitution_open_petition = { PETITION = 12 }
+						}
+						1 = {
+							trigger = { fh_constitution_zheng_officers = yes }
+							fh_constitution_open_petition = { PETITION = 13 }
+						}
+						1 = {
+							trigger = { fh_constitution_southern_support = yes }
+							fh_constitution_open_petition = { PETITION = 14 }
+						}
+					}
+				}
+			}
+		}
+		if = {
+			limit = { is_ai = yes }
+			fh_constitution_ai_ratify = yes
+		}
+	}
+}
+
+fh_constitution_open_petition = {
+	set_variable = { name = fh_constitution_petition_cooldown months = 12 }
+	set_variable = { name = fh_constitution_petition value = $PETITION$ months = 2 }
+	trigger_event = { id = fh_constitution.$PETITION$ popup = yes }
+}
+
+fh_constitution_answer_petition = {
+	if = {
+		limit = { fh_constitution_petition_valid = { PETITION = $PETITION$ ELIGIBLE = $ELIGIBLE$ } }
+		remove_variable = fh_constitution_petition
+		change_variable = { name = $MANDATE$ add = $DELTA$ }
+		ig:$IG$ ?= { add_modifier = { name = $APPROVAL$ months = 6 } }
+		fh_constitution_refresh_mandates = yes
+	}
+}
+
+fh_constitution_open_ratification = {
+	if = {
+		limit = { fh_constitution_ratification_open = yes }
+		fh_constitution_refresh_mandates = yes
+		if = {
+			limit = { $READY$ = yes }
+			set_variable = { name = fh_constitution_ratification value = $ROUTE$ months = 2 }
+			trigger_event = { id = fh_constitution.$ROUTE$ popup = yes }
+		}
+	}
+}
+
+fh_constitution_confirm = {
+	if = {
+		limit = { fh_constitution_choose_tone = { ROUTE = $ROUTE$ READY = $READY$ } }
+		fh_constitution_refresh_mandates = yes
+		if = {
+			limit = { $READY$ = yes }
+			set_variable = { name = fh_constitution_route value = $ROUTE$ }
+			set_variable = { name = fh_constitution_tone value = $TONE$ }
+			remove_variable = fh_constitution_ratification
+			remove_modifier = fh_constitution_debate_penalty
+			if = {
+				limit = { var:fh_constitution_tone = 2 }
+				add_modifier = { name = fh_constitution_mandate_ratified years = 4 }
+				fh_constitution_mandate_reaction = { FAVOR = fh_constitution_remove_medium_radicals RIVALS = small_radicals }
+			}
+			else = {
+				add_modifier = { name = fh_constitution_mandate_ratified years = 2 }
+				fh_constitution_mandate_reaction = { FAVOR = fh_mainland_remove_small_radicals RIVALS = fh_mainland_remove_small_radicals }
+			}
+			fh_constitution_show_followup = yes
+			fh_constitution_check_followup = yes
+		}
+	}
+}
+
+fh_constitution_show_followup = {
+	if = {
+		limit = { var:fh_constitution_route = 1 }
+		add_journal_entry = { type = fh_je_taiwan_convention }
+	}
+	else_if = {
+		limit = { var:fh_constitution_route = 2 }
+		add_journal_entry = { type = fh_je_southern_court_reborn }
+	}
+	else = { add_journal_entry = { type = fh_je_mandate_of_our_own } }
+}
+
+fh_constitution_mandate_reaction = {
+	fh_constitution_react = { IG = ig_intelligentsia ROUTE = 1 FAVOR = $FAVOR$ RIVALS = $RIVALS$ }
+	fh_constitution_react = { IG = ig_landowners ROUTE = 2 FAVOR = $FAVOR$ RIVALS = $RIVALS$ }
+	fh_constitution_react = { IG = ig_armed_forces ROUTE = 3 FAVOR = $FAVOR$ RIVALS = $RIVALS$ }
+}
+
+fh_constitution_react = {
+	if = {
+		limit = { var:fh_constitution_route = $ROUTE$ }
+		fh_constitution_radicals = { IG = $IG$ VALUE = $FAVOR$ }
+	}
+	else = { fh_constitution_radicals = { IG = $IG$ VALUE = $RIVALS$ } }
+}
+
+fh_constitution_radicals = {
+	if = {
+		limit = { exists = ig:$IG$ }
+		add_radicals = { interest_group = ig:$IG$ value = $VALUE$ }
+	}
+}
+
+fh_constitution_ai_ratify = {
+	if = {
+		limit = { fh_constitution_ratification_open = yes }
+		if = {
+			limit = {
+				fh_constitution_zheng_ready = yes
+				fh_constitution_ai_zheng >= fh_constitution_ai_republic
+				fh_constitution_ai_zheng >= fh_constitution_ai_ming
+			}
+			fh_constitution_open_ratification = { ROUTE = 3 READY = fh_constitution_zheng_ready }
+		}
+		else_if = {
+			limit = {
+				fh_constitution_republic_ready = yes
+				fh_constitution_ai_republic >= fh_constitution_ai_ming
+			}
+			fh_constitution_open_ratification = { ROUTE = 1 READY = fh_constitution_republic_ready }
+		}
+		else_if = {
+			limit = { fh_constitution_ming_ready = yes }
+			fh_constitution_open_ratification = { ROUTE = 2 READY = fh_constitution_ming_ready }
+		}
+	}
+}
+
+# A timed marker measures six elapsed months, including when the court ratifies
+# between monthly pulses. Check prerequisites on weekly pulses and relevant changes.
+fh_constitution_check_followup = {
+	if = {
+		limit = { fh_constitution_followup_active = yes }
+		if = {
+			limit = { fh_constitution_followup_conditions = yes }
+			if = {
+				limit = { NOT = { has_variable = fh_constitution_streak } }
+				set_variable = fh_constitution_streak
+				set_variable = { name = fh_constitution_streak_timer months = 6 }
+			}
+			else_if = {
+				limit = {
+					NOT = { has_variable = fh_constitution_streak_timer }
+					fh_constitution_followup_conditions = yes
+				}
+				fh_constitution_finish_followup = yes
+			}
+		}
+		else_if = {
+			limit = { has_variable = fh_constitution_streak }
+			remove_variable = fh_constitution_streak
+			remove_variable = fh_constitution_streak_timer
+		}
+	}
+}
+
+fh_constitution_finish_followup = {
+	if = {
+		limit = { var:fh_constitution_route = 2 }
+		set_variable = fh_constitution_founding_in_progress
+		fh_constitution_install_ming = yes
+		remove_variable = fh_constitution_founding_in_progress
+	}
+	if = {
+		limit = {
+			fh_constitution_followup_conditions = yes
+			OR = {
+				NOT = { var:fh_constitution_route = 2 }
+				AND = {
+					has_variable = fh_constitution_ming_installed
+					fh_constitution_ming_crown = yes
+					fh_constitution_ming_minister_serving = yes
+				}
+			}
+		}
+		set_variable = fh_constitution_followup_complete
+		remove_variable = fh_constitution_streak
+		if = {
+			limit = { var:fh_constitution_route = 1 }
+			add_modifier = { name = fh_constitution_convention_confidence years = 5 }
+			fh_constitution_radicals = { IG = ig_intelligentsia VALUE = fh_constitution_remove_medium_radicals }
+			fh_constitution_radicals = { IG = ig_landowners VALUE = small_radicals }
+		}
+		else_if = {
+			limit = { var:fh_constitution_route = 2 }
+			add_modifier = { name = fh_constitution_southern_court_reborn years = 5 }
+			fh_constitution_radicals = { IG = ig_landowners VALUE = fh_constitution_remove_medium_radicals }
+			if = {
+				limit = { var:fh_constitution_founding_bloc ?= ig:ig_industrialists }
+				fh_constitution_radicals = { IG = ig_industrialists VALUE = fh_constitution_remove_medium_radicals }
+			}
+			trigger_event = { id = fh_constitution.4 popup = yes }
+		}
+		else = {
+			add_modifier = { name = fh_constitution_mandate_of_our_own years = 5 }
+			fh_constitution_radicals = { IG = ig_armed_forces VALUE = fh_constitution_remove_medium_radicals }
+			fh_constitution_radicals = { IG = ig_intelligentsia VALUE = small_radicals }
+		}
+	}
+}
+
+fh_constitution_review = {
+	if = {
+		limit = { fh_constitution_debate_open = yes }
+		fh_constitution_refresh_mandates = yes
+		if = {
+			limit = {
+				has_variable = fh_constitution_ratification
+				fh_constitution_ratification_valid = no
+			}
+			remove_variable = fh_constitution_ratification
+		}
+	}
+	fh_constitution_check_followup = yes
+}

@@ -1,5 +1,5 @@
 ﻿# Runs after the vanilla regional files in the BUILDINGS phase.
-# Qing owns Taiwan here; Tungning inherits its buildings and local owners at startup.
+# Qing owns Taiwan here; Tungning inherits the buildings before employment is initialized.
 BUILDINGS = {
 	s:STATE_FORMOSA.region_state:CHI ?= {
 		if = {
@@ -13,9 +13,16 @@ BUILDINGS = {
 				remove_building = building_banana_plantation
 			}
 			add_resource_potential = building_silk_plantation
-			activate_production_method = {
-				building_type = building_fishing_wharf
-				production_method = pm_fishing_trawlers
+			# create_building cannot shrink the vanilla five-level wharf.
+			if = {
+				limit = { has_building = building_fishing_wharf }
+				remove_building = building_fishing_wharf
+			}
+			create_building = {
+				building = building_fishing_wharf
+				add_ownership = { building = { type = building_fishing_wharf country = c:CHI region = STATE_FORMOSA levels = 3 } }
+				reserves = 1
+				activate_production_methods = { "pm_fishing_trawlers" "pm_unrefrigerated" }
 			}
 			activate_production_method = {
 				building_type = building_tea_plantation
@@ -83,9 +90,9 @@ BUILDINGS = {
 			}
 			create_building = {
 				building = building_logging_camp
-				add_ownership = { building = { type = building_financial_district country = c:CHI region = STATE_FORMOSA levels = 2 } }
+				add_ownership = { building = { type = building_financial_district country = c:CHI region = STATE_FORMOSA levels = 3 } }
 				reserves = 1
-				activate_production_methods = { "pm_saw_mills" "pm_increased_hardwood" "pm_no_equipment" "pm_road_carts" }
+				activate_production_methods = { "pm_saw_mills" "pm_hardwood" "pm_no_equipment" "pm_road_carts" }
 			}
 			create_building = {
 				building = building_coal_mine

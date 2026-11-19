@@ -28,7 +28,7 @@ If an active academy law loses its required faith, use the first legal fallback:
 - **Amendments:** Apply only on matching laws. Use direct ownership with a monthly fallback for Taiwan and the exact diplomatic play start for Taiping. Record permanent removals even if the underlying law has changed.
 - **Court faith:** Follow the [settlement design](journals/02-court-faith.md#settlement). Use a narrow Church and State group override for the enactment lock and guard repeal separately. Mods overriding the same group need a compatibility patch. [Ming restoration](journals/05-constitutional-settlement.md#the-southern-court-reborn--ming-restoration) keeps the country tag and any citizenship law the player enacted.
 - **Subjecthood compatibility:** The Registers use vanilla Subjecthood directly. Mandate of Heaven also uses the vanilla Subjecthood discrimination calculation for cultural minority movements. The exact checks in Iberian events, regional character ideologies, and Russian scripts remain scoped to their original laws and content. Vanilla regime transitions that exclude Subjecthood as a replacement citizenship law also exclude the Mandate.
-- **Restoration hook:** Call `fh_restore_southern_ming_citizenship = yes` at the Zhu enthronement in Tungning scope. The constitutional restoration journal is still a design; the hook changes only the citizenship law when the Registers remain active and otherwise unlocks the Mandate.
+- **Restoration hook:** Once the Zhu crown and Zheng cabinet are installed, `fh_restore_southern_ming_citizenship` replaces the Port and Village Registers with the Mandate of Heaven if the Registers are still active. Otherwise it unlocks the Mandate and keeps the current citizenship law.
 
 ## 1836 setup changes
 

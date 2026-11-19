@@ -1,0 +1,176 @@
+﻿fh_constitution_civic_congress = {
+	name = fh_constitution_civic_congress
+	desc = fh_constitution_civic_congress_desc
+	visible = { fh_constitution_debate_open = yes }
+	possible = {
+		fh_constitution_endorsement_open = yes
+		fh_constitution_civic_sponsor = yes
+	}
+	effect = {
+		custom_tooltip = fh_constitution_endorsement_effect_tt
+		hidden_effect = {
+			fh_constitution_endorse = {
+				ROUTE = 1
+				SPONSOR = fh_constitution_civic_sponsor
+				ELIGIBLE = always
+				MANDATE = fh_constitution_republic
+				RIVAL_1 = fh_constitution_ming
+				RIVAL_2 = fh_constitution_zheng
+				FIRST = ig_intelligentsia
+				SECOND = ig_trade_unions
+				OPPONENT = ig_landowners
+			}
+		}
+	}
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				fh_constitution_ai_endorsement_open = yes
+				OR = { fh_constitution_republic_law = yes fh_constitution_civic_electorate = yes }
+			}
+			add = 10
+		}
+	}
+}
+
+fh_constitution_ratify_republic = {
+	name = fh_constitution_ratify_republic
+	desc = fh_constitution_ratify_republic_desc
+	visible = { fh_constitution_debate_open = yes }
+	possible = {
+		fh_constitution_ratification_open = yes
+		custom_tooltip = {
+			text = fh_constitution_threshold_tt
+			var:fh_constitution_republic ?= 200
+		}
+	}
+	selected = {
+		fh_constitution_ratification_open = yes
+		fh_constitution_recommend_republic = yes
+	}
+	effect = { fh_constitution_open_ratification = { ROUTE = 1 READY = fh_constitution_republic_ready } }
+	ai_chance = { value = 0 }
+}
+
+fh_constitution_invite_zhu = {
+	name = fh_constitution_invite_zhu
+	desc = fh_constitution_invite_zhu_desc
+	visible = { fh_constitution_debate_open = yes }
+	possible = {
+		fh_constitution_endorsement_open = yes
+		fh_constitution_zhu_sponsor = yes
+		fh_constitution_ming_eligible = yes
+	}
+	effect = {
+		custom_tooltip = fh_constitution_endorsement_effect_tt
+		hidden_effect = {
+			fh_constitution_endorse = {
+				ROUTE = 2
+				SPONSOR = fh_constitution_zhu_sponsor
+				ELIGIBLE = fh_constitution_ming_eligible
+				MANDATE = fh_constitution_ming
+				RIVAL_1 = fh_constitution_republic
+				RIVAL_2 = fh_constitution_zheng
+				FIRST = ig_landowners
+				SECOND = ig_devout
+				OPPONENT = ig_industrialists
+			}
+		}
+	}
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				fh_constitution_ai_endorsement_open = yes
+				fh_constitution_ming_coalition = yes
+				fh_constitution_voting_law = yes
+			}
+			add = 10
+		}
+	}
+}
+
+fh_constitution_ratify_ming = {
+	name = fh_constitution_ratify_ming
+	desc = fh_constitution_ratify_ming_desc
+	visible = { fh_constitution_debate_open = yes }
+	possible = {
+		fh_constitution_ratification_open = yes
+		custom_tooltip = {
+			text = fh_constitution_threshold_tt
+			var:fh_constitution_ming ?= 200
+		}
+		fh_constitution_ming_eligible = yes
+	}
+	selected = {
+		fh_constitution_ratification_open = yes
+		fh_constitution_recommend_ming = yes
+	}
+	effect = { fh_constitution_open_ratification = { ROUTE = 2 READY = fh_constitution_ming_ready } }
+	ai_chance = { value = 0 }
+}
+
+fh_constitution_zheng_petition = {
+	name = fh_constitution_zheng_petition
+	desc = fh_constitution_zheng_petition_desc
+	visible = { fh_constitution_debate_open = yes }
+	possible = {
+		fh_constitution_endorsement_open = yes
+		fh_constitution_zheng_sponsor = yes
+	}
+	effect = {
+		custom_tooltip = fh_constitution_endorsement_effect_tt
+		hidden_effect = {
+			fh_constitution_endorse = {
+				ROUTE = 3
+				SPONSOR = fh_constitution_zheng_sponsor
+				ELIGIBLE = always
+				MANDATE = fh_constitution_zheng
+				RIVAL_1 = fh_constitution_republic
+				RIVAL_2 = fh_constitution_ming
+				FIRST = ig_armed_forces
+				SECOND = ig_landowners
+				OPPONENT = ig_intelligentsia
+			}
+		}
+	}
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				fh_constitution_ai_endorsement_open = yes
+				has_law_or_variant = law_type:law_monarchy
+			}
+			add = 10
+		}
+	}
+}
+
+fh_constitution_ratify_zheng = {
+	name = fh_constitution_ratify_zheng
+	desc = fh_constitution_ratify_zheng_desc
+	visible = { fh_constitution_debate_open = yes }
+	possible = {
+		fh_constitution_ratification_open = yes
+		custom_tooltip = {
+			text = fh_constitution_threshold_tt
+			var:fh_constitution_zheng ?= 200
+		}
+	}
+	selected = {
+		fh_constitution_ratification_open = yes
+		fh_constitution_recommend_zheng = yes
+	}
+	effect = { fh_constitution_open_ratification = { ROUTE = 3 READY = fh_constitution_zheng_ready } }
+	ai_chance = { value = 0 }
+}
+
+fh_constitution_offer_zheng_cadet = {
+	name = fh_constitution_offer_zheng_cadet
+	desc = fh_constitution_offer_zheng_cadet_desc
+	visible = { fh_constitution_zheng_cadet_available = yes }
+	possible = { fh_constitution_followup_active = yes }
+	effect = { fh_constitution_prepare_zheng_cadet = yes }
+	ai_chance = { value = 100 }
+}

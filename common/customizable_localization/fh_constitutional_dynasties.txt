@@ -1,0 +1,65 @@
+﻿fh_constitution_ming_bloc_status = {
+	type = country
+	random_valid = no
+
+	text = {
+		trigger = { fh_constitution_ming_estates_stronger = yes }
+		localization_key = fh_constitution_ming_bloc_estates
+	}
+	text = {
+		trigger = { fh_constitution_ming_houses_stronger = yes }
+		localization_key = fh_constitution_ming_bloc_houses
+	}
+	text = { localization_key = fh_constitution_ming_bloc_neither }
+}
+
+fh_constitution_ming_cabinet_status = {
+	type = country
+	random_valid = no
+
+	text = {
+		trigger = { NOT = { fh_constitution_ming_charter_active = yes } }
+		localization_key = fh_constitution_ming_cabinet_suspended
+	}
+	text = {
+		trigger = { fh_constitution_ming_minister_serving = yes }
+		localization_key = fh_constitution_ming_cabinet_serving
+	}
+	text = { localization_key = fh_constitution_ming_cabinet_vacant }
+}
+
+fh_constitution_ming_rites = {
+	type = country
+	random_valid = no
+
+	text = {
+		trigger = {
+			var:fh_court_faith_settled_religion ?= rel:confucian
+			country_has_state_religion = rel:confucian
+		}
+		localization_key = fh_constitution_ming_rites_confucian
+	}
+	text = {
+		trigger = {
+			var:fh_court_faith_settled_religion ?= rel:mahayana
+			country_has_state_religion = rel:mahayana
+		}
+		localization_key = fh_constitution_ming_rites_mahayana
+	}
+	text = {
+		trigger = {
+			OR = {
+				AND = {
+					var:fh_court_faith_settled_religion ?= rel:catholic
+					country_has_state_religion = rel:catholic
+				}
+				AND = {
+					var:fh_court_faith_settled_religion ?= rel:protestant
+					country_has_state_religion = rel:protestant
+				}
+			}
+		}
+		localization_key = fh_constitution_ming_rites_christian
+	}
+	text = { localization_key = fh_constitution_ming_rites_deferred }
+}

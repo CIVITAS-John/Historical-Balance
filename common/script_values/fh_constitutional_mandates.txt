@@ -1,0 +1,219 @@
+﻿fh_constitution_republic_drift = {
+	value = 0
+	if = {
+		limit = {
+			any_interest_group = {
+				is_in_government = yes
+				OR = {
+					is_interest_group_type = ig_intelligentsia
+					is_interest_group_type = ig_trade_unions
+				}
+				leader ?= {
+					OR = {
+						has_ideology = ideology:ideology_radical
+						has_ideology = ideology:ideology_reformer
+					}
+				}
+			}
+		}
+		add = 1
+	}
+	if = {
+		limit = { fh_constitution_civic_electorate = yes }
+		add = 1
+	}
+	if = {
+		limit = { has_law_or_variant = law_type:law_autocracy }
+		subtract = 1
+	}
+}
+
+fh_constitution_ming_drift = {
+	value = 0
+	if = {
+		limit = { fh_constitution_ming_unlocked = yes }
+		if = {
+			limit = {
+				any_interest_group = {
+					is_in_government = yes
+					leader ?= {
+						OR = {
+							has_ideology = ideology:ideology_traditionalist
+							has_ideology = ideology:ideology_royalist
+						}
+					}
+				}
+			}
+			add = 1
+		}
+		if = {
+			limit = { is_subject = yes }
+			subtract = 1
+		}
+		add = fh_constitution_ming_mainland_drift
+		if = {
+			limit = { fh_constitution_taiwan_lost_or_under_enemy_control = yes }
+			subtract = 8
+		}
+		add = fh_constitution_ming_faith_drift
+	}
+}
+
+fh_constitution_ming_mainland_drift = {
+	value = 0
+	if = {
+		limit = { fh_mainland_has_foothold = yes }
+		if = {
+			limit = {
+				OR = {
+					fh_owns_mainland_foothold = { REGION = STATE_NANJING }
+					fh_owns_mainland_foothold = { REGION = STATE_BEIJING }
+					any_scope_state = {
+						count >= 4
+						fh_constitution_owned_inland_state = yes
+					}
+				}
+			}
+			add = 3
+		}
+		else_if = {
+			limit = { any_scope_state = { fh_constitution_owned_inland_state = yes } }
+			add = 2
+		}
+		else = { add = 1 }
+	}
+}
+
+fh_constitution_ming_faith_drift = {
+	value = 0
+	if = {
+		limit = {
+			OR = {
+				fh_court_faith_debate_active = yes
+				fh_court_faith_can_respond = yes
+			}
+		}
+		if = {
+			limit = {
+				je:fh_je_court_faith ?= { "scripted_bar_progress(fh_court_faith_balance)" < 100 }
+				var:fh_court_faith_ancestral_nominee ?= rel:confucian
+			}
+			add = 1
+		}
+		else_if = {
+			limit = {
+				je:fh_je_court_faith ?= { "scripted_bar_progress(fh_court_faith_balance)" > 100 }
+				OR = {
+					var:fh_court_faith_christian_nominee ?= rel:catholic
+					var:fh_court_faith_christian_nominee ?= rel:protestant
+				}
+				fh_constitution_catholic_missions = yes
+				ig:ig_devout ?= { is_in_government = yes }
+			}
+			subtract = 1
+		}
+	}
+	else_if = {
+		limit = {
+			has_variable = fh_court_faith_settled
+			var:fh_court_faith_settled_religion ?= this.religion
+		}
+		if = {
+			limit = { country_has_state_religion = rel:confucian }
+			add = 2
+		}
+		else_if = {
+			limit = { country_has_state_religion = rel:mahayana }
+			add = 1
+		}
+		else_if = {
+			limit = {
+				has_law_or_variant = law_type:law_state_religion
+				OR = {
+					country_has_state_religion = rel:catholic
+					country_has_state_religion = rel:protestant
+				}
+			}
+			subtract = 1
+		}
+	}
+}
+
+fh_constitution_zheng_drift = {
+	value = 0
+	if = {
+		limit = {
+			has_law_or_variant = law_type:law_monarchy
+			government_legitimacy >= 60
+		}
+		add = 1
+	}
+	if = {
+		limit = { ig:ig_armed_forces ?= { is_in_government = yes } }
+		add = 1
+	}
+	if = {
+		limit = { fh_constitution_republic_law = yes }
+		subtract = 1
+	}
+	if = {
+		limit = { fh_constitution_southern_passage = yes }
+		add = 2
+	}
+	if = {
+		limit = { fh_constitution_philippine_rule = yes }
+		add = 2
+	}
+}
+
+fh_constitution_ming_cap = {
+	value = 0
+	if = {
+		limit = { fh_constitution_ming_eligible = yes }
+		add = 200
+	}
+	else_if = {
+		limit = { fh_constitution_ming_unlocked = yes }
+		add = 150
+	}
+}
+
+# A positive balance is a strict majority of the recorded province set.
+fh_constitution_manila_recorded_balance = {
+	value = 0
+	every_in_list = {
+		variable = fh_manila_starting_provinces
+		if = {
+			limit = { owner ?= prev }
+			add = 1
+		}
+		else = { subtract = 1 }
+	}
+}
+
+fh_constitution_manila_ordinary_balance = {
+	value = 0
+	every_scope_state = {
+		limit = {
+			is_treaty_port = no
+			OR = {
+				state_region = s:STATE_LUZON
+				state_region = s:STATE_VISAYAS
+			}
+		}
+		add = num_provinces
+	}
+	multiply = 2
+	s:STATE_LUZON = { subtract = fh_constitution_ordinary_provinces }
+	s:STATE_VISAYAS = { subtract = fh_constitution_ordinary_provinces }
+}
+
+# State region scope. A province with a treaty-port marker counts unless it is
+# actually in a treaty-port enclave.
+fh_constitution_ordinary_provinces = {
+	value = num_provinces
+	every_scope_state = {
+		limit = { is_treaty_port = yes }
+		subtract = num_provinces
+	}
+}

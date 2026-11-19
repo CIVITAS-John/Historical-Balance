@@ -157,6 +157,10 @@ fh_court_faith_settle = {
 		fh_court_faith_settlement_aftermath = yes
 		set_variable = fh_court_faith_settled
 		remove_variable = fh_court_faith_previous_religion
+		if = {
+			limit = { fh_constitution_ming_charter_active = yes }
+			trigger_event = { id = fh_constitution.5 popup = yes }
+		}
 	}
 	else = { fh_court_faith_check_interruption = yes }
 }
@@ -166,6 +170,7 @@ fh_court_faith_update_devout_profile = {
 		if = {
 			limit = { owner = { country_has_state_religion = rel:confucian } }
 			set_interest_group_name = fh_ig_ritual_academies
+			owner = { set_variable = { name = fh_court_faith_devout_profile value = rel:confucian } }
 			set_ig_trait = ig_trait:fh_ig_trait_religious_petitions
 			set_ig_trait = ig_trait:fh_ig_trait_county_schools
 			set_ig_trait = ig_trait:fh_ig_trait_keepers_of_the_rites
@@ -173,6 +178,7 @@ fh_court_faith_update_devout_profile = {
 		else_if = {
 			limit = { owner = { country_has_state_religion = rel:mahayana } }
 			set_interest_group_name = fh_ig_buddhist_temples
+			owner = { set_variable = { name = fh_court_faith_devout_profile value = rel:mahayana } }
 			set_ig_trait = ig_trait:fh_ig_trait_religious_petitions
 			set_ig_trait = ig_trait:fh_ig_trait_temple_relief
 			set_ig_trait = ig_trait:fh_ig_trait_mediators_of_the_villages
@@ -181,8 +187,12 @@ fh_court_faith_update_devout_profile = {
 			if = {
 				limit = { owner = { country_has_state_religion = rel:protestant } }
 				set_interest_group_name = fh_ig_reformed_congregations
+				owner = { set_variable = { name = fh_court_faith_devout_profile value = rel:protestant } }
 			}
-			else = { set_interest_group_name = fh_ig_catholic_missions }
+			else = {
+				set_interest_group_name = fh_ig_catholic_missions
+				owner = { set_variable = { name = fh_court_faith_devout_profile value = rel:catholic } }
+			}
 			set_ig_trait = ig_trait:fh_ig_trait_closed_classrooms
 			set_ig_trait = ig_trait:fh_ig_trait_church_schools
 			set_ig_trait = ig_trait:fh_ig_trait_books_from_overseas

@@ -1,0 +1,4 @@
+﻿# The vanilla buildings and pops exist by this point, but starting jobs are still unassigned.
+PRODUCTION_METHODS = {
+	c:CHI ?= { fh_tungning_release_formosa = yes }
+}

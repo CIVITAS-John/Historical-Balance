@@ -1,0 +1,11 @@
+﻿TRADE = {
+	s:STATE_FORMOSA.region_state:TWG ?= {
+		if = {
+			limit = { owner = { has_variable = fh_tungning_history_started } }
+			# Export local cash crops and import inputs for the workshops and foundry.
+			sg:tea = { add_exports = 6 }
+			sg:silk = { add_exports = 4 }
+			sg:iron = { add_imports = 10 }
+		}
+	}
+}

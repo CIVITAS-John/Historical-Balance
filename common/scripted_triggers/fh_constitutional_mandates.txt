@@ -1,0 +1,205 @@
+﻿fh_constitution_ming_unlocked = {
+	has_variable = fh_mainland_claim_reasserted
+	NOT = { has_variable = fh_mainland_claim_renounced }
+}
+
+fh_constitution_ming_eligible = {
+	custom_tooltip = {
+		text = fh_constitution_ming_unlocked_tt
+		fh_constitution_ming_unlocked = yes
+	}
+	is_subject = no
+	custom_tooltip = {
+		text = fh_constitution_taiwan_tt
+		fh_constitution_holds_taiwan = yes
+	}
+	custom_tooltip = {
+		text = fh_constitution_foothold_tt
+		fh_mainland_has_foothold = yes
+	}
+}
+
+fh_constitution_holds_taiwan = {
+	fh_owns_mainland_foothold = { REGION = STATE_FORMOSA }
+	NOT = {
+		any_scope_state = {
+			state_region = s:STATE_FORMOSA
+			is_treaty_port = no
+			any_province = { NOT = { controller ?= owner } }
+		}
+	}
+}
+
+fh_constitution_taiwan_lost_or_under_enemy_control = {
+	OR = {
+		NOT = { fh_owns_mainland_foothold = { REGION = STATE_FORMOSA } }
+		any_scope_state = {
+			state_region = s:STATE_FORMOSA
+			is_treaty_port = no
+			any_province = { controller ?= { has_war_with = prev.owner } }
+		}
+	}
+}
+
+fh_constitution_republic_law = {
+	fh_has_civic_republic = yes
+}
+
+fh_constitution_civic_electorate = {
+	OR = {
+		has_law_or_variant = law_type:law_census_voting
+		has_law_or_variant = law_type:law_universal_suffrage
+	}
+}
+
+fh_constitution_voting_law = {
+	OR = {
+		has_law_or_variant = law_type:law_landed_voting
+		has_law_or_variant = law_type:law_wealth_voting
+		fh_constitution_civic_electorate = yes
+	}
+}
+
+# State region scope. The reunification core minus the three strait coast regions.
+fh_constitution_inland_core_region = {
+	OR = {
+		this = s:STATE_SUZHOU
+		this = s:STATE_NANJING
+		this = s:STATE_JIANGSU
+		this = s:STATE_NORTHERN_ANHUI
+		this = s:STATE_SOUTHERN_ANHUI
+		this = s:STATE_JIANGXI
+		this = s:STATE_HUNAN
+		this = s:STATE_EASTERN_HUBEI
+		this = s:STATE_WESTERN_HUBEI
+		this = s:STATE_GUANGXI
+		this = s:STATE_SHAOZHOU
+		this = s:STATE_GUIZHOU
+		this = s:STATE_YUNNAN
+		this = s:STATE_SICHUAN
+		this = s:STATE_CHONGQING
+		this = s:STATE_BEIJING
+		this = s:STATE_ZHILI
+		this = s:STATE_SHANDONG
+		this = s:STATE_HENAN
+		this = s:STATE_SHANXI
+		this = s:STATE_XIAN
+		this = s:STATE_NINGXIA
+		this = s:STATE_GANSU
+		this = s:STATE_SHENGJING
+		this = s:STATE_SOUTHERN_MANCHURIA
+		this = s:STATE_NORTHERN_MANCHURIA
+	}
+}
+
+# State scope: an ordinary holding counts once only if no other country holds
+# ordinary land in its region. The owner's subjects are other owners here.
+fh_constitution_owned_inland_state = {
+	is_treaty_port = no
+	save_temporary_scope_as = fh_constitution_inland_holding
+	state_region = {
+		fh_constitution_inland_core_region = yes
+		NOT = {
+			any_scope_state = {
+				is_treaty_port = no
+				NOT = { owner = scope:fh_constitution_inland_holding.owner }
+			}
+		}
+	}
+}
+
+# The faith journal assigns the Devout profiles. Older campaigns already
+# recorded the adopted faith, or still have their opening Catholic profile.
+fh_constitution_ritual_academies = {
+	OR = {
+		var:fh_court_faith_devout_profile ?= rel:confucian
+		AND = {
+			NOT = { has_variable = fh_court_faith_devout_profile }
+			var:fh_court_faith_settled_religion ?= rel:confucian
+		}
+	}
+}
+
+fh_constitution_catholic_missions = {
+	OR = {
+		var:fh_court_faith_devout_profile ?= rel:catholic
+		AND = {
+			NOT = { has_variable = fh_court_faith_devout_profile }
+			has_variable = fh_court_faith_started
+			OR = {
+				NOT = { has_variable = fh_court_faith_settled }
+				var:fh_court_faith_settled_religion ?= rel:catholic
+			}
+		}
+	}
+}
+
+# JE03 contract: set the country success flag and the flags for original grants
+# still held at victory. Leave those flags fixed; the check reads current holders.
+fh_constitution_southern_passage = {
+	has_variable = fh_southern_passage_secured
+	OR = {
+		fh_constitution_keeps_passage_subject = { TAG = STG GRANT = fh_southern_passage_secured_stg }
+		fh_constitution_keeps_passage_subject = { TAG = SEL GRANT = fh_southern_passage_secured_sel }
+		fh_constitution_keeps_passage_subject = { TAG = BLG GRANT = fh_southern_passage_secured_blg }
+		fh_constitution_keeps_passage_province = { PROVINCE = x1C7417 GRANT = fh_southern_passage_secured_x1c7417 }
+		fh_constitution_keeps_passage_province = { PROVINCE = x2A3D46 GRANT = fh_southern_passage_secured_x2a3d46 }
+		fh_constitution_keeps_passage_province = { PROVINCE = xE02CB6 GRANT = fh_southern_passage_secured_xe02cb6 }
+	}
+}
+
+fh_constitution_keeps_passage_subject = {
+	has_variable = $GRANT$
+	c:$TAG$ ?= {
+		is_country_alive = yes
+		overlord ?= prev
+	}
+}
+
+fh_constitution_keeps_passage_province = {
+	has_variable = $GRANT$
+	p:$PROVINCE$ ?= { owner ?= prev }
+}
+
+fh_constitution_philippine_rule = {
+	OR = {
+		c:PHI ?= {
+			is_country_alive = yes
+			overlord ?= prev
+			p:x0D8236 ?= { owner ?= c:PHI }
+		}
+		AND = {
+			p:x0D8236 ?= { owner ?= prev }
+			fh_constitution_manila_conquest_holdings = yes
+		}
+	}
+}
+
+fh_constitution_manila_conquest_holdings = {
+	# JE04 saves its opening province scopes in this country variable list.
+	# A snapshot stays authoritative after the journal closes.
+	trigger_if = {
+		limit = { has_variable_list = fh_manila_starting_provinces }
+		fh_constitution_manila_recorded_balance > 0
+		OR = {
+			p:xD2CA4A ?= { owner ?= prev }
+			NOT = {
+				any_in_list = {
+					variable = fh_manila_starting_provinces
+					p:xD2CA4A ?= this
+				}
+			}
+		}
+	}
+	trigger_else = {
+		p:xD2CA4A ?= { owner ?= prev }
+		fh_constitution_manila_ordinary_balance > 0
+	}
+}
+
+fh_constitution_southern_support = {
+	OR = {
+		fh_constitution_southern_passage = yes
+		fh_constitution_philippine_rule = yes
+	}
+}

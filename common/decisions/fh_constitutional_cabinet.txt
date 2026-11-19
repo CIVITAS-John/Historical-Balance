@@ -1,0 +1,25 @@
+﻿fh_constitution_appoint_first_minister_decision = {
+	is_shown = {
+		fh_is_tungning_founder = yes
+		has_variable = fh_constitution_ming_installed
+	}
+	possible = {
+		custom_tooltip = {
+			text = fh_constitution_ming_charter_active_tt
+			fh_constitution_ming_charter_active = yes
+		}
+		custom_tooltip = {
+			text = fh_constitution_ming_minister_vacant_tt
+			NOT = { fh_constitution_ming_minister_serving = yes }
+		}
+		custom_tooltip = {
+			text = fh_constitution_ming_bloc_in_government_tt
+			fh_constitution_ming_coalition = yes
+		}
+	}
+	when_taken = {
+		custom_tooltip = fh_constitution_ming_minister_appointed_tt
+		hidden_effect = { fh_constitution_replace_first_minister = yes }
+	}
+	ai_chance = { value = 1 }
+}

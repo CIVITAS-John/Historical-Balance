@@ -1,0 +1,44 @@
+﻿fh_constitution_remove_medium_radicals = {
+	value = medium_radicals
+	multiply = -1
+}
+
+# An unavailable mandate scores zero. Weight the current laws first,
+# then government and the holdings that would help finish the settlement.
+fh_constitution_ai_republic = {
+	value = 0
+	if = {
+		limit = { fh_constitution_republic_ready = yes }
+		add = 1
+		if = { limit = { fh_constitution_republic_law = yes } add = 8 }
+		if = { limit = { fh_constitution_republic_franchise = yes } add = 4 }
+		if = { limit = { fh_constitution_civic_sponsor = yes } add = 2 }
+		if = { limit = { fh_constitution_recommend_republic = yes } add = 0.5 }
+	}
+}
+
+fh_constitution_ai_ming = {
+	value = 0
+	if = {
+		limit = { fh_constitution_ming_ready = yes }
+		add = 1
+		if = { limit = { has_law_or_variant = law_type:law_monarchy } add = 4 }
+		if = { limit = { fh_constitution_voting_law = yes } add = 4 }
+		if = { limit = { fh_constitution_ming_coalition = yes } add = 3 }
+		if = { limit = { fh_constitution_recommend_ming = yes } add = 0.5 }
+	}
+}
+
+fh_constitution_ai_zheng = {
+	value = 0
+	if = {
+		limit = { fh_constitution_zheng_ready = yes }
+		add = 1
+		if = { limit = { has_law_or_variant = law_type:law_monarchy } add = 4 }
+		if = { limit = { fh_constitution_zheng_crown = yes } add = 2 }
+		if = { limit = { fh_constitution_zheng_sponsor = yes } add = 1 }
+		if = { limit = { fh_constitution_zheng_admin = yes } add = 2 }
+		if = { limit = { fh_constitution_southern_support = yes } add = 2 }
+		if = { limit = { fh_constitution_recommend_zheng = yes } add = 0.5 }
+	}
+}

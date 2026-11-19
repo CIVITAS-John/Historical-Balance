@@ -1,0 +1,411 @@
+﻿namespace = fh_constitution
+
+fh_constitution.1 = {
+	type = country_event
+	placement = root
+	title = fh_constitution.1.t
+	desc = fh_constitution.1.d
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	duration = 1
+
+	trigger = { fh_constitution_choose_tone = { ROUTE = 1 READY = fh_constitution_republic_ready } }
+	cancellation_trigger = { NOT = { fh_constitution_choose_tone = { ROUTE = 1 READY = fh_constitution_republic_ready } } }
+
+	option = {
+		name = fh_constitution_compact
+		ai_chance = {
+			base = 100
+			modifier = {
+				trigger = {
+					var:fh_constitution_ming <= 150
+					var:fh_constitution_zheng <= 150
+				}
+				add = -100
+			}
+		}
+		custom_tooltip = fh_constitution_compact_tt
+		hidden_effect = { fh_constitution_confirm = { ROUTE = 1 READY = fh_constitution_republic_ready TONE = 1 } }
+	}
+	option = {
+		name = fh_constitution_proclamation
+		ai_chance = {
+			base = 0
+			modifier = {
+				trigger = {
+					var:fh_constitution_ming <= 150
+					var:fh_constitution_zheng <= 150
+				}
+				add = 100
+			}
+		}
+		custom_tooltip = fh_constitution_proclamation_tt
+		hidden_effect = { fh_constitution_confirm = { ROUTE = 1 READY = fh_constitution_republic_ready TONE = 2 } }
+	}
+	option = {
+		name = fh_constitution_defer
+		default_option = yes
+		ai_chance = { base = 0 }
+		hidden_effect = {
+			if = {
+				limit = { var:fh_constitution_ratification ?= 1 }
+				remove_variable = fh_constitution_ratification
+			}
+		}
+	}
+}
+
+fh_constitution.2 = {
+	type = country_event
+	placement = root
+	title = fh_constitution.2.t
+	desc = fh_constitution.2.d
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	duration = 1
+
+	trigger = { fh_constitution_choose_tone = { ROUTE = 2 READY = fh_constitution_ming_ready } }
+	cancellation_trigger = { NOT = { fh_constitution_choose_tone = { ROUTE = 2 READY = fh_constitution_ming_ready } } }
+
+	option = {
+		name = fh_constitution_compact
+		ai_chance = {
+			base = 100
+			modifier = {
+				trigger = {
+					var:fh_constitution_republic <= 150
+					var:fh_constitution_zheng <= 150
+				}
+				add = -100
+			}
+		}
+		custom_tooltip = fh_constitution_compact_tt
+		hidden_effect = { fh_constitution_confirm = { ROUTE = 2 READY = fh_constitution_ming_ready TONE = 1 } }
+	}
+	option = {
+		name = fh_constitution_proclamation
+		ai_chance = {
+			base = 0
+			modifier = {
+				trigger = {
+					var:fh_constitution_republic <= 150
+					var:fh_constitution_zheng <= 150
+				}
+				add = 100
+			}
+		}
+		custom_tooltip = fh_constitution_proclamation_tt
+		hidden_effect = { fh_constitution_confirm = { ROUTE = 2 READY = fh_constitution_ming_ready TONE = 2 } }
+	}
+	option = {
+		name = fh_constitution_defer
+		default_option = yes
+		ai_chance = { base = 0 }
+		hidden_effect = {
+			if = {
+				limit = { var:fh_constitution_ratification ?= 2 }
+				remove_variable = fh_constitution_ratification
+			}
+		}
+	}
+}
+
+fh_constitution.3 = {
+	type = country_event
+	placement = root
+	title = fh_constitution.3.t
+	desc = fh_constitution.3.d
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	duration = 1
+
+	trigger = { fh_constitution_choose_tone = { ROUTE = 3 READY = fh_constitution_zheng_ready } }
+	cancellation_trigger = { NOT = { fh_constitution_choose_tone = { ROUTE = 3 READY = fh_constitution_zheng_ready } } }
+
+	option = {
+		name = fh_constitution_compact
+		ai_chance = {
+			base = 100
+			modifier = {
+				trigger = {
+					var:fh_constitution_republic <= 150
+					var:fh_constitution_ming <= 150
+				}
+				add = -100
+			}
+		}
+		custom_tooltip = fh_constitution_compact_tt
+		hidden_effect = { fh_constitution_confirm = { ROUTE = 3 READY = fh_constitution_zheng_ready TONE = 1 } }
+	}
+	option = {
+		name = fh_constitution_proclamation
+		ai_chance = {
+			base = 0
+			modifier = {
+				trigger = {
+					var:fh_constitution_republic <= 150
+					var:fh_constitution_ming <= 150
+				}
+				add = 100
+			}
+		}
+		custom_tooltip = fh_constitution_proclamation_tt
+		hidden_effect = { fh_constitution_confirm = { ROUTE = 3 READY = fh_constitution_zheng_ready TONE = 2 } }
+	}
+	option = {
+		name = fh_constitution_defer
+		default_option = yes
+		ai_chance = { base = 0 }
+		hidden_effect = {
+			if = {
+				limit = { var:fh_constitution_ratification ?= 3 }
+				remove_variable = fh_constitution_ratification
+			}
+		}
+	}
+}
+
+fh_constitution.4 = {
+	type = country_event
+	placement = root
+	title = fh_constitution.4.t
+	desc = fh_constitution.4.d
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	duration = 1
+	trigger = { has_variable = fh_constitution_ming_installed }
+	option = {
+		name = fh_constitution_charter_signed
+		default_option = yes
+	}
+}
+
+# If the Zhu charter preceded the faith settlement, announce how the rites now fit it.
+fh_constitution.5 = {
+	type = country_event
+	placement = root
+	title = fh_constitution.5.t
+	desc = fh_constitution.5.d
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	duration = 1
+	trigger = {
+		fh_constitution_ming_charter_active = yes
+		has_variable = fh_court_faith_settled
+	}
+	option = {
+		name = fh_constitution_rites_acknowledged
+		default_option = yes
+	}
+}
+
+fh_constitution.11 = {
+	type = country_event
+	placement = root
+	title = fh_constitution.11.t
+	desc = fh_constitution.11.d
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	duration = 1
+	trigger = { fh_constitution_petition_valid = { PETITION = 11 ELIGIBLE = fh_constitution_civic_electorate } }
+	cancellation_trigger = { NOT = { fh_constitution_petition_valid = { PETITION = 11 ELIGIBLE = fh_constitution_civic_electorate } } }
+
+	option = {
+		name = fh_constitution_petition_back
+		custom_tooltip = fh_constitution_petition_back_tt
+		ai_chance = {
+			base = 50
+			modifier = {
+				trigger = { fh_constitution_recommend_republic = yes }
+				add = 30
+			}
+		}
+		hidden_effect = {
+			fh_constitution_answer_petition = {
+				PETITION = 11
+				ELIGIBLE = fh_constitution_civic_electorate
+				MANDATE = fh_constitution_republic
+				DELTA = 5
+				IG = ig_intelligentsia
+				APPROVAL = fh_constitution_petition_approval
+			}
+		}
+	}
+	option = {
+		name = fh_constitution_petition_reject
+		custom_tooltip = fh_constitution_petition_reject_tt
+		ai_chance = {
+			base = 50
+			modifier = {
+				trigger = { fh_constitution_recommend_republic = yes }
+				add = -30
+			}
+		}
+		hidden_effect = {
+			fh_constitution_answer_petition = {
+				PETITION = 11
+				ELIGIBLE = fh_constitution_civic_electorate
+				MANDATE = fh_constitution_republic
+				DELTA = -5
+				IG = ig_intelligentsia
+				APPROVAL = fh_constitution_petition_disapproval
+			}
+		}
+	}
+}
+
+fh_constitution.12 = {
+	type = country_event
+	placement = root
+	title = fh_constitution.12.t
+	desc = fh_constitution.12.d
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	duration = 1
+	trigger = { fh_constitution_petition_valid = { PETITION = 12 ELIGIBLE = fh_constitution_ming_eligible } }
+	cancellation_trigger = { NOT = { fh_constitution_petition_valid = { PETITION = 12 ELIGIBLE = fh_constitution_ming_eligible } } }
+
+	option = {
+		name = fh_constitution_petition_back
+		custom_tooltip = fh_constitution_petition_back_tt
+		ai_chance = {
+			base = 50
+			modifier = {
+				trigger = { fh_constitution_recommend_ming = yes }
+				add = 30
+			}
+		}
+		hidden_effect = {
+			fh_constitution_answer_petition = {
+				PETITION = 12
+				ELIGIBLE = fh_constitution_ming_eligible
+				MANDATE = fh_constitution_ming
+				DELTA = 5
+				IG = ig_landowners
+				APPROVAL = fh_constitution_petition_approval
+			}
+		}
+	}
+	option = {
+		name = fh_constitution_petition_reject
+		custom_tooltip = fh_constitution_petition_reject_tt
+		ai_chance = {
+			base = 50
+			modifier = {
+				trigger = { fh_constitution_recommend_ming = yes }
+				add = -30
+			}
+		}
+		hidden_effect = {
+			fh_constitution_answer_petition = {
+				PETITION = 12
+				ELIGIBLE = fh_constitution_ming_eligible
+				MANDATE = fh_constitution_ming
+				DELTA = -5
+				IG = ig_landowners
+				APPROVAL = fh_constitution_petition_disapproval
+			}
+		}
+	}
+}
+
+fh_constitution.13 = {
+	type = country_event
+	placement = root
+	title = fh_constitution.13.t
+	desc = fh_constitution.13.d
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	duration = 1
+	trigger = { fh_constitution_petition_valid = { PETITION = 13 ELIGIBLE = fh_constitution_zheng_officers } }
+	cancellation_trigger = { NOT = { fh_constitution_petition_valid = { PETITION = 13 ELIGIBLE = fh_constitution_zheng_officers } } }
+
+	option = {
+		name = fh_constitution_petition_back
+		custom_tooltip = fh_constitution_petition_back_tt
+		ai_chance = {
+			base = 50
+			modifier = {
+				trigger = { fh_constitution_recommend_zheng = yes }
+				add = 30
+			}
+		}
+		hidden_effect = {
+			fh_constitution_answer_petition = {
+				PETITION = 13
+				ELIGIBLE = fh_constitution_zheng_officers
+				MANDATE = fh_constitution_zheng
+				DELTA = 5
+				IG = ig_armed_forces
+				APPROVAL = fh_constitution_petition_approval
+			}
+		}
+	}
+	option = {
+		name = fh_constitution_petition_reject
+		custom_tooltip = fh_constitution_petition_reject_tt
+		ai_chance = {
+			base = 50
+			modifier = {
+				trigger = { fh_constitution_recommend_zheng = yes }
+				add = -30
+			}
+		}
+		hidden_effect = {
+			fh_constitution_answer_petition = {
+				PETITION = 13
+				ELIGIBLE = fh_constitution_zheng_officers
+				MANDATE = fh_constitution_zheng
+				DELTA = -5
+				IG = ig_armed_forces
+				APPROVAL = fh_constitution_petition_disapproval
+			}
+		}
+	}
+}
+
+fh_constitution.14 = {
+	type = country_event
+	placement = root
+	title = fh_constitution.14.t
+	desc = fh_constitution.14.d
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	duration = 1
+	trigger = { fh_constitution_petition_valid = { PETITION = 14 ELIGIBLE = fh_constitution_southern_support } }
+	cancellation_trigger = { NOT = { fh_constitution_petition_valid = { PETITION = 14 ELIGIBLE = fh_constitution_southern_support } } }
+
+	option = {
+		name = fh_constitution_petition_back
+		custom_tooltip = fh_constitution_petition_back_tt
+		ai_chance = {
+			base = 50
+			modifier = {
+				trigger = { fh_constitution_recommend_zheng = yes }
+				add = 30
+			}
+		}
+		hidden_effect = {
+			fh_constitution_answer_petition = {
+				PETITION = 14
+				ELIGIBLE = fh_constitution_southern_support
+				MANDATE = fh_constitution_zheng
+				DELTA = 5
+				IG = ig_industrialists
+				APPROVAL = fh_constitution_petition_approval
+			}
+		}
+	}
+	option = {
+		name = fh_constitution_petition_reject
+		custom_tooltip = fh_constitution_petition_reject_tt
+		ai_chance = {
+			base = 50
+			modifier = {
+				trigger = { fh_constitution_recommend_zheng = yes }
+				add = -30
+			}
+		}
+		hidden_effect = {
+			fh_constitution_answer_petition = {
+				PETITION = 14
+				ELIGIBLE = fh_constitution_southern_support
+				MANDATE = fh_constitution_zheng
+				DELTA = -5
+				IG = ig_industrialists
+				APPROVAL = fh_constitution_petition_disapproval
+			}
+		}
+	}
+}

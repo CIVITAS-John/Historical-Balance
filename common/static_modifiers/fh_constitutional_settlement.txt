@@ -1,0 +1,45 @@
+﻿fh_constitution_debate_penalty = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_documents_negative.dds"
+	country_legitimacy_base_add = -5
+}
+
+fh_constitution_endorsement_approval = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_fist_positive.dds"
+	interest_group_approval_add = 2
+}
+
+fh_constitution_endorsement_disapproval = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_fist_negative.dds"
+	interest_group_approval_add = -2
+}
+
+fh_constitution_petition_approval = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_fist_positive.dds"
+	interest_group_approval_add = 1
+}
+
+fh_constitution_petition_disapproval = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_fist_negative.dds"
+	interest_group_approval_add = -1
+}
+
+fh_constitution_mandate_ratified = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_documents_positive.dds"
+	country_influence_mult = 0.10
+}
+
+fh_constitution_convention_confidence = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_documents_positive.dds"
+	country_legitimacy_base_add = 10
+}
+
+fh_constitution_southern_court_reborn = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_flag_positive.dds"
+	country_prestige_add = 20
+}
+
+fh_constitution_mandate_of_our_own = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_flag_positive.dds"
+	country_legitimacy_base_add = 10
+	country_bureaucracy_mult = 0.10
+}

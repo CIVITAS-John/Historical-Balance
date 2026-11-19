@@ -283,6 +283,7 @@ fh_mainland_renounce = {
 			add_modifier = { name = fh_mainland_unanswered_accord years = 2 }
 			fh_mainland_accommodation_radicals = { VALUE = large_radicals }
 		}
+		fh_constitution_try_open = yes
 	}
 }
 

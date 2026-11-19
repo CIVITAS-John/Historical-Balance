@@ -13,21 +13,7 @@ fh_has_civic_republic = {
 }
 
 fh_has_southern_ming_charter = {
-	has_variable = fh_southern_ming_restored
-	has_law = law_type:law_monarchy
-	OR = {
-		ruler ?= { var:dynasty_var ?= flag:fh_house_zhu }
-		AND = {
-			has_gov_regency = yes
-			heir ?= { var:dynasty_var ?= flag:fh_house_zhu }
-		}
-	}
-	OR = {
-		has_law_or_variant = law_type:law_landed_voting
-		has_law_or_variant = law_type:law_wealth_voting
-		has_law_or_variant = law_type:law_census_voting
-		has_law_or_variant = law_type:law_universal_suffrage
-	}
+	fh_constitution_ming_charter_active = yes
 }
 
 fh_has_great_ming_court = {

@@ -1,0 +1,379 @@
+﻿# All three appointments are prepared before replacing the sitting ruler.
+fh_constitution_install_ming = {
+	if = {
+		limit = {
+			fh_constitution_ming_install_conditions = yes
+			NOT = { has_variable = fh_constitution_ming_installed }
+		}
+		# An interrupted handover may lose its monarch before the charter takes effect.
+		if = {
+			limit = {
+				has_variable = fh_constitution_zhu_crowned
+				NOR = {
+					fh_constitution_ming_crown = yes
+					ruler ?= { fh_constitution_zhu_character = yes }
+				}
+			}
+			remove_variable = fh_constitution_zhu_crowned
+		}
+		fh_constitution_select_cabinet_bloc = yes
+		if = {
+			limit = { NOT = { has_variable = fh_constitution_zhu_crowned } }
+			if = {
+				limit = { exists = ruler NOT = { has_variable = fh_constitution_outgoing_ruler } }
+				set_variable = { name = fh_constitution_outgoing_ruler value = ruler }
+			}
+			if = {
+				limit = { exists = heir NOT = { has_variable = fh_constitution_outgoing_heir } }
+				set_variable = { name = fh_constitution_outgoing_heir value = heir }
+			}
+			fh_constitution_prepare_zhu_crown = yes
+			fh_constitution_prepare_zhu_heir = yes
+		}
+		fh_constitution_select_minister_fallback = yes
+		if = {
+			limit = {
+				NOT = { has_variable = fh_constitution_zhu_crowned }
+				exists = scope:fh_constitution_zhu_monarch
+				exists = scope:fh_constitution_zhu_successor
+				exists = scope:fh_constitution_minister_fallback
+				fh_constitution_ming_install_conditions = yes
+			}
+			set_variable = { name = fh_constitution_prepared_zhu_heir value = scope:fh_constitution_zhu_successor }
+			if = {
+				limit = {
+					has_gov_regency = yes
+					OR = {
+						fh_constitution_ming_crown = no
+						NOT = { ruler ?= scope:fh_constitution_zhu_monarch }
+					}
+				}
+				remove_regency_modifier = yes
+			}
+			scope:fh_constitution_zhu_monarch = {
+				set_variable = { name = dynasty_var value = flag:fh_house_zhu }
+				if = {
+					limit = { is_ruler_of_own_country = no }
+					set_character_as_ruler = yes
+				}
+			}
+			if = {
+				limit = { ruler ?= scope:fh_constitution_zhu_monarch }
+				set_variable = fh_constitution_zhu_crowned
+			}
+		}
+		if = {
+			limit = {
+				has_variable = fh_constitution_zhu_crowned
+				OR = {
+					fh_constitution_ming_crown = yes
+					ruler ?= { fh_constitution_zhu_character = yes }
+				}
+			}
+			# A handover can span more than one pulse if the cabinet changes.
+			# Keep any native Zhu heir, and replace a reservation only if it was lost.
+			ruler = { save_temporary_scope_as = fh_constitution_zhu_monarch }
+			if = {
+				limit = {
+					NOR = {
+						heir ?= { fh_constitution_zhu_successor_candidate = yes }
+						var:fh_constitution_prepared_zhu_heir ?= {
+							owner = prev
+							fh_constitution_zhu_successor_candidate = yes
+						}
+					}
+				}
+				fh_constitution_prepare_zhu_heir = yes
+				if = {
+					limit = { exists = scope:fh_constitution_zhu_successor }
+					set_variable = { name = fh_constitution_prepared_zhu_heir value = scope:fh_constitution_zhu_successor }
+				}
+			}
+			fh_constitution_seat_zhu_heir = yes
+			# The new ruler may have changed either bloc's clout.
+			if = {
+				limit = { fh_constitution_ming_install_conditions = yes }
+				fh_constitution_select_cabinet_bloc = yes
+				fh_constitution_seat_founding_minister = yes
+			}
+			fh_constitution_select_cabinet_bloc = yes
+			if = {
+				limit = {
+					fh_constitution_ming_install_conditions = yes
+					fh_constitution_ming_crown = yes
+					heir ?= { fh_constitution_zhu_character = yes }
+					fh_constitution_founding_minister_serving = yes
+				}
+				set_variable = { name = fh_constitution_founding_bloc value = var:fh_constitution_first_minister_bloc }
+				set_variable = fh_constitution_ming_installed
+				fh_restore_southern_ming_citizenship = yes
+				remove_variable = fh_constitution_outgoing_ruler
+				remove_variable = fh_constitution_outgoing_heir
+				remove_variable = fh_constitution_prepared_zhu_heir
+				remove_variable = fh_constitution_reserved_zhu_crown
+			}
+		}
+	}
+}
+
+fh_constitution_prepare_zhu_crown = {
+	if = {
+		limit = {
+			any_scope_character = {
+				owner = prev
+				fh_constitution_zhu_crown_candidate = yes
+				has_variable = fh_tungning_ming_claimant
+			}
+		}
+		random_scope_character = {
+			limit = {
+				owner = prev
+				fh_constitution_zhu_crown_candidate = yes
+				has_variable = fh_tungning_ming_claimant
+			}
+			save_temporary_scope_as = fh_constitution_zhu_monarch
+		}
+	}
+	else_if = {
+		limit = { ruler ?= { fh_constitution_zhu_character = yes is_adult = yes } }
+		ruler = { save_temporary_scope_as = fh_constitution_zhu_monarch }
+	}
+	else_if = {
+		limit = {
+			var:fh_constitution_reserved_zhu_crown ?= {
+				owner = prev
+				fh_constitution_zhu_crown_candidate = yes
+			}
+		}
+		var:fh_constitution_reserved_zhu_crown = { save_temporary_scope_as = fh_constitution_zhu_monarch }
+	}
+	else_if = {
+		limit = { any_scope_character = { owner = prev fh_constitution_zhu_crown_candidate = yes } }
+		random_scope_character = {
+			limit = { owner = prev fh_constitution_zhu_crown_candidate = yes }
+			save_temporary_scope_as = fh_constitution_zhu_monarch
+		}
+	}
+	else = {
+		# One reserve at a time. Only replace it if no living local Zhu can take the throne.
+		create_character = {
+			template = fh_zhu_chengyuan_cadet
+			save_scope_as = fh_constitution_new_zhu_monarch
+		}
+		if = {
+			limit = { exists = scope:fh_constitution_new_zhu_monarch }
+			set_variable = { name = fh_constitution_reserved_zhu_crown value = scope:fh_constitution_new_zhu_monarch }
+			scope:fh_constitution_new_zhu_monarch = { save_temporary_scope_as = fh_constitution_zhu_monarch }
+		}
+	}
+}
+
+fh_constitution_prepare_zhu_heir = {
+	if = {
+		limit = {
+			heir ?= { fh_constitution_zhu_successor_candidate = yes }
+		}
+		heir = { save_temporary_scope_as = fh_constitution_zhu_successor }
+	}
+	else_if = {
+		limit = { any_scope_character = { owner = prev fh_constitution_zhu_successor_candidate = yes } }
+		random_scope_character = {
+			limit = { owner = prev fh_constitution_zhu_successor_candidate = yes }
+			save_temporary_scope_as = fh_constitution_zhu_successor
+		}
+	}
+	else = {
+		create_character = {
+			template = fh_zhu_yunming_cadet
+			save_scope_as = fh_constitution_new_zhu_successor
+		}
+		if = {
+			limit = { exists = scope:fh_constitution_new_zhu_successor }
+			scope:fh_constitution_new_zhu_successor = { save_temporary_scope_as = fh_constitution_zhu_successor }
+		}
+	}
+}
+
+fh_constitution_seat_zhu_heir = {
+	if = {
+		limit = {
+			var:fh_constitution_prepared_zhu_heir ?= {
+				fh_constitution_zhu_character = yes
+				owner = prev
+				is_ruler_of_own_country = no
+			}
+			NOT = { heir ?= { fh_constitution_zhu_successor_candidate = yes } }
+		}
+		heir ?= {
+			if = {
+				limit = { NOT = { fh_constitution_zhu_character = yes } }
+				disinherit_character = yes
+			}
+		}
+		set_heir = var:fh_constitution_prepared_zhu_heir
+	}
+	heir ?= {
+		if = {
+			limit = { fh_constitution_zhu_character = yes }
+			set_variable = { name = dynasty_var value = flag:fh_house_zhu }
+		}
+	}
+}
+
+fh_constitution_select_cabinet_bloc = {
+	save_temporary_scope_as = fh_constitution_cabinet_country
+	if = {
+		limit = { fh_constitution_ming_estates_stronger = yes }
+		ig:ig_landowners = { save_temporary_scope_as = fh_constitution_cabinet_bloc }
+	}
+	else_if = {
+		limit = { fh_constitution_ming_houses_stronger = yes }
+		ig:ig_industrialists = { save_temporary_scope_as = fh_constitution_cabinet_bloc }
+	}
+}
+
+fh_constitution_select_minister_fallback = {
+	if = {
+		limit = {
+			scope:fh_constitution_cabinet_bloc.leader ?= { fh_constitution_minister_candidate = yes }
+		}
+		scope:fh_constitution_cabinet_bloc.leader = {
+			save_temporary_scope_as = fh_constitution_minister_fallback
+		}
+	}
+	else_if = {
+		limit = { any_scope_character = { owner = prev fh_constitution_minister_candidate = yes } }
+		random_scope_character = {
+			limit = { owner = prev fh_constitution_minister_candidate = yes }
+			save_temporary_scope_as = fh_constitution_minister_fallback
+		}
+	}
+	else_if = {
+		limit = { NOT = { has_variable = fh_constitution_cabinet_cadet_prepared } }
+		create_character = {
+			template = fh_zheng_jingwen_cadet
+			save_scope_as = fh_constitution_new_cabinet_cadet
+		}
+		if = {
+			limit = { exists = scope:fh_constitution_new_cabinet_cadet }
+			set_variable = fh_constitution_cabinet_cadet_prepared
+			scope:fh_constitution_new_cabinet_cadet = { save_temporary_scope_as = fh_constitution_minister_fallback }
+		}
+	}
+	else = {
+		# The first cadet is no longer eligible. Let native naming distinguish a replacement.
+		create_character = {
+			last_name = Zheng
+			age = 35
+			noble = yes
+			culture = cu:min
+			religion = rel:catholic
+			interest_group = ig_landowners
+			ideology = ideology_moderate
+			save_scope_as = fh_constitution_new_cabinet_cadet
+			on_created = { set_variable = { name = dynasty_var value = flag:fh_house_zheng } }
+		}
+		scope:fh_constitution_new_cabinet_cadet ?= { save_temporary_scope_as = fh_constitution_minister_fallback }
+	}
+}
+
+fh_constitution_seat_founding_minister = {
+	if = {
+		limit = { NOT = { fh_constitution_founding_minister_serving = yes } }
+		var:fh_constitution_outgoing_ruler ?= { fh_constitution_appoint_minister = yes }
+	}
+	if = {
+		limit = { NOT = { fh_constitution_founding_minister_serving = yes } }
+		var:fh_constitution_outgoing_heir ?= { fh_constitution_appoint_minister = yes }
+	}
+	if = {
+		limit = { NOT = { fh_constitution_founding_minister_serving = yes } }
+		scope:fh_constitution_minister_fallback ?= { fh_constitution_appoint_minister = yes }
+	}
+}
+
+fh_constitution_replace_first_minister = {
+	if = {
+		limit = {
+			fh_constitution_ming_charter_active = yes
+			fh_constitution_ming_coalition = yes
+			NOT = { fh_constitution_ming_minister_serving = yes }
+		}
+		fh_constitution_vacate_first_minister = yes
+		fh_constitution_select_cabinet_bloc = yes
+		fh_constitution_select_minister_fallback = yes
+		scope:fh_constitution_minister_fallback ?= { fh_constitution_appoint_minister = yes }
+	}
+}
+
+# Character scope. The country and chosen bloc are supplied by the seated coalition.
+fh_constitution_appoint_minister = {
+	if = {
+		limit = {
+			fh_constitution_minister_candidate = yes
+			owner ?= scope:fh_constitution_cabinet_country
+			scope:fh_constitution_cabinet_bloc ?= { is_in_government = yes }
+		}
+		save_temporary_scope_as = fh_constitution_candidate_for_minister
+		if = {
+			limit = { NOT = { interest_group ?= scope:fh_constitution_cabinet_bloc } }
+			if = {
+				limit = { interest_group.leader ?= scope:fh_constitution_candidate_for_minister }
+				remove_as_interest_group_leader = yes
+			}
+			set_interest_group = scope:fh_constitution_cabinet_bloc
+		}
+		if = {
+			limit = { NOT = { scope:fh_constitution_cabinet_bloc.leader ?= scope:fh_constitution_candidate_for_minister } }
+			set_as_interest_group_leader = yes
+		}
+		if = {
+			limit = {
+				fh_constitution_minister_candidate = yes
+				owner ?= scope:fh_constitution_cabinet_country
+				scope:fh_constitution_cabinet_bloc ?= {
+					is_in_government = yes
+					leader ?= scope:fh_constitution_candidate_for_minister
+				}
+			}
+			owner = {
+				set_variable = { name = fh_constitution_first_minister value = scope:fh_constitution_candidate_for_minister }
+				set_variable = { name = fh_constitution_first_minister_bloc value = scope:fh_constitution_cabinet_bloc }
+			}
+		}
+	}
+}
+
+fh_constitution_vacate_first_minister = {
+	remove_variable = fh_constitution_first_minister
+	remove_variable = fh_constitution_first_minister_bloc
+}
+
+fh_constitution_initialize_zheng_dynasty = {
+	ruler ?= {
+		if = {
+			limit = {
+				has_template = fh_zheng_wenhai_ruler
+				fh_constitution_living_local_character = yes
+				NOT = { has_variable = dynasty_var }
+			}
+			set_variable = { name = dynasty_var value = flag:fh_house_zheng }
+		}
+	}
+}
+
+fh_constitution_prepare_zheng_cadet = {
+	if = {
+		limit = { fh_constitution_zheng_cadet_available = yes }
+		create_character = {
+			template = fh_zheng_mingde_cadet
+			save_scope_as = fh_constitution_zheng_successor
+		}
+		if = {
+			limit = { scope:fh_constitution_zheng_successor ?= { fh_constitution_zheng_character = yes } }
+			set_variable = fh_constitution_zheng_cadet_prepared
+			heir ?= { disinherit_character = yes }
+			set_heir = scope:fh_constitution_zheng_successor
+		}
+	}
+}

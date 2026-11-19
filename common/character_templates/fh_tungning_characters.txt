@@ -9,6 +9,7 @@
 	interest_group = ig_landowners
 	ideology = ideology_royalist
 	home_region = STATE_FORMOSA
+	on_created = { set_variable = { name = dynasty_var value = flag:fh_house_zheng } }
 }
 
 # Descendant of Chen Yonghua, who negotiated the withdrawal from Manila.

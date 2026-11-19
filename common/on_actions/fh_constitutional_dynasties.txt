@@ -1,0 +1,72 @@
+﻿on_monthly_pulse_country = {
+	on_actions = { fh_constitution_check_minister }
+}
+
+on_government_reformed = {
+	on_actions = { fh_constitution_check_minister }
+}
+
+on_ig_resigned_government = {
+	on_actions = { fh_constitution_ministers_bloc_left }
+}
+
+on_new_interest_group_leader = {
+	on_actions = { fh_constitution_minister_lost_leadership }
+}
+
+on_character_death = {
+	on_actions = { fh_constitution_minister_left_play }
+}
+
+on_character_spawned_in_pool = {
+	on_actions = { fh_constitution_minister_left_play }
+}
+
+on_heir_born = {
+	on_actions = { fh_constitution_legacy_zheng_inheritance }
+}
+
+fh_constitution_legacy_zheng_inheritance = {
+	# Wenhai can predate the dynasty marker in an existing save.
+	trigger = {
+		owner.ruler ?= {
+			has_template = fh_zheng_wenhai_ruler
+			NOT = { has_variable = dynasty_var }
+		}
+	}
+	effect = {
+		owner ?= { fh_constitution_initialize_zheng_dynasty = yes }
+		set_variable = { name = dynasty_var value = flag:fh_house_zheng }
+	}
+}
+
+# The status text and appointment guard also check the live positions.
+fh_constitution_check_minister = {
+	trigger = {
+		has_variable = fh_constitution_first_minister
+		NOT = { fh_constitution_ming_minister_serving = yes }
+	}
+	effect = { fh_constitution_vacate_first_minister = yes }
+}
+
+fh_constitution_ministers_bloc_left = {
+	trigger = {
+		owner ?= { var:fh_constitution_first_minister_bloc ?= root }
+	}
+	effect = { owner ?= { fh_constitution_vacate_first_minister = yes } }
+}
+
+fh_constitution_minister_lost_leadership = {
+	trigger = {
+		owner ?= {
+			var:fh_constitution_first_minister_bloc ?= root.interest_group
+			NOT = { var:fh_constitution_first_minister ?= root }
+		}
+	}
+	effect = { owner ?= { fh_constitution_vacate_first_minister = yes } }
+}
+
+fh_constitution_minister_left_play = {
+	trigger = { owner ?= { var:fh_constitution_first_minister ?= root } }
+	effect = { owner ?= { fh_constitution_vacate_first_minister = yes } }
+}

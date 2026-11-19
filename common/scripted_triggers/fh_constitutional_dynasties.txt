@@ -1,0 +1,133 @@
+﻿# Country scope. Resolve clout before testing government membership.
+fh_constitution_ming_estates_stronger = {
+	ig:ig_landowners ?= { is_marginal = no }
+	OR = {
+		NOT = { ig:ig_industrialists ?= { is_marginal = no } }
+		ig:ig_landowners.ig_clout >= ig:ig_industrialists.ig_clout
+	}
+}
+
+fh_constitution_ming_houses_stronger = {
+	ig:ig_industrialists ?= { is_marginal = no }
+	NOT = { fh_constitution_ming_estates_stronger = yes }
+}
+
+fh_constitution_ming_coalition = {
+	OR = {
+		AND = {
+			fh_constitution_ming_estates_stronger = yes
+			ig:ig_landowners ?= { is_in_government = yes }
+		}
+		AND = {
+			fh_constitution_ming_houses_stronger = yes
+			ig:ig_industrialists ?= { is_in_government = yes }
+		}
+	}
+}
+
+fh_constitution_ming_install_conditions = {
+	var:fh_constitution_route ?= 2
+	fh_constitution_ming_conditions = yes
+}
+
+# Character scope. Do not count a character who has left play.
+fh_constitution_living_local_character = {
+	is_character_alive = yes
+	is_in_void = no
+	is_in_exile_pool = no
+	exists = owner
+}
+
+fh_constitution_zhu_character = {
+	fh_constitution_living_local_character = yes
+	OR = {
+		var:dynasty_var ?= flag:fh_house_zhu
+		has_variable = fh_tungning_ming_claimant
+	}
+}
+
+fh_constitution_zhu_crown_candidate = {
+	fh_constitution_zhu_character = yes
+	is_adult = yes
+	is_ruler_of_own_country = no
+}
+
+fh_constitution_zhu_successor_candidate = {
+	fh_constitution_zhu_character = yes
+	is_ruler_of_own_country = no
+	NOT = { scope:fh_constitution_zhu_monarch ?= this }
+}
+
+fh_constitution_zheng_character = {
+	fh_constitution_living_local_character = yes
+	OR = {
+		var:dynasty_var ?= flag:fh_house_zheng
+		has_template = fh_zheng_wenhai_ruler
+	}
+}
+
+fh_constitution_minister_candidate = {
+	fh_constitution_zheng_character = yes
+	is_adult = yes
+	is_ruler_of_own_country = no
+	is_heir_of_own_country = no
+}
+
+# Country scope. A regent governs on behalf of the house of the heir.
+fh_constitution_ming_crown = {
+	OR = {
+		AND = {
+			has_gov_regency = no
+			ruler ?= { fh_constitution_zhu_character = yes }
+		}
+		AND = {
+			has_gov_regency = yes
+			heir ?= { fh_constitution_zhu_character = yes }
+		}
+	}
+}
+
+fh_constitution_ming_charter_active = {
+	fh_is_tungning_founder = yes
+	has_variable = fh_constitution_ming_installed
+	has_law_or_variant = law_type:law_monarchy
+	fh_constitution_voting_law = yes
+	fh_constitution_ming_crown = yes
+}
+
+fh_constitution_ming_minister_serving = {
+	var:fh_constitution_first_minister ?= {
+		fh_constitution_minister_candidate = yes
+		owner = prev
+	}
+	var:fh_constitution_first_minister_bloc ?= {
+		owner = prev
+		is_in_government = yes
+		leader ?= { owner.var:fh_constitution_first_minister ?= this }
+	}
+}
+
+fh_constitution_founding_minister_serving = {
+	fh_constitution_ming_minister_serving = yes
+	var:fh_constitution_first_minister_bloc ?= scope:fh_constitution_cabinet_bloc
+}
+
+fh_constitution_zheng_crown = {
+	has_law_or_variant = law_type:law_monarchy
+	has_gov_regency = no
+	ruler ?= { fh_constitution_zheng_character = yes }
+}
+
+fh_constitution_zheng_heir = {
+	heir ?= { fh_constitution_zheng_character = yes }
+}
+
+fh_constitution_zheng_cadet_available = {
+	var:fh_constitution_route ?= 3
+	has_law_or_variant = law_type:law_monarchy
+	NOR = {
+		fh_constitution_zheng_crown = yes
+		fh_constitution_zheng_heir = yes
+		has_variable = fh_constitution_zheng_cadet_prepared
+	}
+}

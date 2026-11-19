@@ -1,7 +1,8 @@
-﻿# Invoked in Qing scope once after vanilla bookmark history.
-fh_tungning_setup = {
+﻿# Invoked in Qing scope after vanilla building and pop history, before initial employment.
+fh_tungning_release_formosa = {
 	if = {
 		limit = {
+			game_date = 1836.1.1
 			is_country_alive = yes
 			owns_entire_state_region = STATE_FORMOSA
 			exists = s:STATE_FORMOSA.region_state:CHI
@@ -12,28 +13,43 @@ fh_tungning_setup = {
 			origin = this
 			state = s:STATE_FORMOSA.region_state:CHI
 			on_created = {
-				fh_tungning_country_setup = yes
+				set_variable = fh_tungning_history_started
+				if = {
+					limit = { is_subject = yes }
+					make_independent = yes
+				}
+				set_capital = STATE_FORMOSA
+				set_market_capital = STATE_FORMOSA
+				effect_starting_technology_tier_4_tech = yes
+				add_technology_researched = urban_planning
+				add_technology_researched = sericulture
+				add_technology_researched = academia
+				add_technology_researched = law_enforcement
+				activate_law = law_type:law_fh_anping_trade_charters
+				s:STATE_FORMOSA.region_state:TWG ?= { fh_tungning_formosa_setup = yes }
+				fh_tungning_lanfang_setup = yes
 			}
 		}
+	}
+}
 
-		if = {
-			limit = {
-				c:TWG ?= { has_variable = fh_tungning_bootstrapped }
+# Finish the political and military setup after the bookmark has initialized.
+fh_tungning_setup = {
+	if = {
+		limit = {
+			c:TWG ?= {
+				is_country_alive = yes
+				has_variable = fh_tungning_history_started
+				NOT = { has_variable = fh_tungning_bootstrapped }
 			}
-			fh_tungning_qing_setup = yes
 		}
+		c:TWG = { fh_tungning_country_setup = yes }
+		fh_tungning_qing_setup = yes
 	}
 }
 
 fh_tungning_country_setup = {
 	set_country_type = unrecognized
-	if = {
-		limit = { is_subject = yes }
-		make_independent = yes
-	}
-
-	set_capital = STATE_FORMOSA
-	set_market_capital = STATE_FORMOSA
 	set_state_religion = rel:catholic
 	if = {
 		limit = { country_has_primary_culture = cu:manchu }
@@ -52,13 +68,6 @@ fh_tungning_country_setup = {
 		add_primary_culture = cu:hakka
 	}
 
-	# Ensure the vanilla Qing baseline even if country creation does not
-	# copy its entire technology list. Qing receives Paddle Steamer later.
-	effect_starting_technology_tier_4_tech = yes
-	add_technology_researched = urban_planning
-	add_technology_researched = sericulture
-	add_technology_researched = academia
-	add_technology_researched = law_enforcement
 	add_technology_researched = mandatory_service
 	add_technology_researched = line_infantry
 	add_technology_researched = empiricism
@@ -72,7 +81,6 @@ fh_tungning_country_setup = {
 	active_law:lawgroup_church_and_state ?= {
 		add_amendment = { type = amendment_fh_yongli_articles sponsor = prev.ig:ig_devout }
 	}
-	activate_law = law_type:law_fh_anping_trade_charters
 	activate_law = law_type:law_migration_controls
 	activate_law = law_type:law_colonial_resettlement
 	activate_law = law_type:law_tenant_farmers
@@ -85,11 +93,6 @@ fh_tungning_country_setup = {
 	set_ruling_interest_groups = { ig_landowners }
 	create_character = { template = fh_zheng_wenhai_ruler }
 
-	fh_tungning_lanfang_setup = yes
-	s:STATE_FORMOSA.region_state:TWG ?= { fh_tungning_formosa_setup = yes }
-	activate_production_method = { building_type = building_urban_center production_method = pm_market_squares }
-	activate_production_method = { building_type = building_urban_center production_method = pm_gas_streetlights }
-	activate_production_method = { building_type = building_urban_center production_method = pm_free_urban_clergy }
 	create_character = { template = fh_chen_zhaowen_petty_bourgeoisie }
 	create_character = { template = fh_xu_wenjing_intelligentsia }
 	create_character = { template = fh_luo_jingde_devout }
@@ -141,14 +144,16 @@ fh_tungning_lanfang_setup = {
 			set_state_owner = c:TWG
 			set_state_type = unincorporated
 			activate_production_method = { building_type = building_port production_method = pm_basic_port }
+			fh_tungning_urban_setup = yes
 		}
 	}
 }
 
 fh_tungning_formosa_setup = {
 	set_state_type = incorporated
+	fh_tungning_urban_setup = yes
 
-	# Tungning now owns Taiwan and has enacted the Anping Trade Charters.
+	# Create the trade center early enough to receive workers with the other buildings.
 	create_building = {
 		building = building_trade_center
 		add_ownership = { building = { type = building_financial_district country = c:TWG region = STATE_FORMOSA levels = 2 } }
@@ -173,6 +178,12 @@ fh_tungning_formosa_setup = {
 	}
 	create_pop = { culture = korean size = 3000 }
 	create_pop = { culture = japanese size = 2000 }
+}
+
+fh_tungning_urban_setup = {
+	activate_production_method = { building_type = building_urban_center production_method = pm_market_squares }
+	activate_production_method = { building_type = building_urban_center production_method = pm_gas_streetlights }
+	activate_production_method = { building_type = building_urban_center production_method = pm_free_urban_clergy }
 }
 
 fh_tungning_army_setup = {
