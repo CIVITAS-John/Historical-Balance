@@ -25,7 +25,22 @@ INJECT:law_public_schools = {
 }
 
 INJECT:law_serfdom = {
-	disallowing_laws = { law_fh_confucian_academies }
+	# Joseon's academies coexist with its starting land law.
+	can_enact = {
+		OR = {
+			c:KOR ?= this
+			NOT = { has_law = law_type:law_fh_confucian_academies }
+		}
+	}
+	can_impose = {
+		can_impose_law_default = yes
+		scope:target_country = {
+			OR = {
+				c:KOR ?= this
+				NOT = { has_law = law_type:law_fh_confucian_academies }
+			}
+		}
+	}
 }
 
 INJECT:law_total_separation = {

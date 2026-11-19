@@ -377,7 +377,6 @@ law_fh_confucian_academies = {
 	disallowing_laws = {
 		law_total_separation
 		law_state_atheism
-		law_serfdom
 	}
 
 	is_visible = {
@@ -386,6 +385,10 @@ law_fh_confucian_academies = {
 
 	can_enact = {
 		country_has_state_religion = rel:confucian
+		OR = {
+			c:KOR ?= this
+			NOT = { has_law = law_type:law_serfdom }
+		}
 	}
 
 	modifier = {
@@ -402,6 +405,10 @@ law_fh_confucian_academies = {
 	can_impose = {
 		scope:target_country = {
 			country_has_state_religion = rel:confucian
+			OR = {
+				c:KOR ?= this
+				NOT = { has_law = law_type:law_serfdom }
+			}
 		}
 		OR = {
 			AND = {

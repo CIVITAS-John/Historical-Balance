@@ -24,6 +24,15 @@ fh_tungning_bookmark_setup = {
 				}
 				activate_law = law_type:law_fh_yangban_administration
 			}
+			if = {
+				limit = {
+					is_country_alive = yes
+					has_law = law_type:law_no_schools
+					any_law = { type = law_type:law_fh_confucian_academies law_is_available = yes }
+				}
+				activate_law = law_type:law_fh_confucian_academies
+				set_institution_investment_level = { institution = institution_schools level = 1 }
+			}
 		}
 		c:CHI ?= {
 			if = {
