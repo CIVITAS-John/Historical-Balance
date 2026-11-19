@@ -148,6 +148,14 @@ fh_tungning_lanfang_setup = {
 fh_tungning_formosa_setup = {
 	set_state_type = incorporated
 
+	# Tungning now owns Taiwan and has enacted the Anping Trade Charters.
+	create_building = {
+		building = building_trade_center
+		add_ownership = { building = { type = building_financial_district country = c:TWG region = STATE_FORMOSA levels = 2 } }
+		reserves = 1
+		activate_production_methods = { "pm_trade_center" "pm_trade_center_trade_quantity_normal" }
+	}
+
 	every_scope_pop = {
 		limit = {
 			OR = { has_pop_culture = han has_pop_culture = min }

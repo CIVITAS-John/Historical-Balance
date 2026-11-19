@@ -52,7 +52,7 @@ amendment_fh_port_and_village_registers = {
 		country_acceptance_homeland_add = 10
 	}
 
-	possible = { c:TWG ?= this }
+	possible = { fh_has_tungning_identity = yes }
 
 	on_activate = { recalculate_pop_ig_support = yes }
 	on_deactivate = { recalculate_pop_ig_support = yes }
@@ -72,7 +72,7 @@ amendment_fh_port_and_village_registers_with_levies = {
 	}
 
 	possible = {
-		c:TWG ?= this
+		fh_has_tungning_identity = yes
 		NOT = { has_variable = fh_return_to_mainland_completed }
 	}
 
@@ -91,7 +91,7 @@ amendment_fh_tungning_school_charter = {
 		state_conversion_mult = -0.20
 	}
 
-	possible = { c:TWG ?= this }
+	possible = { fh_has_tungning_identity = yes }
 
 	can_repeal = { legitimacy >= legitimacy_to_repeal_amendment }
 }
@@ -106,7 +106,7 @@ amendment_fh_yongli_articles = {
 		state_conversion_mult = -0.50
 	}
 
-	possible = { c:TWG ?= this }
+	possible = { fh_has_tungning_identity = yes }
 
 	can_repeal = {
 		fh_court_faith_law_lock_active = no

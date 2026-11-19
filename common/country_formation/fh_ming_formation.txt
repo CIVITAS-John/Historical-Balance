@@ -1,0 +1,49 @@
+﻿MIG = {
+	# The mainland core, excluding Taiwan, Manchuria, and overseas settlements.
+	states = {
+		STATE_FUJIAN
+		STATE_GUANGDONG
+		STATE_ZHEJIANG
+		STATE_SUZHOU
+		STATE_NANJING
+		STATE_JIANGSU
+		STATE_NORTHERN_ANHUI
+		STATE_SOUTHERN_ANHUI
+		STATE_JIANGXI
+		STATE_HUNAN
+		STATE_EASTERN_HUBEI
+		STATE_WESTERN_HUBEI
+		STATE_GUANGXI
+		STATE_SHAOZHOU
+		STATE_GUIZHOU
+		STATE_YUNNAN
+		STATE_SICHUAN
+		STATE_CHONGQING
+		STATE_BEIJING
+		STATE_ZHILI
+		STATE_SHANDONG
+		STATE_HENAN
+		STATE_SHANXI
+		STATE_XIAN
+		STATE_NINGXIA
+		STATE_GANSU
+	}
+	required_states_fraction = 0.6
+
+	possible = {
+		is_subject = no
+		custom_tooltip = {
+			text = fh_ming_claim_not_renounced_tt
+			NOT = { has_variable = fh_mainland_claim_renounced }
+		}
+	}
+
+	# Leave the established AI claimants on their scripted Qing and Taiping paths.
+	ai_will_do = {
+		is_at_war = no
+		NOR = {
+			c:CHI ?= this
+			c:TPG ?= this
+		}
+	}
+}

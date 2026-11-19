@@ -1,0 +1,31 @@
+﻿MIG = {
+	flag_definition = {
+		coa = MIG
+		subject_canton = MIG
+		priority = 1
+	}
+	flag_definition = {
+		coa = MIG_imperial
+		subject_canton = MIG_imperial
+		priority = 10
+		trigger = { scope:actor ?= { fh_has_great_ming_court = yes } }
+	}
+	flag_definition = {
+		coa = MIG_southern
+		subject_canton = MIG_southern
+		priority = 10
+		trigger = { scope:actor ?= { fh_has_southern_ming_court = yes } }
+	}
+	flag_definition = {
+		coa = MIG_republic
+		subject_canton = MIG_republic
+		priority = 10
+		trigger = { scope:actor ?= { fh_has_civic_republic = yes } }
+	}
+	flag_definition = {
+		coa = MIG_council
+		subject_canton = MIG_council
+		priority = 2100
+		trigger = { coa_def_communist_flag_trigger = yes }
+	}
+}

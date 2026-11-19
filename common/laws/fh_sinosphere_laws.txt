@@ -25,10 +25,7 @@ law_fh_mandate_of_heaven = {
 			has_law = law_type:law_monarchy
 			OR = {
 				c:CHI ?= this
-				AND = {
-					c:TWG ?= this
-					has_variable = fh_southern_ming_restored
-				}
+				has_variable = fh_southern_ming_restored
 			}
 		}
 		OR = {
@@ -50,10 +47,7 @@ law_fh_mandate_of_heaven = {
 	is_visible = {
 		OR = {
 			c:CHI ?= this
-			AND = {
-				c:TWG ?= this
-				has_variable = fh_southern_ming_restored
-			}
+			has_variable = fh_southern_ming_restored
 		}
 	}
 
@@ -324,7 +318,7 @@ law_fh_anping_trade_charters = {
 	}
 
 	is_visible = {
-		c:TWG ?= this
+		fh_has_tungning_identity = yes
 	}
 
 	modifier = {

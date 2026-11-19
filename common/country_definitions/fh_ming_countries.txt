@@ -1,0 +1,7 @@
+﻿MIG = {
+	color = { 173 38 35 }
+	country_type = unrecognized
+	tier = empire
+	cultures = { han hakka min yue }
+	capital = STATE_NANJING
+}

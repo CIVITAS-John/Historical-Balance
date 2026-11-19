@@ -97,7 +97,7 @@ on_monthly_pulse_country = {
 
 fh_tungning_migrate_registers = {
 	trigger = {
-		c:TWG ?= this
+		fh_has_tungning_identity = yes
 		has_law = law_type:law_fh_port_and_village_registers
 	}
 	effect = { fh_tungning_set_up_registers = yes }
@@ -105,7 +105,7 @@ fh_tungning_migrate_registers = {
 
 fh_tungning_migrate_split_registers = {
 	trigger = {
-		c:TWG ?= this
+		fh_has_tungning_identity = yes
 		active_law:lawgroup_citizenship ?= {
 			has_amendment = amendment_type:amendment_fh_port_and_village_levies
 		}

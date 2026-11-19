@@ -1,0 +1,44 @@
+﻿TWG = {
+	dynamic_country_name = {
+		name = dyn_c_fh_southern_ming
+		adjective = MIG_ADJ
+		is_main_tag_only = yes
+		priority = 20
+		trigger = { scope:actor ?= { fh_has_southern_ming_charter = yes } }
+	}
+	dynamic_country_name = {
+		name = dyn_c_fh_kingdom_of_tungning
+		is_main_tag_only = yes
+		priority = 10
+		trigger = { scope:actor ?= { country_has_monarchy_law = yes } }
+	}
+	dynamic_country_name = {
+		name = dyn_c_fh_republic_of_tungning
+		is_main_tag_only = yes
+		priority = 10
+		trigger = { scope:actor ?= { fh_has_civic_republic = yes } }
+	}
+}
+
+MIG = {
+	dynamic_country_name = {
+		name = dyn_c_fh_great_ming
+		is_main_tag_only = yes
+		trigger = { scope:actor ?= { fh_has_great_ming_court = yes } }
+	}
+	dynamic_country_name = {
+		name = dyn_c_fh_southern_ming
+		is_main_tag_only = yes
+		trigger = { scope:actor ?= { fh_has_southern_ming_court = yes } }
+	}
+	dynamic_country_name = {
+		name = dyn_c_fh_republic_of_ming
+		is_main_tag_only = yes
+		trigger = { scope:actor ?= { fh_has_civic_republic = yes } }
+	}
+	dynamic_country_name = {
+		name = dyn_c_fh_ming_council_republic
+		is_main_tag_only = yes
+		trigger = { coa_def_communist_flag_trigger = yes }
+	}
+}

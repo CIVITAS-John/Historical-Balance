@@ -1,15 +1,43 @@
 ﻿TWG = {
 	pattern = "pattern_solid.tga"
-	color1 = "red"
+	color1 = "blue"
+
+	colored_emblem = {
+		texture = "ce_ship_wheel.dds"
+		color1 = "yellow"
+		color2 = "yellow"
+		instance = { scale = { 0.68 0.68 } }
+	}
+}
+
+# The Zheng court's Catholic banner preserves the original cross and roundel.
+TWG_catholic = {
+	pattern = "pattern_border_of_4.dds"
+	color1 = "red_dark"
+	color2 = "golden"
 
 	colored_emblem = {
 		texture = "ce_circle.dds"
-		color1 = "yellow"
-		instance = { scale = { 0.65 0.65 } }
+		color1 = "golden"
+		instance = { scale = { 0.69 0.69 } }
 	}
+
 	colored_emblem = {
 		texture = "ce_cross_patty.dds"
-		color1 = "red"
-		instance = { scale = { 0.36 0.36 } }
+		color1 = "red_dark"
+		instance = { scale = { 0.48 0.48 } }
+	}
+}
+
+TWG_republic = {
+	pattern = "pattern_border_of_2.dds"
+	color1 = "teal"
+	color2 = "white"
+
+	colored_emblem = {
+		texture = "ce_ship_wheel.dds"
+		color1 = "white"
+		color2 = "white"
+		instance = { scale = { 0.62 0.62 } }
 	}
 }

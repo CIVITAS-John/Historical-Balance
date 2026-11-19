@@ -8,7 +8,6 @@ fh_mainland_claim_country_update = {
 			fh_is_tungning_founder = yes
 			AND = {
 				NOT = { has_global_variable = fh_tungning_founder }
-				c:TWG ?= this
 				has_variable = fh_tungning_bootstrapped
 				is_country_alive = yes
 			}

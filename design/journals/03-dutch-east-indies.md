@@ -32,7 +32,7 @@ At **100 pressure** or the **fifth anniversary**, check for success before conce
 
 ## Actions
 
-- **Policy Challenge:** <!-- -12 pressure with 12mo cooldown. -100% export tariff, +2 maritime approval for 12 months -->
+- **Tariff Challenge:** <!-- -12 pressure with 12mo cooldown. -100% export tariff, +2 maritime approval for 12 months -->
 - **Military Challenge:** Requires an active interest in Indonesia, no default, and naval projection at least as high as the Dutch comparison and at least 120% of Tungning’s opening projection. Once per journal, reduce relations with the rival by 20 and start the naval demonstration. For one year, give the Maritime Houses −2 approval for risking trade and the Army and Fleet +2 under a southern-expedition leader, −2 under a mainland-first leader, or zero under a neutral leader. During the demonstration, raise naval goods costs by 25%.
 
 ## Events

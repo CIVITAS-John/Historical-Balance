@@ -4,4 +4,27 @@
 		subject_canton = TWG
 		priority = 1
 	}
+	flag_definition = {
+		coa = TWG_catholic
+		subject_canton = TWG_catholic
+		priority = 10
+		trigger = {
+			scope:actor ?= {
+				country_has_monarchy_law = yes
+				country_has_state_religion = rel:catholic
+			}
+		}
+	}
+	flag_definition = {
+		coa = TWG_republic
+		subject_canton = TWG_republic
+		priority = 10
+		trigger = { scope:actor ?= { fh_has_civic_republic = yes } }
+	}
+	flag_definition = {
+		coa = MIG_southern
+		subject_canton = MIG_southern
+		priority = 20
+		trigger = { scope:actor ?= { fh_has_southern_ming_charter = yes } }
+	}
 }
