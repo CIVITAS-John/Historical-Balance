@@ -1,0 +1,9 @@
+﻿# Formosa has been released; create the barracks before starting jobs are assigned.
+MILITARY_FORMATIONS = {
+	c:TWG ?= {
+		if = {
+			limit = { has_variable = fh_tungning_history_started }
+			fh_tungning_army_setup = yes
+		}
+	}
+}

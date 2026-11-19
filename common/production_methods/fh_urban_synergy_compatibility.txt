@@ -1,0 +1,4 @@
+﻿# Keep the keys valid without Grey's Urban Synergy Unleashed. Only that mod
+# assigns these methods to an urban center production method group.
+INJECT_OR_CREATE:pm_horses = {}
+INJECT_OR_CREATE:pm_stagecoaches_and_wagons = {}

@@ -33,7 +33,7 @@ fh_tungning_release_formosa = {
 	}
 }
 
-# Finish the political and military setup after the bookmark has initialized.
+# Finish the political and naval setup after the bookmark has initialized.
 fh_tungning_setup = {
 	if = {
 		limit = {
@@ -69,12 +69,10 @@ fh_tungning_country_setup = {
 	}
 
 	add_technology_researched = mandatory_service
-	add_technology_researched = line_infantry
 	add_technology_researched = empiricism
 	add_technology_researched = colonization
 	activate_law = law_type:law_monarchy
 	activate_law = law_type:law_autocracy
-	activate_law = law_type:law_professional_army
 	activate_law = law_type:law_fh_standardized_examinations
 	fh_tungning_set_up_registers = yes
 	activate_law = law_type:law_freedom_of_conscience
@@ -99,7 +97,6 @@ fh_tungning_country_setup = {
 	create_character = { template = fh_samuel_talavan_agitator }
 	create_character = { template = fh_yang_jingyuan_industrialists }
 	create_character = { template = fh_zhu_yucheng_magnate }
-	fh_tungning_army_setup = yes
 	fh_tungning_fleet_setup = yes
 
 	add_modifier = {
@@ -152,6 +149,19 @@ fh_tungning_lanfang_setup = {
 fh_tungning_formosa_setup = {
 	set_state_type = incorporated
 	fh_tungning_urban_setup = yes
+	# Grey's Urban Synergy Unleashed starts local transport on Horses.
+	if = {
+		limit = {
+			is_production_method_active = {
+				building_type = building_urban_center
+				production_method = pm_horses
+			}
+		}
+		activate_production_method = {
+			building_type = building_urban_center
+			production_method = pm_stagecoaches_and_wagons
+		}
+	}
 
 	# Create the trade center early enough to receive workers with the other buildings.
 	create_building = {
@@ -187,6 +197,8 @@ fh_tungning_urban_setup = {
 }
 
 fh_tungning_army_setup = {
+	add_technology_researched = line_infantry
+	activate_law = law_type:law_professional_army
 	create_military_formation = {
 		type = army
 		hq_region = sr:region_south_china
