@@ -1,3 +1,4 @@
-﻿fh_register_conscription = {
+﻿# Legacy save key. No new levies are granted through this modifier.
+fh_register_conscription = {
 	state_conscription_rate_mult = 0.25
 }

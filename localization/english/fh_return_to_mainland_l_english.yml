@@ -1,9 +1,9 @@
 ﻿l_english:
  fh_je_mainland_foothold: "The Return to the Mainland"
  fh_je_mainland_foothold_reason: "Secure all ordinary land in Fujian, Guangdong, or Zhejiang. The administration there must have two staffed levels of Government Administration, no occupation and at most 20% Turmoil at three consecutive monthly checks."
- fh_je_mainland_foothold_completed_desc: "The court has registered its first mainland administration. The extra levy from the Port and Village Registers is over."
+ fh_je_mainland_foothold_completed_desc: "The court has registered its first mainland administration. The Port and Village Levies are over."
  fh_register_mainland_administration: "Register the Mainland Administration"
- fh_register_mainland_administration_desc: "Confirm how to record the first coastal administration. Completing the registration ends the extra conscription granted by the Port and Village Registers."
+ fh_register_mainland_administration_desc: "Confirm how to record the first coastal administration. Completing the registration ends the Port and Village Levies."
  fh_mainland_registration_ready_tt: "At least one mainland region has met the registration requirements for three consecutive monthly checks."
  fh_mainland_registration.1.t: "Register the Mainland Administration"
  fh_mainland_registration.1.d: "The coastal administration is ready to submit its accounts. The court may recognize the local rolls or have its commissioners put them into a common format."

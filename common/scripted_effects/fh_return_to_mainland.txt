@@ -29,7 +29,12 @@ fh_select_mainland_registration_state = {
 
 fh_finish_mainland_registration = {
 	set_variable = fh_return_to_mainland_completed
-	fh_sync_register_conscription = yes
+	fh_remove_port_and_village_levies = yes
+	# An older save can register before its first law migration pulse.
+	if = {
+		limit = { has_modifier = fh_register_conscription }
+		remove_modifier = fh_register_conscription
+	}
 	remove_variable = fh_fujian_readiness
 	remove_variable = fh_guangdong_readiness
 	remove_variable = fh_zhejiang_readiness

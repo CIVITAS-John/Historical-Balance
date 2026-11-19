@@ -67,8 +67,7 @@ fh_tungning_country_setup = {
 	activate_law = law_type:law_autocracy
 	activate_law = law_type:law_professional_army
 	activate_law = law_type:law_fh_standardized_examinations
-	activate_law = law_type:law_fh_port_and_village_registers
-	fh_sync_register_conscription = yes
+	fh_tungning_set_up_registers = yes
 	activate_law = law_type:law_freedom_of_conscience
 	active_law:lawgroup_church_and_state ?= {
 		add_amendment = { type = amendment_fh_yongli_articles sponsor = prev.ig:ig_devout }

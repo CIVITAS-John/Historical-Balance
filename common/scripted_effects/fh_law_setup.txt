@@ -43,6 +43,26 @@ fh_qing_law_setup = {
 	}
 }
 
+fh_tungning_set_up_registers = {
+	activate_law = law_type:law_subjecthood
+	if = {
+		limit = { has_law = law_type:law_subjecthood }
+		active_law:lawgroup_citizenship ?= {
+			add_amendment = {
+				type = amendment_fh_port_and_village_registers
+				sponsor = prev.ig:ig_petty_bourgeoisie
+			}
+			if = {
+				limit = { owner = { NOT = { has_variable = fh_return_to_mainland_completed } } }
+				add_amendment = {
+					type = amendment_fh_port_and_village_levies
+					sponsor = prev.ig:ig_armed_forces
+				}
+			}
+		}
+	}
+}
+
 # Called at the actual Zhu enthronement, in the same founding country.
 # Unlock the Mandate either way, and retain any other citizenship law.
 fh_restore_southern_ming_citizenship = {
@@ -56,6 +76,18 @@ fh_restore_southern_ming_citizenship = {
 		set_variable = fh_southern_ming_restored
 		if = {
 			limit = { has_law = law_type:law_fh_port_and_village_registers }
+			fh_tungning_set_up_registers = yes
+		}
+		if = {
+			limit = {
+				active_law:lawgroup_citizenship ?= {
+					has_amendment = amendment_type:amendment_fh_port_and_village_registers
+				}
+			}
+			active_law:lawgroup_citizenship ?= {
+				fh_remove_law_amendment = { AMENDMENT = amendment_fh_port_and_village_levies }
+				fh_remove_law_amendment = { AMENDMENT = amendment_fh_port_and_village_registers }
+			}
 			activate_law = law_type:law_fh_mandate_of_heaven
 		}
 	}

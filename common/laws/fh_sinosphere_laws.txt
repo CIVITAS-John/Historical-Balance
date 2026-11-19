@@ -138,6 +138,8 @@ law_fh_mandate_of_heaven = {
 
 }
 
+# Retain this law for saves made before the Registers became amendments.
+# The country pulse migrates it to Subjecthood and the matching amendments.
 law_fh_port_and_village_registers = {
 	group = lawgroup_citizenship
 	parent = law_subjecthood
@@ -146,42 +148,10 @@ law_fh_port_and_village_registers = {
 
 	progressiveness = -25
 
-	# The temporary levy is a country modifier, so registration can end it
-	# without replacing this citizenship law.
-	on_activate = {
-		recalculate_pop_ig_support = yes
-		fh_sync_register_conscription = yes
-	}
-
 	on_deactivate = {
 		if = {
 			limit = { has_modifier = fh_register_conscription }
 			remove_modifier = fh_register_conscription
-		}
-	}
-
-	on_enact = {
-		if = {
-			limit = {
-				is_subject = yes
-			}
-			custom_tooltip = subjecthood_fervor_no_effects_ld_tt
-		}
-	}
-
-	can_impose = {
-		scope:target_country = {
-			c:TWG ?= this
-		}
-		OR = {
-			AND = {
-				is_in_same_power_bloc = scope:target_country
-				AND = {
-					modifier:country_can_impose_same_lawgroup_citizenship_in_power_bloc_bool = yes
-					has_law = scope:law
-				}
-			}
-			can_impose_law_default = yes
 		}
 	}
 
@@ -193,7 +163,7 @@ law_fh_port_and_village_registers = {
 	}
 
 	is_visible = {
-		c:TWG ?= this
+		always = no
 	}
 
 	modifier = {

@@ -26,7 +26,8 @@
 }
 
 amendment_fh_coastal_registers = {
-	parent = law_canton_system
+	# Loosening Canton trade attracts support from groups that favor open trade.
+	parent = law_free_trade
 	allowed_laws = { law_canton_system }
 
 	modifier = {
@@ -38,6 +39,38 @@ amendment_fh_coastal_registers = {
 	possible = {
 		c:CHI ?= this
 		NOT = { has_variable = fh_coastal_registers_removed }
+	}
+
+	can_repeal = { legitimacy >= legitimacy_to_repeal_amendment }
+}
+
+amendment_fh_port_and_village_registers = {
+	parent = law_subjecthood
+	allowed_laws = { law_subjecthood }
+
+	modifier = {
+		country_acceptance_homeland_add = 10
+	}
+
+	possible = { c:TWG ?= this }
+
+	on_activate = { recalculate_pop_ig_support = yes }
+	on_deactivate = { recalculate_pop_ig_support = yes }
+
+	can_repeal = { legitimacy >= legitimacy_to_repeal_amendment }
+}
+
+amendment_fh_port_and_village_levies = {
+	parent = law_subjecthood
+	allowed_laws = { law_subjecthood }
+
+	modifier = {
+		state_conscription_rate_mult = 0.25
+	}
+
+	possible = {
+		c:TWG ?= this
+		NOT = { has_variable = fh_return_to_mainland_completed }
 	}
 
 	can_repeal = { legitimacy >= legitimacy_to_repeal_amendment }
