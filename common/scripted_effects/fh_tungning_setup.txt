@@ -1,4 +1,39 @@
-﻿# Finish the political and naval setup after the bookmark has initialized.
+﻿# Invoked in Qing scope after vanilla building and pop history, before initial employment.
+fh_tungning_release_formosa = {
+	if = {
+		limit = {
+			game_date = 1836.1.1
+			is_country_alive = yes
+			owns_entire_state_region = STATE_FORMOSA
+			exists = s:STATE_FORMOSA.region_state:CHI
+			NOT = { c:TWG ?= { is_country_alive = yes } }
+		}
+		create_country = {
+			tag = TWG
+			origin = this
+			state = s:STATE_FORMOSA.region_state:CHI
+			on_created = {
+				set_variable = fh_tungning_history_started
+				if = {
+					limit = { is_subject = yes }
+					make_independent = yes
+				}
+				set_capital = STATE_FORMOSA
+				set_market_capital = STATE_FORMOSA
+				effect_starting_technology_tier_4_tech = yes
+				add_technology_researched = urban_planning
+				add_technology_researched = sericulture
+				add_technology_researched = academia
+				add_technology_researched = law_enforcement
+				activate_law = law_type:law_fh_anping_trade_charters
+				s:STATE_FORMOSA.region_state:TWG ?= { fh_tungning_formosa_setup = yes }
+				fh_tungning_lanfang_setup = yes
+			}
+		}
+	}
+}
+
+# Finish the political and naval setup after the bookmark has initialized.
 fh_tungning_setup = {
 	if = {
 		limit = {
@@ -112,6 +147,7 @@ fh_tungning_lanfang_setup = {
 }
 
 fh_tungning_formosa_setup = {
+	set_state_type = incorporated
 	fh_tungning_urban_setup = yes
 	# Grey's Urban Synergy Unleashed starts local transport on Horses.
 	if = {
@@ -152,6 +188,10 @@ fh_tungning_formosa_setup = {
 	}
 	create_pop = { culture = korean size = 3000 }
 	create_pop = { culture = japanese size = 2000 }
+
+	# Seed the new pops as Qing does in POPULATION. Grey's Soft Pop Adjustments
+	# gives unseeded pops a very high default that the starting wage calculation uses.
+	effect_starting_pop_wealth_low = yes
 }
 
 fh_tungning_urban_setup = {
