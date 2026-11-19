@@ -1,4 +1,10 @@
-﻿# The vanilla buildings and pops exist by this point, but starting jobs are still unassigned.
+﻿# Both states have their starting buildings, but starting jobs are still unassigned.
 PRODUCTION_METHODS = {
-	c:CHI ?= { fh_tungning_release_formosa = yes }
+	c:TWG ?= {
+		if = {
+			limit = { has_variable = fh_tungning_history_started }
+			s:STATE_FORMOSA.region_state:TWG ?= { fh_tungning_formosa_setup = yes }
+			fh_tungning_lanfang_setup = yes
+		}
+	}
 }
