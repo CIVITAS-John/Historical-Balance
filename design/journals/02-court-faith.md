@@ -52,12 +52,12 @@ When an option promotes a faith, it converts **0.5% of Taiwan Pops outside that 
 
 | Event and trigger | +5 toward Christianity | −5 toward ancestral traditions |
 | --- | --- | --- |
-| **Mission-school dispute:** At least 3% Catholic population in Taiwan. Luo petitions for classrooms; Xu argues that mission pupils should also study the classics. | Put the missions in charge (promote Catholicism; −1% radicals among Catholic Pops and +1% among other faiths in Taiwan; Taiwan education access +5 percentage points for one year) | Fund classical tutors (promote Confucianism; Taiwan qualifications +3%) |
-| **A chaplain from Manila:** Active Manila Compact. Luo welcomes the visiting chaplain. | Receive the chaplain (promote Catholicism; Taiwan trade advantage +3%) | Send a secular delegation (influence +3%) |
-| **The printing house:** A Taiwan university. Talavan brings Siraya readers to the university press; Xu makes the case for printing them. | Print translations for the missions (promote Protestantism; technology spread +3%) | Print classical readers (promote Confucianism; Taiwan qualifications +3%) |
-| **The academy’s appeal:** Governing Ming Estates. | Admit mission graduates to exams (promote Catholicism; Taiwan qualifications +3%) | Keep the classical examinations (promote Confucianism; bureaucracy +3%) |
+| **Mission-school dispute:** At least 3% Catholic population in Taiwan. Luo petitions for classrooms; Xu argues that mission pupils should also study the classics. | Put the missions in charge (promote Catholicism; -2% radicals among Catholic Pops and +0.5% among other faiths in Taiwan; Taiwan education access +5 percentage points for one year) | Fund classical tutors (promote Confucianism; Taiwan qualifications +3%) |
+| **A chaplain from Manila:** Active Manila Compact. Luo welcomes the visiting chaplain. | Receive the chaplain (promote Catholicism; Taiwan trade advantage +3%) | Send a secular delegation (influence +5%) |
+| **The printing house:** A Taiwan university. Talavan brings Siraya readers to the university press; Xu makes the case for printing them. | Print translations for the missions (promote Protestantism; technology spread +5%) | Print classical readers (promote Confucianism; Taiwan qualifications +3%) |
+| **The academy’s appeal:** Governing Ming Estates. | Admit mission graduates to exams (promote Catholicism; Taiwan qualifications +5%) | Keep the classical examinations (promote Confucianism; bureaucracy +3%) |
 | **A temple school endowment:** At least 10% Mahayana Buddhist population in Taiwan. | Invite missions to match the endowment (promote Catholicism; Taiwan education access +3 percentage points) | Recognize temple schools (promote Mahayana Buddhism; Taiwan qualifications +3%) |
-| **A visit to the Reformed congregations:** Tungning owns part of Taiwan and has an active, voluntarily signed treaty with a Protestant country. | Welcome Reformed teachers (promote Protestantism; +1% radicals among Catholic and Confucian Pops in Taiwan) | Keep the treaty to secular matters. |
+| **A visit to the Reformed congregations:** Tungning owns part of Taiwan and has an active, voluntarily signed treaty with a Protestant country. | Welcome Reformed teachers (promote Protestantism; +0.5% radicals among Catholic and Confucian Pops in Taiwan) | Keep the treaty to secular matters. |
 
 Apply Taiwan conditions and modifiers to the state Tungning actually owns; skip local effects if it no longer owns a state there.
 

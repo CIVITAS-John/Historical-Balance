@@ -95,6 +95,10 @@ fh_court_faith_clean_transferred_state = {
 			remove_modifier = fh_court_faith_local_teachers
 		}
 		if = {
+			limit = { has_modifier = fh_court_faith_mission_graduates }
+			remove_modifier = fh_court_faith_mission_graduates
+		}
+		if = {
 			limit = { has_modifier = fh_court_faith_chaplain_visit }
 			remove_modifier = fh_court_faith_chaplain_visit
 		}

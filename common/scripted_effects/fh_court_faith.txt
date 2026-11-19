@@ -347,7 +347,7 @@ fh_court_faith_spread_faith = {
 fh_court_faith_mission_school_reaction = {
 	custom_tooltip = fh_court_faith_mission_school_reaction_tt
 	hidden_effect = {
-		add_radicals_in_state = { value = -0.01 religion = rel:catholic }
+		add_radicals_in_state = { value = -0.02 religion = rel:catholic }
 		every_scope_pop = {
 			limit = { NOT = { has_pop_religion = catholic } }
 			religion = {
@@ -361,7 +361,7 @@ fh_court_faith_mission_school_reaction = {
 			list = fh_court_faith_school_other_religions
 			save_temporary_scope_as = fh_court_faith_school_other_religion
 			prev = {
-				add_radicals_in_state = { value = 0.01 religion = scope:fh_court_faith_school_other_religion }
+				add_radicals_in_state = { value = 0.005 religion = scope:fh_court_faith_school_other_religion }
 			}
 		}
 	}

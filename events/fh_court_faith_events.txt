@@ -271,7 +271,7 @@ fh_court_faith.14 = {
 			every_scope_state = {
 				limit = { state_region = s:STATE_FORMOSA }
 				fh_court_faith_spread_faith = { FAITH = catholic }
-				add_modifier = { name = fh_court_faith_local_teachers months = 6 }
+				add_modifier = { name = fh_court_faith_mission_graduates months = 6 }
 			}
 			fh_court_faith_answer_event = { DELTA = 5 }
 		}
@@ -385,8 +385,8 @@ fh_court_faith.16 = {
 			limit = { fh_court_faith_can_answer_event = { EVENT = 16 ELIGIBLE = fh_court_faith_reformed_visit_still_eligible } }
 			every_scope_state = {
 				limit = { state_region = s:STATE_FORMOSA }
-				add_radicals_in_state = { value = 0.01 religion = rel:catholic }
-				add_radicals_in_state = { value = 0.01 religion = rel:confucian }
+				add_radicals_in_state = { value = 0.005 religion = rel:catholic }
+				add_radicals_in_state = { value = 0.005 religion = rel:confucian }
 				fh_court_faith_spread_faith = { FAITH = protestant }
 			}
 			fh_court_faith_answer_event = { DELTA = 5 }
