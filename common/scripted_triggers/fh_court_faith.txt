@@ -109,10 +109,70 @@ fh_court_faith_traditionalist_in_government = {
 	}
 }
 
-fh_court_faith_confucian_tributary = {
-	is_subject_type = subject_type_tributary
-	c:CHI ?= { country_has_state_religion = rel:confucian }
-	is_direct_subject_of = c:CHI
+fh_court_faith_christian_overlord = {
+	overlord ?= { religion = { has_discrimination_trait = heritage_christian } }
+}
+
+fh_court_faith_can_answer_event = {
+	fh_court_faith_debate_active = yes
+	var:fh_court_faith_pending_event ?= $EVENT$
+	$ELIGIBLE$ = yes
+}
+
+fh_court_faith_mission_school_eligible = {
+	any_scope_state = {
+		state_region = s:STATE_FORMOSA
+		religion_percent_state = { target = rel:catholic value >= 0.03 }
+	}
+}
+
+fh_court_faith_taiwan_has_university = {
+	any_scope_state = {
+		state_region = s:STATE_FORMOSA
+		has_building = building_university
+	}
+}
+
+fh_court_faith_academy_eligible = {
+	ig:ig_landowners ?= { is_in_government = yes }
+}
+
+fh_court_faith_taiwan_has_mahayana = {
+	any_scope_state = {
+		state_region = s:STATE_FORMOSA
+		religion_percent_state = { target = rel:mahayana value >= 0.10 }
+	}
+}
+
+# Treaty scope, with Tungning as the root country of the event.
+fh_court_faith_protestant_treaty = {
+	binds = root
+	is_enforced = no
+	OR = {
+		first_country = {
+			NOT = { this = root }
+			is_country_alive = yes
+			country_has_state_religion = rel:protestant
+		}
+		second_country = {
+			NOT = { this = root }
+			is_country_alive = yes
+			country_has_state_religion = rel:protestant
+		}
+	}
+}
+
+fh_court_faith_reformed_visit_eligible = {
+	any_scope_state = { state_region = s:STATE_FORMOSA }
+	any_scope_treaty = { fh_court_faith_protestant_treaty = yes }
+}
+
+fh_court_faith_reformed_visit_still_eligible = {
+	any_scope_state = { state_region = s:STATE_FORMOSA }
+	any_scope_treaty = {
+		this ?= scope:fh_court_faith_reformed_visit_treaty
+		fh_court_faith_protestant_treaty = yes
+	}
 }
 
 fh_court_faith_nomination_open = {
@@ -141,12 +201,7 @@ fh_court_faith_protestant_sponsor = {
 		fh_court_faith_reformer_sponsor = yes
 		AND = {
 			is_interest_group_type = ig_intelligentsia
-			owner = {
-				any_scope_state = {
-					state_region = s:STATE_FORMOSA
-					has_building = building_university
-				}
-			}
+			owner = { fh_court_faith_taiwan_has_university = yes }
 		}
 	}
 }

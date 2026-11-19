@@ -1,4 +1,16 @@
-﻿on_law_activated = {
+﻿fh_court_faith_quarterly_events = {
+	random_events = {
+		chance_to_happen = 10
+		1 = fh_court_faith.11
+		1 = fh_court_faith.12
+		1 = fh_court_faith.13
+		1 = fh_court_faith.14
+		1 = fh_court_faith.15
+		1 = fh_court_faith.16
+	}
+}
+
+on_law_activated = {
 	on_actions = { fh_court_faith_on_law_activated }
 }
 
@@ -69,6 +81,26 @@ fh_court_faith_clean_transferred_state = {
 		if = {
 			limit = { has_modifier = fh_court_faith_temple_patronage_taiwan }
 			remove_modifier = fh_court_faith_temple_patronage_taiwan
+		}
+		if = {
+			limit = { has_modifier = fh_court_faith_event_conversion }
+			remove_modifier = fh_court_faith_event_conversion
+		}
+		if = {
+			limit = { has_modifier = fh_court_faith_mission_school_charter }
+			remove_modifier = fh_court_faith_mission_school_charter
+		}
+		if = {
+			limit = { has_modifier = fh_court_faith_local_teachers }
+			remove_modifier = fh_court_faith_local_teachers
+		}
+		if = {
+			limit = { has_modifier = fh_court_faith_chaplain_visit }
+			remove_modifier = fh_court_faith_chaplain_visit
+		}
+		if = {
+			limit = { has_modifier = fh_court_faith_matching_endowments }
+			remove_modifier = fh_court_faith_matching_endowments
 		}
 	}
 }

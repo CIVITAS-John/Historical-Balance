@@ -69,10 +69,7 @@ fh_court_faith_nominate_mahayana = {
 		fh_court_faith_nomination_open = yes
 		OR = {
 			any_interest_group = { fh_court_faith_mahayana_sponsor = yes }
-			any_scope_state = {
-				state_region = s:STATE_FORMOSA
-				fh_court_faith_taiwan_mahayana_share >= 0.10
-			}
+			fh_court_faith_taiwan_has_mahayana = yes
 		}
 	}
 	effect = {

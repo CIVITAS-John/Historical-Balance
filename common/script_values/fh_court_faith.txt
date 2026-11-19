@@ -1,11 +1,15 @@
-﻿fh_court_faith_taiwan_mahayana_share = {
-	every_scope_pop = {
-		limit = { has_pop_religion = mahayana }
-		add = total_size
-	}
-	divide = {
-		value = state_population
-		min = 1
+﻿# Other religions count in the population denominator but back neither side.
+fh_court_faith_taiwan_demographic_drift = {
+	value = 0
+	every_scope_state = {
+		limit = {
+			state_region = s:STATE_FORMOSA
+			state_population > 0
+		}
+		add = "this.religion_percent_state(rel:catholic)"
+		add = "this.religion_percent_state(rel:protestant)"
+		subtract = "this.religion_percent_state(rel:confucian)"
+		subtract = "this.religion_percent_state(rel:mahayana)"
 	}
 }
 

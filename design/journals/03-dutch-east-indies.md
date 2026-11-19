@@ -41,8 +41,8 @@ Each quarter, roll a 10% chance to draw one eligible event. Start a shared 12-mo
 
 | Event | Eligible while | Choices |
 | --- | --- | --- |
-| Merchants ask for escorts | Tungning still owns a tracked Lanfang parcel | Escort the ships (−5 pressure, +5% military goods costs) or leave the merchants to arrange their own passage (+5 pressure, +5% trade advantage in Tungning’s West Borneo state). |
-| Dutch fleet called away | The rival or its Dutch overlord is fighting in another war | Send out the squadron (−5 pressure, −10 relations with the rival immediately, +5% military goods costs for one year) or keep ships on their usual routes (+5 pressure, +2 Maritime Houses approval for six months). |
+| Merchants ask for escorts | Tungning still owns a tracked Lanfang parcel | Escort the ships (−5 pressure, +5% naval goods costs for one year) or leave the merchants to arrange their own passage (+5 pressure, +10% trade advantage in Tungning’s West Borneo state). |
+| Dutch fleet called away | The rival or its Dutch overlord is fighting in another war | Send out the squadron (−5 pressure, -5 relations with the rival immediately, +5% naval goods costs for one year) or keep ships on their usual routes (+5 pressure, +2 Maritime Houses approval for six months). |
 
 Event modifiers last six months unless an option gives a different term. Recheck eligibility when the event is answered.
 

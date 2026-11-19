@@ -59,6 +59,10 @@ fh_court_faith_clear_audience = {
 		limit = { has_modifier = fh_court_faith_conversions_on_hold }
 		remove_modifier = fh_court_faith_conversions_on_hold
 	}
+	every_scope_state = {
+		limit = { state_region = s:STATE_FORMOSA has_modifier = fh_court_faith_event_conversion }
+		remove_modifier = fh_court_faith_event_conversion
+	}
 }
 
 fh_court_faith_check_endpoint = {
@@ -280,6 +284,87 @@ fh_court_faith_nominate = {
 	else = { add_modifier = { name = fh_court_faith_academy_consultation months = 6 } }
 	je:fh_je_court_faith ?= { add_progress = { name = fh_court_faith_balance value = $DELTA$ } }
 	fh_court_faith_check_endpoint = yes
+}
+
+fh_court_faith_roll_event = {
+	if = {
+		limit = {
+			fh_court_faith_debate_active = yes
+			NOT = { has_variable = fh_court_faith_quarterly_gate }
+		}
+		# Skip the next two monthly pulses, even as calendar month lengths vary.
+		set_variable = { name = fh_court_faith_quarterly_gate days = 75 }
+		if = {
+			limit = { NOT = { has_variable = fh_court_faith_event_cooldown } }
+			trigger_event = { on_action = fh_court_faith_quarterly_events }
+		}
+	}
+}
+
+fh_court_faith_open_event = {
+	set_variable = { name = fh_court_faith_event_cooldown months = 12 }
+	set_variable = { name = fh_court_faith_pending_event value = $EVENT$ days = 30 }
+}
+
+fh_court_faith_find_speaker = {
+	random_scope_character = {
+		limit = {
+			has_template = $TEMPLATE$
+			is_character_alive = yes
+			is_in_exile_pool = no
+			owner = prev
+		}
+		save_scope_as = $SPEAKER$
+	}
+}
+
+fh_court_faith_answer_event = {
+	if = {
+		limit = { $DELTA$ > 0 }
+		custom_tooltip = fh_court_faith_event_christian_tt
+	}
+	else = { custom_tooltip = fh_court_faith_event_ancestral_tt }
+	hidden_effect = {
+		remove_variable = fh_court_faith_pending_event
+		je:fh_je_court_faith ?= { add_progress = { name = fh_court_faith_balance value = $DELTA$ } }
+		fh_court_faith_check_endpoint = yes
+	}
+}
+
+# State scope. Natural conversion still follows the country's laws.
+fh_court_faith_spread_faith = {
+	if = {
+		limit = { owner = { country_has_state_religion = rel:$FAITH$ } }
+		add_modifier = { name = fh_court_faith_event_conversion months = 6 }
+	}
+	else = {
+		custom_tooltip = fh_court_faith_convert_$FAITH$_tt
+		hidden_effect = { convert_population = { target = rel:$FAITH$ value = 0.005 } }
+	}
+}
+
+# Apply the reaction before conversions, once for each faith present.
+fh_court_faith_mission_school_reaction = {
+	custom_tooltip = fh_court_faith_mission_school_reaction_tt
+	hidden_effect = {
+		add_radicals_in_state = { value = -0.01 religion = rel:catholic }
+		every_scope_pop = {
+			limit = { NOT = { has_pop_religion = catholic } }
+			religion = {
+				if = {
+					limit = { NOT = { is_in_list = fh_court_faith_school_other_religions } }
+					add_to_temporary_list = fh_court_faith_school_other_religions
+				}
+			}
+		}
+		every_in_list = {
+			list = fh_court_faith_school_other_religions
+			save_temporary_scope_as = fh_court_faith_school_other_religion
+			prev = {
+				add_radicals_in_state = { value = 0.01 religion = scope:fh_court_faith_school_other_religion }
+			}
+		}
+	}
 }
 
 fh_court_faith_update_conversion = {

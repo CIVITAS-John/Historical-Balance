@@ -62,3 +62,348 @@ fh_court_faith.3 = {
 
 	immediate = { fh_court_faith_settle = { CHOICE = 1 } }
 }
+
+fh_court_faith.11 = {
+	type = country_event
+	placement = root
+	title = fh_court_faith.11.t
+	desc = fh_court_faith.11.d
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	duration = 1
+	flavor = {
+		triggered_desc = {
+			trigger = {
+				exists = scope:fh_court_faith_speaker_luo
+				exists = scope:fh_court_faith_speaker_xu
+			}
+			desc = fh_court_faith.11.f
+		}
+	}
+
+	trigger = {
+		fh_court_faith_debate_active = yes
+		fh_court_faith_mission_school_eligible = yes
+	}
+	cancellation_trigger = { NOT = { fh_court_faith_can_answer_event = { EVENT = 11 ELIGIBLE = fh_court_faith_mission_school_eligible } } }
+
+	immediate = {
+		fh_court_faith_open_event = { EVENT = 11 }
+		fh_court_faith_find_speaker = { TEMPLATE = fh_luo_jingde_devout SPEAKER = fh_court_faith_speaker_luo }
+		fh_court_faith_find_speaker = { TEMPLATE = fh_xu_wenjing_intelligentsia SPEAKER = fh_court_faith_speaker_xu }
+	}
+
+	option = {
+		name = fh_court_faith.11.a
+		ai_chance = { base = 1 }
+		if = {
+			limit = { fh_court_faith_can_answer_event = { EVENT = 11 ELIGIBLE = fh_court_faith_mission_school_eligible } }
+			every_scope_state = {
+				limit = { state_region = s:STATE_FORMOSA }
+				fh_court_faith_mission_school_reaction = yes
+				fh_court_faith_spread_faith = { FAITH = catholic }
+				add_modifier = { name = fh_court_faith_mission_school_charter years = 1 }
+			}
+			fh_court_faith_answer_event = { DELTA = 5 }
+		}
+	}
+
+	option = {
+		name = fh_court_faith.11.b
+		ai_chance = { base = 1 }
+		if = {
+			limit = { fh_court_faith_can_answer_event = { EVENT = 11 ELIGIBLE = fh_court_faith_mission_school_eligible } }
+			every_scope_state = {
+				limit = { state_region = s:STATE_FORMOSA }
+				fh_court_faith_spread_faith = { FAITH = confucian }
+				add_modifier = { name = fh_court_faith_local_teachers months = 6 }
+			}
+			fh_court_faith_answer_event = { DELTA = -5 }
+		}
+	}
+	option = {
+		name = fh_court_faith_event_no_response
+		default_option = yes
+		ai_chance = { base = 0 }
+	}
+}
+
+fh_court_faith.12 = {
+	type = country_event
+	placement = root
+	title = fh_court_faith.12.t
+	desc = fh_court_faith.12.d
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	duration = 1
+	flavor = {
+		triggered_desc = {
+			trigger = {
+				exists = scope:fh_court_faith_speaker_luo
+			}
+			desc = fh_court_faith.12.f
+		}
+	}
+
+	trigger = {
+		fh_court_faith_debate_active = yes
+		fh_court_faith_manila_compact_active = yes
+	}
+	cancellation_trigger = { NOT = { fh_court_faith_can_answer_event = { EVENT = 12 ELIGIBLE = fh_court_faith_manila_compact_active } } }
+
+	immediate = {
+		fh_court_faith_open_event = { EVENT = 12 }
+		fh_court_faith_find_speaker = { TEMPLATE = fh_luo_jingde_devout SPEAKER = fh_court_faith_speaker_luo }
+	}
+
+	option = {
+		name = fh_court_faith.12.a
+		ai_chance = { base = 1 }
+		if = {
+			limit = { fh_court_faith_can_answer_event = { EVENT = 12 ELIGIBLE = fh_court_faith_manila_compact_active } }
+			every_scope_state = {
+				limit = { state_region = s:STATE_FORMOSA }
+				fh_court_faith_spread_faith = { FAITH = catholic }
+				add_modifier = { name = fh_court_faith_chaplain_visit months = 6 }
+			}
+			fh_court_faith_answer_event = { DELTA = 5 }
+		}
+	}
+
+	option = {
+		name = fh_court_faith.12.b
+		ai_chance = { base = 1 }
+		if = {
+			limit = { fh_court_faith_can_answer_event = { EVENT = 12 ELIGIBLE = fh_court_faith_manila_compact_active } }
+			add_modifier = { name = fh_court_faith_secular_delegation months = 6 }
+			fh_court_faith_answer_event = { DELTA = -5 }
+		}
+	}
+	option = {
+		name = fh_court_faith_event_no_response
+		default_option = yes
+		ai_chance = { base = 0 }
+	}
+}
+
+fh_court_faith.13 = {
+	type = country_event
+	placement = root
+	title = fh_court_faith.13.t
+	desc = fh_court_faith.13.d
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	duration = 1
+	flavor = {
+		triggered_desc = {
+			trigger = {
+				exists = scope:fh_court_faith_speaker_talavan
+				exists = scope:fh_court_faith_speaker_xu
+			}
+			desc = fh_court_faith.13.f
+		}
+	}
+
+	trigger = {
+		fh_court_faith_debate_active = yes
+		fh_court_faith_taiwan_has_university = yes
+	}
+	cancellation_trigger = { NOT = { fh_court_faith_can_answer_event = { EVENT = 13 ELIGIBLE = fh_court_faith_taiwan_has_university } } }
+
+	immediate = {
+		fh_court_faith_open_event = { EVENT = 13 }
+		fh_court_faith_find_speaker = { TEMPLATE = fh_samuel_talavan_agitator SPEAKER = fh_court_faith_speaker_talavan }
+		fh_court_faith_find_speaker = { TEMPLATE = fh_xu_wenjing_intelligentsia SPEAKER = fh_court_faith_speaker_xu }
+	}
+
+	option = {
+		name = fh_court_faith.13.a
+		ai_chance = { base = 1 }
+		if = {
+			limit = { fh_court_faith_can_answer_event = { EVENT = 13 ELIGIBLE = fh_court_faith_taiwan_has_university } }
+			every_scope_state = {
+				limit = { state_region = s:STATE_FORMOSA }
+				fh_court_faith_spread_faith = { FAITH = protestant }
+			}
+			add_modifier = { name = fh_court_faith_translated_readers months = 6 }
+			fh_court_faith_answer_event = { DELTA = 5 }
+		}
+	}
+
+	option = {
+		name = fh_court_faith.13.b
+		ai_chance = { base = 1 }
+		if = {
+			limit = { fh_court_faith_can_answer_event = { EVENT = 13 ELIGIBLE = fh_court_faith_taiwan_has_university } }
+			every_scope_state = {
+				limit = { state_region = s:STATE_FORMOSA }
+				fh_court_faith_spread_faith = { FAITH = confucian }
+				add_modifier = { name = fh_court_faith_local_teachers months = 6 }
+			}
+			fh_court_faith_answer_event = { DELTA = -5 }
+		}
+	}
+	option = {
+		name = fh_court_faith_event_no_response
+		default_option = yes
+		ai_chance = { base = 0 }
+	}
+}
+
+fh_court_faith.14 = {
+	type = country_event
+	placement = root
+	title = fh_court_faith.14.t
+	desc = fh_court_faith.14.d
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	duration = 1
+
+	trigger = {
+		fh_court_faith_debate_active = yes
+		fh_court_faith_academy_eligible = yes
+	}
+	cancellation_trigger = { NOT = { fh_court_faith_can_answer_event = { EVENT = 14 ELIGIBLE = fh_court_faith_academy_eligible } } }
+
+	immediate = { fh_court_faith_open_event = { EVENT = 14 } }
+
+	option = {
+		name = fh_court_faith.14.a
+		ai_chance = { base = 1 }
+		if = {
+			limit = { fh_court_faith_can_answer_event = { EVENT = 14 ELIGIBLE = fh_court_faith_academy_eligible } }
+			every_scope_state = {
+				limit = { state_region = s:STATE_FORMOSA }
+				fh_court_faith_spread_faith = { FAITH = catholic }
+				add_modifier = { name = fh_court_faith_local_teachers months = 6 }
+			}
+			fh_court_faith_answer_event = { DELTA = 5 }
+		}
+	}
+
+	option = {
+		name = fh_court_faith.14.b
+		ai_chance = { base = 1 }
+		if = {
+			limit = { fh_court_faith_can_answer_event = { EVENT = 14 ELIGIBLE = fh_court_faith_academy_eligible } }
+			every_scope_state = {
+				limit = { state_region = s:STATE_FORMOSA }
+				fh_court_faith_spread_faith = { FAITH = confucian }
+			}
+			add_modifier = { name = fh_court_faith_classical_examinations months = 6 }
+			fh_court_faith_answer_event = { DELTA = -5 }
+		}
+	}
+	option = {
+		name = fh_court_faith_event_no_response
+		default_option = yes
+		ai_chance = { base = 0 }
+	}
+}
+
+fh_court_faith.15 = {
+	type = country_event
+	placement = root
+	title = fh_court_faith.15.t
+	desc = fh_court_faith.15.d
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	duration = 1
+
+	trigger = {
+		fh_court_faith_debate_active = yes
+		fh_court_faith_taiwan_has_mahayana = yes
+	}
+	cancellation_trigger = { NOT = { fh_court_faith_can_answer_event = { EVENT = 15 ELIGIBLE = fh_court_faith_taiwan_has_mahayana } } }
+
+	immediate = { fh_court_faith_open_event = { EVENT = 15 } }
+
+	option = {
+		name = fh_court_faith.15.a
+		ai_chance = { base = 1 }
+		if = {
+			limit = { fh_court_faith_can_answer_event = { EVENT = 15 ELIGIBLE = fh_court_faith_taiwan_has_mahayana } }
+			every_scope_state = {
+				limit = { state_region = s:STATE_FORMOSA }
+				fh_court_faith_spread_faith = { FAITH = catholic }
+				add_modifier = { name = fh_court_faith_matching_endowments months = 6 }
+			}
+			fh_court_faith_answer_event = { DELTA = 5 }
+		}
+	}
+
+	option = {
+		name = fh_court_faith.15.b
+		ai_chance = { base = 1 }
+		if = {
+			limit = { fh_court_faith_can_answer_event = { EVENT = 15 ELIGIBLE = fh_court_faith_taiwan_has_mahayana } }
+			every_scope_state = {
+				limit = { state_region = s:STATE_FORMOSA }
+				fh_court_faith_spread_faith = { FAITH = mahayana }
+				add_modifier = { name = fh_court_faith_local_teachers months = 6 }
+			}
+			fh_court_faith_answer_event = { DELTA = -5 }
+		}
+	}
+	option = {
+		name = fh_court_faith_event_no_response
+		default_option = yes
+		ai_chance = { base = 0 }
+	}
+}
+
+fh_court_faith.16 = {
+	type = country_event
+	placement = root
+	title = fh_court_faith.16.t
+	desc = fh_court_faith.16.d
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	duration = 1
+	flavor = {
+		triggered_desc = {
+			trigger = {
+				exists = scope:fh_court_faith_speaker_talavan
+			}
+			desc = fh_court_faith.16.f
+		}
+	}
+
+	trigger = {
+		fh_court_faith_debate_active = yes
+		fh_court_faith_reformed_visit_eligible = yes
+	}
+	cancellation_trigger = { NOT = { fh_court_faith_can_answer_event = { EVENT = 16 ELIGIBLE = fh_court_faith_reformed_visit_still_eligible } } }
+
+	immediate = {
+		fh_court_faith_open_event = { EVENT = 16 }
+		fh_court_faith_find_speaker = { TEMPLATE = fh_samuel_talavan_agitator SPEAKER = fh_court_faith_speaker_talavan }
+		random_scope_treaty = {
+			limit = { fh_court_faith_protestant_treaty = yes }
+			save_scope_as = fh_court_faith_reformed_visit_treaty
+		}
+	}
+
+	option = {
+		name = fh_court_faith.16.a
+		ai_chance = { base = 1 }
+		if = {
+			limit = { fh_court_faith_can_answer_event = { EVENT = 16 ELIGIBLE = fh_court_faith_reformed_visit_still_eligible } }
+			every_scope_state = {
+				limit = { state_region = s:STATE_FORMOSA }
+				add_radicals_in_state = { value = 0.01 religion = rel:catholic }
+				add_radicals_in_state = { value = 0.01 religion = rel:confucian }
+				fh_court_faith_spread_faith = { FAITH = protestant }
+			}
+			fh_court_faith_answer_event = { DELTA = 5 }
+		}
+	}
+
+	option = {
+		name = fh_court_faith.16.b
+		ai_chance = { base = 1 }
+		if = {
+			limit = { fh_court_faith_can_answer_event = { EVENT = 16 ELIGIBLE = fh_court_faith_reformed_visit_still_eligible } }
+			fh_court_faith_answer_event = { DELTA = -5 }
+		}
+	}
+	option = {
+		name = fh_court_faith_event_no_response
+		default_option = yes
+		ai_chance = { base = 0 }
+	}
+}

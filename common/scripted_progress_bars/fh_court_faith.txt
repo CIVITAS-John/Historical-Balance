@@ -33,9 +33,24 @@
 		progress_condition = {
 			limit = {
 				fh_court_faith_debate_active = yes
-				fh_court_faith_confucian_tributary = yes
+				fh_court_faith_christian_overlord = yes
 			}
-			add = { desc = fh_court_faith_qing_drift value = -1 }
+			add = { desc = fh_court_faith_christian_overlord_drift value = 1 }
+		}
+		progress_condition = {
+			limit = {
+				fh_court_faith_debate_active = yes
+				is_subject = yes
+				fh_court_faith_christian_overlord = no
+			}
+			add = { desc = fh_court_faith_nonchristian_overlord_drift value = -1 }
+		}
+		progress_condition = {
+			limit = {
+				fh_court_faith_debate_active = yes
+				any_scope_state = { state_region = s:STATE_FORMOSA }
+			}
+			add = { desc = fh_court_faith_taiwan_drift value = fh_court_faith_taiwan_demographic_drift }
 		}
 	}
 }

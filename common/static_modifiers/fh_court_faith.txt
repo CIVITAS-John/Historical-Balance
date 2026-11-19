@@ -62,3 +62,36 @@ fh_court_faith_academy_consultation = {
 	country_bureaucracy_mult = 0.05
 	country_tech_spread_mult = -0.05
 }
+
+fh_court_faith_event_conversion = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_documents_positive.dds"
+	state_conversion_mult = 0.15
+}
+fh_court_faith_mission_school_charter = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_lightbulb_positive.dds"
+	state_education_access_add = 0.05
+}
+fh_court_faith_local_teachers = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_lightbulb_positive.dds"
+	state_pop_qualifications_mult = 0.03
+}
+fh_court_faith_chaplain_visit = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_coins_positive.dds"
+	state_trade_advantage_mult = 0.03
+}
+fh_court_faith_matching_endowments = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_lightbulb_positive.dds"
+	state_education_access_add = 0.03
+}
+fh_court_faith_secular_delegation = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_flag_positive.dds"
+	country_influence_mult = 0.03
+}
+fh_court_faith_translated_readers = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_lightbulb_positive.dds"
+	country_tech_spread_mult = 0.03
+}
+fh_court_faith_classical_examinations = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_documents_positive.dds"
+	country_bureaucracy_mult = 0.03
+}

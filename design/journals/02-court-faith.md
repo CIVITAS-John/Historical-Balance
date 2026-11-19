@@ -22,8 +22,10 @@ The opening audience introduces Xu Wenjing, a Catholic scholar of the Confucian 
 - **Monthly drift:** Add all applicable effects:
   - +1 while the Manila Compact with Spain is active.
   - +1 while the Catholic Missions are in government.
+  - +1 while Tungning has a direct overlord whose state religion has Christian heritage.
   - −1 if the Ming Estates are in government or another governing group has a Traditionalist leader. Count this once.
-  - −1 while Tungning is a direct tributary of a Confucian Qing.
+  - −1 while Tungning has a direct overlord whose state religion does not have Christian heritage.
+  - Add the Catholic and Protestant shares of Tungning’s Taiwan population and subtract the Confucian and Mahayana shares. A difference of 20 percentage points moves the bar by 0.20 that month. Other faiths are neutral, and the factor is zero if Tungning owns no part of Taiwan.
 
 A nomination changes the bar and the proposed outcome only. The Catholic Missions retain their name, traits, and constituency until settlement. The court can settle only on one of the four faiths below.
 
@@ -44,15 +46,18 @@ The four nominations share a six-month cooldown. Give the qualifying domestic sp
 
 ## Court events
 
-Roll a **10%** chance each quarter to draw one eligible event, then start a shared 12-month cooldown. Responses move the bar without replacing a nomination. Their modifiers last six months unless an option gives a different term. Recheck eligibility on response and discard pending events after 30 days or when the settlement audience opens.
+Roll a **10%** chance each quarter to draw one eligible event, then start a shared 12-month cooldown. Responses move the bar without replacing a nomination. The court can also let the matter rest without effect; this happens automatically if no response is chosen within 30 days. Recheck eligibility on response and discard pending events when the settlement audience opens.
+
+When an option promotes a faith, it converts **0.5% of Taiwan Pops outside that faith** if the faith is unofficial. If it is already the state religion, the option instead adds **+25% conversion speed in Taiwan** for six months, ending early if the debate closes. This adds to the Articles and nomination modifiers; ordinary laws still govern natural conversion. Other event modifiers last six months unless the option specifies otherwise.
 
 | Event and trigger | +5 toward Christianity | −5 toward ancestral traditions |
 | --- | --- | --- |
-| **Mission-school dispute:** At least 3% Catholic population in Taiwan. Luo petitions for classrooms; Xu argues that mission pupils should also study the classics. | Put the missions in charge (remove 2% radicals among Catholic Pops in Tungning’s Taiwan and add 2% among all other faiths there; Taiwan education access +5 percentage points for one year) | Fund classical tutors (Taiwan qualifications +3% for six months) |
-| **A chaplain from Manila:** Active Manila Compact. Luo welcomes the visiting chaplain. | Receive the chaplain (Taiwan trade advantage +3%) | Send a secular delegation (influence +3%) |
-| **The printing house:** A Taiwan university. Talavan brings Siraya readers to the university press; Xu makes the case for printing them. | Print translations for the missions (technology spread +3%) | Print classical readers (Taiwan qualifications +3%) |
-| **The academy’s appeal:** Governing Ming Estates. | Admit mission graduates to exams (Taiwan qualifications +3%) | Keep the classical examinations (bureaucracy +3%) |
-| **A temple school endowment:** At least 10% Mahayana Buddhist population in Taiwan | Invite missions to match the endowment (Taiwan education access +3 percentage points) | Recognize temple schools (Taiwan qualifications +3%) |
+| **Mission-school dispute:** At least 3% Catholic population in Taiwan. Luo petitions for classrooms; Xu argues that mission pupils should also study the classics. | Put the missions in charge (promote Catholicism; −1% radicals among Catholic Pops and +1% among other faiths in Taiwan; Taiwan education access +5 percentage points for one year) | Fund classical tutors (promote Confucianism; Taiwan qualifications +3%) |
+| **A chaplain from Manila:** Active Manila Compact. Luo welcomes the visiting chaplain. | Receive the chaplain (promote Catholicism; Taiwan trade advantage +3%) | Send a secular delegation (influence +3%) |
+| **The printing house:** A Taiwan university. Talavan brings Siraya readers to the university press; Xu makes the case for printing them. | Print translations for the missions (promote Protestantism; technology spread +3%) | Print classical readers (promote Confucianism; Taiwan qualifications +3%) |
+| **The academy’s appeal:** Governing Ming Estates. | Admit mission graduates to exams (promote Catholicism; Taiwan qualifications +3%) | Keep the classical examinations (promote Confucianism; bureaucracy +3%) |
+| **A temple school endowment:** At least 10% Mahayana Buddhist population in Taiwan. | Invite missions to match the endowment (promote Catholicism; Taiwan education access +3 percentage points) | Recognize temple schools (promote Mahayana Buddhism; Taiwan qualifications +3%) |
+| **A visit to the Reformed congregations:** Tungning owns part of Taiwan and has an active, voluntarily signed treaty with a Protestant country. | Welcome Reformed teachers (promote Protestantism; +1% radicals among Catholic and Confucian Pops in Taiwan) | Keep the treaty to secular matters. |
 
 Apply Taiwan conditions and modifiers to the state Tungning actually owns; skip local effects if it no longer owns a state there.
 
@@ -86,7 +91,8 @@ Use `rel:catholic`, `rel:protestant`, `rel:confucian`, and `rel:mahayana` for th
 - Trace both endpoints, a deadline tie, the two default faiths, and each nominated faith. Include a sponsor leaving government and a pending event when the audience opens.
 - Check the combined conversion effects at opening, after each type of nomination, and during the audience. At settlement or interruption, remove the journal effect and retain the Articles’ effect only if the amendment remains. State transfers must not leave the journal effect with another country.
 - Verify that neither ordinary enactment, imposed enactment, nor repeal can bypass the lock during debate or audience. Restore the Ming in both phases without resetting progress. Force a replacement law and confirm only the interruption aftermath applies, without a second law change.
-- Trace Keep, Repeal, both eligible and blocked switches, and audience timeout. Exercise a choice that becomes illegal and verify it keeps the Articles. Leave the Manila Compact, Pop religions, and unrelated laws or enactments intact except for the school law fallback.
+- Trace Keep, Repeal, both eligible and blocked switches, and audience timeout. Exercise a choice that becomes illegal and verify it keeps the Articles. Settlement itself leaves the Manila Compact, Pop religions, and unrelated laws or enactments intact except for the school law fallback.
 - Show the Catholic Missions throughout nominations and the audience, then check the Devout name, leader, traits, and support after all four faith outcomes. Trace an unavailable Luo and an already matching incumbent. Keep other countries’ Devout unchanged.
-- Check that the Spanish compact and Qing tributary terms alter drift only while active. The faith journal runs alongside the mainland debate and can settle independently of it.
+- Check drift with independent Tungning, direct Christian and non-Christian overlords, and no owned Taiwan state. Changing Taiwan’s religious makeup must change the monthly balance. The faith journal runs alongside the mainland debate and can settle independently of it.
+- Trace both conversion branches, the quarterly draw, the shared cooldown and the 30-day response window. Check a Protestant partner on either side of a treaty and discard a visit if that treaty ends or the partner changes faith. Check loss of Taiwan before and after a response and a visit with Talavan unavailable.
 - References: `common/scripted_effects/fh_tungning_setup.txt` and `common/scripted_effects/fh_tungning_diplomacy.txt`; vanilla `common/law_groups/00_laws.txt` (church law lock), `common/laws/00_church_and_state.txt` (eligibility), `common/amendments/00_amendments_ip5_04.txt` (amendment precedent), and `events/bic_breakup.txt` (state religion changes).
