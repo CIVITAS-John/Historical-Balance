@@ -1,0 +1,62 @@
+﻿amendment_fh_banner_precedence = {
+	parent = law_fh_mandate_of_heaven
+	allowed_laws = { law_fh_mandate_of_heaven }
+
+	modifier = {
+		state_standard_of_living_add = -0.5
+		state_manchu_standard_of_living_add = 1.5
+
+		# Primary cultures use their own base; other cultures use one heritage tier.
+		country_acceptance_primary_culture_add = -10
+		country_acceptance_shared_heritage_trait_add = -10
+		country_acceptance_shared_heritage_trait_group_add = -10
+		country_acceptance_no_shared_heritage_trait_add = -10
+		country_manchu_cultural_acceptance_add = 10
+
+		state_radicals_and_loyalists_from_sol_change_mult = 0.25
+		state_conscription_rate_mult = -0.50
+	}
+
+	possible = {
+		c:CHI ?= this
+		NOT = { has_variable = fh_banner_precedence_removed }
+	}
+
+	can_repeal = { legitimacy >= legitimacy_to_repeal_amendment }
+}
+
+amendment_fh_coastal_registers = {
+	parent = law_canton_system
+	allowed_laws = { law_canton_system }
+
+	modifier = {
+		state_trade_capacity_mult = 0.05
+		country_tech_spread_mult = 0.05
+		country_authority_mult = -0.15
+	}
+
+	possible = {
+		c:CHI ?= this
+		NOT = { has_variable = fh_coastal_registers_removed }
+	}
+
+	can_repeal = { legitimacy >= legitimacy_to_repeal_amendment }
+}
+
+amendment_fh_yongli_articles = {
+	parent = law_freedom_of_conscience
+	allowed_laws = { law_freedom_of_conscience }
+
+	modifier = {
+		country_acceptance_shared_religious_trait_group_add = 5
+		country_acceptance_no_shared_religious_trait_add = 5
+		state_conversion_mult = -0.50
+	}
+
+	possible = { c:TWG ?= this }
+
+	can_repeal = {
+		fh_court_faith_law_lock_active = no
+		legitimacy >= legitimacy_to_repeal_amendment
+	}
+}

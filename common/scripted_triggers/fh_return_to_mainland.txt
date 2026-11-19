@@ -1,0 +1,70 @@
+﻿# ROOT is the country registering the foothold. Foreign treaty-port
+# enclaves are exempt; ordinary territory and subject holdings are not.
+fh_owns_mainland_foothold = {
+	s:$REGION$ = {
+		any_scope_state = { owner = root is_treaty_port = no }
+		NOT = {
+			any_scope_state = {
+				is_treaty_port = no
+				NOT = { owner = root }
+			}
+		}
+	}
+}
+
+fh_mainland_ready_now = {
+	fh_owns_mainland_foothold = { REGION = $REGION$ }
+	any_scope_state = {
+		state_region = s:$REGION$
+		is_treaty_port = no
+		fh_mainland_registration_state_ready = yes
+	}
+}
+
+fh_mainland_registration_state_ready = {
+	turmoil <= 0.20
+	NOT = {
+		any_province = { NOT = { controller ?= owner } }
+	}
+	any_scope_building = {
+		is_building_type = building_government_administration
+		fh_staffed_administration_levels >= 2
+	}
+}
+
+fh_ai_prefers_common_register = {
+	ig:ig_intelligentsia = { is_in_government = yes }
+	scope:fh_registration_state ?= { turmoil <= 0.10 }
+}
+
+fh_mainland_region_can_register = {
+	has_variable = $STREAK$
+	var:$STREAK$ >= 3
+	fh_mainland_ready_now = { REGION = $REGION$ }
+}
+
+fh_mainland_registration_still_valid = {
+	has_journal_entry = fh_je_mainland_foothold
+	has_variable = fh_mainland_registration_pending
+	NOT = { has_variable = fh_return_to_mainland_completed }
+	exists = scope:fh_registration_state
+	scope:fh_registration_state ?= {
+		owner = root
+		is_treaty_port = no
+		fh_mainland_registration_state_ready = yes
+	}
+	OR = {
+		AND = {
+			scope:fh_registration_state.state_region ?= s:STATE_FUJIAN
+			fh_mainland_region_can_register = { REGION = STATE_FUJIAN STREAK = fh_fujian_readiness }
+		}
+		AND = {
+			scope:fh_registration_state.state_region ?= s:STATE_GUANGDONG
+			fh_mainland_region_can_register = { REGION = STATE_GUANGDONG STREAK = fh_guangdong_readiness }
+		}
+		AND = {
+			scope:fh_registration_state.state_region ?= s:STATE_ZHEJIANG
+			fh_mainland_region_can_register = { REGION = STATE_ZHEJIANG STREAK = fh_zhejiang_readiness }
+		}
+	}
+}

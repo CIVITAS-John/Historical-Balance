@@ -1,0 +1,431 @@
+﻿# The founding marker stays on the country through a Ming restoration.
+fh_start_court_faith = {
+	if = {
+		limit = {
+			has_variable = fh_tungning_bootstrapped
+			NOT = { has_variable = fh_court_faith_started }
+			fh_court_faith_has_articles = yes
+		}
+		set_variable = fh_court_faith_started
+		set_variable = fh_court_faith_open
+		set_variable = { name = fh_court_faith_previous_religion value = this.religion }
+		fh_court_faith_update_devout_profile = yes
+		recalculate_pop_ig_support = yes
+		add_modifier = { name = fh_court_faith_conversions_on_hold }
+		add_journal_entry = { type = fh_je_court_faith }
+		trigger_event = { id = fh_court_faith.1 years = 10 }
+	}
+}
+
+fh_court_faith_check_interruption = {
+	if = {
+		limit = { fh_court_faith_law_lock_active = yes }
+		if = {
+			limit = { fh_court_faith_has_articles = no }
+			fh_court_faith_interrupt = yes
+		}
+		else = {
+			set_variable = { name = fh_court_faith_previous_religion value = this.religion }
+		}
+	}
+}
+
+fh_court_faith_interrupt = {
+	if = {
+		limit = { has_variable = fh_court_faith_open }
+		fh_court_faith_clear_audience = yes
+		set_variable = fh_court_faith_interrupted
+		add_modifier = { name = fh_court_faith_broken_audience years = 1 }
+		add_radicals = {
+			value = small_radicals
+			religion = var:fh_court_faith_previous_religion
+		}
+		remove_variable = fh_court_faith_previous_religion
+	}
+}
+
+fh_court_faith_clear_audience = {
+	remove_variable = fh_court_faith_open
+	if = {
+		limit = { has_variable = fh_court_faith_audience }
+		remove_variable = fh_court_faith_audience
+		remove_variable = fh_court_faith_proposed_religion
+	}
+	if = {
+		limit = { has_modifier = fh_court_faith_catholic_preference }
+		remove_modifier = fh_court_faith_catholic_preference
+	}
+	if = {
+		limit = { has_modifier = fh_court_faith_conversions_on_hold }
+		remove_modifier = fh_court_faith_conversions_on_hold
+	}
+}
+
+fh_court_faith_check_endpoint = {
+	if = {
+		limit = {
+			fh_court_faith_debate_active = yes
+			je:fh_je_court_faith ?= {
+				OR = {
+					"scripted_bar_progress(fh_court_faith_balance)" <= 0
+					"scripted_bar_progress(fh_court_faith_balance)" >= 200
+				}
+			}
+		}
+		fh_court_faith_open_audience = yes
+	}
+}
+
+# Select the leading side's latest nomination, then its current faith or default.
+fh_court_faith_choose_religion = {
+	if = {
+		limit = { fh_court_faith_predict_protestant = yes }
+		rel:protestant = { save_scope_as = fh_court_faith_candidate }
+	}
+	else_if = {
+		limit = { fh_court_faith_predict_mahayana = yes }
+		rel:mahayana = { save_scope_as = fh_court_faith_candidate }
+	}
+	else_if = {
+		limit = { fh_court_faith_christian_leads = yes }
+		rel:catholic = { save_scope_as = fh_court_faith_candidate }
+	}
+	else = { rel:confucian = { save_scope_as = fh_court_faith_candidate } }
+}
+
+fh_court_faith_open_audience = {
+	if = {
+		limit = { fh_court_faith_debate_active = yes }
+		fh_court_faith_choose_religion = yes
+		set_variable = fh_court_faith_audience
+		set_variable = {
+			name = fh_court_faith_proposed_religion
+			value = scope:fh_court_faith_candidate
+		}
+		trigger_event = { id = fh_court_faith.2 popup = yes }
+		trigger_event = { id = fh_court_faith.3 days = 30 }
+	}
+}
+
+fh_court_faith_repeal_articles = {
+	active_law:lawgroup_church_and_state ?= {
+		fh_remove_law_amendment = { AMENDMENT = amendment_fh_yongli_articles }
+	}
+}
+
+# CHOICE: 1 keep, 2 repeal, 3 establish, 4 separate. Revalidate after unlocking.
+fh_court_faith_settle = {
+	if = {
+		limit = { fh_court_faith_can_respond = yes }
+		var:fh_court_faith_proposed_religion = { save_scope_as = fh_court_faith_adopted_religion }
+		fh_court_faith_prepare_settlement_sponsor = yes
+		fh_court_faith_clear_audience = yes
+		set_variable = { name = fh_court_faith_law_choice value = 1 }
+		if = {
+			limit = { $CHOICE$ = 2 }
+			fh_court_faith_repeal_articles = yes
+			set_variable = { name = fh_court_faith_law_choice value = 2 }
+		}
+		else_if = {
+			limit = {
+				$CHOICE$ = 3
+				fh_court_faith_can_establish = yes
+			}
+			fh_court_faith_repeal_articles = yes
+			activate_law = law_type:law_state_religion
+			set_variable = { name = fh_court_faith_law_choice value = 3 }
+		}
+		else_if = {
+			limit = {
+				$CHOICE$ = 4
+				fh_court_faith_can_separate = yes
+			}
+			fh_court_faith_repeal_articles = yes
+			activate_law = law_type:law_total_separation
+			set_variable = { name = fh_court_faith_law_choice value = 4 }
+		}
+		set_state_religion = scope:fh_court_faith_adopted_religion
+		set_variable = { name = fh_court_faith_settled_religion value = scope:fh_court_faith_adopted_religion }
+		fh_court_faith_update_devout_profile = yes
+		fh_court_faith_update_devout_leader = yes
+		recalculate_pop_ig_support = yes
+		fh_validate_confucian_academies = yes
+		fh_court_faith_settlement_aftermath = yes
+		set_variable = fh_court_faith_settled
+		remove_variable = fh_court_faith_previous_religion
+	}
+	else = { fh_court_faith_check_interruption = yes }
+}
+
+fh_court_faith_update_devout_profile = {
+	ig:ig_devout ?= {
+		if = {
+			limit = { owner = { country_has_state_religion = rel:confucian } }
+			set_interest_group_name = fh_ig_ritual_academies
+			set_ig_trait = ig_trait:fh_ig_trait_religious_petitions
+			set_ig_trait = ig_trait:fh_ig_trait_county_schools
+			set_ig_trait = ig_trait:fh_ig_trait_keepers_of_the_rites
+		}
+		else_if = {
+			limit = { owner = { country_has_state_religion = rel:mahayana } }
+			set_interest_group_name = fh_ig_buddhist_temples
+			set_ig_trait = ig_trait:fh_ig_trait_religious_petitions
+			set_ig_trait = ig_trait:fh_ig_trait_temple_relief
+			set_ig_trait = ig_trait:fh_ig_trait_mediators_of_the_villages
+		}
+		else = {
+			if = {
+				limit = { owner = { country_has_state_religion = rel:protestant } }
+				set_interest_group_name = fh_ig_reformed_congregations
+			}
+			else = { set_interest_group_name = fh_ig_catholic_missions }
+			set_ig_trait = ig_trait:fh_ig_trait_closed_classrooms
+			set_ig_trait = ig_trait:fh_ig_trait_church_schools
+			set_ig_trait = ig_trait:fh_ig_trait_books_from_overseas
+		}
+	}
+}
+
+fh_court_faith_update_devout_leader = {
+	if = {
+		limit = {
+			exists = ig:ig_devout
+			NOT = {
+				ig:ig_devout.leader ?= {
+					is_character_alive = yes
+					religion = scope:fh_court_faith_adopted_religion
+				}
+			}
+		}
+		random_scope_character = {
+			limit = {
+				is_character_alive = yes
+				owner = prev
+				interest_group ?= { is_interest_group_type = ig_devout }
+				religion = scope:fh_court_faith_adopted_religion
+				is_in_exile_pool = no
+			}
+			save_scope_as = fh_court_faith_new_devout_leader
+		}
+		if = {
+			limit = { NOT = { exists = scope:fh_court_faith_new_devout_leader } }
+			if = {
+				limit = { country_has_state_religion = rel:protestant }
+				create_character = {
+					role = character_role_politician
+					culture = cu:yuanzhumin
+					religion = rel:protestant
+					interest_group = ig_devout
+					save_scope_as = fh_court_faith_new_devout_leader
+				}
+			}
+			else = {
+				create_character = {
+					role = character_role_politician
+					culture = cu:min
+					religion = scope:fh_court_faith_adopted_religion
+					interest_group = ig_devout
+					save_scope_as = fh_court_faith_new_devout_leader
+				}
+			}
+		}
+		scope:fh_court_faith_new_devout_leader ?= { set_as_interest_group_leader = yes }
+	}
+}
+
+# Resolve ties without rounding or perturbing the clout comparison.
+fh_court_faith_find_sponsor = {
+	ordered_interest_group = {
+		limit = { $BACKING$ = yes }
+		order_by = ig_clout
+		check_range_bounds = no
+		save_temporary_scope_as = fh_court_faith_highest_clout
+	}
+	if = {
+		limit = { exists = scope:fh_court_faith_highest_clout }
+		ordered_interest_group = {
+			limit = {
+				$BACKING$ = yes
+				ig_clout = scope:fh_court_faith_highest_clout.ig_clout
+			}
+			order_by = fh_court_faith_ig_tiebreak
+			check_range_bounds = no
+			save_temporary_scope_as = $RESULT$
+		}
+	}
+}
+
+fh_court_faith_nominate = {
+	set_variable = { name = fh_court_faith_nomination_cooldown months = 6 }
+	set_variable = { name = fh_court_faith_$SIDE$_nominee value = rel:$FAITH$ }
+	fh_court_faith_find_sponsor = { BACKING = $BACKING$ RESULT = fh_court_faith_nomination_sponsor }
+	scope:fh_court_faith_nomination_sponsor ?= {
+		add_modifier = { name = fh_court_faith_endorsement months = 6 }
+	}
+	ig:$OPPOSITION$ ?= {
+		if = {
+			limit = { NOT = { this ?= scope:fh_court_faith_nomination_sponsor } }
+			add_modifier = { name = fh_court_faith_objection months = 6 }
+		}
+	}
+	fh_court_faith_update_conversion = { FAITH = $FAITH$ }
+	if = {
+		limit = { $DELTA$ > 0 }
+		add_modifier = { name = fh_court_faith_missions_oversight months = 6 }
+		every_scope_state = {
+			limit = { state_region = s:STATE_FORMOSA }
+			add_modifier = { name = fh_court_faith_mission_teachers months = 6 }
+		}
+	}
+	else = { add_modifier = { name = fh_court_faith_academy_consultation months = 6 } }
+	je:fh_je_court_faith ?= { add_progress = { name = fh_court_faith_balance value = $DELTA$ } }
+	fh_court_faith_check_endpoint = yes
+}
+
+fh_court_faith_update_conversion = {
+	if = {
+		limit = { rel:$FAITH$ = rel:catholic }
+		if = {
+			limit = { has_modifier = fh_court_faith_conversions_on_hold }
+			remove_modifier = fh_court_faith_conversions_on_hold
+			add_modifier = { name = fh_court_faith_catholic_preference }
+		}
+	}
+	else_if = {
+		limit = { has_modifier = fh_court_faith_catholic_preference }
+		remove_modifier = fh_court_faith_catholic_preference
+		add_modifier = { name = fh_court_faith_conversions_on_hold }
+	}
+}
+
+# Snapshot the eligible additional sponsor before the law and official faith change.
+fh_court_faith_prepare_settlement_sponsor = {
+	if = {
+		limit = { scope:fh_court_faith_adopted_religion = rel:protestant }
+		fh_court_faith_find_sponsor = { BACKING = fh_court_faith_reformer_sponsor RESULT = fh_court_faith_settlement_sponsor }
+	}
+	else_if = {
+		limit = { scope:fh_court_faith_adopted_religion = rel:confucian }
+		fh_court_faith_find_sponsor = { BACKING = fh_court_faith_confucian_sponsor RESULT = fh_court_faith_settlement_sponsor }
+	}
+}
+
+fh_court_faith_settlement_aftermath = {
+	ig:ig_devout ?= { add_modifier = { name = fh_court_faith_settlement_approval years = 3 } }
+	scope:fh_court_faith_settlement_sponsor ?= {
+		if = {
+			limit = { NOT = { is_interest_group_type = ig_devout } }
+			add_modifier = { name = fh_court_faith_settlement_approval years = 3 }
+		}
+	}
+	if = {
+		limit = { country_has_state_religion = rel:catholic }
+		fh_court_faith_change_partner_relations = { DELTA = 10 }
+	}
+	else = { fh_court_faith_change_partner_relations = { DELTA = -10 } }
+
+	if = {
+		limit = { var:fh_court_faith_law_choice = 1 }
+		add_radicals = { value = -0.02 }
+		fh_court_faith_apply_faith_reward = { YEARS = 3 }
+	}
+	else_if = {
+		limit = { var:fh_court_faith_law_choice = 2 }
+		fh_court_faith_religious_reaction = { RECOGNIZED = -0.05 UNRECOGNIZED = 0.02 SHARED = yes }
+		fh_court_faith_apply_faith_reward = { YEARS = 4 }
+	}
+	else_if = {
+		limit = { var:fh_court_faith_law_choice = 3 }
+		fh_court_faith_religious_reaction = { RECOGNIZED = -0.10 UNRECOGNIZED = 0.05 SHARED = no }
+		fh_court_faith_apply_faith_reward = { YEARS = 5 }
+	}
+	else = {
+		add_radicals = { value = -0.05 }
+		fh_court_faith_apply_faith_reward = { YEARS = 2 }
+	}
+}
+
+fh_court_faith_change_partner_relations = {
+	if = {
+		limit = { c:SPA ?= { is_country_alive = yes } }
+		change_relations = { country = c:SPA value = $DELTA$ }
+	}
+	if = {
+		limit = { c:PHI ?= { is_country_alive = yes } }
+		change_relations = { country = c:PHI value = $DELTA$ }
+	}
+}
+
+# Collect only the distinct faiths present in the country's Pops. Use the
+# native religion-filtered radical adjustment once per faith.
+fh_court_faith_religious_reaction = {
+	every_scope_pop = {
+		religion = {
+			if = {
+				limit = { NOT = { is_in_list = fh_court_faith_pop_religions } }
+				add_to_temporary_list = fh_court_faith_pop_religions
+			}
+		}
+	}
+	every_in_list = {
+		list = fh_court_faith_pop_religions
+		save_temporary_scope_as = fh_court_faith_pop_religion
+		if = {
+			limit = {
+				OR = {
+					this = scope:fh_court_faith_adopted_religion
+					AND = {
+						always = $SHARED$
+						shares_heritage_trait_with_religion = scope:fh_court_faith_adopted_religion
+					}
+				}
+			}
+			prev = { add_radicals = { value = $RECOGNIZED$ religion = scope:fh_court_faith_pop_religion } }
+		}
+		else = {
+			prev = { add_radicals = { value = $UNRECOGNIZED$ religion = scope:fh_court_faith_pop_religion } }
+		}
+	}
+}
+
+fh_court_faith_apply_faith_reward = {
+	if = {
+		limit = { country_has_state_religion = rel:catholic }
+		add_modifier = { name = fh_court_faith_manila_connection years = $YEARS$ }
+		every_scope_state = {
+			limit = { state_region = s:STATE_FORMOSA }
+			add_modifier = { name = fh_court_faith_manila_connection_taiwan years = $YEARS$ }
+		}
+	}
+	else_if = {
+		limit = { country_has_state_religion = rel:protestant }
+		add_modifier = { name = fh_court_faith_translators_press years = $YEARS$ }
+	}
+	else_if = {
+		limit = { country_has_state_religion = rel:confucian }
+		add_modifier = { name = fh_court_faith_restored_academies years = $YEARS$ }
+	}
+	else = {
+		add_modifier = { name = fh_court_faith_temple_patronage years = $YEARS$ }
+		every_scope_state = {
+			limit = { state_region = s:STATE_FORMOSA }
+			add_modifier = { name = fh_court_faith_temple_patronage_taiwan years = $YEARS$ }
+		}
+	}
+}
+
+fh_court_faith_reward_preview = {
+	if = {
+		limit = { scope:fh_court_faith_candidate = rel:catholic }
+		custom_tooltip = fh_court_faith_catholic_reward_tt
+	}
+	else_if = {
+		limit = { scope:fh_court_faith_candidate = rel:protestant }
+		custom_tooltip = fh_court_faith_protestant_reward_tt
+	}
+	else_if = {
+		limit = { scope:fh_court_faith_candidate = rel:confucian }
+		custom_tooltip = fh_court_faith_confucian_reward_tt
+	}
+	else = { custom_tooltip = fh_court_faith_mahayana_reward_tt }
+}

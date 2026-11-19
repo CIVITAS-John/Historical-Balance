@@ -1,0 +1,74 @@
+﻿on_law_activated = {
+	on_actions = { fh_court_faith_on_law_activated }
+}
+
+fh_court_faith_on_law_activated = {
+	trigger = { owner ?= { fh_court_faith_law_lock_active = yes } }
+	effect = { owner = { fh_court_faith_check_interruption = yes } }
+}
+
+on_amendment_repealed = {
+	on_actions = { fh_court_faith_on_amendment_repealed }
+}
+
+fh_court_faith_on_amendment_repealed = {
+	trigger = {
+		fh_court_faith_law_lock_active = yes
+		scope:amendment.type ?= amendment_type:amendment_fh_yongli_articles
+	}
+	effect = { fh_court_faith_interrupt = yes }
+}
+
+# Also stop scripted enactment and foreign imposition if they bypass the group check.
+on_impose_law = {
+	on_actions = { fh_court_faith_on_impose_law }
+}
+
+fh_court_faith_on_impose_law = {
+	trigger = {
+		fh_court_faith_law_lock_active = yes
+		imposed_law.type ?= { is_same_law_group_as = law_type:law_freedom_of_conscience }
+	}
+	effect = { imposed_law ?= { cancel_imposition = yes } }
+}
+
+on_law_enactment_started = {
+	on_actions = { fh_court_faith_on_enactment_started }
+}
+
+fh_court_faith_on_enactment_started = {
+	trigger = {
+		fh_court_faith_law_lock_active = yes
+		currently_enacting_law.type ?= { is_same_law_group_as = law_type:law_freedom_of_conscience }
+	}
+	effect = { cancel_enactment = yes }
+}
+
+on_state_owner_change = {
+	on_actions = { fh_court_faith_clean_transferred_state }
+}
+
+on_state_created = {
+	on_actions = { fh_court_faith_clean_transferred_state }
+}
+
+fh_court_faith_clean_transferred_state = {
+	trigger = {
+		state_region = s:STATE_FORMOSA
+		NOT = { owner ?= { has_variable = fh_tungning_bootstrapped } }
+	}
+	effect = {
+		if = {
+			limit = { has_modifier = fh_court_faith_mission_teachers }
+			remove_modifier = fh_court_faith_mission_teachers
+		}
+		if = {
+			limit = { has_modifier = fh_court_faith_manila_connection_taiwan }
+			remove_modifier = fh_court_faith_manila_connection_taiwan
+		}
+		if = {
+			limit = { has_modifier = fh_court_faith_temple_patronage_taiwan }
+			remove_modifier = fh_court_faith_temple_patronage_taiwan
+		}
+	}
+}

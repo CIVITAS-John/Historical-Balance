@@ -1,0 +1,165 @@
+﻿fh_court_faith_law_lock_active = {
+	has_variable = fh_tungning_bootstrapped
+	has_variable = fh_court_faith_open
+	has_journal_entry = fh_je_court_faith
+}
+
+fh_court_faith_has_articles = {
+	has_law = law_type:law_freedom_of_conscience
+	active_law:lawgroup_church_and_state ?= {
+		has_amendment = amendment_type:amendment_fh_yongli_articles
+	}
+}
+
+fh_court_faith_debate_active = {
+	fh_court_faith_law_lock_active = yes
+	fh_court_faith_has_articles = yes
+	NOT = { has_variable = fh_court_faith_audience }
+}
+
+fh_court_faith_can_respond = {
+	fh_court_faith_law_lock_active = yes
+	has_variable = fh_court_faith_audience
+	fh_court_faith_has_articles = yes
+}
+
+fh_court_faith_christian_leads = {
+	OR = {
+		je:fh_je_court_faith ?= { "scripted_bar_progress(fh_court_faith_balance)" > 100 }
+		AND = {
+			je:fh_je_court_faith ?= { "scripted_bar_progress(fh_court_faith_balance)" = 100 }
+			OR = {
+				country_has_state_religion = rel:catholic
+				country_has_state_religion = rel:protestant
+			}
+		}
+	}
+}
+
+fh_court_faith_predict_protestant = {
+	fh_court_faith_christian_leads = yes
+	OR = {
+		var:fh_court_faith_christian_nominee ?= rel:protestant
+		AND = {
+			NOT = { exists = var:fh_court_faith_christian_nominee }
+			country_has_state_religion = rel:protestant
+		}
+	}
+}
+
+fh_court_faith_predict_mahayana = {
+	fh_court_faith_christian_leads = no
+	OR = {
+		var:fh_court_faith_ancestral_nominee ?= rel:mahayana
+		AND = {
+			NOT = { exists = var:fh_court_faith_ancestral_nominee }
+			country_has_state_religion = rel:mahayana
+		}
+	}
+}
+
+# State Religion has no further country prerequisites from active Freedom of Conscience.
+# Once the journal lock is off, both switches also use the engine's availability check.
+fh_court_faith_can_establish = {
+	OR = {
+		fh_court_faith_law_lock_active = yes
+		any_law = {
+			type = law_type:law_state_religion
+			law_is_available = yes
+		}
+	}
+}
+
+fh_court_faith_can_separate = {
+	has_technology_researched = empiricism
+	NOR = {
+		has_law_or_variant = law_type:law_theocracy
+		has_law_or_variant = law_type:law_religious_schools
+	}
+	OR = {
+		is_power_bloc_leader = no
+		power_bloc ?= {
+			NOT = { has_identity = identity:identity_religious }
+		}
+	}
+	OR = {
+		fh_court_faith_law_lock_active = yes
+		any_law = {
+			type = law_type:law_total_separation
+			law_is_available = yes
+		}
+	}
+}
+
+fh_court_faith_manila_compact_active = {
+	exists = var:fh_manila_compact
+	any_scope_treaty = {
+		this = prev.var:fh_manila_compact
+		binds = c:SPA
+	}
+}
+
+fh_court_faith_traditionalist_in_government = {
+	any_interest_group = {
+		is_in_government = yes
+		OR = {
+			is_interest_group_type = ig_landowners
+			leader ?= { has_ideology = ideology:ideology_traditionalist }
+		}
+	}
+}
+
+fh_court_faith_confucian_tributary = {
+	is_subject_type = subject_type_tributary
+	c:CHI ?= { country_has_state_religion = rel:confucian }
+	is_direct_subject_of = c:CHI
+}
+
+fh_court_faith_nomination_open = {
+	fh_court_faith_debate_active = yes
+	NOT = { has_variable = fh_court_faith_nomination_cooldown }
+}
+
+fh_court_faith_catholic_sponsor = {
+	is_in_government = yes
+	is_interest_group_type = ig_devout
+}
+
+fh_court_faith_reformer_sponsor = {
+	is_in_government = yes
+	leader ?= {
+		OR = {
+			has_ideology = ideology:ideology_reformer
+			has_ideology = ideology:ideology_market_liberal
+		}
+	}
+}
+
+fh_court_faith_protestant_sponsor = {
+	is_in_government = yes
+	OR = {
+		fh_court_faith_reformer_sponsor = yes
+		AND = {
+			is_interest_group_type = ig_intelligentsia
+			owner = {
+				any_scope_state = {
+					state_region = s:STATE_FORMOSA
+					has_building = building_university
+				}
+			}
+		}
+	}
+}
+
+fh_court_faith_mahayana_sponsor = {
+	is_in_government = yes
+	leader ?= { has_ideology = ideology:ideology_traditionalist }
+}
+
+fh_court_faith_confucian_sponsor = {
+	is_in_government = yes
+	OR = {
+		is_interest_group_type = ig_landowners
+		fh_court_faith_mahayana_sponsor = yes
+	}
+}

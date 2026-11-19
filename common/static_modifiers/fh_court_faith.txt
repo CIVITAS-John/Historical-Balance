@@ -1,0 +1,21 @@
+﻿# Country modifiers propagate to the current owner's states and leave no modifier on a ceded state.
+fh_court_faith_conversions_on_hold = { state_conversion_mult = -0.25 }
+fh_court_faith_catholic_preference = { state_conversion_mult = 0.15 }
+
+fh_court_faith_broken_audience = { country_bureaucracy_mult = -0.10 }
+fh_court_faith_manila_connection = { country_prestige_add = 10 }
+fh_court_faith_manila_connection_taiwan = { state_trade_advantage_mult = 0.10 }
+fh_court_faith_translators_press = { country_tech_spread_mult = 0.15 }
+fh_court_faith_restored_academies = { country_bureaucracy_mult = 0.10 }
+fh_court_faith_temple_patronage = { country_prestige_add = 10 }
+fh_court_faith_temple_patronage_taiwan = { state_pop_qualifications_mult = 0.15 }
+
+fh_court_faith_endorsement = { interest_group_approval_add = 2 }
+fh_court_faith_settlement_approval = { interest_group_approval_add = 2 }
+fh_court_faith_objection = { interest_group_approval_add = -2 }
+fh_court_faith_missions_oversight = { country_bureaucracy_mult = -0.05 }
+fh_court_faith_mission_teachers = { state_education_access_add = 0.05 }
+fh_court_faith_academy_consultation = {
+	country_bureaucracy_mult = 0.05
+	country_tech_spread_mult = -0.05
+}

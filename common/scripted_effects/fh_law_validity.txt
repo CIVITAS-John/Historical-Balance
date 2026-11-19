@@ -1,0 +1,60 @@
+﻿# Vanilla normally replaces Subjecthood variants on leaving Monarchy,
+# but keeps them in some transitions (for example, into Theocracy).
+fh_validate_mandate_of_heaven = {
+	if = {
+		limit = {
+			has_law = law_type:law_fh_mandate_of_heaven
+			NOT = { has_law = law_type:law_monarchy }
+		}
+		if = {
+			limit = {
+				any_law = { type = law_type:law_subjecthood law_is_available = yes }
+			}
+			activate_law = law_type:law_subjecthood
+		}
+		else = {
+			activate_law = law_type:law_national_supremacy
+		}
+	}
+}
+
+# Direct switches between school laws keep the same institution in force.
+fh_validate_confucian_academies = {
+	if = {
+		limit = {
+			has_law = law_type:law_fh_confucian_academies
+			NOT = { country_has_state_religion = rel:confucian }
+		}
+		if = {
+			limit = {
+				any_law = { type = law_type:law_religious_schools law_is_available = yes }
+			}
+			activate_law = law_type:law_religious_schools
+		}
+		else_if = {
+			limit = {
+				any_law = { type = law_type:law_private_schools law_is_available = yes }
+			}
+			activate_law = law_type:law_private_schools
+		}
+		else_if = {
+			limit = {
+				OR = {
+					has_law_or_variant = law_type:law_compulsory_primary_school
+					modifier:country_disallow_law_no_schools_bool = yes
+				}
+				any_law = { type = law_type:law_public_schools law_is_available = yes }
+			}
+			activate_law = law_type:law_public_schools
+		}
+		else_if = {
+			limit = {
+				NOT = { has_law_or_variant = law_type:law_compulsory_primary_school }
+				modifier:country_disallow_law_no_schools_bool = no
+				any_law = { type = law_type:law_no_schools law_is_available = yes }
+			}
+			activate_law = law_type:law_no_schools
+		}
+		# If none is legal, retain investment and retry when requirements change.
+	}
+}

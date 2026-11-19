@@ -1,0 +1,13 @@
+﻿# Keep the native group settings; only the founding court's debate adds a lock.
+REPLACE:lawgroup_church_and_state = {
+	law_group_category = power_structure
+	ideological_opinion_impact = 1.0
+	affected_by_regime_change = yes
+
+	change_allowed_trigger = {
+		custom_tooltip = {
+			text = fh_court_faith_church_law_locked_tt
+			fh_court_faith_law_lock_active = no
+		}
+	}
+}

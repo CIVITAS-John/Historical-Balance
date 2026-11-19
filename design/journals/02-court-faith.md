@@ -6,7 +6,7 @@ The opening audience introduces Xu Wenjing, a Catholic scholar of the Confucian 
 
 ## Opening effects
 
-- **Yongli Articles:** Start with the [Yongli amendment to Freedom of Conscience](../law-plan.md#proposed-laws-against-vanilla). Its −50% conversion speed continues while the amendment is in force.
+- **Yongli Articles:** Start with the [Yongli amendment to Freedom of Conscience](../law-plan.md#laws-against-vanilla). Its −50% conversion speed continues while the amendment is in force.
 - **Church law on hold:** Block voluntary and imposed enactment in the Church and State law group, and block repeal of the Articles, until settlement or interruption. This applies to the same founding country if it restores the Ming; restoration neither ends nor restarts the debate. Keep other law groups available.
 - **Conversions on hold:** While the debate is open, add a temporary **−25% conversion speed** in Tungning’s states, for **−75%** from the journal and Articles together. Existing Catholic status alone does not ease the restriction.
 - **Catholic preference:** If Catholicism is the latest faith explicitly nominated, use a temporary **+15% conversion speed** instead, for **−35%** from the journal and Articles together. A new nomination for any other faith restores the full penalty. This does not change which nomination each side would adopt on winning.
@@ -74,7 +74,7 @@ Open a **30-day settlement audience** and freeze the bar, nominations, and court
 
 Apply any church law change before setting the official faith. Leave unrelated enactments alone. Then update the [Devout name and traits](README.md#interest-groups) and recalculate Pop support. If the incumbent Devout leader’s personal faith does not match the result, appoint a living representative of the new faith from Tungning’s Devout, or create a matching delegate if needed. A Sinkan pastor can represent the Reformed congregations; Talavan remains a schoolmaster. Luo and other incumbents keep their personal faiths and may leave the leadership without being expelled. Ordinary succession resumes afterward.
 
-If active Confucian Academies lose their required official faith, use the [school law fallback](../law-plan.md#proposed-laws-against-vanilla) and preserve investment where schools remain active. Record the actual law choice and adopted faith, conclude the journal, and apply the [faith aftermath](outcome-modifiers.md#court-faith) once. The settlement does not rewrite treaties.
+If active Confucian Academies lose their required official faith, use the [school law fallback](../law-plan.md#laws-against-vanilla) and preserve investment where schools remain active. Record the actual law choice and adopted faith, conclude the journal, and apply the [faith aftermath](outcome-modifiers.md#court-faith) once. The settlement does not rewrite treaties.
 
 [Taiping negotiations](08-taiping-rebellion.md#bargain-with-the-heavenly-kingdom) use the current official faith even while this debate is open. A nomination has no diplomatic effect before settlement.
 

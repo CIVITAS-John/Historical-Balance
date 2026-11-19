@@ -1,0 +1,23 @@
+﻿fh_court_faith_taiwan_mahayana_share = {
+	every_scope_pop = {
+		limit = { has_pop_religion = mahayana }
+		add = total_size
+	}
+	divide = {
+		value = state_population
+		min = 1
+	}
+}
+
+# A stable order used only when the eligible sponsors have exactly equal clout.
+fh_court_faith_ig_tiebreak = {
+	value = 0
+	if = { limit = { is_interest_group_type = ig_landowners } add = 8 }
+	else_if = { limit = { is_interest_group_type = ig_devout } add = 7 }
+	else_if = { limit = { is_interest_group_type = ig_intelligentsia } add = 6 }
+	else_if = { limit = { is_interest_group_type = ig_industrialists } add = 5 }
+	else_if = { limit = { is_interest_group_type = ig_armed_forces } add = 4 }
+	else_if = { limit = { is_interest_group_type = ig_petty_bourgeoisie } add = 3 }
+	else_if = { limit = { is_interest_group_type = ig_rural_folk } add = 2 }
+	else_if = { limit = { is_interest_group_type = ig_trade_unions } add = 1 }
+}

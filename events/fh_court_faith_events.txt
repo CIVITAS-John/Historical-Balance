@@ -1,0 +1,64 @@
+﻿namespace = fh_court_faith
+
+# The anniversary can end a debate, but does not alter an audience already open.
+fh_court_faith.1 = {
+	type = country_event
+	hidden = yes
+
+	trigger = { fh_court_faith_debate_active = yes }
+
+	immediate = { fh_court_faith_open_audience = yes }
+}
+
+fh_court_faith.2 = {
+	type = country_event
+	placement = root
+	title = fh_court_faith.2.t
+	desc = fh_court_faith.2.d
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	duration = 1
+
+	trigger = { fh_court_faith_can_respond = yes }
+	cancellation_trigger = { fh_court_faith_can_respond = no }
+
+	option = {
+		name = fh_court_faith.2.keep
+		default_option = yes
+		ai_chance = { base = 100 }
+		custom_tooltip = fh_court_faith_keep_tt
+		fh_court_faith_reward_preview = yes
+		hidden_effect = { fh_court_faith_settle = { CHOICE = 1 } }
+	}
+	option = {
+		name = fh_court_faith.2.repeal
+		ai_chance = { base = 0 }
+		custom_tooltip = fh_court_faith_repeal_tt
+		fh_court_faith_reward_preview = yes
+		hidden_effect = { fh_court_faith_settle = { CHOICE = 2 } }
+	}
+	option = {
+		name = fh_court_faith.2.establish
+		trigger = { fh_court_faith_can_establish = yes }
+		ai_chance = { base = 0 }
+		custom_tooltip = fh_court_faith_establish_tt
+		fh_court_faith_reward_preview = yes
+		hidden_effect = { fh_court_faith_settle = { CHOICE = 3 } }
+	}
+	option = {
+		name = fh_court_faith.2.separate
+		trigger = { fh_court_faith_can_separate = yes }
+		ai_chance = { base = 0 }
+		custom_tooltip = fh_court_faith_separate_tt
+		fh_court_faith_reward_preview = yes
+		hidden_effect = { fh_court_faith_settle = { CHOICE = 4 } }
+	}
+}
+
+fh_court_faith.3 = {
+	type = country_event
+	hidden = yes
+
+	trigger = { fh_court_faith_can_respond = yes }
+
+	immediate = { fh_court_faith_settle = { CHOICE = 1 } }
+}

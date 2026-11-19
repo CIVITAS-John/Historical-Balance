@@ -1,0 +1,140 @@
+﻿# Replace only the vanilla radicalism calculation, preserving the rest of the movement.
+INJECT:movement_cultural_minority = {
+	additional_radicalism_factors = {
+		add = {
+			value = "owner.average_sol"
+			subtract = "owner.average_sol_for_culture(scope:culture)"
+			multiply = 0.05
+			max = 0.5
+			min = 0
+			desc = "STANDARD_OF_LIVING_FOR_CULTURE"
+		}
+
+		if = {
+			limit = {
+				owner = {
+					OR = {
+						has_law = law_type:law_subjecthood
+						has_law = law_type:law_fh_mandate_of_heaven
+						has_law = law_type:law_fh_port_and_village_registers
+					}
+				}
+			}
+			add = {
+				value = 100
+				subtract = "owner.country_average_cultural_acceptance(scope:culture)"
+				divide = 200 # To get this on the level of the other laws
+				subtract = 0.10 # Compensate for religious acceptance, which is currently inaccessible from here
+				desc = "DISCRIMINATION_LEVEL_subjecthood"
+			}
+		}
+		else = {
+			if = {
+				limit = {
+				owner = { cultural_acceptance_base = { target = scope:culture value <= acceptance_status_1 } }
+			}
+
+			add = {
+				value = 0.3
+				desc = "DISCRIMINATION_LEVEL_violent_hostility"
+			}
+		}
+		else_if = {
+			limit = {
+				owner = { cultural_acceptance_base = { target = scope:culture value <= acceptance_status_2 } }
+			}
+
+			add = {
+				value = 0.2
+				desc = "DISCRIMINATION_LEVEL_cultural_erasure"
+			}
+		}
+		else_if = {
+			limit = {
+				owner = { cultural_acceptance_base = { target = scope:culture value <= acceptance_status_3 } }
+			}
+
+			add = {
+				value = 0.1
+				desc = "DISCRIMINATION_LEVEL_open_prejudice"
+			}
+		}
+		}
+
+		if = {
+			limit = {
+				owner = {
+					any_scope_diplomatic_pact = {
+						is_diplomatic_action_type = support_separatism
+						second_country = prev
+						"diplomatic_pact_other_country(root.owner)" = {
+							country_has_primary_culture = root.culture
+						}
+					}
+				}
+			}
+			add = {
+				desc = "SUPPORT_SEPARATISM_ACTION"
+				value = support_separatism_radicalism
+			}
+		}
+
+		subtract = {
+			value = 0.25
+			subtract = political_movement_identity_support
+			min = 0
+			desc = "LOW_MOVEMENT_IDENTITY_SUPPORT"
+		}
+
+		if = {
+			limit = {
+				owner = { cultural_acceptance_base = { target = scope:culture value <= acceptance_status_4 } }
+			}
+			add = {
+				desc = "FERVOR_OF_CULTURE_ACTIVISM"
+				value = scope:culture.culture_current_fervor
+				divide = 400
+			}
+		}
+
+		if = {
+			limit = {
+				owner = {
+					any_neighbouring_state = {
+						owner = {
+							NOT = { THIS = ROOT.owner }
+							any_political_movement = {
+								culture ?= ROOT.culture
+								is_insurrectionary = yes
+							}
+						}
+					}
+				}
+			}
+			add = {
+				desc = "NEIGHBOURING_COUNTRY_WITH_CULTURE_REVOLUTION"
+				value = 0.15
+			}
+		}
+		if = {
+			limit = {
+				owner = {
+					any_scope_state = {
+						state_region = { is_homeland = scope:culture }
+						culture_percent_state = {
+							target = scope:culture
+							value >= 0.05
+						}
+						is_isolated_from_market = yes
+					}
+				}
+			}
+			add = {
+				value = 0.1
+				desc = "ISOLATED_FROM_MARKET"
+			}
+		}
+		add = movement_radicalism_simultaneous_insurrections
+		add = movement_radicalism_suppressed_after_civil_war
+	}
+}

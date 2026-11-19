@@ -1,0 +1,74 @@
+﻿on_diplomatic_play_started = {
+	on_actions = { fh_banner_precedence_taiping_started }
+}
+
+fh_banner_precedence_taiping_started = {
+	trigger = {
+		is_diplomatic_play_type = dp_taiping_rebellion
+		scope:target ?= { c:CHI ?= this }
+	}
+	effect = {
+		scope:target = {
+			set_variable = fh_banner_precedence_removed
+			active_law:lawgroup_citizenship ?= {
+				fh_remove_law_amendment = { AMENDMENT = amendment_fh_banner_precedence }
+			}
+		}
+	}
+}
+
+on_state_owner_change = {
+	on_actions = { fh_coastal_registers_formosa_changed }
+}
+
+on_state_created = {
+	on_actions = { fh_coastal_registers_formosa_changed }
+}
+
+fh_coastal_registers_formosa_changed = {
+	trigger = {
+		state_region = s:STATE_FORMOSA
+		owner ?= { c:CHI ?= this }
+	}
+	effect = { owner = { fh_qing_check_coastal_registers = yes } }
+}
+
+on_monthly_pulse = {
+	on_actions = { fh_coastal_registers_monthly }
+}
+
+fh_coastal_registers_monthly = {
+	effect = { c:CHI ?= { fh_qing_check_coastal_registers = yes } }
+}
+
+# An inactive law must not bring a permanently retired amendment back.
+on_law_activated = {
+	on_actions = { fh_qing_remove_retired_amendment }
+}
+
+fh_qing_remove_retired_amendment = {
+	trigger = {
+		c:CHI ?= owner
+		OR = {
+			AND = {
+				type = law_type:law_fh_mandate_of_heaven
+				owner = { has_variable = fh_banner_precedence_removed }
+				has_amendment = amendment_type:amendment_fh_banner_precedence
+			}
+			AND = {
+				type = law_type:law_canton_system
+				owner = { has_variable = fh_coastal_registers_removed }
+				has_amendment = amendment_type:amendment_fh_coastal_registers
+			}
+		}
+	}
+	effect = {
+		if = {
+			limit = { type = law_type:law_fh_mandate_of_heaven }
+			fh_remove_law_amendment = { AMENDMENT = amendment_fh_banner_precedence }
+		}
+		else = {
+			fh_remove_law_amendment = { AMENDMENT = amendment_fh_coastal_registers }
+		}
+	}
+}

@@ -1,0 +1,40 @@
+﻿fh_ig_trait_closed_classrooms = {
+	icon = "gfx/interface/icons/ig_trait_icons/pious_fiction.dds"
+	max_approval = unhappy
+	modifier = { state_education_access_add = -0.03 }
+}
+fh_ig_trait_church_schools = {
+	icon = "gfx/interface/icons/ig_trait_icons/divine_right.dds"
+	min_approval = happy
+	modifier = { state_education_access_add = 0.03 }
+}
+fh_ig_trait_books_from_overseas = {
+	icon = "gfx/interface/icons/ig_trait_icons/job_creators.dds"
+	min_approval = loyal
+	modifier = { country_tech_spread_mult = 0.08 }
+}
+fh_ig_trait_religious_petitions = {
+	icon = "gfx/interface/icons/ig_trait_icons/pious_fiction.dds"
+	max_approval = unhappy
+	modifier = { state_radicals_from_political_movements_mult = 0.10 }
+}
+fh_ig_trait_county_schools = {
+	icon = "gfx/interface/icons/ig_trait_icons/divine_right.dds"
+	min_approval = happy
+	modifier = { country_bureaucracy_mult = 0.05 }
+}
+fh_ig_trait_keepers_of_the_rites = {
+	icon = "gfx/interface/icons/ig_trait_icons/be_fruitful_and_multiply.dds"
+	min_approval = loyal
+	modifier = { country_authority_mult = 0.05 }
+}
+fh_ig_trait_temple_relief = {
+	icon = "gfx/interface/icons/ig_trait_icons/divine_right.dds"
+	min_approval = happy
+	modifier = { state_mortality_mult = -0.02 }
+}
+fh_ig_trait_mediators_of_the_villages = {
+	icon = "gfx/interface/icons/ig_trait_icons/be_fruitful_and_multiply.dds"
+	min_approval = loyal
+	modifier = { state_radicals_from_political_movements_mult = -0.10 }
+}

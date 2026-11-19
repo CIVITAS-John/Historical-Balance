@@ -1,0 +1,4 @@
+﻿fh_staffed_administration_levels = {
+	value = level
+	multiply = occupancy
+}

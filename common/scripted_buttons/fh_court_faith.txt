@@ -1,0 +1,88 @@
+﻿fh_court_faith_nominate_catholic = {
+	name = fh_court_faith_nominate_catholic
+	desc = fh_court_faith_nominate_catholic_desc
+	visible = { fh_court_faith_debate_active = yes }
+	possible = {
+		fh_court_faith_nomination_open = yes
+		OR = {
+			fh_court_faith_manila_compact_active = yes
+			any_interest_group = { fh_court_faith_catholic_sponsor = yes }
+		}
+	}
+	effect = {
+		fh_court_faith_nominate = {
+			FAITH = catholic
+			SIDE = christian
+			DELTA = 12
+			BACKING = fh_court_faith_catholic_sponsor
+			OPPOSITION = ig_landowners
+		}
+	}
+	ai_chance = { value = 0 }
+}
+
+fh_court_faith_nominate_protestant = {
+	name = fh_court_faith_nominate_protestant
+	desc = fh_court_faith_nominate_protestant_desc
+	visible = { fh_court_faith_debate_active = yes }
+	possible = {
+		fh_court_faith_nomination_open = yes
+		any_interest_group = { fh_court_faith_protestant_sponsor = yes }
+	}
+	effect = {
+		fh_court_faith_nominate = {
+			FAITH = protestant
+			SIDE = christian
+			DELTA = 12
+			BACKING = fh_court_faith_protestant_sponsor
+			OPPOSITION = ig_devout
+		}
+	}
+	ai_chance = { value = 0 }
+}
+
+fh_court_faith_nominate_confucian = {
+	name = fh_court_faith_nominate_confucian
+	desc = fh_court_faith_nominate_confucian_desc
+	visible = { fh_court_faith_debate_active = yes }
+	possible = {
+		fh_court_faith_nomination_open = yes
+		any_interest_group = { fh_court_faith_confucian_sponsor = yes }
+	}
+	effect = {
+		fh_court_faith_nominate = {
+			FAITH = confucian
+			SIDE = ancestral
+			DELTA = -12
+			BACKING = fh_court_faith_confucian_sponsor
+			OPPOSITION = ig_devout
+		}
+	}
+	ai_chance = { value = 0 }
+}
+
+fh_court_faith_nominate_mahayana = {
+	name = fh_court_faith_nominate_mahayana
+	desc = fh_court_faith_nominate_mahayana_desc
+	visible = { fh_court_faith_debate_active = yes }
+	possible = {
+		fh_court_faith_nomination_open = yes
+		OR = {
+			any_interest_group = { fh_court_faith_mahayana_sponsor = yes }
+			any_scope_state = {
+				state_region = s:STATE_FORMOSA
+				fh_court_faith_taiwan_mahayana_share >= 0.10
+			}
+		}
+	}
+	effect = {
+		fh_court_faith_nominate = {
+			FAITH = mahayana
+			SIDE = ancestral
+			DELTA = -12
+			BACKING = fh_court_faith_mahayana_sponsor
+			OPPOSITION = ig_devout
+		}
+	}
+	ai_chance = { value = 0 }
+}

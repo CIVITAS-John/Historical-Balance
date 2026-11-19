@@ -1,0 +1,3 @@
+﻿fh_register_conscription = {
+	state_conscription_rate_mult = 0.25
+}

@@ -1,0 +1,23 @@
+﻿# Country scope: the opening transfer must have happened before Taiwan can return.
+fh_qing_check_coastal_registers = {
+	if = {
+		limit = {
+			is_country_alive = yes
+			has_variable = fh_qing_laws_initialized
+			NOT = { has_variable = fh_coastal_registers_removed }
+			owns_entire_state_region = STATE_FORMOSA
+		}
+		set_variable = fh_coastal_registers_removed
+		active_law:lawgroup_trade_policy ?= {
+			fh_remove_law_amendment = { AMENDMENT = amendment_fh_coastal_registers }
+		}
+	}
+}
+
+# Law scope.
+fh_remove_law_amendment = {
+	every_scope_amendment = {
+		limit = { type = amendment_type:$AMENDMENT$ }
+		remove_amendment = yes
+	}
+}

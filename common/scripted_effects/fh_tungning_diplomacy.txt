@@ -252,6 +252,26 @@ fh_tungning_manila_compact = {
 			}
 		}
 	}
+	# Keep the signed compact's scope for the court debate, even after the binding period.
+	random_scope_treaty = {
+		limit = {
+			binds = c:SPA
+			any_scope_article = {
+				has_type = military_assistance
+				source_country = c:SPA
+			}
+			any_scope_article = {
+				has_type = goods_transfer
+				target_country = c:SPA
+				input_goods = g:porcelain
+			}
+		}
+		save_temporary_scope_as = fh_signed_manila_compact
+	}
+	if = {
+		limit = { exists = scope:fh_signed_manila_compact }
+		set_variable = { name = fh_manila_compact value = scope:fh_signed_manila_compact }
+	}
 }
 
 fh_tungning_busan_lease = {

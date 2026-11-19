@@ -1,0 +1,21 @@
+﻿on_law_activated = {
+	on_actions = { fh_check_active_law_prerequisites }
+}
+
+fh_check_active_law_prerequisites = {
+	effect = {
+		owner ?= {
+			fh_validate_mandate_of_heaven = yes
+			fh_validate_confucian_academies = yes
+		}
+	}
+}
+
+# Covers state-faith changes made by external script without a law change.
+on_monthly_pulse_country = {
+	on_actions = { fh_school_law_monthly_check }
+}
+
+fh_school_law_monthly_check = {
+	effect = { fh_validate_confucian_academies = yes }
+}

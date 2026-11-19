@@ -1,0 +1,37 @@
+﻿# A law's disallowing list checks exact active laws when that law is proposed.
+# Append the custom counterparts without replacing the vanilla law definitions.
+INJECT:law_interventionism = {
+	disallowing_laws = { law_fh_banner_estates }
+}
+
+INJECT:law_laissez_faire = {
+	disallowing_laws = { law_fh_banner_estates }
+}
+
+INJECT:law_cooperative_ownership = {
+	disallowing_laws = { law_fh_banner_estates }
+}
+
+INJECT:law_command_economy = {
+	disallowing_laws = { law_fh_banner_estates }
+}
+
+INJECT:law_religious_schools = {
+	disallowing_laws = { law_fh_banner_estates }
+}
+
+INJECT:law_public_schools = {
+	disallowing_laws = { law_fh_banner_estates }
+}
+
+INJECT:law_serfdom = {
+	disallowing_laws = { law_fh_confucian_academies }
+}
+
+INJECT:law_total_separation = {
+	disallowing_laws = { law_fh_confucian_academies }
+}
+
+INJECT:law_state_atheism = {
+	disallowing_laws = { law_fh_confucian_academies }
+}

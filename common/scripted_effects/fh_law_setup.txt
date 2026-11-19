@@ -1,0 +1,62 @@
+﻿# Run after the Taiwan transfer, so the opening map determines whether the
+# Coastal Registers survive. Keep compatible non-vanilla starting laws.
+fh_qing_law_setup = {
+	if = {
+		limit = {
+			has_law = law_type:law_appointed_bureaucrats
+			any_primary_culture = { has_discrimination_trait = tradition_sinosphere }
+		}
+		activate_law = law_type:law_fh_standardized_examinations
+	}
+	if = {
+		limit = { has_law = law_type:law_serfdom }
+		activate_law = law_type:law_fh_banner_estates
+	}
+	if = {
+		limit = {
+			has_law = law_type:law_monarchy
+			has_law = law_type:law_subjecthood
+		}
+		activate_law = law_type:law_fh_mandate_of_heaven
+	}
+	if = {
+		limit = {
+			has_law = law_type:law_fh_mandate_of_heaven
+			NOT = { has_variable = fh_banner_precedence_removed }
+		}
+		active_law:lawgroup_citizenship ?= {
+			add_amendment = { type = amendment_fh_banner_precedence sponsor = prev.ig:ig_landowners }
+		}
+	}
+	if = {
+		limit = { owns_entire_state_region = STATE_FORMOSA }
+		set_variable = fh_coastal_registers_removed
+	}
+	if = {
+		limit = {
+			has_law = law_type:law_canton_system
+			NOT = { has_variable = fh_coastal_registers_removed }
+		}
+		active_law:lawgroup_trade_policy ?= {
+			add_amendment = { type = amendment_fh_coastal_registers sponsor = prev.ig:ig_petty_bourgeoisie }
+		}
+	}
+}
+
+# Called at the actual Zhu enthronement, in the same founding country.
+# Unlock the Mandate either way, and retain any other citizenship law.
+fh_restore_southern_ming_citizenship = {
+	if = {
+		limit = {
+			c:TWG ?= this
+			has_variable = fh_tungning_bootstrapped
+			has_law = law_type:law_monarchy
+			NOT = { has_variable = fh_southern_ming_restored }
+		}
+		set_variable = fh_southern_ming_restored
+		if = {
+			limit = { has_law = law_type:law_fh_port_and_village_registers }
+			activate_law = law_type:law_fh_mandate_of_heaven
+		}
+	}
+}

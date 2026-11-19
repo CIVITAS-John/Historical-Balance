@@ -1,0 +1,34 @@
+﻿fh_court_faith_likely_religion = {
+	type = country
+	random_valid = no
+
+	text = {
+		trigger = { var:fh_court_faith_proposed_religion ?= rel:protestant }
+		localization_key = fh_court_faith_religion_protestant
+	}
+	text = {
+		trigger = { var:fh_court_faith_proposed_religion ?= rel:mahayana }
+		localization_key = fh_court_faith_religion_mahayana
+	}
+	text = {
+		trigger = { var:fh_court_faith_proposed_religion ?= rel:catholic }
+		localization_key = fh_court_faith_religion_catholic
+	}
+	text = {
+		trigger = { var:fh_court_faith_proposed_religion ?= rel:confucian }
+		localization_key = fh_court_faith_religion_confucian
+	}
+	text = {
+		trigger = { fh_court_faith_predict_protestant = yes }
+		localization_key = fh_court_faith_religion_protestant
+	}
+	text = {
+		trigger = { fh_court_faith_predict_mahayana = yes }
+		localization_key = fh_court_faith_religion_mahayana
+	}
+	text = {
+		trigger = { fh_court_faith_christian_leads = yes }
+		localization_key = fh_court_faith_religion_catholic
+	}
+	text = { localization_key = fh_court_faith_religion_confucian }
+}

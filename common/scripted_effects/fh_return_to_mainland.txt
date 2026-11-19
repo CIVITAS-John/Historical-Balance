@@ -1,0 +1,36 @@
+﻿fh_update_mainland_readiness = {
+	if = {
+		limit = { fh_mainland_ready_now = { REGION = $REGION$ } }
+		if = {
+			limit = { NOT = { has_variable = $STREAK$ } }
+			set_variable = { name = $STREAK$ value = 1 }
+		}
+		else_if = {
+			limit = { var:$STREAK$ < 3 }
+			change_variable = { name = $STREAK$ add = 1 }
+		}
+	}
+	else_if = {
+		limit = { has_variable = $STREAK$ }
+		remove_variable = $STREAK$
+	}
+}
+
+fh_select_mainland_registration_state = {
+	random_scope_state = {
+		limit = {
+			state_region = s:$REGION$
+			is_treaty_port = no
+			fh_mainland_registration_state_ready = yes
+		}
+		save_scope_as = fh_registration_state
+	}
+}
+
+fh_finish_mainland_registration = {
+	set_variable = fh_return_to_mainland_completed
+	fh_sync_register_conscription = yes
+	remove_variable = fh_fujian_readiness
+	remove_variable = fh_guangdong_readiness
+	remove_variable = fh_zhejiang_readiness
+}

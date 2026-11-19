@@ -29,6 +29,11 @@ fh_tungning_bookmark_setup = {
 			if = {
 				limit = { is_country_alive = yes }
 				fh_tungning_setup = yes
+				if = {
+					limit = { NOT = { has_variable = fh_qing_laws_initialized } }
+					set_variable = fh_qing_laws_initialized
+					fh_qing_law_setup = yes
+				}
 			}
 		}
 		c:TWG ?= {

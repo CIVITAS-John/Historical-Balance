@@ -1,0 +1,41 @@
+﻿fh_je_mainland_foothold = {
+	group = je_group_foreign_affairs
+	icon = "gfx/interface/icons/event_icons/event_industry.dds"
+	transferable = no
+	can_revolution_inherit = no
+	scripted_button = fh_register_mainland_administration
+
+	is_shown_when_inactive = {
+		has_variable = fh_tungning_bootstrapped
+		NOT = { has_variable = fh_return_to_mainland_completed }
+	}
+
+	possible = {
+		NOR = {
+			has_variable = fh_mainland_claim_abandoned
+			has_variable = fh_taiping_fork_pending
+		}
+		OR = {
+			has_variable = fh_mainland_claim_reasserted
+			fh_owns_mainland_foothold = { REGION = STATE_FUJIAN }
+			fh_owns_mainland_foothold = { REGION = STATE_GUANGDONG }
+			fh_owns_mainland_foothold = { REGION = STATE_ZHEJIANG }
+		}
+	}
+
+	on_monthly_pulse = {
+		effect = {
+			fh_update_mainland_readiness = { REGION = STATE_FUJIAN STREAK = fh_fujian_readiness }
+			fh_update_mainland_readiness = { REGION = STATE_GUANGDONG STREAK = fh_guangdong_readiness }
+			fh_update_mainland_readiness = { REGION = STATE_ZHEJIANG STREAK = fh_zhejiang_readiness }
+		}
+	}
+
+	outcome = {
+		header = je_standard_completion_header
+		effect_header = je_standard_on_completion_header
+		conclusion_desc = fh_je_mainland_foothold_completed_desc
+		color = "gold_positive"
+		trigger = { has_variable = fh_return_to_mainland_completed }
+	}
+}

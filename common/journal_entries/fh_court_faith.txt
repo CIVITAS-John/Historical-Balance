@@ -1,0 +1,54 @@
+﻿fh_je_court_faith = {
+	group = je_group_historical_content
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	scripted_progress_bar = fh_court_faith_balance
+	transferable = no
+	can_revolution_inherit = no
+
+	scripted_button = fh_court_faith_nominate_catholic
+	scripted_button = fh_court_faith_nominate_protestant
+	scripted_button = fh_court_faith_nominate_confucian
+	scripted_button = fh_court_faith_nominate_mahayana
+
+	on_monthly_pulse = {
+		effect = {
+			fh_court_faith_check_interruption = yes
+			fh_court_faith_check_endpoint = yes
+		}
+	}
+
+	outcome = {
+		header = je_standard_completion_header
+		effect_header = je_standard_on_completion_header
+		conclusion_desc = fh_court_faith_settled_desc
+		color = "gold_positive"
+		trigger = {
+			custom_tooltip = {
+				text = fh_court_faith_settlement_required_tt
+				has_variable = fh_court_faith_settled
+			}
+		}
+	}
+
+	outcome = {
+		header = je_standard_failure_header
+		effect_header = je_standard_on_failure_header
+		conclusion_desc = fh_court_faith_interrupted_desc
+		color = "blue_negative"
+		trigger = {
+			custom_tooltip = {
+				text = fh_court_faith_interruption_tt
+				OR = {
+					has_variable = fh_court_faith_interrupted
+					AND = {
+						fh_court_faith_law_lock_active = yes
+						fh_court_faith_has_articles = no
+					}
+				}
+			}
+		}
+		effect = { fh_court_faith_interrupt = yes }
+	}
+
+	weight = 100
+}
