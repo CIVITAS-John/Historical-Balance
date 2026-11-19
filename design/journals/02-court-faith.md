@@ -7,6 +7,7 @@ The opening audience introduces Xu Wenjing, a Catholic scholar of the Confucian 
 ## Opening effects
 
 - **Yongli Articles:** Start with the [Yongli amendment to Freedom of Conscience](../law-plan.md#laws-against-vanilla). Its −50% conversion speed continues while the amendment is in force.
+- **School charter:** Level 1 Religious Schools starts with the Tungning School Charter, which cancels the school conversion bonus. While Religious Schools remains active, it still blocks the Total Separation settlement.
 - **Church law on hold:** Block voluntary and imposed enactment in the Church and State law group, and block repeal of the Articles, until settlement or interruption. This applies to the same founding country if it restores the Ming; restoration neither ends nor restarts the debate. Keep other law groups available.
 - **Conversions on hold:** While the debate is open, add a temporary **−25% conversion speed** in Tungning’s states, for **−75%** from the journal and Articles together. Existing Catholic status alone does not ease the restriction.
 - **Catholic preference:** If Catholicism is the latest faith explicitly nominated, use a temporary **+15% conversion speed** instead, for **−35%** from the journal and Articles together. A new nomination for any other faith restores the full penalty. This does not change which nomination each side would adopt on winning.

@@ -43,7 +43,10 @@ fh_coastal_registers_monthly = {
 
 # An inactive law must not bring a permanently retired amendment back.
 on_law_activated = {
-	on_actions = { fh_qing_remove_retired_amendment }
+	on_actions = {
+		fh_qing_remove_retired_amendment
+		fh_tungning_end_retired_levies
+	}
 }
 
 fh_qing_remove_retired_amendment = {
@@ -73,19 +76,23 @@ fh_qing_remove_retired_amendment = {
 	}
 }
 
-on_amendment_repealed = {
-	on_actions = { fh_tungning_registers_repealed }
-}
-
-fh_tungning_registers_repealed = {
+fh_tungning_end_retired_levies = {
 	trigger = {
-		scope:amendment.type ?= { this = amendment_type:amendment_fh_port_and_village_registers }
+		type = law_type:law_subjecthood
+		owner = { has_variable = fh_return_to_mainland_completed }
+		OR = {
+			has_amendment = amendment_type:amendment_fh_port_and_village_registers_with_levies
+			has_amendment = amendment_type:amendment_fh_port_and_village_levies
+		}
 	}
-	effect = { fh_remove_port_and_village_levies = yes }
+	effect = { fh_retire_tungning_register_levies = yes }
 }
 
 on_monthly_pulse_country = {
-	on_actions = { fh_tungning_migrate_registers }
+	on_actions = {
+		fh_tungning_migrate_registers
+		fh_tungning_migrate_split_registers
+	}
 }
 
 fh_tungning_migrate_registers = {
@@ -94,4 +101,26 @@ fh_tungning_migrate_registers = {
 		has_law = law_type:law_fh_port_and_village_registers
 	}
 	effect = { fh_tungning_set_up_registers = yes }
+}
+
+fh_tungning_migrate_split_registers = {
+	trigger = {
+		c:TWG ?= this
+		active_law:lawgroup_citizenship ?= {
+			has_amendment = amendment_type:amendment_fh_port_and_village_levies
+		}
+	}
+	effect = {
+		active_law:lawgroup_citizenship ?= {
+			fh_remove_law_amendment = { AMENDMENT = amendment_fh_port_and_village_levies }
+			if = {
+				limit = {
+					has_amendment = amendment_type:amendment_fh_port_and_village_registers
+					owner = { NOT = { has_variable = fh_return_to_mainland_completed } }
+				}
+				fh_remove_law_amendment = { AMENDMENT = amendment_fh_port_and_village_registers }
+				fh_add_tungning_registers = { AMENDMENT = amendment_fh_port_and_village_registers_with_levies }
+			}
+		}
+	}
 }

@@ -60,11 +60,14 @@ amendment_fh_port_and_village_registers = {
 	can_repeal = { legitimacy >= legitimacy_to_repeal_amendment }
 }
 
-amendment_fh_port_and_village_levies = {
-	parent = law_subjecthood
+# The two versions share one name and are never attached together.
+# Registration replaces the opening version with the one above.
+amendment_fh_port_and_village_registers_with_levies = {
+	parent = law_mass_conscription
 	allowed_laws = { law_subjecthood }
 
 	modifier = {
+		country_acceptance_homeland_add = 10
 		state_conscription_rate_mult = 0.25
 	}
 
@@ -72,6 +75,23 @@ amendment_fh_port_and_village_levies = {
 		c:TWG ?= this
 		NOT = { has_variable = fh_return_to_mainland_completed }
 	}
+
+	on_activate = { recalculate_pop_ig_support = yes }
+	on_deactivate = { recalculate_pop_ig_support = yes }
+
+	can_repeal = { legitimacy >= legitimacy_to_repeal_amendment }
+}
+
+amendment_fh_tungning_school_charter = {
+	parent = law_public_schools
+	allowed_laws = { law_religious_schools }
+
+	institution = institution_schools
+	institution_modifier = {
+		state_conversion_mult = -0.20
+	}
+
+	possible = { c:TWG ?= this }
 
 	can_repeal = { legitimacy >= legitimacy_to_repeal_amendment }
 }
@@ -92,4 +112,10 @@ amendment_fh_yongli_articles = {
 		fh_court_faith_law_lock_active = no
 		legitimacy >= legitimacy_to_repeal_amendment
 	}
+}
+
+# Old saves may still have the separate levy on Subjecthood.
+amendment_fh_port_and_village_levies = {
+	allowed_laws = { law_subjecthood }
+	possible = { always = no }
 }

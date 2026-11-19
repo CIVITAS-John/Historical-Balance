@@ -29,7 +29,7 @@ fh_select_mainland_registration_state = {
 
 fh_finish_mainland_registration = {
 	set_variable = fh_return_to_mainland_completed
-	fh_remove_port_and_village_levies = yes
+	active_law:lawgroup_citizenship ?= { fh_retire_tungning_register_levies = yes }
 	# An older save can register before its first law migration pulse.
 	if = {
 		limit = { has_modifier = fh_register_conscription }

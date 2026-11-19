@@ -91,7 +91,7 @@ For these reactions, use the School of Practical Learning for the Republic, the 
 
 ## [Return to the Mainland](06-mainland-reconquest.md#consolidate-the-foothold)
 
-The first registration records the foothold, repeals the Port and Village Levies amendment, and opens reunification. The Port and Village Registers amendment remains in place if it was active. There is no timed country modifier or immediate radical change. [State decrees](06-mainland-reconquest.md#state-decrees) have their own local effects while assigned.
+The first registration records the foothold, ends the Port and Village Registers’ conscription bonus, and opens reunification. The Registers keep their homeland acceptance bonus if still in force. There is no timed country modifier or immediate radical change. [State decrees](06-mainland-reconquest.md#state-decrees) have their own local effects while assigned.
 
 ## [Reunification](07-reunification-of-china.md#proclaim-the-settlement)
 

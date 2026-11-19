@@ -38,7 +38,7 @@ fh_qing_law_setup = {
 			NOT = { has_variable = fh_coastal_registers_removed }
 		}
 		active_law:lawgroup_trade_policy ?= {
-			add_amendment = { type = amendment_fh_coastal_registers sponsor = prev.ig:ig_petty_bourgeoisie }
+			add_amendment = { type = amendment_fh_coastal_registers sponsor = prev.ig:ig_industrialists }
 		}
 	}
 }
@@ -48,16 +48,12 @@ fh_tungning_set_up_registers = {
 	if = {
 		limit = { has_law = law_type:law_subjecthood }
 		active_law:lawgroup_citizenship ?= {
-			add_amendment = {
-				type = amendment_fh_port_and_village_registers
-				sponsor = prev.ig:ig_petty_bourgeoisie
-			}
 			if = {
-				limit = { owner = { NOT = { has_variable = fh_return_to_mainland_completed } } }
-				add_amendment = {
-					type = amendment_fh_port_and_village_levies
-					sponsor = prev.ig:ig_armed_forces
-				}
+				limit = { owner = { has_variable = fh_return_to_mainland_completed } }
+				fh_add_tungning_registers = { AMENDMENT = amendment_fh_port_and_village_registers }
+			}
+			else = {
+				fh_add_tungning_registers = { AMENDMENT = amendment_fh_port_and_village_registers_with_levies }
 			}
 		}
 	}
@@ -81,12 +77,16 @@ fh_restore_southern_ming_citizenship = {
 		if = {
 			limit = {
 				active_law:lawgroup_citizenship ?= {
-					has_amendment = amendment_type:amendment_fh_port_and_village_registers
+					OR = {
+						has_amendment = amendment_type:amendment_fh_port_and_village_registers
+						has_amendment = amendment_type:amendment_fh_port_and_village_registers_with_levies
+					}
 				}
 			}
 			active_law:lawgroup_citizenship ?= {
 				fh_remove_law_amendment = { AMENDMENT = amendment_fh_port_and_village_levies }
 				fh_remove_law_amendment = { AMENDMENT = amendment_fh_port_and_village_registers }
+				fh_remove_law_amendment = { AMENDMENT = amendment_fh_port_and_village_registers_with_levies }
 			}
 			activate_law = law_type:law_fh_mandate_of_heaven
 		}
