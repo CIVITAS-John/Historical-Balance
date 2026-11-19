@@ -91,12 +91,7 @@ For these reactions, use the School of Practical Learning for the Republic, the 
 
 ## [Return to the Mainland](06-mainland-reconquest.md#consolidate-the-foothold)
 
-| First registration event | Modifier on Tungning | Duration | Immediate effects |
-| --- | --- | --- | --- |
-| Enter the local rolls as they stand | **The Mainland Registers:** +10% bureaucracy | 2 years | −5% radicals in the newly registered state. |
-| Require a common register | **The Mainland Registers:** +10% bureaucracy | 4 years | −5% radicals among School of Practical Learning supporters in other Tungning states; +2% among Pops in the registered state. |
-
-Either version records the same foothold. Local offices and tax terms from earlier agreements stand.
+The first registration records the foothold, ends the Port and Village Registers’ conscription bonus, and opens reunification. There is no timed country modifier or immediate radical change. [State decrees](06-mainland-reconquest.md#state-decrees) have their own local effects while assigned.
 
 ## [Reunification](07-reunification-of-china.md#proclaim-the-settlement)
 
@@ -123,7 +118,7 @@ A fulfilled pact requires completed commitments from Tungning, at least one tang
 
 ## Implementation order
 
-Opening effects, interim event responses, mobilization, magisterial compacts, resettlement, and capital or local policies keep their own terms.
+Opening effects, interim event responses, mobilization, integration decrees, and capital or local policies keep their own terms.
 
 1. Add namespaced definitions in `common/static_modifiers/` and localized names and descriptions. Use a single national modifier for each result, with a separate optional state modifier for the local components above. Use native `add_modifier` with an explicit duration. Use `is_decaying = yes` for Mandate Reaffirmed; keep other modifiers at full strength until expiry. For nationwide trade advantage, include `state_trade_advantage_mult` in the country modifier, as in vanilla `modifier_relations_with_west`. Use a state companion only where a specific state is named.
 2. Give each entry one guarded settlement path. Validate the trigger and current owner; complete necessary treaty or territorial checks before choosing the result. Guard the transaction against reentry while transfers are in progress. Persist the actual result and chosen or derived variant before granting any immediate effects or starting modifiers. Clear opening and preparation effects and use the same handler for manual choices, AI choices, deadlines, and ownership callbacks. Use native `outcome` blocks on the recorded results. Use tracked deadlines for holds and audiences because native `timeout` closes the entry immediately. Once an entry starts, use internal suspension for waits and a visible outcome for forced closure. Set `transferable = no` and `can_revolution_inherit = no`: a regime or tag change on the same founding country keeps the entry, but a separate successor country does not inherit it or open a new copy. For the faith audience, enter a guarded settlement phase and lift the lock before rechecking a requested law switch. The approved change must not trigger the forced interruption handler. Snapshot pre-settlement sponsors, apply the actual law and faith, then record both before applying the reaction. Keep the terminal record after expiry. A delayed event, repeated pulse, or load must never repeat the immediate effects or restart the modifier.
