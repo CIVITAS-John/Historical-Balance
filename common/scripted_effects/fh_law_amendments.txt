@@ -14,11 +14,6 @@ fh_qing_check_coastal_registers = {
 	}
 }
 
-# Law scope.
-fh_add_tungning_registers = {
-	add_amendment = { type = $AMENDMENT$ sponsor = owner.ig:ig_armed_forces }
-}
-
 # Law scope. Keep the civil provisions when the opening muster expires.
 fh_retire_tungning_register_levies = {
 	hidden_effect = {
@@ -29,7 +24,10 @@ fh_retire_tungning_register_levies = {
 		custom_tooltip = fh_port_and_village_levies_end_tt
 		hidden_effect = {
 			fh_remove_law_amendment = { AMENDMENT = amendment_fh_port_and_village_registers_with_levies }
-			fh_add_tungning_registers = { AMENDMENT = amendment_fh_port_and_village_registers }
+			add_amendment = {
+				type = amendment_fh_port_and_village_registers
+				sponsor = owner.ig:ig_armed_forces
+			}
 		}
 	}
 }

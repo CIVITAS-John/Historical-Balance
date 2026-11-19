@@ -119,7 +119,10 @@ fh_tungning_migrate_split_registers = {
 					owner = { NOT = { has_variable = fh_return_to_mainland_completed } }
 				}
 				fh_remove_law_amendment = { AMENDMENT = amendment_fh_port_and_village_registers }
-				fh_add_tungning_registers = { AMENDMENT = amendment_fh_port_and_village_registers_with_levies }
+				add_amendment = {
+					type = amendment_fh_port_and_village_registers_with_levies
+					sponsor = prev.ig:ig_armed_forces
+				}
 			}
 		}
 	}

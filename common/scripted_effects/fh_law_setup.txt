@@ -49,11 +49,17 @@ fh_tungning_set_up_registers = {
 		limit = { has_law = law_type:law_subjecthood }
 		active_law:lawgroup_citizenship ?= {
 			if = {
-				limit = { owner = { has_variable = fh_return_to_mainland_completed } }
-				fh_add_tungning_registers = { AMENDMENT = amendment_fh_port_and_village_registers }
+				limit = { prev = { has_variable = fh_return_to_mainland_completed } }
+				add_amendment = {
+					type = amendment_fh_port_and_village_registers
+					sponsor = prev.ig:ig_armed_forces
+				}
 			}
 			else = {
-				fh_add_tungning_registers = { AMENDMENT = amendment_fh_port_and_village_registers_with_levies }
+				add_amendment = {
+					type = amendment_fh_port_and_village_registers_with_levies
+					sponsor = prev.ig:ig_armed_forces
+				}
 			}
 		}
 	}
