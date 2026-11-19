@@ -1,0 +1,70 @@
+﻿namespace = fh_mainland_mobilization
+
+fh_mainland_mobilization.1 = {
+	type = country_event
+	hidden = yes
+	trigger = { has_variable = fh_mainland_mobilizing }
+	immediate = {
+		fh_mainland_find_active_war = yes
+		fh_mainland_finish_mobilization = yes
+	}
+}
+
+fh_mainland_mobilization.2 = {
+	type = country_event
+	placement = root
+	title = fh_mainland_mobilization.2.t
+	desc = fh_mainland_mobilization.2.d
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	option = {
+		name = fh_mainland_mobilization.2.a
+		default_option = yes
+	}
+}
+
+fh_mainland_mobilization.3 = {
+	type = country_event
+	placement = root
+	title = fh_mainland_mobilization.3.t
+	desc = fh_mainland_mobilization.3.d
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	option = {
+		name = fh_mainland_mobilization.3.a
+		default_option = yes
+	}
+}
+
+fh_mainland_mobilization.4 = {
+	type = country_event
+	placement = root
+	title = fh_mainland_mobilization.4.t
+	desc = fh_mainland_mobilization.4.d
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 1
+
+	trigger = { fh_mainland_claims_audience_valid = yes }
+	cancellation_trigger = { fh_mainland_claims_audience_valid = no }
+
+	option = {
+		name = fh_mainland_mobilization.4.press
+		trigger = { scope:fh_claims_target ?= { fh_mainland_claim_target_ready = yes } }
+		ai_chance = { base = 100 }
+		custom_tooltip = fh_mainland_claim_press_play_tt
+		scope:fh_claims_target = {
+			every_scope_state = {
+				limit = { fh_mainland_claim_target_state = yes }
+				custom_tooltip = fh_mainland_claim_show_demand_tt
+			}
+		}
+		hidden_effect = { fh_mainland_launch_claims_play = yes }
+	}
+	option = {
+		name = fh_mainland_mobilization.4.wait
+		default_option = yes
+		ai_chance = { base = 0 }
+		if = {
+			limit = { fh_mainland_claims_audience_valid = yes }
+			remove_variable = fh_mainland_claims_audience
+		}
+	}
+}

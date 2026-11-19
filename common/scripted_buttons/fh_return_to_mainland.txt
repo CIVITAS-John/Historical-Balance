@@ -1,7 +1,7 @@
 ﻿fh_register_mainland_administration = {
 	name = fh_register_mainland_administration
 	desc = fh_register_mainland_administration_desc
-	visible = { always = yes }
+	visible = { fh_mainland_registration_available = yes }
 	possible = {
 		NOT = { has_variable = fh_mainland_registration_pending }
 		custom_tooltip = {

@@ -1,12 +1,13 @@
-﻿# ROOT is the country registering the foothold. Foreign treaty-port
+﻿# Run in the country whose holdings are being checked. Foreign treaty-port
 # enclaves are exempt; ordinary territory and subject holdings are not.
 fh_owns_mainland_foothold = {
+	save_temporary_scope_as = fh_foothold_owner
 	s:$REGION$ = {
-		any_scope_state = { owner = root is_treaty_port = no }
+		any_scope_state = { owner = scope:fh_foothold_owner is_treaty_port = no }
 		NOT = {
 			any_scope_state = {
 				is_treaty_port = no
-				NOT = { owner = root }
+				NOT = { owner = scope:fh_foothold_owner }
 			}
 		}
 	}
@@ -37,7 +38,18 @@ fh_ai_prefers_common_register = {
 	scope:fh_registration_state ?= { turmoil <= 0.10 }
 }
 
+fh_mainland_registration_available = {
+	fh_is_tungning_founder = yes
+	has_variable = fh_mainland_foothold_opened
+	NOR = {
+		has_variable = fh_return_to_mainland_completed
+		has_variable = fh_mainland_claim_abandoned
+		has_variable = fh_taiping_fork_pending
+	}
+}
+
 fh_mainland_region_can_register = {
+	fh_mainland_registration_available = yes
 	has_variable = $STREAK$
 	var:$STREAK$ >= 3
 	fh_mainland_ready_now = { REGION = $REGION$ }
@@ -46,7 +58,6 @@ fh_mainland_region_can_register = {
 fh_mainland_registration_still_valid = {
 	has_journal_entry = fh_je_mainland_foothold
 	has_variable = fh_mainland_registration_pending
-	NOT = { has_variable = fh_return_to_mainland_completed }
 	exists = scope:fh_registration_state
 	scope:fh_registration_state ?= {
 		owner = root

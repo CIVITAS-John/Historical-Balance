@@ -1,0 +1,265 @@
+﻿fh_strait_open_offer = {
+	if = {
+		limit = { NOT = { has_variable = fh_strait_offer_opened } }
+		set_variable = fh_strait_offer_opened
+		set_variable = fh_strait_offer_pending
+		c:CHI ?= { save_scope_as = fh_strait_recipient }
+		if = {
+			limit = { exists = scope:fh_strait_recipient }
+			set_variable = { name = fh_strait_qing value = scope:fh_strait_recipient }
+		}
+		if = {
+			limit = { fh_strait_offer_available = no }
+			fh_strait_handle_offer = { RESPONSE = 0 }
+		}
+		else_if = {
+			limit = { c:CHI ?= { is_player = yes } }
+			save_scope_as = fh_strait_proposer
+			c:CHI = { trigger_event = { id = fh_strait_accord.1 popup = yes } }
+			trigger_event = { id = fh_strait_accord.2 days = 90 }
+		}
+		else = {
+			fh_strait_handle_offer = { RESPONSE = 1 }
+		}
+	}
+}
+
+fh_strait_cancel_offer = {
+	if = {
+		limit = { has_variable = fh_strait_offer_pending }
+		remove_variable = fh_strait_offer_pending
+		if = {
+			limit = { has_variable = fh_strait_qing }
+			remove_variable = fh_strait_qing
+		}
+	}
+}
+
+# Responses: 0 unavailable, 1 accept, 2 refuse, 3 expire.
+# Both countries' event paths use this handler in Tungning's scope.
+fh_strait_handle_offer = {
+	if = {
+		limit = { has_variable = fh_strait_offer_pending }
+		fh_mainland_refresh = yes
+		if = {
+			limit = { has_variable = fh_strait_offer_pending }
+			save_temporary_scope_value_as = { name = fh_strait_response value = $RESPONSE$ }
+			remove_variable = fh_strait_offer_pending
+			if = {
+				limit = { scope:fh_strait_response = 2 }
+				fh_strait_finalize_no_deal = { REASON = 2 }
+			}
+			else_if = {
+				limit = { scope:fh_strait_response = 3 }
+				fh_strait_finalize_no_deal = { REASON = 3 }
+			}
+			else_if = {
+				limit = {
+					OR = {
+						NOT = { var:fh_strait_qing ?= c:CHI }
+						fh_strait_subject_eligible = no
+					}
+				}
+				fh_strait_finalize_no_deal = { REASON = 4 }
+			}
+			else_if = {
+				limit = { fh_strait_trade_eligible = no }
+				fh_strait_finalize_no_deal = { REASON = 5 }
+			}
+			else = {
+				fh_strait_ratify = yes
+			}
+		}
+	}
+}
+
+fh_strait_finalize_no_deal = {
+	set_variable = { name = fh_strait_offer_result value = $REASON$ }
+	fh_mainland_renounce = { RESULT = 2 }
+	trigger_event = { id = fh_strait_accord.3 popup = yes }
+}
+
+fh_strait_ratify = {
+	# The shared resolver has consumed the offer. State/diplomacy callbacks
+	# must not open a new resolution while native effects change the pacts.
+	set_variable = fh_strait_ratification_in_progress
+	save_temporary_scope_as = fh_strait_party
+	var:fh_strait_qing = { save_temporary_scope_as = fh_strait_other_party }
+	# Eligibility requires either an independent market or Qing's market
+	# under an existing tributary pact. Snapshot the pact and market grant
+	# that define this arrangement; rollback does not move any states.
+	if = {
+		limit = { fh_strait_is_qing_tributary = { QING = scope:fh_strait_other_party } }
+		save_temporary_scope_value_as = { name = fh_strait_reuses_tributary value = 1 }
+	}
+	if = {
+		limit = { fh_strait_has_trade_article = { QING = scope:fh_strait_other_party } }
+		save_temporary_scope_value_as = { name = fh_strait_reuses_trade value = 1 }
+	}
+	scope:fh_strait_other_party = {
+		save_temporary_scope_value_as = {
+			name = fh_strait_previous_relations
+			value = "relations(scope:fh_strait_party)"
+		}
+		if = {
+			limit = { has_diplomatic_pact = { who = scope:fh_strait_party type = grant_own_market is_initiator = yes } }
+			save_temporary_scope_value_as = { name = fh_strait_previous_market_grant value = 1 }
+		}
+		if = {
+			limit = { has_truce_with = scope:fh_strait_party }
+			save_temporary_scope_value_as = { name = fh_strait_previous_truce value = 1 }
+		}
+		if = {
+			limit = { has_diplomatic_pact = { who = scope:fh_strait_party type = embargo is_initiator = yes } }
+			save_temporary_scope_value_as = { name = fh_strait_previous_embargo value = 1 }
+			remove_diplomatic_pact = { country = scope:fh_strait_party type = embargo }
+		}
+		if = {
+			limit = { NOT = { exists = scope:fh_strait_reuses_tributary } }
+			create_diplomatic_pact = { country = scope:fh_strait_party type = tributary }
+		}
+		if = {
+			limit = {
+				NOT = { exists = scope:fh_strait_previous_market_grant }
+				scope:fh_strait_party = {
+					fh_strait_is_qing_tributary = { QING = scope:fh_strait_other_party }
+					OR = {
+						# A newly created tributary normally joins Qing's market.
+						# Apply the grant even if the market cache still shows
+						# Tungning's old market, as in vanilla subject history.
+						NOT = { exists = scope:fh_strait_reuses_tributary }
+						market ?= scope:fh_strait_other_party.market
+					}
+				}
+			}
+			create_diplomatic_pact = { country = scope:fh_strait_party type = grant_own_market }
+		}
+	}
+
+	# Check the resulting market arrangement and native article eligibility
+	# again before creating a treaty. An existing equivalent article is reused.
+	if = {
+		limit = {
+			fh_strait_markets_separate = { QING = scope:fh_strait_other_party }
+			fh_strait_is_qing_tributary = { QING = scope:fh_strait_other_party }
+			scope:fh_strait_other_party = {
+				NOT = { has_diplomatic_pact = { who = scope:fh_strait_party type = embargo is_initiator = yes } }
+			}
+			NOT = { exists = scope:fh_strait_reuses_trade }
+			can_create_treaty = {
+				first_country = scope:fh_strait_other_party
+				second_country = scope:fh_strait_party
+				is_draft = no
+				binding_period = { years = 5 }
+				articles_to_create = {
+					{ article = trade_privilege source_country = scope:fh_strait_other_party target_country = scope:fh_strait_party }
+				}
+			}
+		}
+		create_treaty = {
+			name = fh_strait_treaty
+			first_country = scope:fh_strait_other_party
+			second_country = scope:fh_strait_party
+			is_draft = no
+			binding_period = { years = 5 }
+			articles_to_create = {
+				{ article = trade_privilege source_country = scope:fh_strait_other_party target_country = scope:fh_strait_party }
+			}
+		}
+		# No treaty with this directed article existed immediately beforehand.
+		random_scope_treaty = {
+			limit = {
+				binds = scope:fh_strait_other_party
+				any_scope_article = {
+					has_type = trade_privilege
+					source_country = scope:fh_strait_other_party
+					target_country = scope:fh_strait_party
+				}
+			}
+			save_temporary_scope_as = fh_strait_new_treaty
+		}
+	}
+
+	if = {
+		limit = {
+			fh_strait_is_qing_tributary = { QING = scope:fh_strait_other_party }
+			fh_strait_markets_separate = { QING = scope:fh_strait_other_party }
+			fh_strait_has_trade_article = { QING = scope:fh_strait_other_party }
+			scope:fh_strait_other_party = {
+				NOT = { has_diplomatic_pact = { who = scope:fh_strait_party type = embargo is_initiator = yes } }
+			}
+		}
+		if = {
+			limit = { exists = scope:fh_strait_new_treaty }
+			set_variable = { name = fh_strait_signed_treaty value = scope:fh_strait_new_treaty }
+			trigger_event = { id = fh_strait_accord.4 years = 5 }
+		}
+		set_variable = { name = fh_strait_offer_result value = 1 }
+		add_modifier = { name = fh_strait_half_tribute }
+		scope:fh_strait_other_party = {
+			if = {
+				limit = { "relations(scope:fh_strait_party)" < 30 }
+				set_relations = { country = scope:fh_strait_party value = 30 }
+			}
+		}
+		remove_variable = fh_strait_ratification_in_progress
+		fh_mainland_renounce = { RESULT = 1 }
+		trigger_event = { id = fh_strait_accord.3 popup = yes }
+	}
+	else = {
+		fh_strait_rollback = yes
+		remove_variable = fh_strait_ratification_in_progress
+		fh_strait_finalize_no_deal = { REASON = 6 }
+	}
+}
+
+fh_strait_rollback = {
+	scope:fh_strait_new_treaty ?= { withdraw = { country = scope:fh_strait_party } }
+	scope:fh_strait_other_party = {
+		# Removing only a grant this offer created restores normal market
+		# ownership under the prior relationship, without moving states.
+		if = {
+			limit = {
+				NOT = { exists = scope:fh_strait_previous_market_grant }
+				has_diplomatic_pact = { who = scope:fh_strait_party type = grant_own_market is_initiator = yes }
+			}
+			remove_diplomatic_pact = { country = scope:fh_strait_party type = grant_own_market }
+		}
+		if = {
+			limit = {
+				NOT = { exists = scope:fh_strait_reuses_tributary }
+				has_diplomatic_pact = { who = scope:fh_strait_party type = tributary is_initiator = yes }
+			}
+			remove_diplomatic_pact = { country = scope:fh_strait_party type = tributary }
+			# Do not keep a truce generated solely by retracting this offer.
+			if = {
+				limit = {
+					NOT = { exists = scope:fh_strait_previous_truce }
+					has_truce_with = scope:fh_strait_party
+				}
+				end_truce = scope:fh_strait_party
+			}
+		}
+		if = {
+			limit = { "relations(scope:fh_strait_party)" != scope:fh_strait_previous_relations }
+			set_relations = { country = scope:fh_strait_party value = scope:fh_strait_previous_relations }
+		}
+		if = {
+			limit = {
+				exists = scope:fh_strait_previous_embargo
+				fh_strait_can_restore_embargo = yes
+			}
+			create_diplomatic_pact = { country = scope:fh_strait_party type = embargo }
+		}
+	}
+}
+
+fh_strait_check_discount = {
+	if = {
+		limit = {
+			has_modifier = fh_strait_half_tribute
+			NOT = { fh_strait_is_qing_tributary = { QING = var:fh_strait_qing } }
+		}
+		remove_modifier = fh_strait_half_tribute
+	}
+}

@@ -1,0 +1,57 @@
+﻿fh_is_tungning_founder = {
+	global_var:fh_tungning_founder ?= this
+	is_country_alive = yes
+}
+
+fh_mainland_claim_unsettled = {
+	fh_is_tungning_founder = yes
+	has_journal_entry = fh_je_mainland_claim
+	NOT = { has_variable = fh_mainland_settled }
+}
+
+fh_mainland_debate_active = {
+	fh_mainland_claim_unsettled = yes
+	NOR = {
+		has_variable = fh_strait_offer_pending
+		has_variable = fh_strait_ratification_in_progress
+		has_variable = fh_taiping_fork_pending
+		has_variable = fh_mainland_tone_pending
+	}
+}
+
+fh_mainland_has_foothold = {
+	OR = {
+		fh_owns_mainland_foothold = { REGION = STATE_FUJIAN }
+		fh_owns_mainland_foothold = { REGION = STATE_GUANGDONG }
+		fh_owns_mainland_foothold = { REGION = STATE_ZHEJIANG }
+	}
+}
+
+fh_mainland_ai_public_challenge = {
+	ig:ig_armed_forces ?= { is_in_government = yes }
+	fh_mainland_officers_mainland = yes
+	scaled_debt < 0.75
+	in_default = no
+}
+
+fh_mainland_taiping_rebellion = {
+	is_diplomatic_play_type = dp_taiping_rebellion
+	target_is = c:CHI
+	initiator_is = c:TPG
+}
+
+fh_mainland_taiping_active = {
+	var:fh_mainland_taiping_play ?= { save_temporary_scope_as = fh_recorded_taiping_play }
+	any_diplomatic_play = { this = scope:fh_recorded_taiping_play }
+}
+
+fh_mainland_fork_open = {
+	fh_mainland_claim_unsettled = yes
+	has_variable = fh_taiping_fork_pending
+}
+
+fh_mainland_tone_open = {
+	fh_mainland_claim_unsettled = yes
+	has_variable = fh_mainland_tone_pending
+	NOT = { has_variable = fh_taiping_fork_pending }
+}

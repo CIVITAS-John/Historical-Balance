@@ -1,0 +1,15 @@
+﻿dp_fh_mainland_claims = {
+	war_goal = fh_mainland_return_state
+	requires_interest_marker = yes
+	add_infamy_for_starting_initiator_wargoals = no
+
+	texture = "gfx/interface/icons/war_goals/return_state.dds"
+	selectable_in_lens = { always = no }
+	# The decision owns access, as with vanilla's scripted Balkan War.
+	possible = { always = no }
+
+	ai_acceptance_max = 90
+	on_weekly_pulse = {}
+	on_war_begins = {}
+	on_war_end = {}
+}

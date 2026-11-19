@@ -1,0 +1,333 @@
+﻿fh_start_mainland_claim = {
+	if = {
+		limit = {
+			fh_is_tungning_founder = yes
+			NOT = { has_variable = fh_mainland_claim_started }
+		}
+		set_variable = fh_mainland_claim_started
+		set_variable = { name = fh_mainland_petition_months value = 0 }
+		if = {
+			limit = {
+				NOT = { has_variable = fh_mainland_qing }
+				c:CHI ?= { is_country_alive = yes }
+			}
+			set_variable = { name = fh_mainland_qing value = c:CHI }
+		}
+		add_journal_entry = { type = fh_je_mainland_claim }
+		add_modifier = { name = fh_mainland_disputed_mandate }
+		add_modifier = { name = fh_mainland_established_suppliers }
+		fh_mainland_refresh = yes
+	}
+}
+
+# State changes and offer replies use the same priority as the monthly tick.
+# A recorded fork takes precedence over land acquired after the fork opened.
+fh_mainland_refresh = {
+	if = {
+		limit = {
+			fh_is_tungning_founder = yes
+			NOT = { has_variable = fh_strait_ratification_in_progress }
+		}
+		if = {
+			limit = { NOT = { has_variable = fh_mainland_taiping_launched } }
+			random_diplomatic_play = {
+				limit = { fh_mainland_taiping_rebellion = yes }
+				save_temporary_scope_as = fh_caught_up_taiping_play
+				prev = {
+					set_variable = fh_mainland_taiping_launched
+					set_variable = { name = fh_mainland_taiping_play value = scope:fh_caught_up_taiping_play }
+					set_variable = { name = fh_mainland_qing value = c:CHI }
+					set_variable = { name = fh_mainland_taiping value = c:TPG }
+				}
+			}
+		}
+		if = {
+			limit = {
+				NOR = {
+					has_variable = fh_taiping_fork_pending
+					has_variable = fh_mainland_claim_abandoned
+				}
+				fh_mainland_has_foothold = yes
+			}
+			if = {
+				limit = { fh_mainland_claim_unsettled = yes }
+				fh_mainland_reassert = { PUBLIC = no }
+			}
+			else_if = {
+				limit = { has_variable = fh_mainland_settled }
+				fh_mainland_open_foothold = yes
+			}
+		}
+		else_if = {
+			limit = {
+				fh_mainland_claim_unsettled = yes
+				has_variable = fh_mainland_taiping_launched
+				NOT = { has_variable = fh_taiping_fork_pending }
+			}
+			fh_mainland_freeze = yes
+			fh_strait_cancel_offer = yes
+			if = {
+				limit = { has_variable = fh_mainland_tone_pending }
+				remove_variable = fh_mainland_tone_pending
+			}
+			set_variable = fh_taiping_fork_pending
+			fh_mainland_show_fork = yes
+		}
+	}
+}
+
+fh_mainland_monthly = {
+	fh_mainland_refresh = yes
+	fh_mainland_check_endpoint = { INTERACTIVE = no }
+	if = {
+		limit = { fh_mainland_debate_active = yes }
+		change_variable = { name = fh_mainland_petition_months add = 1 }
+		if = {
+			limit = { var:fh_mainland_petition_months >= 3 }
+			set_variable = { name = fh_mainland_petition_months value = 0 }
+			fh_mainland_roll_petition = yes
+		}
+	}
+}
+
+# Callers check ownership and the fork before applying effects and points.
+fh_mainland_change_balance = {
+	if = {
+		limit = { fh_mainland_debate_active = yes }
+		je:fh_je_mainland_claim ?= {
+			add_progress = { name = fh_mainland_claim_balance value = $DELTA$ }
+		}
+		fh_mainland_check_endpoint = { INTERACTIVE = yes }
+	}
+}
+
+fh_mainland_check_endpoint = {
+	if = {
+		limit = {
+			fh_mainland_debate_active = yes
+			je:fh_je_mainland_claim ?= {
+				"scripted_bar_progress(fh_mainland_claim_balance)" >= 200
+			}
+		}
+		if = {
+			limit = { always = $INTERACTIVE$ }
+			fh_mainland_freeze = yes
+			set_variable = fh_mainland_tone_pending
+			trigger_event = { id = fh_mainland_claim.1 popup = yes }
+		}
+		else = { fh_mainland_reassert = { PUBLIC = no } }
+	}
+	else_if = {
+		limit = {
+			fh_mainland_debate_active = yes
+			je:fh_je_mainland_claim ?= {
+				"scripted_bar_progress(fh_mainland_claim_balance)" <= 0
+			}
+		}
+		fh_mainland_freeze = yes
+		fh_strait_open_offer = yes
+	}
+}
+
+fh_mainland_freeze = {
+	if = {
+		limit = { has_modifier = fh_mainland_disputed_mandate }
+		remove_modifier = fh_mainland_disputed_mandate
+	}
+	if = {
+		limit = { has_modifier = fh_mainland_established_suppliers }
+		remove_modifier = fh_mainland_established_suppliers
+	}
+	if = {
+		limit = { has_variable = fh_mainland_court_action_pending }
+		remove_variable = fh_mainland_court_action_pending
+	}
+	if = {
+		limit = { has_variable = fh_mainland_court_petition_pending }
+		remove_variable = fh_mainland_court_petition_pending
+	}
+}
+
+fh_mainland_finish = {
+	set_variable = fh_mainland_settled
+	remove_variable = fh_mainland_petition_months
+	fh_mainland_freeze = yes
+	fh_strait_cancel_offer = yes
+	if = {
+		limit = { has_variable = fh_mainland_tone_pending }
+		remove_variable = fh_mainland_tone_pending
+	}
+	if = {
+		limit = { has_variable = fh_taiping_fork_pending }
+		remove_variable = fh_taiping_fork_pending
+	}
+	if = {
+		limit = { has_variable = fh_mainland_fork_popup }
+		remove_variable = fh_mainland_fork_popup
+	}
+}
+
+fh_mainland_open_foothold = {
+	if = {
+		limit = {
+			NOR = {
+				has_variable = fh_mainland_foothold_opened
+				has_variable = fh_mainland_claim_abandoned
+				has_variable = fh_return_to_mainland_completed
+				has_variable = fh_taiping_fork_pending
+			}
+		}
+		set_variable = fh_mainland_foothold_opened
+		if = {
+			limit = { NOT = { has_journal_entry = fh_je_mainland_foothold } }
+			add_journal_entry = { type = fh_je_mainland_foothold }
+		}
+	}
+}
+
+fh_mainland_add_outstanding_claim = {
+	if = {
+		limit = {
+			NOR = {
+				fh_owns_mainland_foothold = { REGION = $REGION$ }
+				has_claim = s:$REGION$
+			}
+		}
+		s:$REGION$ = { add_claim = prev }
+	}
+}
+
+fh_mainland_remove_claim = {
+	if = {
+		limit = { has_claim = s:$REGION$ }
+		s:$REGION$ = { remove_claim = prev }
+	}
+}
+
+# Record the terminal route before any irreversible or one-time effects.
+fh_mainland_reassert = {
+	if = {
+		limit = { fh_mainland_claim_unsettled = yes }
+		set_variable = fh_mainland_claim_reasserted
+		if = {
+			limit = { always = $PUBLIC$ }
+			set_variable = fh_mainland_public_challenge
+		}
+		fh_mainland_finish = yes
+		fh_mainland_add_outstanding_claim = { REGION = STATE_FUJIAN }
+		fh_mainland_add_outstanding_claim = { REGION = STATE_GUANGDONG }
+		fh_mainland_add_outstanding_claim = { REGION = STATE_ZHEJIANG }
+		fh_mainland_open_foothold = yes
+		fh_mainland_start_mobilization = yes
+		fh_mainland_claim_radicals = { VALUE = fh_mainland_remove_large_radicals }
+		if = {
+			limit = { always = $PUBLIC$ }
+			add_modifier = { name = fh_mainland_mandate_reaffirmed years = 7 is_decaying = yes }
+			fh_mainland_accommodation_radicals = { VALUE = medium_radicals }
+			if = {
+				limit = { c:CHI ?= { is_country_alive = yes } }
+				change_relations = { country = c:CHI value = -60 }
+			}
+		}
+		else = {
+			add_modifier = { name = fh_mainland_mandate_reaffirmed years = 5 is_decaying = yes }
+			fh_mainland_accommodation_radicals = { VALUE = small_radicals }
+			if = {
+				limit = { c:CHI ?= { is_country_alive = yes } }
+				change_relations = { country = c:CHI value = -30 }
+			}
+		}
+	}
+}
+
+# 1 = ratified, 2 = no agreement, 3 = abandonment at the Taiping fork.
+fh_mainland_renounce = {
+	if = {
+		limit = { fh_mainland_claim_unsettled = yes }
+		set_variable = { name = fh_mainland_claim_renounced value = $RESULT$ }
+		if = {
+			limit = { var:fh_mainland_claim_renounced = 3 }
+			set_variable = fh_mainland_claim_abandoned
+		}
+		fh_mainland_finish = yes
+		fh_mainland_remove_claim = { REGION = STATE_FUJIAN }
+		fh_mainland_remove_claim = { REGION = STATE_GUANGDONG }
+		fh_mainland_remove_claim = { REGION = STATE_ZHEJIANG }
+		set_variable = fh_constitutional_debate_unlocked
+		ig:ig_industrialists ?= { add_modifier = { name = fh_mainland_renunciation_approval years = 3 } }
+		if = {
+			limit = { fh_mainland_officers_mainland = yes }
+			ig:ig_armed_forces ?= { add_modifier = { name = fh_mainland_renunciation_disapproval years = 3 } }
+		}
+		else_if = {
+			limit = { fh_mainland_officers_southern = yes }
+			ig:ig_armed_forces ?= { add_modifier = { name = fh_mainland_renunciation_approval years = 3 } }
+		}
+		if = {
+			limit = { var:fh_mainland_claim_renounced = 1 }
+			add_modifier = { name = fh_mainland_strait_settlement years = 5 }
+			fh_mainland_accommodation_radicals = { VALUE = fh_mainland_remove_large_radicals }
+			fh_mainland_claim_radicals = { VALUE = small_radicals }
+		}
+		else_if = {
+			limit = { has_variable = fh_mainland_claim_abandoned }
+			add_modifier = { name = fh_mainland_island_first years = 2 }
+			add_modifier = { name = fh_mainland_squadrons_stand_down years = 2 }
+			fh_mainland_claim_radicals = { VALUE = small_radicals }
+			if = {
+				limit = { exists = ig:ig_industrialists }
+				add_radicals = { interest_group = ig:ig_industrialists value = fh_mainland_remove_small_radicals }
+			}
+		}
+		else = {
+			add_modifier = { name = fh_mainland_unanswered_accord years = 2 }
+			fh_mainland_accommodation_radicals = { VALUE = large_radicals }
+		}
+	}
+}
+
+fh_mainland_claim_radicals = {
+	if = {
+		limit = { exists = ig:ig_landowners }
+		add_radicals = { interest_group = ig:ig_landowners value = $VALUE$ }
+	}
+	if = {
+		limit = { fh_mainland_officers_mainland = yes }
+		add_radicals = { interest_group = ig:ig_armed_forces value = $VALUE$ }
+	}
+}
+
+fh_mainland_accommodation_radicals = {
+	if = {
+		limit = { exists = ig:ig_industrialists }
+		add_radicals = { interest_group = ig:ig_industrialists value = $VALUE$ }
+	}
+	if = {
+		limit = { fh_mainland_officers_southern = yes }
+		add_radicals = { interest_group = ig:ig_armed_forces value = $VALUE$ }
+	}
+}
+
+fh_mainland_show_fork = {
+	if = {
+		limit = {
+			fh_mainland_fork_open = yes
+			NOT = { has_variable = fh_mainland_fork_popup }
+		}
+		set_variable = { name = fh_mainland_fork_popup days = 30 }
+		trigger_event = { id = fh_mainland_claim.2 popup = yes }
+	}
+}
+
+fh_mainland_answer_fork_reassert = {
+	if = {
+		limit = { fh_mainland_fork_open = yes }
+		set_variable = fh_mainland_from_taiping
+		if = {
+			limit = { fh_mainland_taiping_active = yes }
+			set_variable = fh_mainland_taiping_wants_audience
+		}
+		else = { set_variable = fh_mainland_taiping_no_bargain }
+		fh_mainland_reassert = { PUBLIC = $PUBLIC$ }
+	}
+}

@@ -6,29 +6,33 @@
 	scripted_button = fh_register_mainland_administration
 
 	is_shown_when_inactive = {
-		has_variable = fh_tungning_bootstrapped
-		NOT = { has_variable = fh_return_to_mainland_completed }
+		fh_is_tungning_founder = yes
+		NOR = {
+			has_variable = fh_return_to_mainland_completed
+			has_variable = fh_mainland_claim_abandoned
+		}
 	}
 
 	possible = {
-		NOR = {
-			has_variable = fh_mainland_claim_abandoned
-			has_variable = fh_taiping_fork_pending
-		}
-		OR = {
-			has_variable = fh_mainland_claim_reasserted
-			fh_owns_mainland_foothold = { REGION = STATE_FUJIAN }
-			fh_owns_mainland_foothold = { REGION = STATE_GUANGDONG }
-			fh_owns_mainland_foothold = { REGION = STATE_ZHEJIANG }
-		}
+		fh_mainland_registration_available = yes
 	}
 
 	on_monthly_pulse = {
+		trigger = { fh_mainland_registration_available = yes }
 		effect = {
 			fh_update_mainland_readiness = { REGION = STATE_FUJIAN STREAK = fh_fujian_readiness }
 			fh_update_mainland_readiness = { REGION = STATE_GUANGDONG STREAK = fh_guangdong_readiness }
 			fh_update_mainland_readiness = { REGION = STATE_ZHEJIANG STREAK = fh_zhejiang_readiness }
 		}
+	}
+
+	# A save from before the claim stage can already have this entry active.
+	outcome = {
+		header = fh_mainland_claim_abandoned_header
+		effect_header = je_standard_on_failure_header
+		conclusion_desc = fh_je_mainland_foothold_abandoned_desc
+		color = "blue_negative"
+		trigger = { has_variable = fh_mainland_claim_abandoned }
 	}
 
 	outcome = {

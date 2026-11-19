@@ -1,21 +1,64 @@
 ﻿# Country modifiers propagate to the current owner's states and leave no modifier on a ceded state.
-fh_court_faith_conversions_on_hold = { state_conversion_mult = -0.25 }
-fh_court_faith_catholic_preference = { state_conversion_mult = 0.15 }
+fh_court_faith_conversions_on_hold = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_documents_negative.dds"
+	state_conversion_mult = -0.25
+}
+fh_court_faith_catholic_preference = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_documents_positive.dds"
+	state_conversion_mult = 0.15
+}
 
-fh_court_faith_broken_audience = { country_bureaucracy_mult = -0.10 }
-fh_court_faith_manila_connection = { country_prestige_add = 10 }
-fh_court_faith_manila_connection_taiwan = { state_trade_advantage_mult = 0.10 }
-fh_court_faith_translators_press = { country_tech_spread_mult = 0.15 }
-fh_court_faith_restored_academies = { country_bureaucracy_mult = 0.10 }
-fh_court_faith_temple_patronage = { country_prestige_add = 10 }
-fh_court_faith_temple_patronage_taiwan = { state_pop_qualifications_mult = 0.15 }
+fh_court_faith_broken_audience = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_documents_negative.dds"
+	country_bureaucracy_mult = -0.10
+}
+fh_court_faith_manila_connection = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_flag_positive.dds"
+	country_prestige_add = 10
+}
+fh_court_faith_manila_connection_taiwan = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_coins_positive.dds"
+	state_trade_advantage_mult = 0.10
+}
+fh_court_faith_translators_press = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_lightbulb_positive.dds"
+	country_tech_spread_mult = 0.15
+}
+fh_court_faith_restored_academies = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_documents_positive.dds"
+	country_bureaucracy_mult = 0.10
+}
+fh_court_faith_temple_patronage = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_statue_positive.dds"
+	country_prestige_add = 10
+}
+fh_court_faith_temple_patronage_taiwan = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_lightbulb_positive.dds"
+	state_pop_qualifications_mult = 0.15
+}
 
-fh_court_faith_endorsement = { interest_group_approval_add = 2 }
-fh_court_faith_settlement_approval = { interest_group_approval_add = 2 }
-fh_court_faith_objection = { interest_group_approval_add = -2 }
-fh_court_faith_missions_oversight = { country_bureaucracy_mult = -0.05 }
-fh_court_faith_mission_teachers = { state_education_access_add = 0.05 }
+fh_court_faith_endorsement = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_fist_positive.dds"
+	interest_group_approval_add = 2
+}
+fh_court_faith_settlement_approval = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_fist_positive.dds"
+	interest_group_approval_add = 2
+}
+fh_court_faith_objection = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_fist_negative.dds"
+	interest_group_approval_add = -2
+}
+fh_court_faith_missions_oversight = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_documents_negative.dds"
+	country_bureaucracy_mult = -0.05
+}
+fh_court_faith_mission_teachers = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_lightbulb_positive.dds"
+	state_education_access_add = 0.05
+}
 fh_court_faith_academy_consultation = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_documents_positive.dds"
 	country_bureaucracy_mult = 0.05
 	country_tech_spread_mult = -0.05
 }

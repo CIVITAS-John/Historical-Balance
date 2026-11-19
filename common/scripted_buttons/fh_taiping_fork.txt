@@ -1,0 +1,13 @@
+﻿fh_reopen_taiping_fork = {
+	name = fh_reopen_taiping_fork
+	desc = fh_reopen_taiping_fork_desc
+	visible = { fh_mainland_fork_open = yes }
+	possible = {
+		custom_tooltip = {
+			text = fh_mainland_fork_ready_tt
+			NOT = { has_variable = fh_mainland_fork_popup }
+		}
+	}
+	ai_chance = { value = 0 }
+	effect = { fh_mainland_show_fork = yes }
+}

@@ -1,0 +1,431 @@
+﻿namespace = fh_mainland_court
+
+fh_mainland_court.1 = {
+	type = country_event
+	placement = root
+	title = fh_mainland_court.1.t
+	desc = fh_mainland_court.1.d
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	duration = 1
+
+	trigger = { fh_mainland_court_action_pending = { ACTION = 1 } }
+	cancellation_trigger = { NOT = { fh_mainland_court_action_pending = { ACTION = 1 } } }
+
+	option = {
+		name = fh_mainland_court.1.confirm
+		trigger = { fh_mainland_memorial_has_sponsor = yes }
+		ai_chance = { base = 100 }
+		custom_tooltip = fh_mainland_court.1.confirm_tt
+		hidden_effect = {
+			fh_mainland_confirm_court_action = {
+				ACTION = 1
+				ELIGIBLE = fh_mainland_memorial_has_sponsor
+				APPLY = fh_mainland_apply_memorials
+				DELTA = 12
+			}
+		}
+	}
+	option = {
+		name = fh_mainland_court.cancel
+		default_option = yes
+		ai_chance = { base = 0 }
+		hidden_effect = { fh_mainland_cancel_court_action = { ACTION = 1 } }
+	}
+}
+
+fh_mainland_court.2 = {
+	type = country_event
+	placement = root
+	title = fh_mainland_court.2.t
+	desc = fh_mainland_court.2.d
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	duration = 1
+
+	trigger = { fh_mainland_court_action_pending = { ACTION = 2 } }
+	cancellation_trigger = { NOT = { fh_mainland_court_action_pending = { ACTION = 2 } } }
+
+	option = {
+		name = fh_mainland_court.2.confirm
+		trigger = { fh_mainland_merchants_have_sponsor = yes }
+		ai_chance = { base = 100 }
+		custom_tooltip = fh_mainland_court.2.confirm_tt
+		hidden_effect = {
+			fh_mainland_confirm_court_action = {
+				ACTION = 2
+				ELIGIBLE = fh_mainland_merchants_have_sponsor
+				APPLY = fh_mainland_apply_merchants
+				DELTA = -12
+			}
+		}
+	}
+	option = {
+		name = fh_mainland_court.cancel
+		default_option = yes
+		ai_chance = { base = 0 }
+		hidden_effect = { fh_mainland_cancel_court_action = { ACTION = 2 } }
+	}
+}
+
+fh_mainland_court.11 = {
+	type = country_event
+	placement = root
+	title = fh_mainland_court.11.t
+	desc = fh_mainland_court.11.d
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	duration = 1
+
+	trigger = {
+		fh_mainland_court_petition_pending = { PETITION = 11 }
+		fh_mainland_canton_petition_eligible = yes
+	}
+	cancellation_trigger = {
+		NAND = {
+			fh_mainland_court_petition_pending = { PETITION = 11 }
+			fh_mainland_canton_petition_eligible = yes
+		}
+	}
+
+	option = {
+		name = fh_mainland_court.11.mainland
+		ai_chance = {
+			base = 1
+			modifier = {
+				trigger = { fh_mainland_ai_favors_memorials = yes }
+				add = 2
+			}
+		}
+		custom_tooltip = fh_mainland_petition_plus_tt
+		hidden_effect = {
+			fh_mainland_answer_petition = { PETITION = 11 ELIGIBLE = fh_mainland_canton_petition_eligible DELTA = 5 }
+		}
+	}
+
+	option = {
+		name = fh_mainland_court.11.accommodate
+		default_option = yes
+		ai_chance = {
+			base = 1
+			modifier = {
+				trigger = { fh_mainland_ai_favors_memorials = no }
+				add = 2
+			}
+		}
+		custom_tooltip = fh_mainland_petition_minus_tt
+		hidden_effect = {
+			fh_mainland_answer_petition = { PETITION = 11 ELIGIBLE = fh_mainland_canton_petition_eligible DELTA = -5 }
+		}
+	}
+}
+
+fh_mainland_court.12 = {
+	type = country_event
+	placement = root
+	title = fh_mainland_court.12.t
+	desc = fh_mainland_court.12.d
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	duration = 1
+
+	trigger = {
+		fh_mainland_court_petition_pending = { PETITION = 12 }
+		fh_mainland_fujian_petition_eligible = yes
+	}
+	cancellation_trigger = {
+		NAND = {
+			fh_mainland_court_petition_pending = { PETITION = 12 }
+			fh_mainland_fujian_petition_eligible = yes
+		}
+	}
+
+	option = {
+		name = fh_mainland_court.12.mainland
+		ai_chance = {
+			base = 1
+			modifier = {
+				trigger = { fh_mainland_ai_favors_memorials = yes }
+				add = 2
+			}
+		}
+		custom_tooltip = fh_mainland_petition_plus_tt
+		hidden_effect = {
+			fh_mainland_answer_petition = { PETITION = 12 ELIGIBLE = fh_mainland_fujian_petition_eligible DELTA = 5 }
+		}
+	}
+
+	option = {
+		name = fh_mainland_court.12.accommodate
+		default_option = yes
+		ai_chance = {
+			base = 1
+			modifier = {
+				trigger = { fh_mainland_ai_favors_memorials = no }
+				add = 2
+			}
+		}
+		custom_tooltip = fh_mainland_petition_minus_tt
+		hidden_effect = {
+			fh_mainland_answer_petition = { PETITION = 12 ELIGIBLE = fh_mainland_fujian_petition_eligible DELTA = -5 }
+		}
+	}
+}
+
+fh_mainland_court.13 = {
+	type = country_event
+	placement = root
+	title = fh_mainland_court.13.t
+	desc = fh_mainland_court.13.d
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	duration = 1
+
+	trigger = {
+		fh_mainland_court_petition_pending = { PETITION = 13 }
+		fh_mainland_taiwan_petition_eligible = yes
+	}
+	cancellation_trigger = {
+		NAND = {
+			fh_mainland_court_petition_pending = { PETITION = 13 }
+			fh_mainland_taiwan_petition_eligible = yes
+		}
+	}
+
+	option = {
+		name = fh_mainland_court.13.mainland
+		ai_chance = {
+			base = 1
+			modifier = {
+				trigger = { fh_mainland_ai_favors_memorials = yes }
+				add = 2
+			}
+		}
+		custom_tooltip = fh_mainland_petition_plus_tt
+		hidden_effect = {
+			fh_mainland_answer_petition = { PETITION = 13 ELIGIBLE = fh_mainland_taiwan_petition_eligible DELTA = 5 }
+		}
+	}
+
+	option = {
+		name = fh_mainland_court.13.accommodate
+		default_option = yes
+		ai_chance = {
+			base = 1
+			modifier = {
+				trigger = { fh_mainland_ai_favors_memorials = no }
+				add = 2
+			}
+		}
+		custom_tooltip = fh_mainland_petition_minus_tt
+		hidden_effect = {
+			fh_mainland_answer_petition = { PETITION = 13 ELIGIBLE = fh_mainland_taiwan_petition_eligible DELTA = -5 }
+		}
+	}
+}
+
+fh_mainland_court.14 = {
+	type = country_event
+	placement = root
+	title = fh_mainland_court.14.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { fh_mainland_officers_mainland = yes }
+				desc = fh_mainland_court.14.d_mainland
+			}
+			triggered_desc = {
+				trigger = { fh_mainland_officers_southern = yes }
+				desc = fh_mainland_court.14.d_southern
+			}
+			desc = fh_mainland_court.14.d_neutral
+		}
+	}
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 1
+
+	trigger = {
+		fh_mainland_court_petition_pending = { PETITION = 14 }
+		fh_mainland_officer_petition_eligible = yes
+	}
+	cancellation_trigger = {
+		NAND = {
+			fh_mainland_court_petition_pending = { PETITION = 14 }
+			fh_mainland_officer_petition_eligible = yes
+		}
+	}
+
+	option = {
+		name = fh_mainland_court.14.back
+		ai_chance = {
+			base = 1
+			modifier = {
+				trigger = {
+					OR = {
+						AND = {
+							fh_mainland_officers_mainland = yes
+							fh_mainland_ai_favors_memorials = yes
+						}
+						AND = {
+							fh_mainland_officers_southern = yes
+							fh_mainland_ai_favors_memorials = no
+						}
+					}
+				}
+				add = 2
+			}
+		}
+		if = {
+			limit = { fh_mainland_officers_mainland = yes }
+			custom_tooltip = fh_mainland_petition_plus_tt
+		}
+		else_if = {
+			limit = { fh_mainland_officers_southern = yes }
+			custom_tooltip = fh_mainland_petition_minus_tt
+		}
+		custom_tooltip = fh_mainland_court.14.back_tt
+		hidden_effect = {
+			fh_mainland_answer_officers = {
+				BACKED = yes
+				MAINLAND_DELTA = 5
+				SOUTHERN_DELTA = -5
+			}
+		}
+	}
+
+	option = {
+		name = fh_mainland_court.14.refuse
+		default_option = yes
+		ai_chance = {
+			base = 1
+			modifier = {
+				trigger = {
+					OR = {
+						AND = {
+							fh_mainland_officers_southern = yes
+							fh_mainland_ai_favors_memorials = yes
+						}
+						AND = {
+							fh_mainland_officers_mainland = yes
+							fh_mainland_ai_favors_memorials = no
+						}
+					}
+				}
+				add = 2
+			}
+		}
+		if = {
+			limit = { fh_mainland_officers_mainland = yes }
+			custom_tooltip = fh_mainland_petition_minus_tt
+		}
+		else_if = {
+			limit = { fh_mainland_officers_southern = yes }
+			custom_tooltip = fh_mainland_petition_plus_tt
+		}
+		custom_tooltip = fh_mainland_court.14.refuse_tt
+		hidden_effect = {
+			fh_mainland_answer_officers = {
+				BACKED = no
+				MAINLAND_DELTA = -5
+				SOUTHERN_DELTA = 5
+			}
+		}
+	}
+}
+
+fh_mainland_court.15 = {
+	type = country_event
+	placement = root
+	title = fh_mainland_court.15.t
+	desc = fh_mainland_court.15.d
+	icon = "gfx/interface/icons/event_icons/event_protest.dds"
+	duration = 1
+
+	trigger = {
+		fh_mainland_court_petition_pending = { PETITION = 15 }
+		fh_mainland_refugee_petition_eligible = yes
+	}
+	cancellation_trigger = {
+		NAND = {
+			fh_mainland_court_petition_pending = { PETITION = 15 }
+			fh_mainland_refugee_petition_eligible = yes
+		}
+	}
+
+	option = {
+		name = fh_mainland_court.15.mainland
+		ai_chance = {
+			base = 1
+			modifier = {
+				trigger = { fh_mainland_ai_favors_memorials = yes }
+				add = 2
+			}
+		}
+		custom_tooltip = fh_mainland_petition_plus_tt
+		hidden_effect = {
+			fh_mainland_answer_petition = { PETITION = 15 ELIGIBLE = fh_mainland_refugee_petition_eligible DELTA = 5 }
+		}
+	}
+
+	option = {
+		name = fh_mainland_court.15.accommodate
+		default_option = yes
+		ai_chance = {
+			base = 1
+			modifier = {
+				trigger = { fh_mainland_ai_favors_memorials = no }
+				add = 2
+			}
+		}
+		custom_tooltip = fh_mainland_petition_minus_tt
+		hidden_effect = {
+			fh_mainland_answer_petition = { PETITION = 15 ELIGIBLE = fh_mainland_refugee_petition_eligible DELTA = -5 }
+		}
+	}
+}
+
+fh_mainland_court.16 = {
+	type = country_event
+	placement = root
+	title = fh_mainland_court.16.t
+	desc = fh_mainland_court.16.d
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	duration = 1
+
+	trigger = {
+		fh_mainland_court_petition_pending = { PETITION = 16 }
+		fh_mainland_royal_petition_eligible = yes
+	}
+	cancellation_trigger = {
+		NAND = {
+			fh_mainland_court_petition_pending = { PETITION = 16 }
+			fh_mainland_royal_petition_eligible = yes
+		}
+	}
+
+	option = {
+		name = fh_mainland_court.16.mainland
+		ai_chance = {
+			base = 1
+			modifier = {
+				trigger = { fh_mainland_ai_favors_memorials = yes }
+				add = 2
+			}
+		}
+		custom_tooltip = fh_mainland_petition_plus_tt
+		hidden_effect = {
+			fh_mainland_answer_petition = { PETITION = 16 ELIGIBLE = fh_mainland_royal_petition_eligible DELTA = 5 }
+		}
+	}
+
+	option = {
+		name = fh_mainland_court.16.accommodate
+		default_option = yes
+		ai_chance = {
+			base = 1
+			modifier = {
+				trigger = { fh_mainland_ai_favors_memorials = no }
+				add = 2
+			}
+		}
+		custom_tooltip = fh_mainland_petition_minus_tt
+		hidden_effect = {
+			fh_mainland_answer_petition = { PETITION = 16 ELIGIBLE = fh_mainland_royal_petition_eligible DELTA = -5 }
+		}
+	}
+}

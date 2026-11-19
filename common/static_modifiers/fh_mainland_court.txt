@@ -1,0 +1,30 @@
+﻿fh_mainland_court_approval = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_fist_positive.dds"
+	interest_group_approval_add = 2
+}
+
+fh_mainland_court_disapproval = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_fist_negative.dds"
+	interest_group_approval_add = -2
+}
+
+fh_mainland_officer_disapproval = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_rifle_negative.dds"
+	interest_group_approval_add = -2
+}
+
+fh_mainland_memorial_preparations = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_rifle_negative.dds"
+	country_military_goods_cost_mult = 0.05
+}
+
+fh_mainland_merchant_hearing = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_coins_positive.dds"
+	state_trade_advantage_mult = 0.10
+}
+
+fh_mainland_officers_at_the_ready = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_rifle_positive.dds"
+	ship_power_projection_mult = 0.10
+	country_military_goods_cost_mult = 0.05
+}

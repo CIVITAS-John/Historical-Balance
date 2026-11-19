@@ -1,0 +1,19 @@
+﻿on_new_interest_group_leader = {
+	on_actions = { fh_mainland_assign_new_officer_stance }
+}
+
+# Root is the new character. Stance stays with the character if they return to office.
+fh_mainland_assign_new_officer_stance = {
+	trigger = {
+		owner ?= { fh_is_tungning_founder = yes }
+		interest_group ?= { is_interest_group_type = ig_armed_forces }
+		NOT = { has_variable = fh_mainland_officer_stance }
+	}
+	effect = {
+		random_list = {
+			40 = { set_variable = { name = fh_mainland_officer_stance value = 1 } }
+			40 = { set_variable = { name = fh_mainland_officer_stance value = 2 } }
+			20 = { set_variable = { name = fh_mainland_officer_stance value = 0 } }
+		}
+	}
+}

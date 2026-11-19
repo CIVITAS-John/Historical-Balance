@@ -1,0 +1,94 @@
+﻿on_monthly_pulse_country = {
+	on_actions = { fh_mainland_claim_country_update }
+}
+
+fh_mainland_claim_country_update = {
+	trigger = {
+		OR = {
+			fh_is_tungning_founder = yes
+			AND = {
+				NOT = { has_global_variable = fh_tungning_founder }
+				c:TWG ?= this
+				has_variable = fh_tungning_bootstrapped
+				is_country_alive = yes
+			}
+		}
+	}
+	effect = {
+		# Saves from before this entry have the setup marker but no saved founder.
+		if = {
+			limit = { NOT = { has_global_variable = fh_tungning_founder } }
+			set_global_variable = { name = fh_tungning_founder value = this }
+		}
+		if = {
+			limit = { NOT = { has_variable = fh_mainland_claim_started } }
+			fh_start_mainland_claim = yes
+		}
+		else = { fh_mainland_refresh = yes }
+		fh_strait_check_discount = yes
+	}
+}
+
+on_state_owner_change = {
+	on_actions = { fh_mainland_coast_changed fh_mainland_clean_taiwan_hearing }
+}
+
+on_state_created = {
+	on_actions = { fh_mainland_coast_changed fh_mainland_clean_taiwan_hearing }
+}
+
+fh_mainland_coast_changed = {
+	trigger = {
+		has_global_variable = fh_tungning_founder
+		OR = {
+			state_region = s:STATE_FUJIAN
+			state_region = s:STATE_GUANGDONG
+			state_region = s:STATE_ZHEJIANG
+		}
+	}
+	effect = { global_var:fh_tungning_founder ?= { fh_mainland_refresh = yes } }
+}
+
+fh_mainland_clean_taiwan_hearing = {
+	trigger = {
+		has_modifier = fh_mainland_merchant_hearing
+		NOT = { owner ?= { fh_is_tungning_founder = yes } }
+	}
+	effect = { remove_modifier = fh_mainland_merchant_hearing }
+}
+
+on_diplomatic_play_started = {
+	on_actions = { fh_mainland_record_taiping_launch }
+}
+
+fh_mainland_record_taiping_launch = {
+	trigger = {
+		fh_mainland_taiping_rebellion = yes
+		global_var:fh_tungning_founder ?= {
+			is_country_alive = yes
+			NOT = { has_variable = fh_mainland_taiping_launched }
+		}
+	}
+	effect = {
+		save_scope_as = fh_launched_taiping_play
+		global_var:fh_tungning_founder ?= {
+			set_variable = fh_mainland_taiping_launched
+			set_variable = { name = fh_mainland_taiping_play value = scope:fh_launched_taiping_play }
+			set_variable = { name = fh_mainland_qing value = scope:target }
+			set_variable = { name = fh_mainland_taiping value = scope:initiator }
+			set_variable = fh_mainland_taiping_snapshot
+			scope:initiator ?= {
+				every_scope_state = {
+					limit = { is_treaty_port = no }
+					state_region = {
+						save_temporary_scope_as = fh_taiping_home_region
+						global_var:fh_tungning_founder ?= {
+							add_to_variable_list = { name = fh_taiping_opening_regions target = scope:fh_taiping_home_region }
+						}
+					}
+				}
+			}
+			fh_mainland_refresh = yes
+		}
+	}
+}

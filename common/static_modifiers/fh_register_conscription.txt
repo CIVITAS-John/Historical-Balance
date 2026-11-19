@@ -1,4 +1,5 @@
 ﻿# Legacy save key. No new levies are granted through this modifier.
 fh_register_conscription = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_rifle_positive.dds"
 	state_conscription_rate_mult = 0.25
 }

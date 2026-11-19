@@ -1,0 +1,45 @@
+﻿fh_mainland_disputed_mandate = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_documents_negative.dds"
+	country_legitimacy_base_add = -10
+}
+
+fh_mainland_established_suppliers = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_coins_positive.dds"
+	country_navy_goods_cost_mult = -0.50
+}
+
+fh_mainland_mandate_reaffirmed = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_flag_positive.dds"
+	country_legitimacy_base_add = 10
+}
+
+fh_mainland_strait_settlement = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_documents_positive.dds"
+	country_influence_mult = 0.10
+	state_trade_advantage_mult = 0.10
+}
+
+fh_mainland_unanswered_accord = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_documents_negative.dds"
+	country_influence_mult = -0.10
+}
+
+fh_mainland_island_first = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_coins_positive.dds"
+	state_trade_advantage_mult = 0.10
+}
+
+fh_mainland_squadrons_stand_down = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_rifle_positive.dds"
+	country_military_goods_cost_mult = -0.10
+}
+
+fh_mainland_renunciation_approval = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_fist_positive.dds"
+	interest_group_approval_add = 2
+}
+
+fh_mainland_renunciation_disapproval = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_fist_negative.dds"
+	interest_group_approval_add = -2
+}

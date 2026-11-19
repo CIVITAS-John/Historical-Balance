@@ -1,0 +1,201 @@
+﻿# Use the recorded Qing scope across a tag change. Vanilla records the
+# government that replaces Qing after fragmentation separately from warlords.
+fh_mainland_central_government = {
+	NOT = { global_var:fh_tungning_founder ?= this }
+	OR = {
+		global_var:fh_tungning_founder.var:fh_mainland_qing ?= this
+		global_var:chinese_central_government ?= this
+		c:CHI ?= this
+	}
+}
+
+# Evaluate in the specific play, including founders and Qing on either side.
+fh_mainland_play_has_opposing_qing = {
+	OR = {
+		AND = {
+			OR = {
+				initiator ?= { global_var:fh_tungning_founder ?= this }
+				any_scope_initiator_ally = { global_var:fh_tungning_founder ?= this }
+			}
+			OR = {
+				target ?= { fh_mainland_central_government = yes }
+				any_scope_target_ally = { fh_mainland_central_government = yes }
+			}
+		}
+		AND = {
+			OR = {
+				target ?= { global_var:fh_tungning_founder ?= this }
+				any_scope_target_ally = { global_var:fh_tungning_founder ?= this }
+			}
+			OR = {
+				initiator ?= { fh_mainland_central_government = yes }
+				any_scope_initiator_ally = { fh_mainland_central_government = yes }
+			}
+		}
+	}
+}
+
+fh_mainland_claim_target_state = {
+	is_treaty_port = no
+	has_claim_by = global_var:fh_tungning_founder
+	OR = {
+		state_region = s:STATE_FUJIAN
+		state_region = s:STATE_GUANGDONG
+		state_region = s:STATE_ZHEJIANG
+	}
+}
+
+# Only local successor governments can be targeted. A state acquired by an
+# unrelated empire or its subject is outside the preset diplomatic play.
+fh_mainland_is_taiping_rival = {
+	OR = {
+		c:TPG ?= this
+		global_var:fh_tungning_founder.var:fh_mainland_taiping ?= this
+	}
+}
+
+fh_mainland_claim_target_country = {
+	NOT = { global_var:fh_tungning_founder ?= this }
+	is_country_alive = yes
+	is_subject = no
+	NOT = { is_country_type = decentralized }
+	OR = {
+		fh_mainland_central_government = yes
+		has_variable = warlord_state
+		fh_mainland_is_taiping_rival = yes
+	}
+	any_scope_state = { fh_mainland_claim_target_state = yes }
+	NAND = {
+		fh_mainland_is_taiping_rival = yes
+		global_var:fh_tungning_founder ?= {
+			has_variable = fh_taiping_pact_ratified
+			fh_mainland_taiping_active = yes
+		}
+	}
+}
+
+# The outer scope is the prospective target. All three objectives share
+# South China, so the founding country can check interest once.
+fh_mainland_claim_diplomacy_legal = {
+	NOT = { has_journal_entry = je_the_first_carlist_war }
+	NOT = {
+		any_scope_treaty = {
+			binds = global_var:fh_tungning_founder
+			any_scope_article = {
+				OR = {
+					has_type = alliance
+					has_type = defensive_pact
+					has_type = guarantee_independence
+				}
+			}
+		}
+	}
+	global_var:fh_tungning_founder = {
+		is_subject = no
+		aggressive_diplomatic_plays_permitted = yes
+		has_strategic_region_interest_tier = {
+			strategic_region = sr:region_south_china
+			value >= interest_tier_effect_can_start_diplomatic_plays_min_tier
+		}
+		NOR = {
+			has_truce_with = prev
+			has_war_with = prev
+			is_diplomatic_play_participant_with = prev
+			has_journal_entry = je_the_first_carlist_war
+			AND = {
+				is_in_same_power_bloc = prev
+				power_bloc ?= { modifier:power_bloc_disallow_war_bool = yes }
+			}
+			any_diplomatic_play = {
+				is_diplomatic_play_type = dp_fh_mainland_claims
+				initiator_is = global_var:fh_tungning_founder
+			}
+		}
+		relations:prev < relations_threshold:cordial
+	}
+}
+
+# THIS is a possible backer. Check directed guarantees from that backer.
+fh_mainland_claim_ai_backer = {
+	save_temporary_scope_as = fh_coalition_backer
+	NOT = { global_var:fh_tungning_founder ?= this }
+	OR = {
+		is_subject_of = scope:fh_coalition_target
+		any_scope_treaty = {
+			binds = scope:fh_coalition_target
+			any_scope_article = {
+				OR = {
+					has_type = alliance
+					has_type = defensive_pact
+					AND = {
+						has_type = guarantee_independence
+						source_country = scope:fh_coalition_backer
+					}
+				}
+			}
+		}
+	}
+}
+
+# Judge the target together with subjects and formal defensive partners.
+# Additional third parties can still be swayed into the native play.
+fh_mainland_claim_target_ready = {
+	fh_mainland_claim_target_country = yes
+	fh_mainland_claim_diplomacy_legal = yes
+	trigger_if = {
+		limit = { global_var:fh_tungning_founder = { is_ai = yes } }
+		OR = {
+			is_at_war = yes
+			any_scope_state = {
+				fh_mainland_claim_target_state = yes
+				turmoil >= 0.25
+			}
+		}
+		global_var:fh_tungning_founder = {
+			army_size >= 10
+			in_default = no
+			army_power_projection >= prev.fh_mainland_claim_coalition
+		}
+	}
+}
+
+fh_mainland_claims_decision_visible = {
+	global_var:fh_tungning_founder ?= this
+	has_variable = fh_mainland_claim_reasserted
+	NOR = {
+		has_variable = fh_mainland_claim_abandoned
+		has_variable = fh_taiping_fork_pending
+	}
+	OR = {
+		fh_mainland_claim_outstanding = { REGION = STATE_FUJIAN }
+		fh_mainland_claim_outstanding = { REGION = STATE_GUANGDONG }
+		fh_mainland_claim_outstanding = { REGION = STATE_ZHEJIANG }
+	}
+}
+
+fh_mainland_claim_outstanding = {
+	s:$REGION$ = {
+		any_scope_state = {
+			NOT = { owner = global_var:fh_tungning_founder }
+			fh_mainland_claim_target_state = yes
+		}
+	}
+}
+
+fh_mainland_claims_audience_valid = {
+	fh_mainland_claims_decision_visible = yes
+	has_variable = fh_mainland_claims_audience
+	var:fh_mainland_claims_serial = scope:fh_claims_serial
+	scope:fh_claims_target ?= { is_country_alive = yes }
+}
+
+# Use the stored play even when the source country's role or tag changes.
+fh_mainland_matches_or_can_track_war = {
+	OR = {
+		var:fh_mainland_first_war ?= scope:diplomatic_play
+		AND = {
+			NOT = { has_variable = fh_mainland_first_war }
+			scope:diplomatic_play ?= { fh_mainland_play_has_opposing_qing = yes }
+		}
+	}
+}

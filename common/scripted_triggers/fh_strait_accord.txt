@@ -1,0 +1,120 @@
+﻿# These offer checks run in Tungning's scope, including from the journal UI.
+fh_strait_subject_eligible = {
+	custom_tooltip = {
+		text = fh_strait_qing_available_tt
+		c:CHI ?= {
+			is_country_alive = yes
+			is_country_type = unrecognized
+			country_rank >= rank_value:unrecognized_regional_power
+			NOT = { is_subject_of = prev }
+			NOT = { has_war_with = prev }
+			NOT = { is_diplomatic_play_enemy_of = prev }
+		}
+	}
+	custom_tooltip = {
+		text = fh_strait_tributary_available_tt
+		OR = {
+			fh_strait_is_qing_tributary = { QING = c:CHI }
+			AND = {
+				is_subject = no
+				c:CHI ?= { can_have_as_subject = { who = prev type = subject_type_tributary } }
+			}
+		}
+	}
+}
+
+fh_strait_is_qing_tributary = {
+	is_direct_subject_of = $QING$
+	is_subject_type = subject_type_tributary
+	has_diplomatic_pact = { who = $QING$ type = tributary is_initiator = no }
+}
+
+fh_strait_trade_eligible = {
+	custom_tooltip = {
+		text = fh_strait_trade_laws_tt
+		country_has_isolationism = no
+		c:CHI ?= { country_has_isolationism = no }
+	}
+	custom_tooltip = {
+		text = fh_strait_trade_markets_tt
+		c:CHI ?= {
+			market.owner = this
+			is_junior_in_customs_union = no
+		}
+		OR = {
+			AND = {
+				market.owner = this
+				is_junior_in_customs_union = no
+			}
+			AND = {
+				fh_strait_is_qing_tributary = { QING = c:CHI }
+				market ?= c:CHI.market
+				c:CHI ?= {
+					NOR = {
+						has_diplomatic_pact = { who = prev type = grant_own_market is_initiator = yes }
+						is_diplomatic_play_enemy_of = prev
+					}
+				}
+			}
+		}
+	}
+	custom_tooltip = {
+		text = fh_strait_trade_article_tt
+		OR = {
+			fh_strait_has_trade_article = { QING = c:CHI }
+			AND = {
+				has_technology_researched = international_relations
+				c:CHI ?= { has_technology_researched = international_relations }
+			}
+		}
+	}
+}
+
+fh_strait_offer_available = {
+	fh_strait_subject_eligible = yes
+	fh_strait_trade_eligible = yes
+}
+
+fh_strait_markets_separate = {
+	country_has_isolationism = no
+	market.owner = this
+	is_junior_in_customs_union = no
+	$QING$ ?= {
+		country_has_isolationism = no
+		market.owner = this
+		is_junior_in_customs_union = no
+	}
+	NOT = { market ?= $QING$.market }
+}
+
+# any_scope_treaty only iterates treaties in force; drafts have a separate list.
+fh_strait_has_trade_article = {
+	any_scope_treaty = {
+		binds = $QING$
+		any_scope_article = {
+			has_type = trade_privilege
+			source_country = $QING$
+		}
+	}
+}
+
+fh_strait_can_restore_embargo = {
+	NOT = {
+		has_diplomatic_pact = { who = scope:fh_strait_party type = embargo is_initiator = yes }
+	}
+	can_create_diplomatic_pact = { target = scope:fh_strait_party type = embargo }
+	# See the maintenance requirements in vanilla 13_embargo.txt.
+	"relations(scope:fh_strait_party)" <= relations_threshold:poor
+	has_diplomatic_relevance = scope:fh_strait_party
+	aggressive_diplomatic_plays_permitted = yes
+	country_has_isolationism_or_sakoku = no
+	is_junior_in_customs_union = no
+	NOT = { is_subject_of = scope:fh_strait_party }
+	scope:fh_strait_party = {
+		aggressive_diplomatic_plays_permitted = yes
+		country_has_isolationism_or_sakoku = no
+		is_junior_in_customs_union = no
+		NOT = { is_subject_of = prev }
+		NOT = { has_treaty_port_in_market = prev.market }
+	}
+}

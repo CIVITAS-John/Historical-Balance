@@ -1,0 +1,12 @@
+﻿fh_mainland_claim_coalition = {
+	value = army_power_projection
+	save_temporary_scope_as = fh_coalition_target
+	every_country = {
+		limit = {
+			NOT = { this = scope:fh_coalition_target }
+			fh_mainland_claim_ai_backer = yes
+		}
+		add = army_power_projection
+	}
+	multiply = 0.75
+}

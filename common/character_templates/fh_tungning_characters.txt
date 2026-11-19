@@ -76,12 +76,14 @@ fh_shi_jichang_admiral = {
 	last_name = Shi
 	birth_date = 1790.3.18
 	is_admiral = yes
+	ig_leader = yes
 	culture = cu:min
 	religion = rel:catholic
 	interest_group = ig_armed_forces
 	ideology = ideology_royalist
 	home_region = STATE_FORMOSA
 	traits = { experienced_naval_commander }
+	on_created = { set_variable = { name = fh_mainland_officer_stance value = 1 } }
 }
 
 # Descendant of Yang Ying, Koxinga's revenue and provisioning official.

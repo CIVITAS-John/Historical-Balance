@@ -1,0 +1,133 @@
+﻿namespace = fh_mainland_claim
+
+fh_mainland_claim.1 = {
+	type = country_event
+	placement = root
+	title = fh_mainland_claim.1.t
+	desc = fh_mainland_claim.1.d
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	duration = 1
+
+	trigger = { fh_mainland_tone_open = yes }
+	cancellation_trigger = { fh_mainland_tone_open = no }
+
+	option = {
+		name = fh_mainland_claim_measured
+		default_option = yes
+		ai_chance = {
+			base = 100
+			modifier = {
+				trigger = { fh_mainland_ai_public_challenge = yes }
+				add = -90
+			}
+		}
+		custom_tooltip = fh_mainland_claim_measured_tt
+		custom_tooltip = fh_mainland_mobilization_preview_tt
+		hidden_effect = {
+			fh_mainland_refresh = yes
+			if = {
+				limit = { fh_mainland_tone_open = yes }
+				fh_mainland_reassert = { PUBLIC = no }
+			}
+		}
+	}
+
+	option = {
+		name = fh_mainland_claim_public
+		ai_chance = {
+			base = 0
+			modifier = {
+				trigger = { fh_mainland_ai_public_challenge = yes }
+				add = 100
+			}
+		}
+		custom_tooltip = fh_mainland_claim_public_tt
+		custom_tooltip = fh_mainland_mobilization_preview_tt
+		hidden_effect = {
+			fh_mainland_refresh = yes
+			if = {
+				limit = { fh_mainland_tone_open = yes }
+				fh_mainland_reassert = { PUBLIC = yes }
+			}
+		}
+	}
+}
+
+fh_mainland_claim.2 = {
+	type = country_event
+	placement = root
+	title = fh_mainland_claim.2.t
+	desc = fh_mainland_claim.2.d
+	icon = "gfx/interface/icons/event_icons/event_revolutionary_flag.dds"
+	duration = 1
+
+	trigger = { fh_mainland_fork_open = yes }
+	cancellation_trigger = { fh_mainland_fork_open = no }
+
+	option = {
+		name = fh_mainland_claim_measured
+		ai_chance = {
+			base = 80
+			modifier = {
+				trigger = { fh_mainland_ai_public_challenge = yes }
+				add = -60
+			}
+		}
+		custom_tooltip = fh_mainland_claim_measured_tt
+		custom_tooltip = fh_mainland_mobilization_preview_tt
+		hidden_effect = { fh_mainland_answer_fork_reassert = { PUBLIC = no } }
+	}
+
+	option = {
+		name = fh_mainland_claim_public
+		ai_chance = {
+			base = 0
+			modifier = {
+				trigger = { fh_mainland_ai_public_challenge = yes }
+				add = 100
+			}
+		}
+		custom_tooltip = fh_mainland_claim_public_tt
+		custom_tooltip = fh_mainland_mobilization_preview_tt
+		hidden_effect = { fh_mainland_answer_fork_reassert = { PUBLIC = yes } }
+	}
+
+	option = {
+		name = fh_mainland_claim_abandon
+		ai_chance = {
+			base = 5
+			modifier = {
+				trigger = {
+					je:fh_je_mainland_claim ?= { "scripted_bar_progress(fh_mainland_claim_balance)" < 90 }
+					OR = {
+						scaled_debt >= 0.75
+						in_default = yes
+						is_subject = yes
+						fh_mainland_taiping_active = no
+					}
+				}
+				add = 200
+			}
+		}
+		custom_tooltip = fh_mainland_claim_abandon_tt
+		custom_tooltip = fh_mainland_renunciation_approval_tt
+		hidden_effect = {
+			if = {
+				limit = { fh_mainland_fork_open = yes }
+				fh_mainland_renounce = { RESULT = 3 }
+			}
+		}
+	}
+
+	option = {
+		name = fh_mainland_claim_defer
+		default_option = yes
+		ai_chance = { base = 0 }
+		hidden_effect = {
+			if = {
+				limit = { has_variable = fh_mainland_fork_popup }
+				remove_variable = fh_mainland_fork_popup
+			}
+		}
+	}
+}

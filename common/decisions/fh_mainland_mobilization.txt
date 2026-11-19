@@ -1,0 +1,15 @@
+﻿fh_press_mainland_claims_decision = {
+	is_shown = { fh_mainland_claims_decision_visible = yes }
+	possible = {
+		NOT = { has_variable = fh_mainland_claims_audience }
+		custom_tooltip = {
+			text = fh_mainland_claim_has_target_tt
+			any_country = { fh_mainland_claim_target_ready = yes }
+		}
+	}
+	when_taken = {
+		custom_tooltip = fh_mainland_claim_open_audience_tt
+		hidden_effect = { fh_mainland_open_claims_audience = yes }
+	}
+	ai_chance = { value = 1 }
+}

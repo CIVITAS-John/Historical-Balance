@@ -1,0 +1,9 @@
+﻿fh_mainland_remove_large_radicals = {
+	value = large_radicals
+	multiply = -1
+}
+
+fh_mainland_remove_small_radicals = {
+	value = small_radicals
+	multiply = -1
+}

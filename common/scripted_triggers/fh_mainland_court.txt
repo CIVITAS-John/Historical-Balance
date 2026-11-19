@@ -1,0 +1,169 @@
+﻿fh_mainland_officers_mainland = {
+	ig:ig_armed_forces ?= {
+		leader ?= {
+			is_character_alive = yes
+			var:fh_mainland_officer_stance ?= 1
+			NOT = { has_ideology = ideology:ideology_pacifist }
+		}
+	}
+}
+
+fh_mainland_officers_southern = {
+	ig:ig_armed_forces ?= {
+		leader ?= {
+			is_character_alive = yes
+			var:fh_mainland_officer_stance ?= 2
+			NOT = { has_ideology = ideology:ideology_pacifist }
+		}
+	}
+}
+
+fh_mainland_qing_embargo = {
+	c:CHI ?= {
+		is_country_alive = yes
+		has_diplomatic_pact = { who = prev type = embargo is_initiator = yes }
+	}
+}
+
+fh_mainland_other_jingoist_in_government = {
+	any_interest_group = {
+		is_in_government = yes
+		NOT = { is_interest_group_type = ig_armed_forces }
+		leader ?= { has_ideology = ideology:ideology_jingoist }
+	}
+}
+
+# These fallback tests are in interest group scope. The Army and Fleet
+# only sponsor as a result of their stance, even under an eligible ideology.
+fh_mainland_memorial_fallback_sponsor = {
+	is_in_government = yes
+	NOR = {
+		is_interest_group_type = ig_landowners
+		is_interest_group_type = ig_armed_forces
+	}
+	leader ?= {
+		OR = {
+			has_ideology = ideology:ideology_jingoist
+			has_ideology = ideology:ideology_royalist
+			has_ideology = ideology:ideology_traditionalist
+		}
+	}
+}
+
+fh_mainland_merchant_fallback_sponsor = {
+	is_in_government = yes
+	NOR = {
+		is_interest_group_type = ig_industrialists
+		is_interest_group_type = ig_petty_bourgeoisie
+		is_interest_group_type = ig_armed_forces
+		is_interest_group_type = ig_landowners
+	}
+	leader ?= {
+		OR = {
+			has_ideology = ideology:ideology_pacifist
+			has_ideology = ideology:ideology_market_liberal
+		}
+	}
+}
+
+fh_mainland_memorial_army_sponsors = {
+	ig:ig_armed_forces ?= { is_in_government = yes }
+	fh_mainland_officers_mainland = yes
+}
+
+fh_mainland_merchants_army_sponsors = {
+	ig:ig_armed_forces ?= { is_in_government = yes }
+	fh_mainland_officers_southern = yes
+}
+
+fh_mainland_merchants_estates_sponsor = {
+	ig:ig_landowners ?= { is_in_government = yes }
+	fh_mainland_qing_embargo = yes
+}
+
+fh_mainland_memorial_has_sponsor = {
+	OR = {
+		ig:ig_landowners ?= { is_in_government = yes }
+		fh_mainland_memorial_army_sponsors = yes
+		any_interest_group = { fh_mainland_memorial_fallback_sponsor = yes }
+	}
+}
+
+fh_mainland_merchants_have_sponsor = {
+	OR = {
+		ig:ig_industrialists ?= { is_in_government = yes }
+		ig:ig_petty_bourgeoisie ?= { is_in_government = yes }
+		fh_mainland_merchants_army_sponsors = yes
+		any_interest_group = { fh_mainland_merchant_fallback_sponsor = yes }
+		fh_mainland_merchants_estates_sponsor = yes
+	}
+}
+
+fh_mainland_court_action_open = {
+	fh_mainland_debate_active = yes
+	NOR = {
+		has_variable = fh_mainland_court_action_pending
+		has_variable = fh_mainland_court_action_cooldown
+	}
+}
+
+fh_mainland_court_action_pending = {
+	fh_mainland_debate_active = yes
+	var:fh_mainland_court_action_pending ?= $ACTION$
+}
+
+fh_mainland_court_petition_pending = {
+	fh_mainland_debate_active = yes
+	var:fh_mainland_court_petition_pending ?= $PETITION$
+}
+
+fh_mainland_canton_petition_eligible = {
+	c:CHI ?= { is_country_alive = yes }
+	s:STATE_GUANGDONG = {
+		any_scope_state = { owner = c:CHI is_treaty_port = no }
+	}
+}
+
+fh_mainland_fujian_petition_eligible = {
+	c:CHI ?= { is_country_alive = yes }
+	s:STATE_FUJIAN = {
+		any_scope_state = { owner = c:CHI is_treaty_port = no }
+	}
+}
+
+fh_mainland_taiwan_petition_eligible = {
+	any_scope_state = { state_region = s:STATE_FORMOSA is_treaty_port = no }
+}
+
+fh_mainland_officer_petition_eligible = {
+	OR = {
+		fh_mainland_officers_mainland = yes
+		fh_mainland_officers_southern = yes
+	}
+}
+
+fh_mainland_refugee_petition_eligible = {
+	OR = {
+		c:CHI ?= { is_country_alive = yes is_at_war = yes }
+		s:STATE_FUJIAN = { any_scope_state = { is_treaty_port = no turmoil >= 0.15 } }
+		s:STATE_GUANGDONG = { any_scope_state = { is_treaty_port = no turmoil >= 0.15 } }
+		s:STATE_ZHEJIANG = { any_scope_state = { is_treaty_port = no turmoil >= 0.15 } }
+	}
+}
+
+fh_mainland_royal_petition_eligible = {
+	any_scope_character = {
+		is_character_alive = yes
+		has_variable = fh_tungning_ming_claimant
+	}
+}
+
+fh_mainland_ai_favors_memorials = {
+	scaled_debt < 0.75
+	in_default = no
+	OR = {
+		fh_mainland_memorial_army_sponsors = yes
+		ig:ig_landowners ?= { is_in_government = yes }
+		fh_mainland_other_jingoist_in_government = yes
+	}
+}

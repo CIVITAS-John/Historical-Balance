@@ -1,0 +1,90 @@
+﻿fh_mainland_claim_balance = {
+	name = fh_mainland_claim_balance
+	desc = fh_mainland_claim_renounce_side
+	second_desc = fh_mainland_claim_reassert_side
+	start_value = 90
+	min_value = 0
+	max_value = 200
+	default = yes
+	marker = yes
+
+	monthly_progress = {
+		progress_condition = {
+			limit = {
+				fh_mainland_debate_active = yes
+				fh_mainland_qing_embargo = yes
+			}
+			add = { desc = fh_mainland_drift_embargo value = -1 }
+		}
+		progress_condition = {
+			limit = {
+				fh_mainland_debate_active = yes
+				c:CHI ?= {
+					is_country_alive = yes
+					relations:root >= relations_threshold:cordial
+				}
+			}
+			add = { desc = fh_mainland_drift_cordial value = -1 }
+		}
+		progress_condition = {
+			limit = {
+				fh_mainland_debate_active = yes
+				scaled_debt >= 0.75
+			}
+			add = { desc = fh_mainland_drift_debt value = -1 }
+		}
+		progress_condition = {
+			limit = {
+				fh_mainland_debate_active = yes
+				is_at_war = yes
+				NOT = { c:CHI ?= { is_country_alive = yes has_war_with = root } }
+			}
+			add = { desc = fh_mainland_drift_other_war value = -1 }
+		}
+		progress_condition = {
+			limit = {
+				fh_mainland_debate_active = yes
+				ig:ig_landowners ?= { is_in_government = yes }
+			}
+			add = { desc = fh_mainland_drift_estates value = 1 }
+		}
+		progress_condition = {
+			limit = {
+				fh_mainland_debate_active = yes
+				fh_mainland_memorial_army_sponsors = yes
+			}
+			add = { desc = fh_mainland_drift_mainland_officers value = 1 }
+		}
+		progress_condition = {
+			limit = {
+				fh_mainland_debate_active = yes
+				fh_mainland_merchants_army_sponsors = yes
+			}
+			add = { desc = fh_mainland_drift_southern_officers value = -1 }
+		}
+		progress_condition = {
+			limit = {
+				fh_mainland_debate_active = yes
+				fh_mainland_other_jingoist_in_government = yes
+			}
+			add = { desc = fh_mainland_drift_jingoist value = 1 }
+		}
+		progress_condition = {
+			limit = {
+				fh_mainland_debate_active = yes
+				c:CHI ?= { is_country_alive = yes is_at_war = yes }
+			}
+			add = { desc = fh_mainland_drift_qing_war value = 1 }
+		}
+		progress_condition = {
+			limit = {
+				fh_mainland_debate_active = yes
+				c:CHI ?= {
+					is_country_alive = yes
+					relations:root <= relations_threshold:cold
+				}
+			}
+			add = { desc = fh_mainland_drift_cold value = 1 }
+		}
+	}
+}

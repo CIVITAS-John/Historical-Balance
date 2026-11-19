@@ -1,3 +1,4 @@
 ﻿fh_tungning_fading_maritime_prestige = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_flag_positive.dds"
 	country_prestige_add = 30
 }

@@ -1,0 +1,118 @@
+﻿namespace = fh_strait_accord
+
+# Qing gets four months on the UI event, but the explicit 90-day timeout
+# consumes the offer first and cancels this event.
+fh_strait_accord.1 = {
+	type = country_event
+	placement = root
+	title = fh_strait_accord.1.t
+	desc = fh_strait_accord.1.d
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	duration = 4
+
+	trigger = {
+		scope:fh_strait_proposer ?= {
+			is_country_alive = yes
+			has_variable = fh_strait_offer_pending
+			var:fh_strait_qing ?= root
+		}
+	}
+	cancellation_trigger = {
+		NOT = {
+			scope:fh_strait_proposer ?= {
+				is_country_alive = yes
+				has_variable = fh_strait_offer_pending
+				var:fh_strait_qing ?= root
+			}
+		}
+	}
+
+	option = {
+		name = fh_strait_accord.1.accept
+		ai_chance = { base = 100 }
+		custom_tooltip = fh_strait_accord_terms_tt
+		scope:fh_strait_proposer ?= {
+			hidden_effect = { fh_strait_handle_offer = { RESPONSE = 1 } }
+		}
+	}
+	option = {
+		name = fh_strait_accord.1.refuse
+		default_option = yes
+		ai_chance = { base = 0 }
+		custom_tooltip = fh_strait_accord_refuse_tt
+		scope:fh_strait_proposer ?= {
+			hidden_effect = { fh_strait_handle_offer = { RESPONSE = 2 } }
+		}
+	}
+}
+
+fh_strait_accord.2 = {
+	type = country_event
+	hidden = yes
+	trigger = { has_variable = fh_strait_offer_pending }
+	immediate = { fh_strait_handle_offer = { RESPONSE = 3 } }
+}
+
+fh_strait_accord.3 = {
+	type = country_event
+	placement = root
+	title = fh_strait_accord.3.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { var:fh_strait_offer_result = 1 }
+				desc = fh_strait_accord.3.ratified
+			}
+			triggered_desc = {
+				trigger = { var:fh_strait_offer_result = 2 }
+				desc = fh_strait_accord.3.refused
+			}
+			triggered_desc = {
+				trigger = { var:fh_strait_offer_result = 3 }
+				desc = fh_strait_accord.3.expired
+			}
+			triggered_desc = {
+				trigger = { var:fh_strait_offer_result = 4 }
+				desc = fh_strait_accord.3.ineligible
+			}
+			triggered_desc = {
+				trigger = { var:fh_strait_offer_result = 5 }
+				desc = fh_strait_accord.3.trade_blocked
+			}
+			desc = fh_strait_accord.3.rolled_back
+		}
+	}
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+
+	option = {
+		name = fh_strait_accord.3.a
+		if = {
+			limit = { var:fh_strait_offer_result = 1 }
+			custom_tooltip = fh_strait_accord_ratified_aftermath_tt
+		}
+		else = { custom_tooltip = fh_strait_accord_unanswered_aftermath_tt }
+	}
+}
+
+# Binding periods permit withdrawal after expiry; they do not by themselves
+# remove the article. Only retire the treaty this accord created, and leave
+# any subsequently amended settlement with additional terms in place.
+fh_strait_accord.4 = {
+	type = country_event
+	hidden = yes
+	trigger = { has_variable = fh_strait_signed_treaty }
+	immediate = {
+		var:fh_strait_signed_treaty ?= {
+			if = {
+				limit = {
+					binds = root
+					binds = root.var:fh_strait_qing
+					any_scope_article = { has_type = trade_privilege source_country = root.var:fh_strait_qing target_country = root }
+					NOT = { any_scope_article = { NOT = { has_type = trade_privilege source_country = root.var:fh_strait_qing target_country = root } } }
+				}
+				withdraw = { country = root }
+			}
+		}
+		remove_variable = fh_strait_signed_treaty
+	}
+}

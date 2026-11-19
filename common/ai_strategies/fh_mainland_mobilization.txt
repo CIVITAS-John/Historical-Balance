@@ -1,0 +1,18 @@
+﻿fh_mainland_mobilization_strategy = {
+	icon = "gfx/interface/icons/ai_strategy_icons/armed_isolationism.dds"
+	type = administrative
+
+	possible = {
+		global_var:fh_tungning_founder ?= this
+		has_variable = fh_mainland_mobilizing
+	}
+
+	weight = { value = 100 }
+
+	building_group_weights = {
+		bg_army = 1.5
+		bg_military_industry = 1.5
+	}
+
+	wanted_army_size = { value = 5 }
+}

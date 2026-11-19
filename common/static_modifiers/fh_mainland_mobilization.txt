@@ -1,0 +1,49 @@
+﻿fh_mainland_mobilization = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_rifle_positive.dds"
+	military_formation_organization_gain_mult = 0.25
+
+	# The native investment pool multipliers are defined per profession.
+	state_academics_investment_pool_efficiency_mult = -0.50
+	state_aristocrats_investment_pool_efficiency_mult = -0.50
+	state_bureaucrats_investment_pool_efficiency_mult = -0.50
+	state_capitalists_investment_pool_efficiency_mult = -0.50
+	state_clerks_investment_pool_efficiency_mult = -0.50
+	state_clergymen_investment_pool_efficiency_mult = -0.50
+	state_engineers_investment_pool_efficiency_mult = -0.50
+	state_farmers_investment_pool_efficiency_mult = -0.50
+	state_laborers_investment_pool_efficiency_mult = -0.50
+	state_machinists_investment_pool_efficiency_mult = -0.50
+	state_officers_investment_pool_efficiency_mult = -0.50
+	state_shopkeepers_investment_pool_efficiency_mult = -0.50
+	state_soldiers_investment_pool_efficiency_mult = -0.50
+}
+
+fh_mainland_mobilization_support = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_fist_positive.dds"
+	interest_group_approval_add = 5
+}
+
+fh_mainland_mobilization_protest = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_fist_negative.dds"
+	interest_group_approval_add = -5
+}
+
+fh_mainland_mobilization_officer_protest = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_fist_negative.dds"
+	interest_group_approval_add = -2
+}
+
+fh_mainland_war_never_fought = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_rifle_negative.dds"
+	country_legitimacy_base_add = -5
+}
+
+fh_mainland_officer_disappointment = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_fist_negative.dds"
+	interest_group_approval_add = -3
+}
+
+fh_mainland_war_defeat = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_flag_negative.dds"
+	country_legitimacy_base_add = -5
+}

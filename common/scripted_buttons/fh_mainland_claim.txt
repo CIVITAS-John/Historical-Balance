@@ -1,0 +1,55 @@
+﻿fh_read_ming_memorials = {
+	name = fh_read_ming_memorials
+	desc = fh_read_ming_memorials_desc
+	visible = { fh_mainland_debate_active = yes }
+	possible = {
+		custom_tooltip = {
+			text = fh_mainland_court_action_open_tt
+			fh_mainland_court_action_open = yes
+		}
+		custom_tooltip = {
+			text = fh_mainland_memorial_has_sponsor_tt
+			fh_mainland_memorial_has_sponsor = yes
+		}
+	}
+	effect = {
+		hidden_effect = {
+			fh_mainland_open_court_action = { ACTION = 1 ELIGIBLE = fh_mainland_memorial_has_sponsor }
+		}
+	}
+	ai_chance = {
+		value = 1
+		if = {
+			limit = { fh_mainland_ai_favors_memorials = yes }
+			add = 9
+		}
+	}
+}
+
+fh_hear_strait_merchants = {
+	name = fh_hear_strait_merchants
+	desc = fh_hear_strait_merchants_desc
+	visible = { fh_mainland_debate_active = yes }
+	possible = {
+		custom_tooltip = {
+			text = fh_mainland_court_action_open_tt
+			fh_mainland_court_action_open = yes
+		}
+		custom_tooltip = {
+			text = fh_mainland_merchants_have_sponsor_tt
+			fh_mainland_merchants_have_sponsor = yes
+		}
+	}
+	effect = {
+		hidden_effect = {
+			fh_mainland_open_court_action = { ACTION = 2 ELIGIBLE = fh_mainland_merchants_have_sponsor }
+		}
+	}
+	ai_chance = {
+		value = 1
+		if = {
+			limit = { fh_mainland_ai_favors_memorials = no }
+			add = 9
+		}
+	}
+}

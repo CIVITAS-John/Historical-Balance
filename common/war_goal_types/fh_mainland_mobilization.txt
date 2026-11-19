@@ -1,0 +1,45 @@
+﻿# Native Return State behavior and checks, with zero infamy reserved for the
+# scripted coastal demands. Additional player demands keep their normal cost.
+fh_mainland_return_state = {
+	icon = "gfx/interface/icons/war_goals/return_state.dds"
+	kind = return_state
+	settings = {
+		require_target_be_part_of_war
+		annexes_entire_state
+		requires_interest
+		validate_conflicts_conquer_state
+		validate_target_not_treaty_port
+		conflicts_with_country_creation
+		conflicts_with_annex_state
+	}
+	execution_priority = 70
+	contestion_type = control_target_state
+	target_type = state
+
+	possible = { always = no }
+	valid = {
+		global_var:fh_tungning_founder ?= this
+		trigger_if = {
+			limit = { exists = scope:diplomatic_play }
+			scope:diplomatic_play = { is_diplomatic_play_type = dp_fh_mainland_claims }
+		}
+		scope:target_state = {
+			owner = scope:target_country
+			fh_mainland_claim_target_state = yes
+		}
+	}
+
+	maneuvers = {
+		value = 10
+		multiply = {
+			desc = "MANEUVERS_TARGET_STATE_POPULATION_FACTOR"
+			value = scope:target_state.state_population
+			divide = define:NDiplomacy|SWAY_OFFER_WARGOAL_MANEUVERS_COST_POPULATION_SCALING_FACTOR
+			multiply = define:NDiplomacy|SWAY_OFFER_WARGOAL_MANEUVERS_COST_POPULATION_SCALING_MULTIPLIER
+			max = define:NDiplomacy|SWAY_OFFER_WARGOAL_MANEUVERS_COST_POPULATION_SCALING_MULTIPLIER_MAX_PER_STATE
+		}
+	}
+	infamy = { value = 0 }
+	mirrored_wargoal = { method = territorial }
+	ai = { is_significant_demand = yes }
+}

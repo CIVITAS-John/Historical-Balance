@@ -54,6 +54,7 @@ fh_tungning_bookmark_setup = {
 				}
 				set_variable = fh_tungning_diplomacy_initialized
 				fh_tungning_diplomacy = yes
+				fh_start_mainland_claim = yes
 				trigger_event = { id = fh_tungning.3 days = 8 }
 			}
 		}

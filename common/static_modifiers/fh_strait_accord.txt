@@ -1,0 +1,4 @@
+﻿fh_strait_half_tribute = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_coins_positive.dds"
+	country_overlord_income_transfer_mult = -0.50
+}

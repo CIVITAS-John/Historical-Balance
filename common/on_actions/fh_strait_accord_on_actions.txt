@@ -1,0 +1,43 @@
+﻿on_become_subject = {
+	on_actions = { fh_strait_check_new_subject_status }
+}
+
+on_become_independent = {
+	on_actions = { fh_strait_check_new_subject_status }
+}
+
+fh_strait_check_new_subject_status = {
+	trigger = { has_modifier = fh_strait_half_tribute }
+	effect = { fh_strait_check_discount = yes }
+}
+
+on_diplomatic_action_overlord_decrease_autonomy = {
+	on_actions = { fh_strait_check_changed_pact }
+}
+
+on_diplomatic_action_overlord_increase_autonomy = {
+	on_actions = { fh_strait_check_changed_pact }
+}
+
+on_diplomatic_action_subject_increase_own_autonomy = {
+	on_actions = { fh_strait_check_changed_pact }
+}
+
+on_diplomatic_pact_auto_break = {
+	on_actions = { fh_strait_check_changed_pact }
+}
+
+on_diplomatic_pact_third_party_auto_break = {
+	on_actions = { fh_strait_check_changed_pact }
+}
+
+on_diplomatic_action_break = {
+	on_actions = { fh_strait_check_changed_pact }
+}
+
+fh_strait_check_changed_pact = {
+	trigger = { global_var:fh_tungning_founder ?= { has_modifier = fh_strait_half_tribute } }
+	effect = {
+		global_var:fh_tungning_founder = { fh_strait_check_discount = yes }
+	}
+}

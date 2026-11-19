@@ -112,6 +112,7 @@ fh_tungning_country_setup = {
 		multiply = -0.35
 	}
 	set_variable = fh_tungning_bootstrapped
+	set_global_variable = { name = fh_tungning_founder value = this }
 	fh_start_court_faith = yes
 }
 

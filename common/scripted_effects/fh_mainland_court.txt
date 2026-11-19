@@ -1,0 +1,198 @@
+﻿fh_mainland_open_court_action = {
+	fh_mainland_refresh = yes
+	if = {
+		limit = {
+			fh_mainland_court_action_open = yes
+			$ELIGIBLE$ = yes
+		}
+		set_variable = { name = fh_mainland_court_action_pending value = $ACTION$ months = 2 }
+		trigger_event = { id = fh_mainland_court.$ACTION$ popup = yes }
+	}
+}
+
+fh_mainland_confirm_court_action = {
+	fh_mainland_refresh = yes
+	if = {
+		limit = { fh_mainland_court_action_pending = { ACTION = $ACTION$ } }
+		remove_variable = fh_mainland_court_action_pending
+		if = {
+			limit = { $ELIGIBLE$ = yes }
+			set_variable = { name = fh_mainland_court_action_cooldown months = 6 }
+			$APPLY$ = yes
+			fh_mainland_change_balance = { DELTA = $DELTA$ }
+		}
+	}
+}
+
+fh_mainland_cancel_court_action = {
+	if = {
+		limit = { fh_mainland_court_action_pending = { ACTION = $ACTION$ } }
+		remove_variable = fh_mainland_court_action_pending
+	}
+}
+
+# Use raw clout to find the strongest sponsor, then the same fixed
+# interest-group order as the faith debate to rank exact ties.
+fh_mainland_find_fallback_sponsor = {
+	ordered_interest_group = {
+		limit = { $ELIGIBLE$ = yes }
+		order_by = ig_clout
+		check_range_bounds = no
+		save_temporary_scope_as = fh_mainland_top_clout
+	}
+	if = {
+		limit = { exists = scope:fh_mainland_top_clout }
+		ordered_interest_group = {
+			limit = {
+				$ELIGIBLE$ = yes
+				ig_clout = scope:fh_mainland_top_clout.ig_clout
+			}
+			order_by = fh_court_faith_ig_tiebreak
+			check_range_bounds = no
+			save_temporary_scope_as = fh_mainland_court_sponsor
+		}
+	}
+}
+
+fh_mainland_apply_memorials = {
+	if = {
+		limit = { ig:ig_landowners ?= { is_in_government = yes } }
+		ig:ig_landowners = { save_temporary_scope_as = fh_mainland_court_sponsor }
+	}
+	else_if = {
+		limit = { fh_mainland_memorial_army_sponsors = yes }
+		ig:ig_armed_forces = { save_temporary_scope_as = fh_mainland_court_sponsor }
+	}
+	else = {
+		fh_mainland_find_fallback_sponsor = { ELIGIBLE = fh_mainland_memorial_fallback_sponsor }
+	}
+	scope:fh_mainland_court_sponsor ?= {
+		add_modifier = { name = fh_mainland_court_approval months = 6 }
+	}
+	ig:ig_industrialists ?= {
+		add_modifier = { name = fh_mainland_court_disapproval months = 6 }
+	}
+	add_modifier = { name = fh_mainland_memorial_preparations months = 6 }
+}
+
+fh_mainland_apply_merchants = {
+	if = {
+		limit = { ig:ig_industrialists ?= { is_in_government = yes } }
+		ig:ig_industrialists = { save_temporary_scope_as = fh_mainland_court_sponsor }
+	}
+	else_if = {
+		limit = { ig:ig_petty_bourgeoisie ?= { is_in_government = yes } }
+		ig:ig_petty_bourgeoisie = { save_temporary_scope_as = fh_mainland_court_sponsor }
+	}
+	else_if = {
+		limit = { fh_mainland_merchants_army_sponsors = yes }
+		ig:ig_armed_forces = { save_temporary_scope_as = fh_mainland_court_sponsor }
+	}
+	else_if = {
+		limit = { any_interest_group = { fh_mainland_merchant_fallback_sponsor = yes } }
+		fh_mainland_find_fallback_sponsor = { ELIGIBLE = fh_mainland_merchant_fallback_sponsor }
+	}
+	else_if = {
+		limit = { fh_mainland_merchants_estates_sponsor = yes }
+		ig:ig_landowners = { save_temporary_scope_as = fh_mainland_court_sponsor }
+	}
+	scope:fh_mainland_court_sponsor ?= {
+		add_modifier = { name = fh_mainland_court_approval months = 6 }
+	}
+	ig:ig_landowners ?= {
+		if = {
+			limit = { NOT = { this ?= scope:fh_mainland_court_sponsor } }
+			add_modifier = { name = fh_mainland_court_disapproval months = 6 }
+		}
+	}
+	every_scope_state = {
+		limit = { state_region = s:STATE_FORMOSA is_treaty_port = no }
+		add_modifier = { name = fh_mainland_merchant_hearing months = 6 }
+	}
+}
+
+fh_mainland_roll_petition = {
+	if = {
+		limit = {
+			fh_mainland_debate_active = yes
+			NOR = {
+				has_variable = fh_mainland_court_petition_pending
+				has_variable = fh_mainland_court_petition_cooldown
+			}
+		}
+		random = {
+			chance = 10
+			random_list = {
+				1 = {
+					trigger = { fh_mainland_canton_petition_eligible = yes }
+					fh_mainland_open_petition = { PETITION = 11 }
+				}
+				1 = {
+					trigger = { fh_mainland_fujian_petition_eligible = yes }
+					fh_mainland_open_petition = { PETITION = 12 }
+				}
+				1 = {
+					trigger = { fh_mainland_taiwan_petition_eligible = yes }
+					fh_mainland_open_petition = { PETITION = 13 }
+				}
+				1 = {
+					trigger = { fh_mainland_officer_petition_eligible = yes }
+					fh_mainland_open_petition = { PETITION = 14 }
+				}
+				1 = {
+					trigger = { fh_mainland_refugee_petition_eligible = yes }
+					fh_mainland_open_petition = { PETITION = 15 }
+				}
+				1 = {
+					trigger = { fh_mainland_royal_petition_eligible = yes }
+					fh_mainland_open_petition = { PETITION = 16 }
+				}
+			}
+		}
+	}
+}
+
+fh_mainland_open_petition = {
+	set_variable = { name = fh_mainland_court_petition_pending value = $PETITION$ months = 2 }
+	trigger_event = { id = fh_mainland_court.$PETITION$ }
+}
+
+fh_mainland_answer_petition = {
+	fh_mainland_refresh = yes
+	if = {
+		limit = { fh_mainland_court_petition_pending = { PETITION = $PETITION$ } }
+		remove_variable = fh_mainland_court_petition_pending
+		if = {
+			limit = { $ELIGIBLE$ = yes }
+			set_variable = { name = fh_mainland_court_petition_cooldown months = 12 }
+			fh_mainland_change_balance = { DELTA = $DELTA$ }
+		}
+	}
+}
+
+fh_mainland_answer_officers = {
+	fh_mainland_refresh = yes
+	if = {
+		limit = { fh_mainland_court_petition_pending = { PETITION = 14 } }
+		remove_variable = fh_mainland_court_petition_pending
+		if = {
+			limit = { fh_mainland_officer_petition_eligible = yes }
+			set_variable = { name = fh_mainland_court_petition_cooldown months = 12 }
+			if = {
+				limit = { always = $BACKED$ }
+				add_radicals = { interest_group = ig:ig_armed_forces value = -0.02 }
+				add_modifier = { name = fh_mainland_officers_at_the_ready years = 1 }
+			}
+			else = {
+				ig:ig_armed_forces ?= {
+					add_modifier = { name = fh_mainland_officer_disapproval months = 6 }
+				}
+			}
+			if = {
+				limit = { fh_mainland_officers_mainland = yes }
+				fh_mainland_change_balance = { DELTA = $MAINLAND_DELTA$ }
+			}
+			else = { fh_mainland_change_balance = { DELTA = $SOUTHERN_DELTA$ } }
+		}
+	}
+}

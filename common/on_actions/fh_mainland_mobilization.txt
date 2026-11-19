@@ -1,0 +1,127 @@
+﻿on_diplo_play_war_start = {
+	on_actions = { fh_mainland_track_started_war }
+}
+
+fh_mainland_track_started_war = {
+	trigger = {
+		global_var:fh_tungning_founder ?= { has_variable = fh_mainland_mobilizing }
+		fh_mainland_play_has_opposing_qing = yes
+	}
+	effect = {
+		global_var:fh_tungning_founder = { fh_mainland_record_war = { PLAY = root } }
+	}
+}
+
+on_war_end = {
+	on_actions = {
+		fh_mainland_track_finished_war
+		fh_mainland_check_taiping_war_end
+	}
+}
+
+# Also catch a war ending in the same peace settlement that grants a foothold.
+# Retain the first play scope so a country loss notification can still use it.
+fh_mainland_track_finished_war = {
+	trigger = {
+		global_var:fh_tungning_founder ?= {
+			is_country_alive = yes
+			OR = {
+				var:fh_mainland_first_war ?= root
+				AND = {
+					NOT = { has_variable = fh_mainland_first_war }
+					root = { fh_mainland_play_has_opposing_qing = yes }
+				}
+			}
+		}
+	}
+	effect = {
+		global_var:fh_tungning_founder = {
+			set_variable = { name = fh_mainland_qing_war_ended_today days = 1 }
+			fh_mainland_record_war = { PLAY = root }
+			fh_mainland_finish_mobilization = yes
+		}
+	}
+}
+
+on_diplo_play_back_down = {
+	on_actions = { fh_mainland_check_taiping_war_end }
+}
+
+fh_mainland_check_taiping_war_end = {
+	trigger = {
+		is_diplomatic_play_type = dp_taiping_rebellion
+		global_var:fh_tungning_founder ?= {
+			has_variable = fh_mainland_mobilizing
+			has_variable = fh_mainland_mobilization_taiping
+			var:fh_mainland_taiping_play ?= root
+		}
+	}
+	effect = {
+		global_var:fh_tungning_founder = {
+			fh_mainland_find_active_war = yes
+			fh_mainland_finish_mobilization = yes
+		}
+	}
+}
+
+on_won_war = {
+	on_actions = { fh_mainland_record_war_end }
+}
+
+on_inconclusive_war = {
+	on_actions = { fh_mainland_record_war_end }
+}
+
+on_lost_war = {
+	on_actions = { fh_mainland_record_lost_war }
+}
+
+fh_mainland_record_war_end = {
+	trigger = {
+		global_var:fh_tungning_founder ?= this
+		fh_mainland_matches_or_can_track_war = yes
+	}
+	effect = {
+		set_variable = { name = fh_mainland_qing_war_ended_today days = 1 }
+		fh_mainland_record_war = { PLAY = scope:diplomatic_play }
+		fh_mainland_finish_mobilization = yes
+	}
+}
+
+fh_mainland_record_lost_war = {
+	trigger = {
+		global_var:fh_tungning_founder ?= this
+		fh_mainland_matches_or_can_track_war = yes
+	}
+	effect = {
+		set_variable = { name = fh_mainland_qing_war_ended_today days = 1 }
+		set_variable = { name = fh_mainland_qing_war_defeat_today days = 1 }
+		fh_mainland_record_war = { PLAY = scope:diplomatic_play }
+		if = {
+			limit = { var:fh_mainland_first_war ?= scope:diplomatic_play }
+			fh_mainland_record_war_defeat = yes
+		}
+		fh_mainland_finish_mobilization = yes
+	}
+}
+
+on_monthly_pulse_country = {
+	on_actions = { fh_mainland_refresh_war_tracking }
+}
+
+fh_mainland_refresh_war_tracking = {
+	trigger = {
+		global_var:fh_tungning_founder ?= this
+		has_variable = fh_mainland_mobilizing
+	}
+	effect = {
+		fh_mainland_find_active_war = yes
+		if = {
+			limit = {
+				has_variable = fh_mainland_mobilization_taiping
+				fh_mainland_taiping_active = no
+			}
+			fh_mainland_finish_mobilization = yes
+		}
+	}
+}
