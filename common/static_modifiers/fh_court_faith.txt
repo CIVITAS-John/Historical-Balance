@@ -65,7 +65,7 @@ fh_court_faith_academy_consultation = {
 
 fh_court_faith_event_conversion = {
 	icon = "gfx/interface/icons/timed_modifier_icons/modifier_documents_positive.dds"
-	state_conversion_mult = 0.15
+	state_conversion_mult = 0.25
 }
 fh_court_faith_mission_school_charter = {
 	icon = "gfx/interface/icons/timed_modifier_icons/modifier_lightbulb_positive.dds"
