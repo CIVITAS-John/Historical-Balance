@@ -1,0 +1,105 @@
+namespace = fh_southern_passage_system
+
+# Let any same-day native monthly progress and peace effects land first.
+fh_southern_passage_system.1 = {
+	type = country_event
+	hidden = yes
+	trigger = { fh_southern_passage_open = yes }
+	immediate = {
+		set_variable = fh_southern_passage_deadline_expired
+		fh_southern_passage_queue_reconcile = yes
+	}
+}
+
+fh_southern_passage_system.2 = {
+	type = country_event
+	hidden = yes
+	trigger = {
+		fh_southern_passage_open = yes
+		has_variable = fh_southern_passage_reconcile_queued
+	}
+	immediate = {
+		remove_variable = fh_southern_passage_reconcile_queued
+		fh_southern_passage_reconcile = yes
+	}
+}
+
+fh_southern_passage_system.50 = {
+	type = country_event
+	placement = root
+	title = fh_southern_passage_system.50.t
+	desc = fh_southern_passage_system.50.d
+	option = { name = fh_southern_passage_system.acknowledge default_option = yes }
+}
+
+fh_southern_passage_system.75 = {
+	type = country_event
+	placement = root
+	title = fh_southern_passage_system.75.t
+	desc = fh_southern_passage_system.75.d
+	option = { name = fh_southern_passage_system.acknowledge default_option = yes }
+}
+
+fh_southern_passage_system.101 = {
+	type = country_event
+	placement = root
+	title = fh_southern_passage_system.101.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { has_variable = fh_southern_passage_recapped_local_reward }
+				desc = fh_southern_passage_system.101.local
+			}
+			desc = fh_southern_passage_system.101.d
+		}
+	}
+	option = { name = fh_southern_passage_system.acknowledge default_option = yes }
+}
+
+fh_southern_passage_system.102 = {
+	type = country_event
+	placement = root
+	title = fh_southern_passage_system.102.t
+	desc = fh_southern_passage_system.102.d
+	option = { name = fh_southern_passage_system.acknowledge default_option = yes }
+}
+
+fh_southern_passage_system.103 = {
+	type = country_event
+	placement = root
+	title = fh_southern_passage_system.103.t
+	desc = fh_southern_passage_system.103.d
+	option = { name = fh_southern_passage_system.acknowledge default_option = yes }
+}
+
+fh_southern_passage_system.104 = {
+	type = country_event
+	placement = root
+	title = fh_southern_passage_system.104.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { has_variable = fh_southern_passage_recapped_local_reward }
+				desc = fh_southern_passage_system.104.local
+			}
+			desc = fh_southern_passage_system.104.d
+		}
+	}
+	option = { name = fh_southern_passage_system.acknowledge default_option = yes }
+}
+
+fh_southern_passage_system.105 = {
+	type = country_event
+	placement = root
+	title = fh_southern_passage_system.105.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { var:fh_southern_passage_ceded_parcels > 0 }
+				desc = fh_southern_passage_system.105.land
+			}
+			desc = fh_southern_passage_system.105.d
+		}
+	}
+	option = { name = fh_southern_passage_system.acknowledge default_option = yes }
+}

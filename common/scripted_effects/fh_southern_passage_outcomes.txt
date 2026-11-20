@@ -1,0 +1,165 @@
+# 1 permanent goal; 2 no grants; 3 no rival; 4 demonstration; 5 concessions.
+fh_southern_passage_resolve = {
+	if = {
+		limit = { fh_southern_passage_open = yes }
+		# Set the result before a concession transfer can fire ownership hooks.
+		set_variable = { name = fh_southern_passage_result value = $RESULT$ }
+		fh_southern_passage_cleanup_preparations = yes
+		fh_southern_passage_refresh_borneo = yes
+
+		if = {
+			limit = { OR = { $RESULT$ = 1 $RESULT$ = 4 } }
+			fh_southern_passage_record_secured_grants = yes
+		}
+
+		if = {
+			limit = { $RESULT$ = 1 }
+			add_modifier = { name = fh_southern_passage_secured_goal_modifier years = 6 }
+			fh_southern_passage_add_aftermath = { MODIFIER = fh_southern_passage_secured_goal_trade YEARS = 6 }
+			fh_southern_passage_southern_radicals = { CHANGE = fh_southern_passage_remove_medium_radicals }
+			fh_southern_passage_maritime_radicals = { CHANGE = small_radicals }
+			trigger_event = { id = fh_southern_passage_system.101 popup = yes }
+		}
+		else_if = {
+			limit = { $RESULT$ = 2 }
+			add_modifier = { name = fh_southern_passage_lost_grants_modifier years = 2 }
+			fh_southern_passage_maritime_radicals = { CHANGE = medium_radicals }
+			trigger_event = { id = fh_southern_passage_system.102 popup = yes }
+		}
+		else_if = {
+			limit = { $RESULT$ = 3 }
+			add_modifier = { name = fh_southern_passage_lost_rival_modifier years = 2 }
+			fh_southern_passage_maritime_radicals = { CHANGE = fh_mainland_remove_small_radicals }
+			trigger_event = { id = fh_southern_passage_system.103 popup = yes }
+		}
+		else_if = {
+			limit = { $RESULT$ = 4 }
+			add_modifier = { name = fh_southern_passage_secured_demo_modifier years = 4 }
+			fh_southern_passage_add_aftermath = { MODIFIER = fh_southern_passage_secured_demo_trade YEARS = 4 }
+			fh_southern_passage_maritime_radicals = { CHANGE = fh_southern_passage_remove_medium_radicals }
+			if = {
+				limit = { var:fh_southern_passage_rival ?= { is_country_alive = yes } }
+				change_relations = { country = var:fh_southern_passage_rival value = 5 }
+			}
+			trigger_event = { id = fh_southern_passage_system.104 popup = yes }
+		}
+		else = {
+			add_modifier = { name = fh_southern_passage_concede_modifier years = 3 }
+			fh_southern_passage_maritime_radicals = { CHANGE = medium_radicals }
+			fh_southern_passage_southern_radicals = { CHANGE = medium_radicals }
+			set_variable = { name = fh_southern_passage_ceded_parcels value = 0 }
+			fh_southern_passage_cede_parcel = { PROVINCE = x1C7417 KEY = x1c7417 }
+			fh_southern_passage_cede_parcel = { PROVINCE = x2A3D46 KEY = x2a3d46 }
+			fh_southern_passage_cede_parcel = { PROVINCE = xE02CB6 KEY = xe02cb6 }
+			trigger_event = { id = fh_southern_passage_system.105 popup = yes }
+		}
+
+		clear_variable_list = fh_southern_passage_play_order
+		clear_variable_list = fh_southern_passage_humiliation_plays
+		clear_variable_list = fh_southern_passage_timer_goals
+		remove_variable = fh_southern_passage_held
+		remove_variable = fh_southern_passage_hold_play
+		remove_variable = fh_southern_passage_hold_rival
+		remove_variable = fh_southern_passage_hold_ended
+		remove_variable = fh_southern_passage_deadline
+		remove_variable = fh_southern_passage_deadline_expired
+		remove_variable = fh_southern_passage_month_due
+		remove_variable = fh_southern_passage_irreversible_goal
+		fh_southern_passage_clear_goal_candidate = yes
+
+		if = {
+			limit = { has_variable = fh_southern_passage_secured }
+			fh_constitution_refresh_mandates = yes
+		}
+	}
+}
+
+fh_southern_passage_record_secured_grants = {
+	set_variable = fh_southern_passage_secured
+	fh_southern_passage_record_secured_subject = { TAG = STG KEY = stg }
+	fh_southern_passage_record_secured_subject = { TAG = SEL KEY = sel }
+	fh_southern_passage_record_secured_subject = { TAG = BLG KEY = blg }
+	fh_southern_passage_record_secured_parcel = { PROVINCE = x1C7417 KEY = x1c7417 }
+	fh_southern_passage_record_secured_parcel = { PROVINCE = x2A3D46 KEY = x2a3d46 }
+	fh_southern_passage_record_secured_parcel = { PROVINCE = xE02CB6 KEY = xe02cb6 }
+}
+
+fh_southern_passage_record_secured_subject = {
+	if = {
+		limit = { fh_southern_passage_keep_subject = { TAG = $TAG$ KEY = $KEY$ } }
+		set_variable = fh_southern_passage_secured_$KEY$
+	}
+}
+
+fh_southern_passage_record_secured_parcel = {
+	if = {
+		limit = { fh_southern_passage_keep_parcel = { PROVINCE = $PROVINCE$ KEY = $KEY$ } }
+		set_variable = fh_southern_passage_secured_$KEY$
+	}
+}
+
+fh_southern_passage_cede_parcel = {
+	if = {
+		limit = {
+			fh_southern_passage_rival_valid = yes
+			fh_southern_passage_keep_parcel = { PROVINCE = $PROVINCE$ KEY = $KEY$ }
+		}
+		transfer_province = {
+			PROVINCE = $PROVINCE$
+			GIVER = global_var:fh_tungning_founder
+			TAKER = global_var:fh_tungning_founder.var:fh_southern_passage_rival
+		}
+		if = {
+			limit = { p:$PROVINCE$ ?= { owner ?= global_var:fh_tungning_founder.var:fh_southern_passage_rival } }
+			change_variable = { name = fh_southern_passage_ceded_parcels add = 1 }
+		}
+	}
+}
+
+fh_southern_passage_maritime_radicals = {
+	if = {
+		limit = { exists = ig:ig_industrialists }
+		add_radicals = { interest_group = ig:ig_industrialists value = $CHANGE$ }
+	}
+}
+
+fh_southern_passage_southern_radicals = {
+	if = {
+		limit = { fh_mainland_officers_southern = yes }
+		add_radicals = { interest_group = ig:ig_armed_forces value = $CHANGE$ }
+	}
+}
+
+fh_southern_passage_add_aftermath = {
+	every_scope_state = {
+		limit = { fh_southern_passage_borneo_parcel_state = yes }
+		global_var:fh_tungning_founder = {
+			set_variable = { name = fh_southern_passage_aftermath_state value = prev years = $YEARS$ }
+			set_variable = fh_southern_passage_recapped_local_reward
+		}
+		add_modifier = { name = $MODIFIER$ years = $YEARS$ }
+	}
+}
+
+fh_southern_passage_clean_aftermath = {
+	if = {
+		limit = {
+			NAND = {
+				fh_southern_passage_borneo_parcel_state = yes
+				global_var:fh_tungning_founder.var:fh_southern_passage_aftermath_state ?= this
+			}
+		}
+		if = {
+			limit = { has_modifier = fh_southern_passage_secured_goal_trade }
+			remove_modifier = fh_southern_passage_secured_goal_trade
+		}
+		if = {
+			limit = { has_modifier = fh_southern_passage_secured_demo_trade }
+			remove_modifier = fh_southern_passage_secured_demo_trade
+		}
+	}
+}
+
+fh_southern_passage_refresh_aftermath = {
+	var:fh_southern_passage_aftermath_state ?= { fh_southern_passage_clean_aftermath = yes }
+}

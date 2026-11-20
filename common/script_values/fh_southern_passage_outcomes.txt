@@ -1,0 +1,4 @@
+fh_southern_passage_remove_medium_radicals = {
+	value = medium_radicals
+	multiply = -1
+}
