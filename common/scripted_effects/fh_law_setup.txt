@@ -45,20 +45,28 @@ fh_qing_law_setup = {
 
 fh_tungning_set_up_registers = {
 	activate_law = law_type:law_subjecthood
-	if = {
-		limit = { has_law = law_type:law_subjecthood }
-		active_law:lawgroup_citizenship ?= {
+	fh_tungning_grant_registers = yes
+}
+
+fh_tungning_grant_registers = {
+	active_law:lawgroup_citizenship ?= {
+		if = {
+			limit = {
+				type = law_type:law_subjecthood
+				NOT = { has_amendment = amendment_type:amendment_fh_port_and_village_registers }
+				NOT = { has_amendment = amendment_type:amendment_fh_port_and_village_registers_with_levies }
+			}
 			if = {
-				limit = { prev = { has_variable = fh_return_to_mainland_completed } }
+				limit = { owner = { has_variable = fh_return_to_mainland_completed } }
 				add_amendment = {
 					type = amendment_fh_port_and_village_registers
-					sponsor = prev.ig:ig_armed_forces
+					sponsor = owner.ig:ig_armed_forces
 				}
 			}
 			else = {
 				add_amendment = {
 					type = amendment_fh_port_and_village_registers_with_levies
-					sponsor = prev.ig:ig_armed_forces
+					sponsor = owner.ig:ig_armed_forces
 				}
 			}
 		}

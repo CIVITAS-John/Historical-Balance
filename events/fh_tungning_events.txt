@@ -39,6 +39,12 @@ fh_tungning.1 = {
 		c:TWG = { trigger_event = { id = fh_tungning.2 popup = yes } }
 		ai_chance = { base = 0 }
 	}
+
+	option = {
+		name = fh_tungning.1.c
+		hidden_effect = { trigger_event = { id = fh_tungning.7 popup = yes } }
+		ai_chance = { base = 0 }
+	}
 }
 
 fh_tungning.2 = {
@@ -47,6 +53,76 @@ fh_tungning.2 = {
 
 	title = fh_tungning.2.t
 	desc = fh_tungning.2.d
+
+	event_image = { video = "asia_farmers_market" }
+	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
+
+	trigger = {
+		c:TWG ?= this
+		has_variable = fh_tungning_bootstrapped
+	}
+
+	option = {
+		name = fh_tungning.2.a
+		default_option = yes
+	}
+
+	option = {
+		name = fh_tungning.2.b
+		hidden_effect = { trigger_event = { id = fh_tungning.4 popup = yes } }
+		ai_chance = { base = 0 }
+	}
+
+	option = {
+		name = fh_tungning.2.c
+		hidden_effect = { trigger_event = { id = fh_tungning.5 popup = yes } }
+		ai_chance = { base = 0 }
+	}
+
+	option = {
+		name = fh_tungning.2.d_details
+		hidden_effect = { trigger_event = { id = fh_tungning.6 popup = yes } }
+		ai_chance = { base = 0 }
+	}
+}
+
+# Opening ranks and markets may take their first weekly update to settle.
+fh_tungning.3 = {
+	type = country_event
+	hidden = yes
+
+	trigger = {
+		c:TWG ?= this
+		is_country_alive = yes
+		has_variable = fh_tungning_diplomacy_initialized
+	}
+
+	immediate = { fh_tungning_diplomacy_retry = yes }
+}
+
+fh_tungning.4 = {
+	type = country_event
+	placement = root
+
+	title = fh_tungning.4.t
+	desc = fh_tungning.4.d
+	event_image = { video = "asia_farmers_market" }
+
+	option = {
+		name = fh_tungning.4.a
+		default_option = yes
+		hidden_effect = { trigger_event = { id = fh_tungning.2 popup = yes } }
+	}
+}
+
+fh_tungning.5 = {
+	type = country_event
+	placement = root
+
+	title = fh_tungning.5.t
+	desc = fh_tungning.5.d
+	event_image = { video = "asia_farmers_market" }
+
 	flavor = {
 		triggered_desc = {
 			trigger = {
@@ -56,14 +132,6 @@ fh_tungning.2 = {
 			}
 			desc = fh_tungning.2.f
 		}
-	}
-
-	event_image = { video = "asia_farmers_market" }
-	on_created_soundeffect = "event:/SFX/UI/Alerts/event_appear"
-
-	trigger = {
-		c:TWG ?= this
-		has_variable = fh_tungning_bootstrapped
 	}
 
 	immediate = {
@@ -82,21 +150,38 @@ fh_tungning.2 = {
 	}
 
 	option = {
-		name = fh_tungning.2.a
+		name = fh_tungning.5.a
 		default_option = yes
+		hidden_effect = { trigger_event = { id = fh_tungning.2 popup = yes } }
 	}
 }
 
-# Opening ranks and markets may take their first weekly update to settle.
-fh_tungning.3 = {
+fh_tungning.6 = {
 	type = country_event
-	hidden = yes
+	placement = root
 
-	trigger = {
-		c:TWG ?= this
-		is_country_alive = yes
-		has_variable = fh_tungning_diplomacy_initialized
+	title = fh_tungning.6.t
+	desc = fh_tungning.6.d
+	event_image = { video = "asia_farmers_market" }
+
+	option = {
+		name = fh_tungning.6.a
+		default_option = yes
+		hidden_effect = { trigger_event = { id = fh_tungning.2 popup = yes } }
 	}
+}
 
-	immediate = { fh_tungning_diplomacy_retry = yes }
+fh_tungning.7 = {
+	type = country_event
+	placement = root
+
+	title = fh_tungning.7.t
+	desc = fh_tungning.7.d
+	event_image = { video = "asia_farmers_market" }
+
+	option = {
+		name = fh_tungning.7.a
+		default_option = yes
+		hidden_effect = { trigger_event = { id = fh_tungning.1 popup = yes } }
+	}
 }

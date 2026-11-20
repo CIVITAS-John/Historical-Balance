@@ -63,7 +63,7 @@ amendment_fh_port_and_village_registers = {
 # The two versions share one name and are never attached together.
 # Registration replaces the opening version with the one above.
 amendment_fh_port_and_village_registers_with_levies = {
-	parent = law_mass_conscription
+	parent = law_subjecthood
 	allowed_laws = { law_subjecthood }
 
 	modifier = {

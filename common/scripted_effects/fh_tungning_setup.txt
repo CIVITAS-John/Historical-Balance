@@ -74,7 +74,10 @@ fh_tungning_country_setup = {
 	activate_law = law_type:law_monarchy
 	activate_law = law_type:law_autocracy
 	activate_law = law_type:law_fh_standardized_examinations
-	fh_tungning_set_up_registers = yes
+	if = {
+		limit = { NOT = { has_law = law_type:law_subjecthood } }
+		activate_law = law_type:law_subjecthood
+	}
 	activate_law = law_type:law_freedom_of_conscience
 	active_law:lawgroup_church_and_state ?= {
 		add_amendment = { type = amendment_fh_yongli_articles sponsor = prev.ig:ig_devout }
@@ -116,6 +119,7 @@ fh_tungning_country_setup = {
 	}
 	set_variable = fh_tungning_bootstrapped
 	set_global_variable = { name = fh_tungning_founder value = this }
+	fh_tungning_grant_registers = yes
 	# Convert after starting jobs are assigned, before the court faith setup recalculates Pop support.
 	s:STATE_FORMOSA.region_state:TWG ?= { fh_tungning_formosa_faith_setup = yes }
 	fh_start_court_faith = yes
@@ -173,6 +177,8 @@ fh_tungning_formosa_setup = {
 		activate_production_methods = { "pm_trade_center" "pm_trade_center_trade_quantity_normal" }
 	}
 
+	# Give the established missions clergy before hiring splits them across buildings.
+	create_pop = { culture = min religion = catholic pop_type = clergymen size = 800 }
 	create_pop = { culture = korean size = 3000 }
 	create_pop = { culture = japanese size = 2000 }
 
