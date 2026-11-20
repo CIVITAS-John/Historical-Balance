@@ -4,9 +4,10 @@
 			limit = { owner = { has_variable = fh_tungning_history_started } }
 			# Sell tea and finished textiles; import iron for the workshops and foundry.
 			sg:tea = { add_exports = 6 }
-			sg:luxury_clothes = { add_exports = 4 }
+			sg:luxury_clothes = { add_exports = 2 }
+			sg:silk = { add_exports = 4 }
 			sg:tools = { add_exports = 4 }
-			sg:iron = { add_imports = 10 }
+			sg:iron = { add_imports = 6 }
 		}
 	}
 }

@@ -42,7 +42,7 @@ BUILDINGS = {
 			}
 			create_building = {
 				building = building_silk_plantation
-				add_ownership = { building = { type = building_manor_house country = c:CHI region = STATE_FORMOSA levels = 2 } }
+				add_ownership = { building = { type = building_financial_district country = c:CHI region = STATE_FORMOSA levels = 2 } }
 				reserves = 2
 				activate_production_methods = { "default_building_silk_plantation" "pm_road_carts" }
 			}
@@ -90,13 +90,13 @@ BUILDINGS = {
 			}
 			create_building = {
 				building = building_logging_camp
-				add_ownership = { building = { type = building_manor_house country = c:CHI region = STATE_FORMOSA levels = 3 } }
+				add_ownership = { building = { type = building_financial_district country = c:CHI region = STATE_FORMOSA levels = 3 } }
 				reserves = 1
 				activate_production_methods = { "pm_saw_mills" "pm_hardwood" "pm_no_equipment" "pm_road_carts" }
 			}
 			create_building = {
 				building = building_coal_mine
-				add_ownership = { building = { type = building_manor_house country = c:CHI region = STATE_FORMOSA levels = 1 } }
+				add_ownership = { building = { type = building_financial_district country = c:CHI region = STATE_FORMOSA levels = 1 } }
 				reserves = 1
 				activate_production_methods = { "pm_picks_and_shovels_building_coal_mine" "pm_no_explosives" "pm_no_steam_automation" "pm_road_carts" }
 			}
