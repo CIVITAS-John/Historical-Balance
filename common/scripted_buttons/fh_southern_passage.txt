@@ -1,0 +1,89 @@
+﻿fh_southern_passage_tariff_challenge = {
+	name = fh_southern_passage_tariff_challenge
+	desc = fh_southern_passage_tariff_challenge_desc
+	visible = { fh_southern_passage_open = yes }
+	possible = {
+		custom_tooltip = {
+			text = fh_southern_passage_actions_open_tt
+			fh_southern_passage_actions_open = yes
+		}
+		custom_tooltip = {
+			text = fh_southern_passage_tariff_policy_tt
+			fh_southern_passage_tariff_policy = yes
+		}
+		custom_tooltip = {
+			text = fh_southern_passage_tariff_ready_tt
+			fh_southern_passage_tariff_ready = yes
+		}
+	}
+	effect = {
+		custom_tooltip = fh_southern_passage_tariff_challenge_tt
+		hidden_effect = { fh_southern_passage_do_tariff_challenge = yes }
+	}
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				fh_southern_passage_ai_treasury = yes
+				je:fh_je_southern_passage ?= { "scripted_bar_progress(fh_southern_passage_pressure)" >= 20 }
+			}
+			add = 5
+			if = {
+				limit = { je:fh_je_southern_passage ?= { "scripted_bar_progress(fh_southern_passage_pressure)" >= 65 } }
+				add = 10
+			}
+			if = {
+				limit = {
+					has_variable = fh_mainland_mobilizing
+					fh_mainland_officers_mainland = yes
+				}
+				add = 5
+			}
+		}
+	}
+}
+
+fh_southern_passage_military_challenge = {
+	name = fh_southern_passage_military_challenge
+	desc = fh_southern_passage_military_challenge_desc
+	visible = { fh_southern_passage_open = yes }
+	possible = {
+		custom_tooltip = {
+			text = fh_southern_passage_actions_open_tt
+			fh_southern_passage_actions_open = yes
+		}
+		custom_tooltip = {
+			text = fh_southern_passage_demonstration_unused_tt
+			fh_southern_passage_demonstration_unused = yes
+		}
+		custom_tooltip = {
+			text = fh_southern_passage_naval_ready_tt
+			fh_southern_passage_naval_ready = yes
+		}
+	}
+	effect = {
+		custom_tooltip = fh_southern_passage_military_challenge_tt
+		hidden_effect = { fh_southern_passage_do_military_challenge = yes }
+	}
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				fh_southern_passage_ai_treasury = yes
+				fh_southern_passage_can_finish_demonstration = yes
+				NAND = {
+					has_variable = fh_mainland_mobilizing
+					fh_mainland_officers_mainland = yes
+				}
+			}
+			add = 5
+			if = {
+				limit = {
+					ig:ig_armed_forces ?= { is_in_government = yes }
+					fh_mainland_officers_southern = yes
+				}
+				add = 10
+			}
+		}
+	}
+}

@@ -1,0 +1,195 @@
+fh_southern_passage_begin_play_tracking = {
+	# The new-play callback appends in chronological order after opening.
+	every_diplomatic_play = {
+		limit = {
+			fh_southern_passage_opposed_in_play = { RIVAL = global_var:fh_tungning_founder.var:fh_southern_passage_rival }
+		}
+		global_var:fh_tungning_founder = {
+			add_to_variable_list = { name = fh_southern_passage_play_order target = prev }
+		}
+	}
+}
+
+fh_southern_passage_start_hold = {
+	# The list is chronological even when a country joins a play after it starts.
+	every_in_list = {
+		variable = fh_southern_passage_play_order
+		limit = {
+			NOT = { global_var:fh_tungning_founder = { has_variable = fh_southern_passage_held } }
+			fh_southern_passage_opposed_in_play = { RIVAL = global_var:fh_tungning_founder.var:fh_southern_passage_rival }
+			save_temporary_scope_as = fh_southern_passage_possible_hold
+			any_diplomatic_play = { this = scope:fh_southern_passage_possible_hold }
+		}
+		global_var:fh_tungning_founder = {
+			if = {
+				limit = { NOT = { has_variable = fh_southern_passage_held } }
+				set_variable = fh_southern_passage_held
+				set_variable = { name = fh_southern_passage_hold_play value = prev }
+				set_variable = { name = fh_southern_passage_hold_rival value = var:fh_southern_passage_rival }
+				fh_southern_passage_suspend_preparations = yes
+			}
+		}
+	}
+}
+
+# The goal-type hook supplies the typed target immediately before native
+# execution. The global callback follows execution and supplies the exact ID.
+fh_southern_passage_stage_state_goal = {
+	if = {
+		limit = {
+			fh_southern_passage_relevant_enforcement = { RIVAL = scope:target_country PLAY = scope:diplomatic_play }
+			scope:target_state ?= {
+				fh_southern_passage_indonesia_state = yes
+				owner = scope:target_country
+			}
+		}
+		fh_southern_passage_stage_goal = yes
+	}
+}
+
+fh_southern_passage_stage_annexation = {
+	if = {
+		limit = {
+			fh_southern_passage_relevant_enforcement = { RIVAL = scope:target_country PLAY = scope:diplomatic_play }
+			scope:target_country ?= { any_scope_state = { fh_southern_passage_indonesia_state = yes } }
+		}
+		fh_southern_passage_stage_goal = yes
+	}
+}
+
+fh_southern_passage_stage_humiliation = {
+	if = {
+		limit = {
+			fh_southern_passage_relevant_enforcement = { RIVAL = scope:target_country PLAY = scope:diplomatic_play }
+			scope:diplomatic_play ?= {
+				fh_southern_passage_direct_play = { RIVAL = scope:target_country }
+			}
+			any_in_list = {
+				variable = fh_southern_passage_humiliation_plays
+				this = scope:diplomatic_play
+			}
+		}
+		fh_southern_passage_stage_goal = yes
+	}
+}
+
+fh_southern_passage_stage_goal = {
+	set_variable = { name = fh_southern_passage_goal_candidate days = 1 }
+	if = {
+		limit = { exists = scope:diplomatic_play }
+		set_variable = { name = fh_southern_passage_goal_candidate_play value = scope:diplomatic_play days = 1 }
+	}
+}
+
+fh_southern_passage_clear_goal_candidate = {
+	remove_variable = fh_southern_passage_goal_candidate
+	remove_variable = fh_southern_passage_goal_candidate_play
+}
+
+# Queue one check after all effects from this settlement, including the
+# territory/subject transfers and any other enforced goals, have landed.
+fh_southern_passage_queue_reconcile = {
+	if = {
+		limit = {
+			fh_southern_passage_open = yes
+			NOT = { has_variable = fh_southern_passage_reconcile_queued }
+		}
+		set_variable = fh_southern_passage_reconcile_queued
+		trigger_event = { id = fh_southern_passage_system.2 days = 1 }
+	}
+}
+
+fh_southern_passage_monthly = {
+	if = {
+		limit = { fh_southern_passage_open = yes }
+		set_variable = fh_southern_passage_month_due
+		fh_southern_passage_reconcile = yes
+	}
+}
+
+fh_southern_passage_check_endpoint = {
+	fh_southern_passage_reconcile = yes
+}
+
+fh_southern_passage_reconcile = {
+	if = {
+		limit = {
+			fh_southern_passage_open = yes
+			NOT = { has_variable = fh_southern_passage_reconcile_queued }
+		}
+		fh_southern_passage_reconcile_grants = yes
+		fh_southern_passage_refresh_borneo = yes
+		fh_southern_passage_refresh_tariff = yes
+		if = {
+			limit = { has_variable = fh_southern_passage_irreversible_goal }
+			fh_southern_passage_resolve = { RESULT = 1 }
+		}
+		else_if = {
+			limit = { has_variable = fh_southern_passage_held fh_southern_passage_hold_active = yes }
+			remove_variable = fh_southern_passage_month_due
+		}
+		else_if = {
+			limit = { fh_southern_passage_has_grant = no }
+			fh_southern_passage_resolve = { RESULT = 2 }
+		}
+		else = {
+			fh_southern_passage_refresh_rival = yes
+			if = {
+				limit = { fh_southern_passage_rival_valid = no }
+				fh_southern_passage_resolve = { RESULT = 3 }
+			}
+			else_if = {
+				limit = { has_variable = fh_southern_passage_held }
+				fh_southern_passage_resolve = { RESULT = 5 }
+			}
+			else = {
+				if = {
+					limit = { has_variable = fh_southern_passage_month_due }
+					fh_southern_passage_check_demonstration = yes
+				}
+				fh_southern_passage_pressure_warnings = yes
+				if = {
+					limit = { var:fh_southern_passage_demonstration_streak >= 24 }
+					fh_southern_passage_resolve = { RESULT = 4 }
+				}
+				else_if = {
+					limit = {
+						OR = {
+							has_variable = fh_southern_passage_deadline_expired
+							je:fh_je_southern_passage ?= { "scripted_bar_progress(fh_southern_passage_pressure)" >= 100 }
+						}
+					}
+					fh_southern_passage_start_hold = yes
+					if = {
+						limit = { NOT = { has_variable = fh_southern_passage_held } }
+						fh_southern_passage_resolve = { RESULT = 5 }
+					}
+				}
+				else_if = {
+					limit = { has_variable = fh_southern_passage_month_due }
+					fh_southern_passage_roll_event = yes
+				}
+				remove_variable = fh_southern_passage_month_due
+			}
+		}
+	}
+}
+
+fh_southern_passage_pressure_warnings = {
+	if = {
+		limit = { je:fh_je_southern_passage ?= { "scripted_bar_progress(fh_southern_passage_pressure)" >= 50 } }
+		if = {
+			limit = { NOT = { has_variable = fh_southern_passage_warned_50 } }
+			set_variable = fh_southern_passage_warned_50
+			trigger_event = { id = fh_southern_passage_system.50 popup = yes }
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = fh_southern_passage_warned_75 }
+				je:fh_je_southern_passage ?= { "scripted_bar_progress(fh_southern_passage_pressure)" >= 75 }
+			}
+			set_variable = fh_southern_passage_warned_75
+			trigger_event = { id = fh_southern_passage_system.75 popup = yes }
+		}
+	}
+}

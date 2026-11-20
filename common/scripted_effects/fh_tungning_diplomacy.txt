@@ -174,9 +174,9 @@ fh_tungning_tributary_pacts = {
 			is_country_type = unrecognized
 			country_rank >= rank_value:unrecognized_regional_power
 		}
-		fh_tungning_make_tributary = { SUBJECT = c:STG }
-		fh_tungning_make_tributary = { SUBJECT = c:SEL }
-		fh_tungning_make_tributary = { SUBJECT = c:BLG }
+		fh_tungning_make_tributary = { SUBJECT = c:STG GRANT = fh_southern_passage_opening_stg }
+		fh_tungning_make_tributary = { SUBJECT = c:SEL GRANT = fh_southern_passage_opening_sel }
+		fh_tungning_make_tributary = { SUBJECT = c:BLG GRANT = fh_southern_passage_opening_blg }
 	}
 }
 
@@ -191,6 +191,16 @@ fh_tungning_make_tributary = {
 			}
 		}
 		create_diplomatic_pact = { country = $SUBJECT$ type = tributary }
+		if = {
+			limit = {
+				NOT = { has_variable = fh_southern_passage_opening_checked }
+				$SUBJECT$ ?= {
+					overlord ?= prev
+					is_subject_type = subject_type_tributary
+				}
+			}
+			set_variable = $GRANT$
+		}
 	}
 }
 

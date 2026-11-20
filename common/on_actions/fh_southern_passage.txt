@@ -1,0 +1,197 @@
+on_diplomatic_play_started = {
+	on_actions = { fh_southern_passage_on_new_play }
+}
+
+fh_southern_passage_on_new_play = {
+	trigger = {
+		global_var:fh_tungning_founder ?= {
+			fh_southern_passage_open = yes
+			NOT = { has_variable = fh_southern_passage_held }
+		}
+	}
+	effect = {
+		global_var:fh_tungning_founder = {
+			add_to_variable_list = { name = fh_southern_passage_play_order target = root }
+		}
+		if = {
+			limit = {
+				OR = {
+					AND = {
+						scope:initiator ?= { fh_is_tungning_founder = yes }
+						scope:target ?= { fh_southern_passage_humiliation_rival = yes }
+					}
+					AND = {
+						scope:target ?= { fh_is_tungning_founder = yes }
+						scope:initiator ?= { fh_southern_passage_humiliation_rival = yes }
+					}
+				}
+			}
+			global_var:fh_tungning_founder = {
+				add_to_variable_list = { name = fh_southern_passage_humiliation_plays target = root }
+			}
+		}
+	}
+}
+
+on_wargoal_enforced = {
+	on_actions = { fh_southern_passage_confirm_permanent_goal }
+}
+
+on_wargoal_enforced_by_timer = {
+	on_actions = { fh_southern_passage_record_timer_goal }
+}
+
+fh_southern_passage_confirm_permanent_goal = {
+	trigger = {
+		fh_southern_passage_relevant_enforcement = { RIVAL = scope:target PLAY = scope:diplomatic_play }
+	}
+	effect = {
+		if = {
+			limit = {
+				OR = {
+					fh_southern_passage_staged_goal = yes
+					fh_southern_passage_recorded_timer_goal = yes
+				}
+			}
+			set_variable = fh_southern_passage_irreversible_goal
+		}
+		fh_southern_passage_clear_goal_candidate = yes
+		fh_southern_passage_queue_reconcile = yes
+	}
+}
+
+fh_southern_passage_record_timer_goal = {
+	trigger = {
+		fh_southern_passage_open = yes
+		fh_southern_passage_staged_goal = yes
+	}
+	effect = {
+		if = {
+			limit = { exists = scope:war_goal_enforced }
+			add_to_variable_list = { name = fh_southern_passage_timer_goals target = scope:war_goal_enforced }
+		}
+		fh_southern_passage_clear_goal_candidate = yes
+	}
+}
+
+on_war_end = {
+	on_actions = { fh_southern_passage_on_conflict_end }
+}
+
+on_diplo_play_back_down = {
+	on_actions = { fh_southern_passage_on_conflict_end }
+}
+
+fh_southern_passage_on_conflict_end = {
+	trigger = {
+		global_var:fh_tungning_founder ?= { fh_southern_passage_open = yes }
+	}
+	effect = {
+		global_var:fh_tungning_founder = {
+			if = {
+				limit = { var:fh_southern_passage_hold_play ?= root }
+				set_variable = fh_southern_passage_hold_ended
+				fh_southern_passage_queue_reconcile = yes
+			}
+			if = {
+				limit = { has_variable_list = fh_southern_passage_play_order }
+				remove_list_variable = { name = fh_southern_passage_play_order target = root }
+			}
+		}
+	}
+}
+
+on_diplo_play_abandon_side = {
+	on_actions = { fh_southern_passage_on_conflict_membership }
+}
+
+on_diplo_play_switch_sides = {
+	on_actions = { fh_southern_passage_on_conflict_membership }
+}
+
+fh_southern_passage_on_conflict_membership = {
+	trigger = {
+		global_var:fh_tungning_founder ?= {
+			fh_southern_passage_open = yes
+			var:fh_southern_passage_hold_play ?= root
+		}
+	}
+	effect = { global_var:fh_tungning_founder = { fh_southern_passage_queue_reconcile = yes } }
+}
+
+on_state_owner_change = {
+	on_actions = { fh_southern_passage_on_state_change }
+}
+
+on_state_created = {
+	on_actions = { fh_southern_passage_on_state_change }
+}
+
+fh_southern_passage_on_state_change = {
+	trigger = {
+		OR = {
+			state_region = s:STATE_WEST_BORNEO
+			AND = {
+				state_region = s:STATE_WEST_JAVA
+				global_var:fh_tungning_founder ?= { fh_southern_passage_open = yes }
+			}
+		}
+	}
+	effect = {
+		if = {
+			limit = { state_region = s:STATE_WEST_BORNEO }
+			fh_southern_passage_clean_borneo = yes
+			fh_southern_passage_clean_aftermath = yes
+		}
+		global_var:fh_tungning_founder ?= {
+			if = {
+				limit = { fh_southern_passage_open = yes }
+				fh_southern_passage_reconcile_grants = yes
+				fh_southern_passage_refresh_borneo = yes
+				fh_southern_passage_queue_reconcile = yes
+			}
+			fh_southern_passage_refresh_aftermath = yes
+		}
+	}
+}
+
+on_become_subject = {
+	on_actions = { fh_southern_passage_on_subject_change }
+}
+
+on_become_independent = {
+	on_actions = { fh_southern_passage_on_subject_change }
+}
+
+fh_southern_passage_on_subject_change = {
+	trigger = { global_var:fh_tungning_founder ?= { fh_southern_passage_open = yes } }
+	effect = {
+		global_var:fh_tungning_founder = {
+			fh_southern_passage_reconcile_grants = yes
+			if = {
+				limit = {
+					OR = {
+						fh_southern_passage_has_grant = no
+						fh_southern_passage_rival_valid = no
+						fh_southern_passage_hold_active = no
+					}
+				}
+				fh_southern_passage_queue_reconcile = yes
+			}
+		}
+	}
+}
+
+# A split may move a parcel without moving ownership of the state object.
+# The hooks handle normal transfers; keep the companion bound to its state.
+on_monthly_pulse_country = {
+	on_actions = { fh_southern_passage_on_aftermath_pulse }
+}
+
+fh_southern_passage_on_aftermath_pulse = {
+	trigger = {
+		fh_is_tungning_founder = yes
+		has_variable = fh_southern_passage_aftermath_state
+	}
+	effect = { fh_southern_passage_refresh_aftermath = yes }
+}

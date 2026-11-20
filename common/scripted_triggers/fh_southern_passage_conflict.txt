@@ -1,0 +1,85 @@
+# A rival must be on the other side of this play itself. Its overlord's
+# participation alone does not create a hold.
+fh_southern_passage_opposed_in_play = {
+	OR = {
+		AND = {
+			OR = {
+				initiator ?= { fh_is_tungning_founder = yes }
+				any_scope_initiator_ally = { fh_is_tungning_founder = yes }
+			}
+			OR = {
+				target_is = $RIVAL$
+				any_scope_target_ally = { this = $RIVAL$ }
+			}
+		}
+		AND = {
+			OR = {
+				target ?= { fh_is_tungning_founder = yes }
+				any_scope_target_ally = { fh_is_tungning_founder = yes }
+			}
+			OR = {
+				initiator_is = $RIVAL$
+				any_scope_initiator_ally = { this = $RIVAL$ }
+			}
+		}
+	}
+}
+
+fh_southern_passage_direct_play = {
+	OR = {
+		AND = { initiator_is = global_var:fh_tungning_founder target_is = $RIVAL$ }
+		AND = { target_is = global_var:fh_tungning_founder initiator_is = $RIVAL$ }
+	}
+}
+
+fh_southern_passage_hold_active = {
+	NOT = { has_variable = fh_southern_passage_hold_ended }
+	var:fh_southern_passage_hold_rival ?= {
+		is_country_alive = yes
+		global_var:fh_tungning_founder.var:fh_southern_passage_rival ?= this
+	}
+	fh_southern_passage_rival_valid = yes
+	any_diplomatic_play = {
+		global_var:fh_tungning_founder.var:fh_southern_passage_hold_play ?= this
+		fh_southern_passage_opposed_in_play = { RIVAL = global_var:fh_tungning_founder.var:fh_southern_passage_hold_rival }
+	}
+}
+
+# Use the recorded rival even if the effects of this settlement have already
+# eliminated it. Never let another play settle a held dispute.
+fh_southern_passage_relevant_enforcement = {
+	fh_southern_passage_open = yes
+	var:fh_southern_passage_rival ?= $RIVAL$
+	trigger_if = {
+		limit = { has_variable = fh_southern_passage_held }
+		var:fh_southern_passage_hold_rival ?= $RIVAL$
+		var:fh_southern_passage_hold_play ?= $PLAY$
+	}
+}
+
+fh_southern_passage_staged_goal = {
+	has_variable = fh_southern_passage_goal_candidate
+	OR = {
+		var:fh_southern_passage_goal_candidate_play ?= scope:diplomatic_play
+		NOR = {
+			has_variable = fh_southern_passage_goal_candidate_play
+			exists = scope:diplomatic_play
+		}
+	}
+}
+
+fh_southern_passage_recorded_timer_goal = {
+	exists = scope:war_goal_enforced
+	any_in_list = {
+		variable = fh_southern_passage_timer_goals
+		this = scope:war_goal_enforced
+	}
+}
+
+fh_southern_passage_humiliation_rival = {
+	OR = {
+		global_var:fh_tungning_founder.var:fh_southern_passage_rival ?= this
+		c:NET ?= this
+	}
+	any_scope_state = { fh_southern_passage_indonesia_state = yes }
+}

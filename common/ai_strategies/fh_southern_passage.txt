@@ -1,0 +1,43 @@
+﻿# Only the diplomatic slot; 01 keeps its administrative mobilization strategy.
+fh_southern_passage_escort_strategy = {
+	icon = "gfx/interface/icons/ai_strategy_icons/territorial_expansion.dds"
+	type = diplomatic
+
+	possible = {
+		fh_southern_passage_active = yes
+		ig:ig_armed_forces ?= { is_in_government = yes }
+		fh_mainland_officers_southern = yes
+	}
+
+	weight = { value = 20 }
+
+	building_group_weights = {
+		bg_navy = 1.25
+	}
+
+	aggression = {
+		value = 0.25
+		if = {
+			limit = {
+				fh_southern_passage_ai_can_seek_play = yes
+				var:fh_southern_passage_rival ?= scope:target_country
+			}
+			add = 0.5
+		}
+	}
+
+	wargoal_scores = {
+		conquer_state = {
+			if = {
+				limit = { fh_southern_passage_ai_naval_target = yes }
+				add = 25
+			}
+		}
+		return_state = {
+			if = {
+				limit = { fh_southern_passage_ai_naval_target = yes }
+				add = 25
+			}
+		}
+	}
+}

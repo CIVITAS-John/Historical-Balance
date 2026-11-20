@@ -1,0 +1,179 @@
+fh_southern_passage_open = {
+	fh_is_tungning_founder = yes
+	has_journal_entry = fh_je_southern_passage
+	NOT = { has_variable = fh_southern_passage_result }
+}
+
+fh_southern_passage_active = {
+	fh_southern_passage_open = yes
+	NOT = { has_variable = fh_southern_passage_held }
+	fh_southern_passage_rival_valid = yes
+	fh_southern_passage_has_grant = yes
+}
+
+fh_southern_passage_keep_subject = {
+	has_variable = fh_southern_passage_opening_$KEY$
+	c:$TAG$ ?= {
+		is_country_alive = yes
+		overlord ?= prev
+	}
+}
+
+fh_southern_passage_keep_parcel = {
+	has_variable = fh_southern_passage_opening_$KEY$
+	p:$PROVINCE$ ?= { owner ?= prev }
+}
+
+fh_southern_passage_has_grant = {
+	OR = {
+		fh_southern_passage_keep_subject = { TAG = STG KEY = stg }
+		fh_southern_passage_keep_subject = { TAG = SEL KEY = sel }
+		fh_southern_passage_keep_subject = { TAG = BLG KEY = blg }
+		fh_southern_passage_has_parcel = yes
+	}
+}
+
+fh_southern_passage_has_parcel = {
+	OR = {
+		fh_southern_passage_keep_parcel = { PROVINCE = x1C7417 KEY = x1c7417 }
+		fh_southern_passage_keep_parcel = { PROVINCE = x2A3D46 KEY = x2a3d46 }
+		fh_southern_passage_keep_parcel = { PROVINCE = xE02CB6 KEY = xe02cb6 }
+	}
+}
+
+fh_southern_passage_indonesia_state = {
+	region = sr:region_indonesia
+	is_treaty_port = no
+}
+
+# Evaluate in the potential fallback country's scope.
+fh_southern_passage_has_west_java = {
+	is_country_alive = yes
+	any_scope_state = {
+		state_region = s:STATE_WEST_JAVA
+		is_treaty_port = no
+	}
+}
+
+fh_southern_passage_rival_valid = {
+	var:fh_southern_passage_rival ?= { is_country_alive = yes }
+	trigger_if = {
+		limit = { has_variable = fh_southern_passage_dutch_fallback }
+		var:fh_southern_passage_rival ?= { fh_southern_passage_has_west_java = yes }
+	}
+}
+
+fh_southern_passage_cordial_rival = {
+	var:fh_southern_passage_rival ?= { relations:prev >= 20 }
+}
+
+fh_southern_passage_rival_embargo = {
+	var:fh_southern_passage_rival ?= {
+		has_diplomatic_pact = { who = prev type = embargo is_initiator = yes }
+	}
+}
+
+# Evaluate in the rival/overlord's scope. Count only wars without the founder,
+# regardless of whether a different war involves Tungning.
+fh_southern_passage_other_war = {
+	any_scope_war = {
+		NOT = { is_war_participant = global_var:fh_tungning_founder }
+	}
+}
+
+fh_southern_passage_rival_other_war = {
+	var:fh_southern_passage_rival ?= {
+		OR = {
+			fh_southern_passage_other_war = yes
+			overlord ?= {
+				c:NET ?= this
+				fh_southern_passage_other_war = yes
+			}
+		}
+	}
+}
+
+fh_southern_passage_protected_by = {
+	c:$TAG$ ?= { is_country_alive = yes }
+	any_scope_treaty = {
+		binds = c:$TAG$
+		any_scope_article = {
+			OR = {
+				has_type = defensive_pact
+				AND = {
+					has_type = guarantee_independence
+					source_country = c:$TAG$
+					target_country = global_var:fh_tungning_founder
+				}
+			}
+		}
+	}
+}
+
+fh_southern_passage_protected = {
+	OR = {
+		fh_southern_passage_protected_by = { TAG = GBR }
+		fh_southern_passage_protected_by = { TAG = BIC }
+	}
+}
+
+fh_southern_passage_state_holds_parcel = {
+	p:$PROVINCE$.state ?= this
+	owner ?= { has_variable = fh_southern_passage_opening_$KEY$ }
+}
+
+fh_southern_passage_borneo_parcel_state = {
+	state_region = s:STATE_WEST_BORNEO
+	owner ?= { fh_is_tungning_founder = yes }
+	OR = {
+		fh_southern_passage_state_holds_parcel = { PROVINCE = x1C7417 KEY = x1c7417 }
+		fh_southern_passage_state_holds_parcel = { PROVINCE = x2A3D46 KEY = x2a3d46 }
+		fh_southern_passage_state_holds_parcel = { PROVINCE = xE02CB6 KEY = xe02cb6 }
+	}
+}
+
+fh_southern_passage_eligible_borneo = {
+	fh_southern_passage_borneo_parcel_state = yes
+	owner ?= { fh_southern_passage_open = yes }
+}
+
+fh_southern_passage_larger_trade_center = {
+	any_scope_state = {
+		fh_southern_passage_eligible_borneo = yes
+		any_scope_building = {
+			is_building_type = building_trade_center
+			level > 0
+			save_temporary_scope_as = fh_southern_passage_local_center
+			NOT = {
+				global_var:fh_tungning_founder.var:fh_southern_passage_rival ?= {
+					any_scope_state = {
+						region = sr:region_indonesia
+						any_scope_building = {
+							is_building_type = building_trade_center
+							level >= scope:fh_southern_passage_local_center.level
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+fh_southern_passage_indonesia_interest = {
+	has_strategic_region_interest_tier = {
+		strategic_region = sr:region_indonesia
+		value >= interest_tier_effect_can_start_diplomatic_plays_min_tier
+	}
+}
+
+fh_southern_passage_naval_ready = {
+	fh_southern_passage_indonesia_interest = yes
+	in_default = no
+	fh_southern_passage_own_navy >= fh_southern_passage_dutch_navy
+	fh_southern_passage_own_navy >= fh_southern_passage_demonstration_min_navy
+}
+
+fh_southern_passage_can_finish_demonstration = {
+	has_variable = fh_southern_passage_deadline
+	var:fh_southern_passage_month_checks <= 36
+}

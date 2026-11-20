@@ -1,0 +1,71 @@
+fh_je_southern_passage = {
+	group = je_group_foreign_affairs
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	transferable = no
+	can_revolution_inherit = no
+	should_be_pinned_by_default_uninvolved_or_context = yes
+	scripted_progress_bar = fh_southern_passage_pressure
+	scripted_button = fh_southern_passage_tariff_challenge
+	scripted_button = fh_southern_passage_military_challenge
+
+	on_monthly_pulse = {
+		effect = { fh_southern_passage_monthly = yes }
+	}
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { has_variable = fh_southern_passage_held }
+				desc = fh_southern_passage_hold_status
+			}
+			triggered_desc = {
+				trigger = {
+					has_variable = fh_southern_passage_demonstration
+					fh_southern_passage_naval_ready = no
+				}
+				desc = fh_southern_passage_demonstration_blocked_status
+			}
+			triggered_desc = {
+				trigger = { has_variable = fh_southern_passage_demonstration }
+				desc = fh_southern_passage_demonstration_status
+			}
+			desc = fh_southern_passage_dispute_status
+		}
+	}
+
+	outcome = {
+		header = fh_southern_passage_enforced_header
+		effect_header = je_standard_on_completion_header
+		color = "gold_positive"
+		conclusion_desc = fh_southern_passage_enforced_desc
+		trigger = { var:fh_southern_passage_result ?= 1 }
+	}
+	outcome = {
+		header = fh_southern_passage_lost_header
+		effect_header = je_standard_on_failure_header
+		color = "blue_negative"
+		conclusion_desc = fh_southern_passage_lost_desc
+		trigger = { var:fh_southern_passage_result ?= 2 }
+	}
+	outcome = {
+		header = fh_southern_passage_no_rival_header
+		effect_header = je_standard_on_completion_header
+		color = "gold_positive"
+		conclusion_desc = fh_southern_passage_no_rival_desc
+		trigger = { var:fh_southern_passage_result ?= 3 }
+	}
+	outcome = {
+		header = fh_southern_passage_demonstrated_header
+		effect_header = je_standard_on_completion_header
+		color = "gold_positive"
+		conclusion_desc = fh_southern_passage_demonstrated_desc
+		trigger = { var:fh_southern_passage_result ?= 4 }
+	}
+	outcome = {
+		header = fh_southern_passage_conceded_header
+		effect_header = je_standard_on_failure_header
+		color = "blue_negative"
+		conclusion_desc = fh_southern_passage_conceded_desc
+		trigger = { var:fh_southern_passage_result ?= 5 }
+	}
+}

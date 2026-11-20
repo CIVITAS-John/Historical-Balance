@@ -1,0 +1,151 @@
+﻿fh_southern_passage_do_tariff_challenge = {
+	fh_southern_passage_reconcile = yes
+	if = {
+		limit = {
+			fh_southern_passage_actions_open = yes
+			fh_southern_passage_tariff_policy = yes
+			fh_southern_passage_tariff_ready = yes
+		}
+		set_variable = { name = fh_southern_passage_tariff_cooldown months = 12 }
+		add_modifier = { name = fh_southern_passage_tariff_relief months = 12 }
+		ig:ig_industrialists ?= {
+			add_modifier = { name = fh_southern_passage_tariff_support months = 12 }
+		}
+		fh_southern_passage_apply_action_pressure = { DELTA = -12 }
+	}
+}
+
+fh_southern_passage_do_military_challenge = {
+	fh_southern_passage_reconcile = yes
+	if = {
+		limit = {
+			fh_southern_passage_actions_open = yes
+			fh_southern_passage_demonstration_unused = yes
+			fh_southern_passage_naval_ready = yes
+		}
+		set_variable = fh_southern_passage_demonstration
+		set_variable = { name = fh_southern_passage_demonstration_streak value = 0 }
+		change_relations = { country = var:fh_southern_passage_rival value = -20 }
+		add_modifier = { name = fh_southern_passage_demonstration_cost }
+		ig:ig_industrialists ?= {
+			add_modifier = { name = fh_southern_passage_military_protest months = 12 }
+		}
+		if = {
+			limit = { fh_mainland_officers_southern = yes }
+			ig:ig_armed_forces ?= {
+				add_modifier = { name = fh_southern_passage_military_support months = 12 }
+			}
+		}
+		else_if = {
+			limit = { fh_mainland_officers_mainland = yes }
+			ig:ig_armed_forces ?= {
+				add_modifier = { name = fh_southern_passage_military_protest months = 12 }
+			}
+		}
+		fh_southern_passage_check_endpoint = yes
+	}
+}
+
+fh_southern_passage_apply_action_pressure = {
+	je:fh_je_southern_passage ?= {
+		add_progress = { name = fh_southern_passage_pressure value = $DELTA$ }
+	}
+	fh_southern_passage_check_endpoint = yes
+}
+
+fh_southern_passage_refresh_tariff = {
+	if = {
+		limit = {
+			has_modifier = fh_southern_passage_tariff_relief
+			NOT = { fh_southern_passage_tariff_policy = yes }
+		}
+		remove_modifier = fh_southern_passage_tariff_relief
+	}
+}
+
+fh_southern_passage_roll_event = {
+	if = {
+		limit = { fh_southern_passage_actions_open = yes }
+		if = {
+			limit = { NOT = { has_variable = fh_southern_passage_event_quarter } }
+			set_variable = { name = fh_southern_passage_event_quarter value = 0 }
+		}
+		change_variable = { name = fh_southern_passage_event_quarter add = 1 }
+		if = {
+			limit = { var:fh_southern_passage_event_quarter >= 3 }
+			set_variable = { name = fh_southern_passage_event_quarter value = 0 }
+			if = {
+				limit = { NOT = { has_variable = fh_southern_passage_event_cooldown } }
+				trigger_event = { on_action = fh_southern_passage_quarterly_events }
+			}
+		}
+	}
+}
+
+fh_southern_passage_open_event = {
+	var:fh_southern_passage_rival ?= { save_scope_as = fh_southern_passage_event_rival }
+	set_variable = { name = fh_southern_passage_event_cooldown months = 12 }
+	set_variable = { name = fh_southern_passage_pending_event value = $EVENT$ days = 30 }
+}
+
+fh_southern_passage_cancel_event = {
+	if = {
+		limit = { has_variable = fh_southern_passage_pending_event }
+		remove_variable = fh_southern_passage_pending_event
+	}
+}
+
+fh_southern_passage_answer_event = {
+	fh_southern_passage_reconcile = yes
+	if = {
+		limit = { fh_southern_passage_can_answer_event = { EVENT = $EVENT$ ELIGIBLE = $ELIGIBLE$ } }
+		fh_southern_passage_cancel_event = yes
+		$RESPONSE$ = yes
+		fh_southern_passage_apply_action_pressure = { DELTA = $DELTA$ }
+	}
+}
+
+fh_southern_passage_pay_escorts = {
+	if = {
+		limit = { NOT = { has_modifier = fh_southern_passage_escort_cost } }
+		add_modifier = { name = fh_southern_passage_escort_cost months = 12 }
+	}
+}
+
+fh_southern_passage_launch_sortie = {
+	change_relations = { country = var:fh_southern_passage_rival value = -5 }
+	fh_southern_passage_pay_escorts = yes
+}
+
+fh_southern_passage_allow_private_escorts = {
+	every_scope_state = {
+		limit = { fh_southern_passage_eligible_borneo = yes }
+		add_modifier = { name = fh_southern_passage_merchant_trade months = 6 }
+	}
+}
+
+fh_southern_passage_maintain_shipping = {
+	ig:ig_industrialists ?= {
+		add_modifier = { name = fh_southern_passage_merchant_support months = 6 }
+	}
+}
+
+fh_southern_passage_suspend_preparations = {
+	fh_southern_passage_cancel_event = yes
+	if = {
+		limit = { has_modifier = fh_southern_passage_tariff_relief }
+		remove_modifier = fh_southern_passage_tariff_relief
+	}
+	if = {
+		limit = { has_modifier = fh_southern_passage_demonstration_cost }
+		remove_modifier = fh_southern_passage_demonstration_cost
+	}
+}
+
+fh_southern_passage_cleanup_preparations = {
+	fh_southern_passage_suspend_preparations = yes
+	if = {
+		limit = { has_modifier = fh_southern_passage_escort_cost }
+		remove_modifier = fh_southern_passage_escort_cost
+	}
+}

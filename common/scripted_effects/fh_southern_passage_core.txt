@@ -1,0 +1,159 @@
+fh_start_southern_passage = {
+	if = {
+		limit = {
+			fh_is_tungning_founder = yes
+			NOT = { has_variable = fh_southern_passage_opening_checked }
+		}
+		set_variable = fh_southern_passage_opening_checked
+		fh_southern_passage_filter_opening_subject = { TAG = STG KEY = stg }
+		fh_southern_passage_filter_opening_subject = { TAG = SEL KEY = sel }
+		fh_southern_passage_filter_opening_subject = { TAG = BLG KEY = blg }
+		fh_southern_passage_filter_opening_parcel = { PROVINCE = x1C7417 KEY = x1c7417 }
+		fh_southern_passage_filter_opening_parcel = { PROVINCE = x2A3D46 KEY = x2a3d46 }
+		fh_southern_passage_filter_opening_parcel = { PROVINCE = xE02CB6 KEY = xe02cb6 }
+		if = {
+			limit = { fh_southern_passage_has_grant = yes }
+			if = {
+				limit = { c:DEI ?= { is_country_alive = yes } }
+				set_variable = { name = fh_southern_passage_rival value = c:DEI }
+			}
+			else_if = {
+				limit = { c:NET ?= { fh_southern_passage_has_west_java = yes } }
+				fh_southern_passage_set_netherlands = yes
+			}
+			if = {
+				limit = { fh_southern_passage_rival_valid = yes }
+				set_variable = { name = fh_southern_passage_opening_navy value = naval_power_projection }
+				set_variable = { name = fh_southern_passage_demonstration_streak value = 0 }
+				set_variable = { name = fh_southern_passage_month_checks value = 0 }
+				set_variable = { name = fh_southern_passage_deadline years = 5 }
+				add_journal_entry = { type = fh_je_southern_passage }
+				fh_southern_passage_reconcile_grants = yes
+				fh_southern_passage_refresh_borneo = yes
+				fh_southern_passage_begin_play_tracking = yes
+				trigger_event = { id = fh_southern_passage_system.1 years = 5 }
+			}
+		}
+	}
+}
+
+fh_southern_passage_filter_opening_subject = {
+	if = {
+		limit = {
+			has_variable = fh_southern_passage_opening_$KEY$
+			NOT = { fh_southern_passage_keep_subject = { TAG = $TAG$ KEY = $KEY$ } }
+		}
+		remove_variable = fh_southern_passage_opening_$KEY$
+	}
+}
+
+fh_southern_passage_filter_opening_parcel = {
+	if = {
+		limit = {
+			has_variable = fh_southern_passage_opening_$KEY$
+			NOT = { fh_southern_passage_keep_parcel = { PROVINCE = $PROVINCE$ KEY = $KEY$ } }
+		}
+		remove_variable = fh_southern_passage_opening_$KEY$
+	}
+}
+
+fh_southern_passage_set_netherlands = {
+	set_variable = fh_southern_passage_dutch_fallback
+	set_variable = { name = fh_southern_passage_rival value = c:NET }
+}
+
+# Run only after giving an enforced goal against the old rival precedence.
+fh_southern_passage_refresh_rival = {
+	if = {
+		limit = {
+			fh_southern_passage_open = yes
+			NOR = {
+				fh_southern_passage_rival_valid = yes
+				has_variable = fh_southern_passage_dutch_fallback
+			}
+			c:NET ?= { fh_southern_passage_has_west_java = yes }
+		}
+		fh_southern_passage_set_netherlands = yes
+		set_variable = { name = fh_southern_passage_demonstration_streak value = 0 }
+		fh_southern_passage_cancel_event = yes
+	}
+}
+
+# The opening list is fixed. Retain a separate live snapshot so a lost grant
+# resets the streak even if another grant was regained in the same check.
+fh_southern_passage_reconcile_grants = {
+	fh_southern_passage_track_subject = { TAG = STG KEY = stg }
+	fh_southern_passage_track_subject = { TAG = SEL KEY = sel }
+	fh_southern_passage_track_subject = { TAG = BLG KEY = blg }
+	fh_southern_passage_track_parcel = { PROVINCE = x1C7417 KEY = x1c7417 }
+	fh_southern_passage_track_parcel = { PROVINCE = x2A3D46 KEY = x2a3d46 }
+	fh_southern_passage_track_parcel = { PROVINCE = xE02CB6 KEY = xe02cb6 }
+}
+
+fh_southern_passage_track_subject = {
+	if = {
+		limit = { fh_southern_passage_keep_subject = { TAG = $TAG$ KEY = $KEY$ } }
+		set_variable = fh_southern_passage_holds_$KEY$
+	}
+	else = { fh_southern_passage_track_lost_grant = { KEY = $KEY$ } }
+}
+
+fh_southern_passage_track_parcel = {
+	if = {
+		limit = { fh_southern_passage_keep_parcel = { PROVINCE = $PROVINCE$ KEY = $KEY$ } }
+		set_variable = fh_southern_passage_holds_$KEY$
+	}
+	else = { fh_southern_passage_track_lost_grant = { KEY = $KEY$ } }
+}
+
+fh_southern_passage_track_lost_grant = {
+	if = {
+		limit = { has_variable = fh_southern_passage_holds_$KEY$ }
+		remove_variable = fh_southern_passage_holds_$KEY$
+		set_variable = { name = fh_southern_passage_demonstration_streak value = 0 }
+	}
+}
+
+fh_southern_passage_check_demonstration = {
+	if = {
+		limit = { fh_southern_passage_active = yes }
+		change_variable = { name = fh_southern_passage_month_checks add = 1 }
+		if = {
+			limit = { has_variable = fh_southern_passage_demonstration }
+			if = {
+				limit = { fh_southern_passage_naval_ready = yes }
+				change_variable = { name = fh_southern_passage_demonstration_streak add = 1 }
+			}
+			else = { set_variable = { name = fh_southern_passage_demonstration_streak value = 0 } }
+		}
+	}
+}
+
+fh_southern_passage_refresh_borneo = {
+	every_scope_state = {
+		limit = { state_region = s:STATE_WEST_BORNEO }
+		if = {
+			limit = { fh_southern_passage_eligible_borneo = yes }
+			if = {
+				limit = { NOT = { has_modifier = fh_southern_passage_borneo_pressure } }
+				add_modifier = { name = fh_southern_passage_borneo_pressure }
+			}
+		}
+		else = { fh_southern_passage_clean_borneo = yes }
+	}
+}
+
+# State scope; owner and creation callbacks also call this for transferred land.
+fh_southern_passage_clean_borneo = {
+	if = {
+		limit = { fh_southern_passage_eligible_borneo = no }
+		if = {
+			limit = { has_modifier = fh_southern_passage_borneo_pressure }
+			remove_modifier = fh_southern_passage_borneo_pressure
+		}
+		if = {
+			limit = { has_modifier = fh_southern_passage_merchant_trade }
+			remove_modifier = fh_southern_passage_merchant_trade
+		}
+	}
+}

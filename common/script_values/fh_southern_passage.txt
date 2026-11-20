@@ -1,0 +1,35 @@
+fh_southern_passage_own_navy = {
+	value = naval_power_projection
+}
+
+fh_southern_passage_demonstration_min_navy = {
+	value = var:fh_southern_passage_opening_navy
+	multiply = 1.20
+}
+
+fh_southern_passage_netherlands_navy = {
+	value = naval_power_projection
+	multiply = 0.25
+}
+
+fh_southern_passage_dutch_navy = {
+	value = 0
+	if = {
+		limit = { has_variable = fh_southern_passage_dutch_fallback }
+		var:fh_southern_passage_rival ?= { add = fh_southern_passage_netherlands_navy }
+	}
+	else = {
+		var:fh_southern_passage_rival ?= {
+			if = {
+				limit = {
+					overlord ?= {
+						c:NET ?= this
+						fh_southern_passage_netherlands_navy > prev.naval_power_projection
+					}
+				}
+				overlord = { add = fh_southern_passage_netherlands_navy }
+			}
+			else = { add = naval_power_projection }
+		}
+	}
+}

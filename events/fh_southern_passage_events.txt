@@ -1,0 +1,200 @@
+﻿namespace = fh_southern_passage_action
+
+fh_southern_passage_action.11 = {
+	type = country_event
+	placement = root
+	title = fh_southern_passage_action.11.t
+	desc = fh_southern_passage_action.11.d
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	duration = 1
+	flavor = {
+		triggered_desc = {
+			trigger = { exists = scope:fh_southern_passage_merchant }
+			desc = fh_southern_passage_action.11.f
+		}
+	}
+
+	trigger = { fh_southern_passage_can_draw_event = { ELIGIBLE = fh_southern_passage_has_parcel } }
+	cancellation_trigger = {
+		NOT = { fh_southern_passage_pending_event_valid = { EVENT = 11 ELIGIBLE = fh_southern_passage_has_parcel } }
+	}
+
+	immediate = {
+		fh_southern_passage_open_event = { EVENT = 11 }
+		fh_court_faith_find_speaker = {
+			TEMPLATE = fh_yang_jingyuan_industrialists
+			SPEAKER = fh_southern_passage_merchant
+		}
+	}
+
+	option = {
+		name = fh_southern_passage_action.11.a
+		trigger = { fh_southern_passage_can_answer_event = { EVENT = 11 ELIGIBLE = fh_southern_passage_has_parcel } }
+		ai_chance = {
+			base = 0
+			modifier = {
+				trigger = { fh_southern_passage_ai_treasury = yes }
+				add = 2
+			}
+		}
+		custom_tooltip = fh_southern_passage_action.11.a_tt
+		hidden_effect = {
+			fh_southern_passage_answer_event = {
+				EVENT = 11
+				ELIGIBLE = fh_southern_passage_has_parcel
+				RESPONSE = fh_southern_passage_pay_escorts
+				DELTA = -5
+			}
+		}
+	}
+
+	option = {
+		name = fh_southern_passage_action.11.b
+		trigger = { fh_southern_passage_can_answer_event = { EVENT = 11 ELIGIBLE = fh_southern_passage_has_parcel } }
+		ai_chance = {
+			base = 0
+			modifier = {
+				trigger = {
+					fh_southern_passage_ai_treasury = no
+					je:fh_je_southern_passage ?= { "scripted_bar_progress(fh_southern_passage_pressure)" <= 40 }
+				}
+				add = 2
+			}
+		}
+		custom_tooltip = fh_southern_passage_action.11.b_tt
+		hidden_effect = {
+			fh_southern_passage_answer_event = {
+				EVENT = 11
+				ELIGIBLE = fh_southern_passage_has_parcel
+				RESPONSE = fh_southern_passage_allow_private_escorts
+				DELTA = 5
+			}
+		}
+	}
+
+	option = {
+		name = fh_southern_passage_action.dismiss
+		default_option = yes
+		ai_chance = { base = 1 }
+		hidden_effect = {
+			if = {
+				limit = { var:fh_southern_passage_pending_event ?= 11 }
+				fh_southern_passage_cancel_event = yes
+			}
+		}
+	}
+}
+
+fh_southern_passage_action.12 = {
+	type = country_event
+	placement = root
+	title = fh_southern_passage_action.12.t
+	desc = fh_southern_passage_action.12.d
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	duration = 1
+	flavor = {
+		triggered_desc = {
+			trigger = { exists = scope:fh_southern_passage_admiral }
+			desc = fh_southern_passage_action.12.f
+		}
+	}
+
+	trigger = { fh_southern_passage_can_draw_event = { ELIGIBLE = fh_southern_passage_rival_other_war } }
+	cancellation_trigger = {
+		NOT = { fh_southern_passage_pending_event_valid = { EVENT = 12 ELIGIBLE = fh_southern_passage_rival_other_war } }
+	}
+
+	immediate = {
+		fh_southern_passage_open_event = { EVENT = 12 }
+		random_scope_admiral = {
+			limit = {
+				owner = prev
+				is_character_alive = yes
+				is_in_exile_pool = no
+				exists = commander_military_formation
+			}
+			save_scope_as = fh_southern_passage_admiral
+		}
+	}
+
+	option = {
+		name = fh_southern_passage_action.12.a
+		trigger = { fh_southern_passage_can_answer_event = { EVENT = 12 ELIGIBLE = fh_southern_passage_rival_other_war } }
+		ai_chance = {
+			base = 0
+			modifier = {
+				trigger = { fh_southern_passage_ai_treasury = yes }
+				add = 2
+			}
+			modifier = {
+				trigger = {
+					fh_southern_passage_ai_treasury = yes
+					ig:ig_armed_forces ?= { is_in_government = yes }
+					fh_mainland_officers_southern = yes
+				}
+				add = 3
+			}
+		}
+		custom_tooltip = fh_southern_passage_action.12.a_tt
+		hidden_effect = {
+			fh_southern_passage_answer_event = {
+				EVENT = 12
+				ELIGIBLE = fh_southern_passage_rival_other_war
+				RESPONSE = fh_southern_passage_launch_sortie
+				DELTA = -5
+			}
+		}
+	}
+
+	option = {
+		name = fh_southern_passage_action.12.b
+		trigger = { fh_southern_passage_can_answer_event = { EVENT = 12 ELIGIBLE = fh_southern_passage_rival_other_war } }
+		ai_chance = {
+			base = 0
+			modifier = {
+				trigger = {
+					je:fh_je_southern_passage ?= { "scripted_bar_progress(fh_southern_passage_pressure)" <= 40 }
+					OR = {
+						fh_southern_passage_ai_treasury = no
+						AND = {
+							has_variable = fh_mainland_mobilizing
+							fh_mainland_officers_mainland = yes
+						}
+					}
+				}
+				add = 3
+			}
+		}
+		custom_tooltip = fh_southern_passage_action.12.b_tt
+		hidden_effect = {
+			fh_southern_passage_answer_event = {
+				EVENT = 12
+				ELIGIBLE = fh_southern_passage_rival_other_war
+				RESPONSE = fh_southern_passage_maintain_shipping
+				DELTA = 5
+			}
+		}
+	}
+
+	option = {
+		name = fh_southern_passage_action.dismiss
+		default_option = yes
+		ai_chance = { base = 1 }
+		hidden_effect = {
+			if = {
+				limit = { var:fh_southern_passage_pending_event ?= 12 }
+				fh_southern_passage_cancel_event = yes
+			}
+		}
+	}
+}
+
+fh_southern_passage_action.13 = {
+	type = country_event
+	hidden = yes
+
+	immediate = {
+		remove_variable = fh_southern_passage_market_refresh_pending
+		fh_southern_passage_refresh_tariff = yes
+	}
+}

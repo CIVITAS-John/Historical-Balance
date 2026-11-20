@@ -97,7 +97,10 @@ fh_tungning.3 = {
 		has_variable = fh_tungning_diplomacy_initialized
 	}
 
-	immediate = { fh_tungning_diplomacy_retry = yes }
+	immediate = {
+		fh_tungning_diplomacy_retry = yes
+		fh_start_southern_passage = yes
+	}
 }
 
 fh_tungning.4 = {

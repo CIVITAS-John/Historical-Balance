@@ -1,0 +1,79 @@
+﻿fh_southern_passage_borneo_pressure = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_coins_negative.dds"
+	state_trade_advantage_mult = -0.10
+}
+
+fh_southern_passage_tariff_relief = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_coins_negative.dds"
+	state_tariff_export_add = -0.10
+}
+
+fh_southern_passage_tariff_support = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_fist_positive.dds"
+	interest_group_approval_add = 2
+}
+
+fh_southern_passage_military_protest = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_fist_negative.dds"
+	interest_group_approval_add = -2
+}
+
+fh_southern_passage_military_support = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_fist_positive.dds"
+	interest_group_approval_add = 2
+}
+
+fh_southern_passage_demonstration_cost = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_rifle_negative.dds"
+	country_navy_goods_cost_mult = 0.25
+}
+
+fh_southern_passage_escort_cost = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_rifle_negative.dds"
+	country_navy_goods_cost_mult = 0.10
+}
+
+fh_southern_passage_merchant_trade = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_coins_positive.dds"
+	state_trade_advantage_mult = 0.10
+}
+
+fh_southern_passage_merchant_support = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_fist_positive.dds"
+	interest_group_approval_add = 2
+}
+
+fh_southern_passage_secured_demo_modifier = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_flag_positive.dds"
+	country_prestige_add = 15
+}
+
+fh_southern_passage_secured_goal_modifier = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_flag_positive.dds"
+	country_prestige_add = 20
+}
+
+fh_southern_passage_secured_demo_trade = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_coins_positive.dds"
+	state_trade_advantage_mult = 0.10
+}
+
+fh_southern_passage_secured_goal_trade = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_coins_positive.dds"
+	state_trade_advantage_mult = 0.15
+}
+
+fh_southern_passage_concede_modifier = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_flag_negative.dds"
+	country_prestige_add = -10
+}
+
+fh_southern_passage_lost_grants_modifier = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_flag_negative.dds"
+	country_prestige_add = -10
+}
+
+fh_southern_passage_lost_rival_modifier = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_flag_positive.dds"
+	country_prestige_add = 10
+}

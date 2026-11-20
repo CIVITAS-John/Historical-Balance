@@ -1,0 +1,64 @@
+﻿fh_southern_passage_actions_open = {
+	fh_southern_passage_active = yes
+	NOT = { has_variable = fh_southern_passage_reconcile_queued }
+}
+
+fh_southern_passage_tariff_policy = {
+	market.owner ?= this
+	OR = {
+		has_law_or_variant = law_type:law_mercantilism
+		has_law_or_variant = law_type:law_protectionism
+	}
+}
+
+fh_southern_passage_tariff_ready = {
+	NOT = { has_variable = fh_southern_passage_tariff_cooldown }
+}
+
+fh_southern_passage_demonstration_unused = {
+	NOT = { has_variable = fh_southern_passage_demonstration }
+}
+
+fh_southern_passage_can_draw_event = {
+	fh_southern_passage_actions_open = yes
+	NOT = { has_variable = fh_southern_passage_event_cooldown }
+	$ELIGIBLE$ = yes
+}
+
+fh_southern_passage_pending_event_valid = {
+	fh_southern_passage_active = yes
+	var:fh_southern_passage_pending_event ?= $EVENT$
+	var:fh_southern_passage_rival ?= scope:fh_southern_passage_event_rival
+	$ELIGIBLE$ = yes
+}
+
+fh_southern_passage_can_answer_event = {
+	fh_southern_passage_pending_event_valid = { EVENT = $EVENT$ ELIGIBLE = $ELIGIBLE$ }
+	NOT = { has_variable = fh_southern_passage_reconcile_queued }
+}
+
+# Use credit headroom as a budget proxy; the cost varies with duties and fleet size.
+fh_southern_passage_ai_treasury = {
+	in_default = no
+	scaled_debt < 0.50
+}
+
+fh_southern_passage_ai_can_seek_play = {
+	fh_southern_passage_actions_open = yes
+	fh_southern_passage_ai_treasury = yes
+	fh_southern_passage_rival_other_war = yes
+	fh_southern_passage_indonesia_interest = yes
+	aggressive_diplomatic_plays_permitted = yes
+	is_at_war = no
+	fh_southern_passage_own_navy >= fh_southern_passage_dutch_navy
+	var:fh_southern_passage_rival ?= { army_power_projection <= prev.army_power_projection }
+}
+
+# Called in the country evaluating a native territorial goal.
+fh_southern_passage_ai_naval_target = {
+	fh_southern_passage_ai_can_seek_play = yes
+	scope:target_state ?= {
+		fh_southern_passage_indonesia_state = yes
+		owner ?= global_var:fh_tungning_founder.var:fh_southern_passage_rival
+	}
+}

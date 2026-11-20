@@ -149,6 +149,16 @@ fh_tungning_lanfang_setup = {
 			activate_production_method = { building_type = building_port production_method = pm_basic_port }
 			fh_tungning_urban_setup = yes
 		}
+		if = {
+			limit = {
+				p:x1C7417 ?= { owner ?= prev }
+				p:x2A3D46 ?= { owner ?= prev }
+				p:xE02CB6 ?= { owner ?= prev }
+			}
+			set_variable = fh_southern_passage_opening_x1c7417
+			set_variable = fh_southern_passage_opening_x2a3d46
+			set_variable = fh_southern_passage_opening_xe02cb6
+		}
 	}
 }
 
