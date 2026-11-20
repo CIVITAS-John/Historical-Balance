@@ -8,7 +8,7 @@ The [aftermath tables](outcome-modifiers.md) hold the immediate effects and time
 | --- | --- | --- |
 | [The Claim Across the Strait](01-mainland-claim.md) | 1836 | Reassert, renounce, or face a final choice when Taiping rises |
 | [The Faith of the Court](02-court-faith.md) | 1836 | One of four official faiths and a choice to keep, repeal, or replace the Yongli Articles |
-| [The Southern Passage](03-dutch-east-indies.md) | After the opening diplomacy retry, with a southern holding and a Dutch rival | Secure the remaining holdings or concede them |
+| [The Southern Passage](03-dutch-east-indies.md) | After the opening diplomacy retry, with a tracked southern holding and a Dutch rival | Secure the route, concede disputed Lanfang parcels still held, or close if the holdings or rival are lost |
 | [The Manila Question](04-philippines.md) | Spain leaves the overlord chain; the opportunity starts once Manila is independent | Establish Tungning rule over the Philippines or let the opportunity pass |
 | [Who Shall Rule the Eastern Sea?](05-constitutional-settlement.md) | After final renunciation or the end of reassertion mobilization | A republic, a constitutional Ming court with a Zheng cabinet, or a Zheng monarchy |
 | [The Return to the Mainland](06-mainland-reconquest.md) | Reassertion or recovery of a coastal foothold | Establish an administration in any one of Fujian, Guangdong, or Zhejiang |

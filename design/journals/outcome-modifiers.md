@@ -54,6 +54,8 @@ Keep and Separate leave no unrecognized group to penalize. Use the actual settle
 | Lose all recorded opening grants before a victory | **Southern Outposts Lost:** −10 prestige | 2 years | +5% radicals among Maritime Houses supporters. |
 | No rival qualifies after checking the Dutch fallback, with a grant still held | **Pressure Relieved:** +10 prestige | 2 years | −2% radicals among Maritime Houses supporters. |
 
+Concessions transfer only eligible Lanfang parcels under the [Southern Passage land rule](03-dutch-east-indies.md#outcomes). Apply the same concession aftermath when only tributaries remain and no parcel changes hands.
+
 ## [Manila](04-philippines.md#outcomes-ai-and-static-checks)
 
 | Final result | Modifier on Tungning | Duration | Immediate effects |
@@ -131,4 +133,4 @@ Opening effects, interim event responses, mobilization, integration decrees, and
 - Trace simultaneous callbacks: ownership acquired while offers are pending, a Southern Passage peace that enforces a valid goal while changing the rival or losing the last grant, Manila conquest eliminating `PHI`, and the Taiping war ending with a delayed fork or cession reply. Check a full expanded cession, partially blocked transfers, up-front trade without aid, natural trade expiry before peace, heavy aid not earned, and a legal cession refused or unanswered. Verify that the recorded outcome takes precedence over late responses and cannot repeat after expiry or reload.
 - Verify modifier keys in vanilla `common/modifier_type_definitions/00_modifier_types.txt` and outcomes in `common/journal_entries/journal_entries.md`. For radicals, see vanilla `common/script_values/event_values.txt`, `events/law_events/welfare_laws_events.txt` (religion), `events/law_events/single_party_state_laws.txt` (interest groups), and `events/balkans_events/montenegro_events.txt` (negative adjustment). The mod already attaches a timed country modifier in [Tungning setup](../../common/scripted_effects/fh_tungning_setup.txt#L88). Run `git diff --check` and standalone Tiger after scripting. Follow [AGENTS.md](../../AGENTS.md): no game or launcher runs.
 
-The plan covers the mod’s Tungning chain. Vanilla journals, existing treaty terms and land rules, and new closure deadlines or failure states are outside its scope. Apply the Southern Passage concession aftermath once under whichever [concession rule](03-dutch-east-indies.md#outcomes) is approved.
+The plan covers the mod’s Tungning chain. Vanilla journals, existing treaty terms and land rules, and new closure deadlines or failure states are outside its scope.
