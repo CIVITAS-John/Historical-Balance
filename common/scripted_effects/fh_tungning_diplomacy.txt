@@ -1,5 +1,6 @@
 ﻿# Invoked once in Tungning scope, after the vanilla bookmark is initialized.
 fh_tungning_diplomacy = {
+	fh_tungning_borneo_tributaries = yes
 	fh_tungning_tributary_pacts = yes
 	fh_tungning_hue_supply_accord = yes
 
@@ -69,6 +70,7 @@ fh_tungning_diplomacy = {
 # The first weekly update can refresh rank and market data for a new tag.
 # Ownership and treaty checks prevent duplicating the initial setup.
 fh_tungning_diplomacy_retry = {
+	fh_tungning_borneo_tributaries = yes
 	fh_tungning_tributary_pacts = yes
 	fh_tungning_hue_supply_accord = yes
 	fh_tungning_busan_lease = yes
@@ -175,8 +177,6 @@ fh_tungning_tributary_pacts = {
 		fh_tungning_make_tributary = { SUBJECT = c:STG }
 		fh_tungning_make_tributary = { SUBJECT = c:SEL }
 		fh_tungning_make_tributary = { SUBJECT = c:BLG }
-		fh_tungning_replace_dei_puppet = { SUBJECT = c:SMB }
-		fh_tungning_replace_dei_puppet = { SUBJECT = c:PON }
 	}
 }
 
@@ -194,18 +194,29 @@ fh_tungning_make_tributary = {
 	}
 }
 
-fh_tungning_replace_dei_puppet = {
+# These are fixed bookmark pacts; ranks can still be stale during setup.
+fh_tungning_borneo_tributaries = {
+	fh_tungning_set_borneo_tributary = { SUBJECT = c:SMB }
+	fh_tungning_set_borneo_tributary = { SUBJECT = c:PON }
+}
+
+fh_tungning_set_borneo_tributary = {
 	if = {
 		limit = {
 			$SUBJECT$ ?= {
 				is_country_alive = yes
-				country_rank < c:TWG.country_rank
-			}
-			c:DEI ?= {
-				has_diplomatic_pact = { who = $SUBJECT$ type = puppet is_initiator = yes }
+				OR = {
+					is_subject = no
+					is_direct_subject_of = c:DEI
+				}
 			}
 		}
-		c:DEI = { remove_diplomatic_pact = { country = $SUBJECT$ type = puppet } }
+		$SUBJECT$ = {
+			if = {
+				limit = { is_direct_subject_of = c:DEI }
+				make_independent = yes
+			}
+		}
 		create_diplomatic_pact = { country = $SUBJECT$ type = tributary }
 	}
 }
