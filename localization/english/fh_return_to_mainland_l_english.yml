@@ -8,7 +8,7 @@
  fh_port_and_village_levies_end_tt: "The Port and Village Registers lose their #v +25%#! conscription bonus."
  fh_mainland_registration_ready_tt: "At least one mainland region has met the registration requirements at three consecutive monthly checks."
  fh_mainland_registration.1.t: "Register the Mainland Administration"
- fh_mainland_registration.1.d: "The coastal administration is ready to submit its accounts. The court may recognize the local rolls, or have its commissioners put them into a common format."
+ fh_mainland_registration.1.d: "The yard outside the yamen is crowded with people who have carried their deeds in split bamboo tubes. A widow gives the registrar her husband’s name and the four bounds of a paddy; the old roll still lists a brother who went south and never wrote. The clerk copies what she says, then sets down his brush. A printed form has come down from the commission, ruled into columns the village has never used, and he does not know which book the court wants."
  fh_mainland_registration.1.a: "Enter the local rolls as they stand."
  fh_mainland_registration.1.b: "Require a common register."
  fh_mainland_registration.1.defer: "Defer registration."
