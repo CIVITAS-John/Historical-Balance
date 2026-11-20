@@ -116,6 +116,8 @@ fh_tungning_country_setup = {
 	}
 	set_variable = fh_tungning_bootstrapped
 	set_global_variable = { name = fh_tungning_founder value = this }
+	# Convert after starting jobs are assigned, before the court faith setup recalculates Pop support.
+	s:STATE_FORMOSA.region_state:TWG ?= { fh_tungning_formosa_faith_setup = yes }
 	fh_start_court_faith = yes
 }
 
@@ -171,27 +173,35 @@ fh_tungning_formosa_setup = {
 		activate_production_methods = { "pm_trade_center" "pm_trade_center_trade_quantity_normal" }
 	}
 
-	every_scope_pop = {
-		limit = {
-			OR = { has_pop_culture = han has_pop_culture = min }
-			NOT = { has_pop_religion = catholic }
-		}
-		change_pop_religion = { target = rel:catholic value = 0.10 }
-	}
-	# A few Siraya congregations survived the end of Dutch rule in this timeline.
-	every_scope_pop = {
-		limit = {
-			has_pop_culture = yuanzhumin
-			has_pop_religion = animist
-		}
-		change_pop_religion = { target = rel:protestant value = 0.005 }
-	}
 	create_pop = { culture = korean size = 3000 }
 	create_pop = { culture = japanese size = 2000 }
 
 	# Seed the new pops as Qing does in POPULATION. Grey's Soft Pop Adjustments
 	# gives unseeded pops a very high default that the starting wage calculation uses.
 	effect_starting_pop_wealth_low = yes
+}
+
+fh_tungning_formosa_faith_setup = {
+	every_scope_pop = {
+		limit = {
+			OR = { has_pop_culture = han has_pop_culture = min }
+			NOT = { has_pop_religion = catholic }
+		}
+		if = {
+			limit = { is_pop_type = clergymen }
+			change_pop_religion = { target = rel:catholic value = 0.25 }
+		}
+		else = {
+			change_pop_religion = { target = rel:catholic value = 0.10 }
+		}
+	}
+	# A few Siraya congregations survived the end of Dutch rule in this timeline.
+	every_scope_pop = {
+		limit = {
+			has_pop_religion = animist
+		}
+		change_pop_religion = { target = rel:protestant value = 0.05 }
+	}
 }
 
 fh_tungning_urban_setup = {
