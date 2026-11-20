@@ -114,7 +114,7 @@ BUILDINGS = {
 			}
 			create_building = {
 				building = building_naval_administration
-				add_ownership = { country = { country = c:CHI levels = 3 } }
+				add_ownership = { country = { country = c:CHI levels = 5 } }
 				reserves = 1
 				activate_production_methods = { "pm_simple_sailor_recruitment" }
 			}
