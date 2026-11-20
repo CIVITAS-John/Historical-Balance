@@ -8,6 +8,7 @@
 			sg:silk = { add_exports = 4 }
 			sg:tools = { add_exports = 4 }
 			sg:iron = { add_imports = 6 }
+			sg:dye = { add_imports = 2 }
 		}
 	}
 }
