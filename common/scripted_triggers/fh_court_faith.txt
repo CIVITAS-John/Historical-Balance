@@ -110,6 +110,7 @@ fh_court_faith_traditionalist_in_government = {
 }
 
 fh_court_faith_christian_overlord = {
+	is_subject = yes
 	overlord ?= { religion = { has_discrimination_trait = heritage_christian } }
 }
 
