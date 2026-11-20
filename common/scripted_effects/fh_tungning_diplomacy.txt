@@ -175,6 +175,8 @@ fh_tungning_tributary_pacts = {
 		fh_tungning_make_tributary = { SUBJECT = c:STG }
 		fh_tungning_make_tributary = { SUBJECT = c:SEL }
 		fh_tungning_make_tributary = { SUBJECT = c:BLG }
+		fh_tungning_replace_dei_puppet = { SUBJECT = c:SMB }
+		fh_tungning_replace_dei_puppet = { SUBJECT = c:PON }
 	}
 }
 
@@ -188,6 +190,22 @@ fh_tungning_make_tributary = {
 				country_rank < c:TWG.country_rank
 			}
 		}
+		create_diplomatic_pact = { country = $SUBJECT$ type = tributary }
+	}
+}
+
+fh_tungning_replace_dei_puppet = {
+	if = {
+		limit = {
+			$SUBJECT$ ?= {
+				is_country_alive = yes
+				country_rank < c:TWG.country_rank
+			}
+			c:DEI ?= {
+				has_diplomatic_pact = { who = $SUBJECT$ type = puppet is_initiator = yes }
+			}
+		}
+		c:DEI = { remove_diplomatic_pact = { country = $SUBJECT$ type = puppet } }
 		create_diplomatic_pact = { country = $SUBJECT$ type = tributary }
 	}
 }
