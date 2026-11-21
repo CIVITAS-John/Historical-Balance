@@ -1,0 +1,4 @@
+﻿fh_mainland_integration_speed = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_documents_positive.dds"
+	state_incorporation_speed_mult = -1
+}

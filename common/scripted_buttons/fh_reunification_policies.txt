@@ -1,0 +1,47 @@
+﻿fh_reunification_taiwan_audience = {
+	name = fh_reunification_taiwan_audience
+	desc = fh_reunification_taiwan_audience_desc
+	visible = {
+		NOR = {
+			has_variable = fh_mainland_claim_abandoned
+			has_variable = fh_reunification_taiwan_policy
+		}
+	}
+	possible = {
+		custom_tooltip = {
+			text = fh_reunification_taiwan_question_available_tt
+			fh_reunification_policy_available = { POLICY = taiwan }
+		}
+		NOT = { has_variable = fh_reunification_taiwan_audience_pending }
+	}
+	effect = {
+		hidden_effect = {
+			fh_reunification_show_policy_audience = { POLICY = taiwan EVENT = fh_reunification_policies.1 }
+		}
+	}
+	ai_chance = { value = 0 }
+}
+
+fh_reunification_south_audience = {
+	name = fh_reunification_south_audience
+	desc = fh_reunification_south_audience_desc
+	visible = {
+		NOR = {
+			has_variable = fh_mainland_claim_abandoned
+			has_variable = fh_reunification_south_policy
+		}
+	}
+	possible = {
+		custom_tooltip = {
+			text = fh_reunification_south_question_available_tt
+			fh_reunification_policy_available = { POLICY = south }
+		}
+		NOT = { has_variable = fh_reunification_south_audience_pending }
+	}
+	effect = {
+		hidden_effect = {
+			fh_reunification_show_policy_audience = { POLICY = south EVENT = fh_reunification_policies.2 }
+		}
+	}
+	ai_chance = { value = 0 }
+}

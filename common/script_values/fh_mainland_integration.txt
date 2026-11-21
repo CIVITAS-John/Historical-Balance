@@ -1,0 +1,82 @@
+﻿fh_mainland_staffed_offices = {
+	every_scope_building = {
+		limit = { is_building_type = building_government_administration }
+		add = fh_staffed_administration_levels
+	}
+	max = 10
+}
+
+fh_mainland_turmoil_factor = {
+	if = {
+		limit = { turmoil >= 0.50 }
+		value = 0.20
+	}
+	else_if = {
+		limit = { turmoil >= 0.25 }
+		value = 0.45
+	}
+	else_if = {
+		limit = { turmoil >= 0.10 }
+		value = 0.75
+	}
+	else = { value = 1 }
+}
+
+fh_mainland_base_rate = {
+	value = fh_mainland_staffed_offices
+	multiply = 0.04
+	add = 0.40
+}
+
+fh_mainland_magistrate_bonus = 0.15
+
+fh_mainland_commissioner_bonus = {
+	value = fh_mainland_staffed_offices
+	multiply = 0.02
+}
+
+fh_mainland_rate_no_decree = {
+	value = fh_mainland_base_rate
+	multiply = fh_mainland_turmoil_factor
+}
+
+fh_mainland_rate_magistrates = {
+	value = fh_mainland_base_rate
+	add = fh_mainland_magistrate_bonus
+	multiply = fh_mainland_turmoil_factor
+}
+
+fh_mainland_rate_commissioners = {
+	value = fh_mainland_base_rate
+	add = fh_mainland_commissioner_bonus
+	multiply = fh_mainland_turmoil_factor
+}
+
+fh_mainland_integration_rate = {
+	if = {
+		limit = {
+			fh_mainland_integration_decree_state = yes
+			has_decree = fh_decree_county_magistrates
+		}
+		value = fh_mainland_rate_magistrates
+	}
+	else_if = {
+		limit = {
+			fh_mainland_integration_decree_state = yes
+			has_decree = fh_decree_taiwan_commissioners
+		}
+		value = fh_mainland_rate_commissioners
+	}
+	else = { value = fh_mainland_rate_no_decree }
+}
+
+fh_mainland_integration_penalty = {
+	if = {
+		limit = { fh_mainland_integration_severe = yes }
+		value = 1.25
+	}
+	else = {
+		value = 1
+		subtract = fh_mainland_integration_rate
+	}
+}

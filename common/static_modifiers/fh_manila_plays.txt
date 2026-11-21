@@ -1,0 +1,4 @@
+﻿fh_manila_expedition_stores = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_rifle_positive.dds"
+	unit_naval_invasion_efficiency_mult = 0.20
+}

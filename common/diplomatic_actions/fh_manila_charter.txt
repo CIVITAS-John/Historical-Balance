@@ -1,0 +1,59 @@
+﻿# The AI opens ordinary commercial talks before it can offer a charter.
+# Manila can refuse this action just like any other diplomatic proposal.
+fh_manila_open_commercial_talks = {
+	groups = { general }
+	texture = "gfx/interface/icons/diplomatic_treaties_articles_icons/trade_agreement_treaties.dds"
+	requires_approval = yes
+	can_use_obligations = no
+	show_effect_in_tooltip = yes
+
+	selectable = {
+		is_player = no
+		fh_manila_window_open = yes
+	}
+	potential = { scope:target_country ?= c:PHI }
+	possible = { fh_manila_charter_ai_trade_eligible = yes }
+
+	accept_effect = {
+		custom_tooltip = fh_manila_open_commercial_talks_tt
+		hidden_effect = {
+			if = {
+				limit = { fh_manila_charter_ai_trade_eligible = yes }
+				create_treaty = {
+					name = fh_manila_trade_treaty
+					first_country = this
+					second_country = c:PHI
+					is_draft = no
+					binding_period = { years = 2 }
+					articles_to_create = {
+						{ article = trade_privilege source_country = this target_country = c:PHI }
+					}
+				}
+			}
+		}
+	}
+	ai = {
+		evaluation_chance = {
+			value = 0
+			if = {
+				limit = { fh_manila_window_open = yes }
+				add = 0.25
+			}
+		}
+		will_propose = { fh_manila_charter_ai_trade_eligible = yes }
+		propose_score = { value = 20 }
+		accept_score = {
+			value = -10
+			add = { value = "relations(scope:actor)" }
+			if = {
+				limit = {
+					OR = {
+						has_attitude = { who = scope:actor attitude = antagonistic }
+						has_attitude = { who = scope:actor attitude = belligerent }
+					}
+				}
+				subtract = 100
+			}
+		}
+	}
+}

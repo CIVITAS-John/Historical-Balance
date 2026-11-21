@@ -1,6 +1,6 @@
 # The Reunification of China
 
-**Proposed design.** Once Tungning owns **Fujian, Guangdong, and Zhejiang**, it can seek a national settlement. Bring the Chinese core under direct rule or bring regional governments into the union under provincial charters. Decide where the court will sit and what terms to offer Taiwan and the southern holdings.
+Once Tungning owns **Fujian, Guangdong, and Zhejiang**, it can seek a national settlement. Bring the Chinese core under direct rule or bring regional governments into the union under provincial charters. Decide where the court will sit and what terms to offer Taiwan and the southern holdings.
 
 ## Opening and progress
 
@@ -86,4 +86,5 @@ Both grant [The Reunification Settlement](outcome-modifiers.md#reunification). T
 - Trace capital preview, confirmation, successful transfer, and cancellation on loss or occupation. Check manual confirmation without reward, no repeated reward on reselection, and no move at Ming enthronement. Check political and market capitals separately.
 - Trace Taiwan and southern holdings lost, recovered, newly eligible after proclamation, and pending another journal. Check effects apply once per eligible state or subject, end on loss, and cannot restart a timed term on recovery.
 - Keep the result tied to the founding country through native tag changes. Vanilla China formation and unification plays do not grant this settlement.
+- The Manila policy pause reads `fh_manila_question_opened` without `fh_manila_question_result`. Proclamation reads `fh_taiping_pact_ratified` with an active rebellion or `fh_taiping_cession_pending`. The Taiping pact and cession flags are the interface for JE 08.
 - Vanilla references: `common/strategic_regions/east_asia_strategic_regions.txt`, `common/journal_entries/00_reunify_china.txt`, `events/warlord_china_events.txt`, `common/country_formation/00_formable_countries.txt`, `common/laws/00_navy_model.txt` (ship power projection), and `events/meiji_restoration.txt` (capital movement).

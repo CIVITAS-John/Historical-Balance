@@ -1,0 +1,89 @@
+﻿fh_decree_county_magistrates = {
+	texture = "gfx/interface/icons/decree/decree_road_maintenance.dds"
+	cost = 100
+	country_trigger = { fh_mainland_integration_decree_country = yes }
+	state_trigger = {
+		fh_mainland_integration_decree_state = yes
+		NOR = {
+			has_decree = fh_decree_taiwan_commissioners
+			has_decree = fh_decree_public_relief
+		}
+	}
+	modifier = {
+		state_radicals_from_political_movements_mult = -0.25
+		state_construction_mult = -0.10
+	}
+	ai_weight = {
+		if = {
+			limit = {
+				incorporation_progress > 0
+				turmoil < 0.50
+				fh_mainland_state_unoccupied = yes
+				fh_mainland_integration_ai_commissioners = no
+			}
+			value = 35
+			if = {
+				limit = { fh_mainland_integration_priority = yes }
+				multiply = 3
+			}
+		}
+	}
+}
+
+fh_decree_taiwan_commissioners = {
+	texture = "gfx/interface/icons/decree/decree_promote_social_mobility.dds"
+	cost = 100
+	country_trigger = { fh_mainland_integration_decree_country = yes }
+	state_trigger = {
+		fh_mainland_integration_decree_state = yes
+		NOR = {
+			has_decree = fh_decree_county_magistrates
+			has_decree = fh_decree_public_relief
+		}
+	}
+	modifier = { state_radicals_from_political_movements_mult = 0.20 }
+	ai_weight = {
+		if = {
+			limit = {
+				incorporation_progress > 0
+				fh_mainland_state_unoccupied = yes
+				fh_mainland_integration_ai_commissioners = yes
+			}
+			value = 40
+			if = {
+				limit = { fh_mainland_integration_priority = yes }
+				multiply = 3
+			}
+		}
+	}
+}
+
+fh_decree_public_relief = {
+	texture = "gfx/interface/icons/decree/decree_emergency_relief.dds"
+	cost = 100
+	country_trigger = { fh_mainland_integration_decree_country = yes }
+	state_trigger = {
+		fh_mainland_integration_decree_state = yes
+		NOR = {
+			has_decree = fh_decree_county_magistrates
+			has_decree = fh_decree_taiwan_commissioners
+		}
+		OR = {
+			owner ?= { is_ai = no }
+			turmoil >= 0.25
+		}
+	}
+	ai_weight = {
+		if = {
+			limit = {
+				fh_mainland_state_unoccupied = yes
+				turmoil >= 0.50
+			}
+			value = 125
+			if = {
+				limit = { fh_mainland_integration_priority = yes }
+				multiply = 3
+			}
+		}
+	}
+}

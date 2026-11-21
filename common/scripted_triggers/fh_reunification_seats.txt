@@ -1,0 +1,176 @@
+﻿fh_reunification_settlements_open = {
+	fh_reunification_route_open = yes
+	has_variable = fh_reunification_opened
+}
+
+# The seat itself must stay eligible after being confirmed, even if a
+# different province changes hands. Taiwan need not start a new project.
+fh_reunification_current_seat_valid = {
+	OR = {
+		AND = {
+			capital ?= {
+				state_region = s:STATE_FORMOSA
+				is_treaty_port = no
+			}
+			fh_mainland_foothold_eligible = { REGION = STATE_FORMOSA }
+		}
+		fh_reunification_holds_capital = { REGION = STATE_FUJIAN }
+		fh_reunification_holds_capital = { REGION = STATE_GUANGDONG }
+		fh_reunification_holds_capital = { REGION = STATE_ZHEJIANG }
+		fh_reunification_holds_capital = { REGION = STATE_NANJING }
+		fh_reunification_holds_capital = { REGION = STATE_BEIJING }
+	}
+}
+
+fh_reunification_holds_capital = {
+	capital ?= {
+		state_region = s:$REGION$
+		is_treaty_port = no
+		is_incorporated = yes
+	}
+	fh_reunification_seat_ready = { REGION = $REGION$ }
+}
+
+fh_reunification_seat_ready = {
+	fh_mainland_foothold_eligible = { REGION = $REGION$ }
+	fh_reunification_seat_incorporated = { REGION = $REGION$ }
+}
+
+fh_reunification_seat_incorporated = {
+	any_scope_state = {
+		state_region = s:$REGION$
+		is_treaty_port = no
+		is_incorporated = yes
+	}
+}
+
+fh_reunification_capital_confirmed = {
+	NOT = { has_variable = fh_reunification_transfer_region }
+	exists = var:fh_reunification_confirmed_seat
+	capital ?= var:fh_reunification_confirmed_seat
+	fh_reunification_current_seat_valid = yes
+}
+
+fh_reunification_coastal_seat_open = {
+	fh_reunification_settlements_open = yes
+	has_journal_entry = fh_je_reunification_of_china
+	fh_reunification_capital_confirmed = no
+	NOT = { has_variable = fh_reunification_transfer_region }
+}
+
+fh_reunification_national_seat_open = {
+	fh_reunification_settlements_open = yes
+	fh_reunification_can_negotiate = yes
+	fh_reunification_secured_inland_seat = yes
+	NOT = { has_variable = fh_reunification_transfer_region }
+}
+
+# Called in the event and again by the effect, since the map can change
+# between opening the preview and choosing an option.
+fh_reunification_can_move_seat = {
+	fh_reunification_$AUDIENCE$_seat_open = yes
+	NOT = { capital.state_region ?= s:$REGION$ }
+	custom_tooltip = {
+		text = fh_reunification_destination_owner_tt
+		fh_owns_mainland_foothold = { REGION = $REGION$ }
+	}
+	custom_tooltip = {
+		text = fh_reunification_destination_incorporated_tt
+		fh_reunification_seat_incorporated = { REGION = $REGION$ }
+	}
+	custom_tooltip = {
+		text = fh_reunification_destination_occupation_tt
+		fh_mainland_region_unoccupied = { REGION = $REGION$ }
+	}
+}
+
+fh_reunification_transfer_valid = {
+	fh_reunification_settlements_open = yes
+	has_journal_entry = fh_je_reunification_of_china
+	capital ?= var:fh_reunification_transfer_origin
+	OR = {
+		AND = {
+			var:fh_reunification_transfer_region ?= s:STATE_FUJIAN
+			fh_reunification_seat_ready = { REGION = STATE_FUJIAN }
+		}
+		AND = {
+			var:fh_reunification_transfer_region ?= s:STATE_GUANGDONG
+			fh_reunification_seat_ready = { REGION = STATE_GUANGDONG }
+		}
+		AND = {
+			var:fh_reunification_transfer_region ?= s:STATE_ZHEJIANG
+			fh_reunification_seat_ready = { REGION = STATE_ZHEJIANG }
+		}
+		AND = {
+			fh_reunification_can_negotiate = yes
+			OR = {
+				AND = {
+					var:fh_reunification_transfer_region ?= s:STATE_NANJING
+					fh_reunification_seat_ready = { REGION = STATE_NANJING }
+				}
+				AND = {
+					var:fh_reunification_transfer_region ?= s:STATE_BEIJING
+					fh_reunification_seat_ready = { REGION = STATE_BEIJING }
+				}
+			}
+		}
+	}
+}
+
+fh_reunification_can_keep_taiwan = {
+	fh_reunification_coastal_seat_open = yes
+	fh_reunification_current_seat_valid = yes
+	capital.state_region ?= s:STATE_FORMOSA
+	var:fh_reunification_opening_capital ?= capital
+	NOT = { has_variable = fh_reunification_seat_rewarded }
+}
+
+fh_reunification_can_confirm_seat = {
+	fh_reunification_$AUDIENCE$_seat_open = yes
+	fh_reunification_capital_confirmed = no
+	fh_reunification_current_seat_valid = yes
+}
+
+fh_reunification_well_staffed_seat = {
+	any_scope_state = {
+		state_region = s:$REGION$
+		is_treaty_port = no
+		turmoil < 0.25
+		any_scope_building = {
+			is_building_type = building_government_administration
+			fh_staffed_administration_levels >= 4
+		}
+	}
+}
+
+fh_reunification_ai_wants_national_seat = {
+	is_ai = yes
+	fh_reunification_national_seat_open = yes
+	NOT = { has_variable = fh_reunification_seat_audience_pending }
+	OR = {
+		AND = {
+			fh_reunification_capital_confirmed = no
+			OR = {
+				fh_reunification_seat_ready = { REGION = STATE_NANJING }
+				fh_reunification_seat_ready = { REGION = STATE_BEIJING }
+			}
+		}
+		AND = {
+			NOT = { has_variable = fh_reunification_ai_national_audience_held }
+			is_at_war = no
+			NAND = { capital.state_region ?= s:STATE_FORMOSA navy_size >= 10 }
+			OR = {
+				AND = {
+					NOT = { capital.state_region ?= s:STATE_NANJING }
+					fh_reunification_seat_ready = { REGION = STATE_NANJING }
+					fh_reunification_well_staffed_seat = { REGION = STATE_NANJING }
+				}
+				AND = {
+					NOT = { capital.state_region ?= s:STATE_BEIJING }
+					fh_reunification_seat_ready = { REGION = STATE_BEIJING }
+					fh_reunification_well_staffed_seat = { REGION = STATE_BEIJING }
+				}
+			}
+		}
+	}
+}

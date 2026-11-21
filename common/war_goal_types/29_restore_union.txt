@@ -1,0 +1,92 @@
+﻿restore_union = {
+	icon = "gfx/interface/icons/war_goals/enforce_treaty_article.dds"
+
+	kind = make_subject
+	subject_type = subject_type_personal_union
+
+	settings = {
+		require_target_be_part_of_war
+		turns_into_subject
+		requires_interest
+		assent_required
+
+		# Validation
+		conflicts_with_make_subject
+		validate_conflicts_make_subject
+	}
+
+	execution_priority = 12
+
+	contestion_type = control_half_target_country_states
+
+	target_type = country
+
+	possible = {
+		# trigger to determine if a goal with its target data is listed when selecting a war goal in the diplo play panel
+		# scopes: root = holder, creator_country, diplomatic_play, target_country, target_state, stakeholder, target_region, article_options
+		ROOT = {
+			has_law = law_type:law_monarchy
+			has_variable = por_seeking_restore_union_var
+		}
+		scope:target_country ?= {
+			c:BRZ ?= this
+		}
+	}
+
+	valid = {
+		# trigger in addition to some basic validation code-side
+		# scopes: root = holder, creator_country, diplomatic_play, target_country, target_state, stakeholder, target_region, article_options
+		ROOT = {
+			has_law = law_type:law_monarchy
+			has_variable = por_seeking_restore_union_var
+		}
+		scope:target_country ?= {
+			c:BRZ ?= this
+		}
+	}
+
+	maneuvers = {
+		value = 0
+
+		add = {
+			desc = "MANEUVERS_BASE_VALUE"
+			value = 10
+		}
+
+		scope:target_country = {
+			multiply = {
+				desc = "MANEUVERS_TARGET_COUNTRY_POPULATION_FACTOR"
+				value = total_population
+				divide = define:NDiplomacy|SWAY_OFFER_WARGOAL_MANEUVERS_COST_POPULATION_SCALING_FACTOR
+				multiply = define:NDiplomacy|SWAY_OFFER_WARGOAL_MANEUVERS_COST_POPULATION_SCALING_MULTIPLIER
+				max = define:NDiplomacy|SWAY_OFFER_WARGOAL_MANEUVERS_COST_POPULATION_SCALING_MULTIPLIER_MAX_TOTAL
+			}
+		}
+	}
+
+	infamy_severity = 0.1
+
+	infamy = {
+		value = 0
+
+		scope:target_country = {
+			add = country_infamy_value
+		}
+	}
+
+	on_enforced = {
+		fh_manila_stage_goal = { KIND = 2 SUBJECT = yes }
+		# script effect on top of the predefined code effect
+		scope:target_country ?= {
+			activate_law = law_type:law_monarchy
+		}
+	}
+
+	mirrored_wargoal = {
+		method = no_mirror
+	}
+
+	ai = {
+		is_significant_demand = yes
+	}
+}

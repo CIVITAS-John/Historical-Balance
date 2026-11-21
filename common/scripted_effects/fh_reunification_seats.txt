@@ -1,0 +1,169 @@
+﻿fh_open_reunification_seats = {
+	set_variable = { name = fh_reunification_opening_capital value = capital }
+	set_variable = { name = fh_reunification_seat_audience_pending days = 33 }
+	trigger_event = { id = fh_reunification_seats.1 days = 1 popup = yes }
+}
+
+fh_reunification_show_seat_audience = {
+	if = {
+		limit = { NOT = { has_variable = fh_reunification_seat_audience_pending } }
+		set_variable = { name = fh_reunification_seat_audience_pending days = 32 }
+		trigger_event = { id = $EVENT$ popup = yes }
+	}
+}
+
+fh_reunification_record_current_seat = {
+	set_variable = { name = fh_reunification_confirmed_seat value = capital }
+}
+
+fh_reunification_confirm_seat = {
+	if = {
+		limit = {
+			has_variable = fh_reunification_seat_audience_pending
+			fh_reunification_can_confirm_seat = { AUDIENCE = $AUDIENCE$ }
+		}
+		remove_variable = fh_reunification_seat_audience_pending
+		fh_reunification_record_current_seat = yes
+	}
+}
+
+fh_reunification_keep_taiwan = {
+	if = {
+		limit = {
+			has_variable = fh_reunification_seat_audience_pending
+			fh_reunification_can_keep_taiwan = yes
+		}
+		remove_variable = fh_reunification_seat_audience_pending
+		fh_reunification_record_current_seat = yes
+		set_variable = fh_reunification_seat_rewarded
+		add_modifier = { name = fh_reunification_taiwan_fleet days = 730 }
+	}
+}
+
+fh_reunification_start_transfer = {
+	if = {
+		limit = {
+			has_variable = fh_reunification_seat_audience_pending
+			fh_reunification_can_move_seat = { REGION = $REGION$ AUDIENCE = $AUDIENCE$ }
+		}
+		remove_variable = fh_reunification_seat_audience_pending
+		set_variable = { name = fh_reunification_transfer_region value = s:$REGION$ }
+		set_variable = { name = fh_reunification_transfer_origin value = capital }
+		set_variable = { name = fh_reunification_transfer_preparing days = 182 }
+		add_modifier = { name = fh_reunification_transfer_cost days = 182 }
+		trigger_event = { id = fh_reunification_seats.3 days = 182 }
+	}
+}
+
+fh_reunification_clear_transfer = {
+	remove_variable = fh_reunification_transfer_region
+	remove_variable = fh_reunification_transfer_origin
+	remove_variable = fh_reunification_transfer_preparing
+	if = {
+		limit = { has_modifier = fh_reunification_transfer_cost }
+		remove_modifier = fh_reunification_transfer_cost
+	}
+}
+
+fh_reunification_finish_transfer = {
+	if = {
+		limit = {
+			has_variable = fh_reunification_transfer_region
+			NOT = { has_variable = fh_reunification_transfer_preparing }
+			fh_reunification_transfer_valid = yes
+		}
+		var:fh_reunification_transfer_region = { save_temporary_scope_as = fh_arrival_region }
+		fh_reunification_clear_transfer = yes
+		fh_reunification_move_to_region = { REGION = STATE_FUJIAN }
+		fh_reunification_move_to_region = { REGION = STATE_GUANGDONG }
+		fh_reunification_move_to_region = { REGION = STATE_ZHEJIANG }
+		fh_reunification_move_to_region = { REGION = STATE_NANJING }
+		fh_reunification_move_to_region = { REGION = STATE_BEIJING }
+		if = {
+			limit = {
+				capital.state_region ?= scope:fh_arrival_region
+				fh_reunification_current_seat_valid = yes
+			}
+			fh_reunification_record_current_seat = yes
+			if = {
+				limit = { NOT = { has_variable = fh_reunification_seat_rewarded } }
+				set_variable = fh_reunification_seat_rewarded
+				capital = {
+					save_scope_as = fh_reunification_arrival_state
+					add_modifier = { name = fh_reunification_arrival_tax days = 730 }
+				}
+				set_variable = { name = fh_reunification_arrival_seat value = capital }
+			}
+			trigger_event = { id = fh_reunification_seats.4 popup = yes }
+		}
+	}
+}
+
+fh_reunification_move_to_region = {
+	if = {
+		limit = { scope:fh_arrival_region ?= s:$REGION$ }
+		set_capital = $REGION$
+	}
+}
+
+fh_reunification_update_seat = {
+	if = {
+		limit = {
+			has_variable = fh_reunification_confirmed_seat
+			OR = {
+				NOT = { capital ?= var:fh_reunification_confirmed_seat }
+				fh_reunification_current_seat_valid = no
+			}
+		}
+		remove_variable = fh_reunification_confirmed_seat
+	}
+	if = {
+		limit = { has_variable = fh_reunification_transfer_region }
+		if = {
+			limit = { fh_reunification_transfer_valid = no }
+			fh_reunification_clear_transfer = yes
+			if = {
+				limit = { fh_reunification_settlements_open = yes is_ai = no }
+				trigger_event = { id = fh_reunification_seats.5 popup = yes }
+			}
+		}
+		else = { fh_reunification_finish_transfer = yes }
+	}
+	var:fh_reunification_arrival_seat ?= { fh_reunification_clean_arrival_tax = yes }
+	if = {
+		limit = {
+			is_ai = yes
+			fh_reunification_coastal_seat_open = yes
+			NOT = { has_variable = fh_reunification_seat_audience_pending }
+			OR = {
+				fh_reunification_current_seat_valid = yes
+				fh_reunification_seat_ready = { REGION = STATE_FUJIAN }
+				fh_reunification_seat_ready = { REGION = STATE_GUANGDONG }
+				fh_reunification_seat_ready = { REGION = STATE_ZHEJIANG }
+			}
+		}
+		fh_reunification_show_seat_audience = { EVENT = fh_reunification_seats.1 }
+	}
+	else_if = {
+		limit = { fh_reunification_ai_wants_national_seat = yes }
+		set_variable = fh_reunification_ai_national_audience_held
+		fh_reunification_show_seat_audience = { EVENT = fh_reunification_seats.2 }
+	}
+}
+
+# State transfer callbacks can strip this before the next country update.
+fh_reunification_clean_arrival_tax = {
+	if = {
+		limit = {
+			has_modifier = fh_reunification_arrival_tax
+			NOT = {
+				owner ?= {
+					fh_is_tungning_founder = yes
+					capital ?= prev
+					fh_reunification_current_seat_valid = yes
+				}
+			}
+		}
+		remove_modifier = fh_reunification_arrival_tax
+	}
+}

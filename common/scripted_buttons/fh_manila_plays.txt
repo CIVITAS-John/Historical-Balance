@@ -1,0 +1,39 @@
+﻿fh_manila_provision_expedition = {
+	name = fh_manila_provision_expedition
+	desc = fh_manila_provision_expedition_desc
+	visible = { fh_manila_unresolved = yes }
+	possible = {
+		custom_tooltip = {
+			text = fh_manila_expedition_window_tt
+			fh_manila_window_open = yes
+		}
+		custom_tooltip = {
+			text = fh_manila_expedition_unused_tt
+			NOT = { has_variable = fh_manila_expedition_funded }
+		}
+		custom_tooltip = {
+			text = fh_manila_expedition_war_tt
+			fh_manila_expedition_war = yes
+		}
+		custom_tooltip = {
+			text = fh_manila_expedition_one_war_tt
+			fh_manila_expedition_single_war = yes
+		}
+		in_default = no
+		custom_tooltip = {
+			text = fh_manila_expedition_cost_tt
+			gold_reserves >= fh_manila_expedition_cost
+		}
+	}
+	effect = {
+		custom_tooltip = fh_manila_expedition_effect_tt
+		hidden_effect = { fh_manila_provision_expedition_effect = yes }
+	}
+	ai_chance = {
+		value = 0
+		if = {
+			limit = { fh_manila_expedition_ai_ready = yes }
+			add = 10
+		}
+	}
+}

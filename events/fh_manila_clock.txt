@@ -1,0 +1,31 @@
+﻿namespace = fh_manila_clock
+
+fh_manila_clock.1 = {
+	type = country_event
+	hidden = yes
+	trigger = { fh_manila_unresolved = yes }
+	immediate = {
+		fh_manila_at_deadline = yes
+		fh_manila_queue_review = yes
+	}
+}
+
+fh_manila_clock.2 = {
+	type = country_event
+	hidden = yes
+	trigger = { fh_manila_unresolved = yes }
+	immediate = {
+		remove_variable = fh_manila_review_queued
+		fh_manila_review = yes
+	}
+}
+
+fh_manila_clock.3 = {
+	type = country_event
+	hidden = yes
+	trigger = { fh_manila_unresolved = yes has_variable = fh_manila_window_timer }
+	immediate = {
+		fh_manila_poll_petitions_effect = yes
+		trigger_event = { id = fh_manila_clock.3 months = 3 }
+	}
+}

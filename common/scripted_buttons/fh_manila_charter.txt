@@ -1,0 +1,46 @@
+﻿fh_manila_offer_charter = {
+	name = fh_manila_offer_charter
+	desc = fh_manila_offer_charter_desc
+	possible = {
+		custom_tooltip = {
+			text = fh_manila_charter_unused_tt
+			NOT = { has_variable = fh_manila_charter_used }
+		}
+		fh_manila_charter_eligible = yes
+	}
+	effect = {
+		custom_tooltip = fh_manila_charter_offer_tt
+		custom_tooltip = fh_manila_charter_market_terms_tt
+		hidden_effect = { fh_manila_send_charter = yes }
+	}
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				"relations(c:PHI)" >= 50
+				NOT = { has_variable = fh_manila_charter_used }
+				fh_manila_charter_eligible = yes
+				c:PHI ?= {
+					OR = {
+						is_player = yes
+						AND = {
+							OR = {
+								"relations(prev)" >= 60
+								army_power_projection < prev.army_power_projection
+								p:x0D8236.state ?= { turmoil >= 0.15 }
+							}
+							OR = {
+								"relations(prev)" >= 70
+								p:x0D8236.state ?= { turmoil >= 0.25 }
+								NOT = {
+									fh_manila_charter_reliable_protector = { PROPOSER = global_var:fh_tungning_founder }
+								}
+							}
+						}
+					}
+				}
+			}
+			add = 25
+		}
+	}
+}

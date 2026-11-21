@@ -1,0 +1,44 @@
+﻿fh_manila_petition_window = {
+	fh_manila_window_open = yes
+	NOT = { has_war_with = c:PHI }
+}
+
+fh_manila_petition_warehouses_available = {
+	c:PHI ?= { relations:prev >= 20 }
+}
+
+fh_manila_petition_trade_center = {
+	any_scope_building = {
+		is_building_type = building_trade_center
+		level > 0
+	}
+}
+
+fh_manila_petition_rice_available = {
+	OR = {
+		c:PHI ?= { is_at_war = yes }
+		p:x0D8236.state ?= { turmoil >= 0.15 }
+	}
+}
+
+fh_manila_petition_sisters_available = {
+	country_has_state_religion = rel:catholic
+	exists = ig:ig_devout
+	var:fh_court_faith_devout_profile ?= rel:catholic
+}
+
+fh_manila_petition_active = {
+	has_variable = fh_manila_petition_$PETITION$_pending
+	NOT = { has_variable = fh_manila_petition_$PETITION$_resolved }
+	fh_manila_petition_window = yes
+	fh_manila_petition_$PETITION$_available = yes
+	scope:fh_manila_petition_taiwan ?= {
+		owner = prev
+		state_region = s:STATE_FORMOSA
+	}
+}
+
+fh_manila_petition_warehouses_active = {
+	fh_manila_petition_active = { PETITION = warehouses }
+	scope:fh_manila_petition_taiwan ?= { fh_manila_petition_trade_center = yes }
+}

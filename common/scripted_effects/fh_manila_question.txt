@@ -1,0 +1,168 @@
+﻿fh_manila_consider_opening = {
+	if = {
+		limit = {
+			fh_is_tungning_founder = yes
+			NOR = {
+				has_variable = fh_manila_question_opened
+				has_variable = fh_manila_question_result
+			}
+			fh_manila_phi_independent = yes
+		}
+		set_variable = fh_manila_question_opened
+		set_variable = { name = fh_manila_window_timer years = 8 }
+		c:PHI = {
+			every_scope_state = {
+				limit = {
+					OR = {
+						state_region = s:STATE_LUZON
+						state_region = s:STATE_VISAYAS
+					}
+				}
+				every_province = {
+					limit = { owner ?= c:PHI }
+					global_var:fh_tungning_founder = {
+						add_to_variable_list = { name = fh_manila_starting_provinces target = prev }
+					}
+				}
+			}
+		}
+		trigger_event = { id = fh_manila_clock.1 years = 8 }
+		trigger_event = { id = fh_manila_clock.3 months = 3 }
+	}
+}
+
+# Ownership and subject hooks can run from inside native peace and charter
+# effects. Resolve on the next day, once enforcement and ownership agree.
+fh_manila_queue_review = {
+	if = {
+		limit = {
+			fh_manila_unresolved = yes
+			NOT = { has_variable = fh_manila_review_queued }
+		}
+		set_variable = fh_manila_review_queued
+		trigger_event = { id = fh_manila_clock.2 days = 1 }
+	}
+}
+
+fh_manila_cancel_pending = {
+	fh_manila_cancel_charter_effect = yes
+	fh_manila_cancel_petition_effect = yes
+}
+
+fh_manila_on_position_changed = {
+	fh_manila_consider_opening = yes
+	if = {
+		limit = { fh_manila_unresolved = yes }
+		if = {
+			limit = { fh_manila_phi_independent = no }
+			fh_manila_cancel_pending = yes
+			fh_manila_stop_expedition_effect = yes
+		}
+		fh_manila_queue_review = yes
+	}
+}
+
+fh_manila_at_deadline = {
+	if = {
+		limit = {
+			fh_manila_unresolved = yes
+			NOT = { has_variable = fh_manila_deadline_checked }
+		}
+		remove_variable = fh_manila_window_timer
+		set_variable = fh_manila_deadline_checked
+		set_variable = { name = fh_manila_deadline_today days = 1 }
+		fh_manila_cancel_pending = yes
+		if = {
+			limit = {
+				fh_manila_phi_independent = yes
+				fh_manila_qualifying_conflict_active = yes
+			}
+			fh_manila_record_deadline_conflict_effect = yes
+			set_variable = fh_manila_deadline_hold
+		}
+	}
+}
+
+fh_manila_review = {
+	if = {
+		limit = { fh_manila_unresolved = yes }
+		if = {
+			limit = { fh_manila_conquest = yes }
+			fh_manila_close = { RESULT = 3 }
+		}
+		else_if = {
+			limit = {
+				fh_manila_direct_subject = yes
+				has_variable = fh_manila_submission_enforced
+			}
+			fh_manila_close = { RESULT = 2 }
+		}
+		else_if = {
+			limit = {
+				fh_manila_direct_subject = yes
+				NOT = { has_variable = fh_manila_submission_unqualified }
+				OR = {
+					has_variable = fh_manila_submission_in_window
+					has_variable = fh_manila_charter_ratified
+				}
+			}
+			fh_manila_close = { RESULT = 1 }
+		}
+		else = {
+			if = {
+				limit = { fh_manila_phi_independent = no }
+				fh_manila_cancel_pending = yes
+				fh_manila_stop_expedition_effect = yes
+			}
+			if = {
+				limit = { NOT = { has_variable = fh_manila_window_timer } }
+				fh_manila_at_deadline = yes
+				if = {
+					limit = { has_variable = fh_manila_deadline_today }
+					fh_manila_queue_review = yes
+				}
+				else_if = {
+					limit = {
+						NAND = {
+							has_variable = fh_manila_deadline_hold
+							fh_manila_qualifying_conflict_active = yes
+						}
+					}
+					fh_manila_close = { RESULT = 4 }
+				}
+			}
+		}
+	}
+}
+
+# Keep the opening province list for the constitutional mandate. The result
+# also releases Philippine holdings to the Southern Compact.
+fh_manila_close = {
+	set_variable = { name = fh_manila_question_result value = $RESULT$ }
+	fh_manila_cancel_pending = yes
+	fh_manila_stop_expedition_effect = yes
+	remove_variable = fh_manila_window_timer
+	remove_variable = fh_manila_deadline_hold
+	remove_variable = fh_manila_deadline_play
+	remove_variable = fh_manila_review_queued
+	remove_variable = fh_manila_submission_in_window
+
+	if = {
+		limit = { $RESULT$ = 1 }
+		add_modifier = { name = fh_manila_settlement_agreement years = 4 }
+		fh_southern_passage_maritime_radicals = { CHANGE = fh_southern_passage_remove_medium_radicals }
+		change_relations = { country = c:PHI value = 10 }
+	}
+	else_if = {
+		limit = { $RESULT$ = 4 }
+		add_modifier = { name = fh_manila_missed_crossing years = 2 }
+		fh_southern_passage_southern_radicals = { CHANGE = small_radicals }
+	}
+	else = {
+		add_modifier = { name = fh_manila_settlement_enforced years = 6 }
+		fh_southern_passage_southern_radicals = { CHANGE = fh_southern_passage_remove_medium_radicals }
+		fh_southern_passage_maritime_radicals = { CHANGE = small_radicals }
+	}
+	fh_constitution_refresh_mandates = yes
+	fh_reunification_refresh_policies = yes
+}

@@ -1,0 +1,114 @@
+﻿namespace = fh_reunification_policies
+
+fh_reunification_policies.1 = {
+	type = country_event
+	placement = root
+	title = fh_reunification_policies.1.t
+	desc = fh_reunification_policies.1.d
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	duration = 1
+
+	trigger = {
+		has_variable = fh_reunification_taiwan_audience_pending
+		fh_reunification_policy_available = { POLICY = taiwan }
+	}
+	cancellation_trigger = {
+		NAND = {
+			has_variable = fh_reunification_taiwan_audience_pending
+			fh_reunification_policy_available = { POLICY = taiwan }
+		}
+	}
+
+	option = {
+		name = fh_reunification_choose_taiwan_local
+		custom_tooltip = fh_reunification_choose_taiwan_local_tt
+		hidden_effect = { fh_reunification_choose_policy = { POLICY = taiwan CHOICE = 1 } }
+		ai_chance = {
+			base = 50
+			modifier = { trigger = { ig:ig_intelligentsia ?= { is_in_government = yes } } add = 50 }
+		}
+	}
+	option = {
+		name = fh_reunification_choose_taiwan_central
+		custom_tooltip = fh_reunification_choose_taiwan_central_tt
+		hidden_effect = { fh_reunification_choose_policy = { POLICY = taiwan CHOICE = 2 } }
+		ai_chance = {
+			base = 50
+			modifier = { trigger = { ig:ig_landowners ?= { is_in_government = yes } } add = 50 }
+		}
+	}
+	option = {
+		name = fh_reunification_defer_policy
+		default_option = yes
+		ai_chance = { base = 0 }
+		hidden_effect = { remove_variable = fh_reunification_taiwan_audience_pending }
+	}
+}
+
+fh_reunification_policies.2 = {
+	type = country_event
+	placement = root
+	title = fh_reunification_policies.2.t
+	desc = fh_reunification_policies.2.d
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	duration = 1
+
+	trigger = {
+		has_variable = fh_reunification_south_audience_pending
+		fh_reunification_policy_available = { POLICY = south }
+	}
+	cancellation_trigger = {
+		NAND = {
+			has_variable = fh_reunification_south_audience_pending
+			fh_reunification_policy_available = { POLICY = south }
+		}
+	}
+
+	option = {
+		name = fh_reunification_choose_south_local
+		custom_tooltip = fh_reunification_choose_south_local_tt
+		hidden_effect = { fh_reunification_choose_policy = { POLICY = south CHOICE = 1 } }
+		ai_chance = {
+			base = 50
+			modifier = { trigger = { ig:ig_industrialists ?= { is_in_government = yes } } add = 50 }
+		}
+	}
+	option = {
+		name = fh_reunification_choose_south_central
+		custom_tooltip = fh_reunification_choose_south_central_tt
+		hidden_effect = { fh_reunification_choose_policy = { POLICY = south CHOICE = 2 } }
+		ai_chance = {
+			base = 50
+			modifier = { trigger = { ig:ig_landowners ?= { is_in_government = yes } } add = 50 }
+		}
+	}
+	option = {
+		name = fh_reunification_defer_policy
+		default_option = yes
+		ai_chance = { base = 0 }
+		hidden_effect = { remove_variable = fh_reunification_south_audience_pending }
+	}
+}
+
+fh_reunification_policies.3 = {
+	type = country_event
+	hidden = yes
+	trigger = {
+		fh_is_tungning_founder = yes
+		exists = scope:fh_reunification_expiring_policy_region
+	}
+	immediate = {
+		scope:fh_reunification_expiring_policy_region = {
+			remove_variable = fh_reunification_local_term_running
+			every_scope_state = {
+				limit = {
+					OR = {
+						has_modifier = fh_reunification_taiwan_central
+						has_modifier = fh_reunification_south_central
+					}
+				}
+				fh_reunification_refresh_state_policies = yes
+			}
+		}
+	}
+}

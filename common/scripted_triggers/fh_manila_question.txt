@@ -1,0 +1,53 @@
+﻿fh_manila_phi_has_manila = {
+	c:PHI ?= { is_country_alive = yes }
+	p:x0D8236 ?= { owner ?= c:PHI }
+}
+
+fh_manila_visible = {
+	fh_is_tungning_founder = yes
+	NOT = { has_variable = fh_manila_question_result }
+	fh_manila_phi_has_manila = yes
+	c:PHI ?= { NOT = { any_overlord_or_above = { this = c:SPA } } }
+}
+
+fh_manila_phi_independent = {
+	fh_manila_phi_has_manila = yes
+	c:PHI ?= { is_subject = no }
+}
+
+fh_manila_unresolved = {
+	fh_is_tungning_founder = yes
+	has_variable = fh_manila_question_opened
+	NOT = { has_variable = fh_manila_question_result }
+}
+
+fh_manila_window_open = {
+	fh_manila_unresolved = yes
+	has_variable = fh_manila_window_timer
+	NOT = { has_variable = fh_manila_deadline_hold }
+	fh_manila_phi_independent = yes
+}
+
+fh_manila_direct_subject = {
+	fh_manila_phi_has_manila = yes
+	c:PHI ?= { overlord ?= prev }
+}
+
+fh_manila_controls_cebu_requirement = {
+	OR = {
+		p:xD2CA4A ?= { owner ?= prev }
+		NOT = {
+			any_in_list = {
+				variable = fh_manila_starting_provinces
+				p:xD2CA4A ?= this
+			}
+		}
+	}
+}
+
+fh_manila_conquest = {
+	has_variable = fh_manila_territory_enforced
+	p:x0D8236 ?= { owner ?= prev }
+	fh_manila_controls_cebu_requirement = yes
+	fh_constitution_manila_recorded_balance > 0
+}

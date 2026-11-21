@@ -1,0 +1,135 @@
+﻿# This list is also used by the mainland incorporation system.
+fh_mainland_core_region = {
+	OR = {
+		this = s:STATE_FUJIAN
+		this = s:STATE_GUANGDONG
+		this = s:STATE_ZHEJIANG
+		this = s:STATE_SUZHOU
+		this = s:STATE_NANJING
+		this = s:STATE_JIANGSU
+		this = s:STATE_NORTHERN_ANHUI
+		this = s:STATE_SOUTHERN_ANHUI
+		this = s:STATE_JIANGXI
+		this = s:STATE_HUNAN
+		this = s:STATE_EASTERN_HUBEI
+		this = s:STATE_WESTERN_HUBEI
+		this = s:STATE_GUANGXI
+		this = s:STATE_SHAOZHOU
+		this = s:STATE_GUIZHOU
+		this = s:STATE_YUNNAN
+		this = s:STATE_SICHUAN
+		this = s:STATE_CHONGQING
+		this = s:STATE_BEIJING
+		this = s:STATE_ZHILI
+		this = s:STATE_SHANDONG
+		this = s:STATE_HENAN
+		this = s:STATE_SHANXI
+		this = s:STATE_XIAN
+		this = s:STATE_NINGXIA
+		this = s:STATE_GANSU
+		this = s:STATE_SHENGJING
+		this = s:STATE_SOUTHERN_MANCHURIA
+		this = s:STATE_NORTHERN_MANCHURIA
+	}
+}
+
+fh_mainland_core_state = {
+	state_region = { fh_mainland_core_region = yes }
+}
+
+fh_reunification_coastal_region = {
+	OR = {
+		this = s:STATE_FUJIAN
+		this = s:STATE_GUANGDONG
+		this = s:STATE_ZHEJIANG
+	}
+}
+
+fh_reunification_all_coasts_owned = {
+	fh_owns_mainland_foothold = { REGION = STATE_FUJIAN }
+	fh_owns_mainland_foothold = { REGION = STATE_GUANGDONG }
+	fh_owns_mainland_foothold = { REGION = STATE_ZHEJIANG }
+}
+
+fh_reunification_direct_region_secure = {
+	fh_owns_mainland_foothold = { REGION = $REGION$ }
+	fh_mainland_region_unoccupied = { REGION = $REGION$ }
+}
+
+fh_reunification_secured_inland_seat = {
+	OR = {
+		fh_reunification_direct_region_secure = { REGION = STATE_NANJING }
+		fh_reunification_direct_region_secure = { REGION = STATE_BEIJING }
+	}
+}
+
+# Coverage is per current state, including every ordinary fragment in a
+# split region. The coast and an inland seat have stricter, separate checks.
+fh_reunification_covered_state = {
+	OR = {
+		is_treaty_port = yes
+		owner ?= {
+			OR = {
+				fh_is_tungning_founder = yes
+				fh_provincial_charter_counts = yes
+			}
+		}
+	}
+}
+
+fh_reunification_region_complete = {
+	any_scope_state = { is_treaty_port = no }
+	NOT = { any_scope_state = { fh_reunification_covered_state = no } }
+}
+
+fh_reunification_core_covered = {
+	NOT = {
+		any_state_region = {
+			fh_mainland_core_region = yes
+			fh_reunification_region_complete = no
+		}
+	}
+}
+
+# Once the map is complete, any ordinary core land not held directly
+# means that at least one charter made a difference.
+fh_reunification_uses_charters = {
+	any_state_region = {
+		fh_mainland_core_region = yes
+		any_scope_state = {
+			is_treaty_port = no
+			NOT = { owner ?= { fh_is_tungning_founder = yes } }
+		}
+	}
+}
+
+fh_reunification_map_region_complete = {
+	state_region = {
+		trigger_if = {
+			limit = { fh_reunification_coastal_region = yes }
+			any_scope_state = {
+				is_treaty_port = no
+				owner ?= { fh_is_tungning_founder = yes }
+			}
+			NOT = {
+				any_scope_state = {
+					is_treaty_port = no
+					NOT = { owner ?= { fh_is_tungning_founder = yes } }
+				}
+			}
+		}
+		trigger_else = { fh_reunification_region_complete = yes }
+	}
+}
+
+fh_reunification_map_occupation = {
+	is_treaty_port = no
+	state_region = {
+		OR = {
+			fh_reunification_coastal_region = yes
+			this = s:STATE_NANJING
+			this = s:STATE_BEIJING
+		}
+	}
+	fh_mainland_state_unoccupied = no
+}

@@ -1,0 +1,32 @@
+﻿fh_reunification_taiwan_local = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_lightbulb_positive.dds"
+	state_education_access_add = 0.05
+	state_tax_capacity_mult = -0.10
+}
+
+fh_reunification_taiwan_central = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_fist_negative.dds"
+	state_radicals_from_political_movements_mult = 0.15
+}
+
+fh_reunification_taiwan_examiners = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_fist_positive.dds"
+	interest_group_approval_add = 2
+}
+
+fh_reunification_south_local = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_coins_positive.dds"
+	state_trade_advantage_mult = 0.05
+	state_tax_capacity_mult = -0.10
+}
+
+fh_reunification_south_central = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_documents_positive.dds"
+	state_tax_capacity_mult = 0.10
+	state_radicals_from_political_movements_mult = 0.15
+}
+
+fh_reunification_south_tribute = {
+	icon = "gfx/interface/icons/timed_modifier_icons/modifier_coins_positive.dds"
+	country_overlord_income_transfer_mult = -0.50
+}

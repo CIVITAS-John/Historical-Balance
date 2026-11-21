@@ -1,0 +1,20 @@
+﻿on_state_owner_change = {
+	on_actions = { fh_manila_petition_state_changed }
+}
+
+on_state_created = {
+	on_actions = { fh_manila_petition_state_changed }
+}
+
+fh_manila_petition_state_changed = {
+	trigger = {
+		state_region = s:STATE_FORMOSA
+		NOT = { owner ?= { fh_is_tungning_founder = yes } }
+	}
+	effect = {
+		fh_manila_clear_petition_state_modifier = { MODIFIER = fh_manila_bonded_warehouses }
+		fh_manila_clear_petition_state_modifier = { MODIFIER = fh_manila_rice_purchase }
+		fh_manila_clear_petition_state_modifier = { MODIFIER = fh_manila_free_hospital }
+		fh_manila_clear_petition_state_modifier = { MODIFIER = fh_manila_works_yard }
+	}
+}

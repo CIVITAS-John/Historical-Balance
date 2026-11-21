@@ -16,7 +16,13 @@ Qing begins with an embargo on Tungning and a small Catholic minority in Fujian.
 
 **The Southern Passage** opens after the first week if Tungning still holds an opening grant and has a Dutch rival. The court can lower export tariffs to buy time, sustain a naval demonstration, or enforce a qualifying demand in Indonesia. If the dispute ends in concessions, only the tracked West Borneo parcels can change hands.
 
+**The Manila Question** gives Tungning eight years from the moment an independent Philippines holds Manila. Offer protection with Manila's market intact, seek submission through ordinary diplomacy, or use a diplomatic play to pursue direct rule. A qualifying conflict already underway can outlast the deadline.
+
 **Who Shall Rule the Eastern Sea?** opens after final renunciation or the end of mainland mobilization. Build support for a republic, a Zhu monarchy with a Zheng cabinet, or a Zheng monarchy. Ratification opens a follow-up that requires six months of stable government under the chosen settlement.
+
+**The Return to the Mainland** opens on reassertion or after Tungning gains a coastal foothold. Directly own all ordinary land in Fujian, Guangdong, or Zhejiang, clear enemy occupation, and reach 50% incorporation in that state to register automatically. Staff Government Administration and use local decrees to ease incorporation across the mainland core.
+
+**The Reunification of China** opens once Tungning directly holds all three coasts. Use the journal map to check the rest of the core, offer provincial charters through diplomacy, and settle the political capital and local policies. Proclamation requires a secure coast, a directly held and secure Nanjing or Beijing, and a complete core. Keeping the court in Taiwan does not require mainland incorporation.
 
 **Ming** is available under Nation Formation to independent countries with Han, Hakka, Min, or Yue as a primary culture and at least 60% of the 26 eligible mainland regions. Tungning cannot form it after permanently renouncing the Ming claim. A monarchy becomes Great Ming when it holds Beijing, or Restored Ming when it holds Nanjing without Beijing. The Republic of Ming and People's Republic of Ming have their own flags. Tungning has separate flags for its Catholic kingdom and its republic.
 

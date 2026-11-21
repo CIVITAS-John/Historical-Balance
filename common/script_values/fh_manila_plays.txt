@@ -1,0 +1,4 @@
+﻿fh_manila_expedition_cost = {
+	value = gold_reserves_limit
+	multiply = 0.05
+}

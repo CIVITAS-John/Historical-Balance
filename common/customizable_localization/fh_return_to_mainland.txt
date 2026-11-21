@@ -1,0 +1,18 @@
+﻿fh_mainland_progress_leader = {
+	type = country
+	random_valid = no
+
+	text = {
+		trigger = { fh_mainland_foothold_leader = 1 }
+		localization_key = fh_mainland_leader_fujian
+	}
+	text = {
+		trigger = { fh_mainland_foothold_leader = 2 }
+		localization_key = fh_mainland_leader_guangdong
+	}
+	text = {
+		trigger = { fh_mainland_foothold_leader = 3 }
+		localization_key = fh_mainland_leader_zhejiang
+	}
+	text = { localization_key = fh_mainland_leader_none }
+}

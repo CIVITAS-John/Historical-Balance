@@ -1,0 +1,219 @@
+﻿namespace = fh_reunification_seats
+
+fh_reunification_seats.1 = {
+	type = country_event
+	placement = root
+	title = fh_reunification_seats.1.t
+	desc = fh_reunification_seats.1.d
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	duration = 1
+
+	trigger = {
+		has_variable = fh_reunification_seat_audience_pending
+		fh_reunification_coastal_seat_open = yes
+	}
+	cancellation_trigger = {
+		OR = {
+			NOT = { has_variable = fh_reunification_seat_audience_pending }
+			fh_reunification_coastal_seat_open = no
+		}
+	}
+
+	option = {
+		name = fh_reunification_keep_taiwan
+		trigger = { fh_reunification_can_keep_taiwan = yes }
+		custom_tooltip = fh_reunification_keep_taiwan_tt
+		hidden_effect = { fh_reunification_keep_taiwan = yes }
+		ai_chance = {
+			base = 25
+			modifier = { trigger = { navy_size >= 10 } add = 100 }
+			modifier = { trigger = { is_at_war = yes } add = 100 }
+		}
+	}
+
+	option = {
+		name = fh_reunification_confirm_capital
+		trigger = {
+			fh_reunification_can_confirm_seat = { AUDIENCE = coastal }
+			fh_reunification_can_keep_taiwan = no
+		}
+		custom_tooltip = fh_reunification_confirm_capital_tt
+		hidden_effect = { fh_reunification_confirm_seat = { AUDIENCE = coastal } }
+		ai_chance = { base = 75 }
+	}
+
+	option = {
+		name = fh_reunification_move_fujian
+		trigger = { fh_reunification_can_move_seat = { REGION = STATE_FUJIAN AUDIENCE = coastal } }
+		show_as_unavailable = { NOT = { capital.state_region ?= s:STATE_FUJIAN } }
+		custom_tooltip = fh_reunification_move_capital_tt
+		hidden_effect = { fh_reunification_start_transfer = { REGION = STATE_FUJIAN AUDIENCE = coastal } }
+		ai_chance = {
+			base = 5
+			modifier = {
+				trigger = {
+					is_at_war = no
+					fh_reunification_well_staffed_seat = { REGION = STATE_FUJIAN }
+				}
+				add = 45
+			}
+			modifier = { trigger = { is_at_war = yes fh_reunification_current_seat_valid = yes } add = -5 }
+		}
+	}
+
+	option = {
+		name = fh_reunification_move_guangdong
+		trigger = { fh_reunification_can_move_seat = { REGION = STATE_GUANGDONG AUDIENCE = coastal } }
+		show_as_unavailable = { NOT = { capital.state_region ?= s:STATE_GUANGDONG } }
+		custom_tooltip = fh_reunification_move_capital_tt
+		hidden_effect = { fh_reunification_start_transfer = { REGION = STATE_GUANGDONG AUDIENCE = coastal } }
+		ai_chance = {
+			base = 5
+			modifier = {
+				trigger = {
+					is_at_war = no
+					fh_reunification_well_staffed_seat = { REGION = STATE_GUANGDONG }
+				}
+				add = 45
+			}
+			modifier = { trigger = { is_at_war = yes fh_reunification_current_seat_valid = yes } add = -5 }
+		}
+	}
+
+	option = {
+		name = fh_reunification_move_zhejiang
+		trigger = { fh_reunification_can_move_seat = { REGION = STATE_ZHEJIANG AUDIENCE = coastal } }
+		show_as_unavailable = { NOT = { capital.state_region ?= s:STATE_ZHEJIANG } }
+		custom_tooltip = fh_reunification_move_capital_tt
+		hidden_effect = { fh_reunification_start_transfer = { REGION = STATE_ZHEJIANG AUDIENCE = coastal } }
+		ai_chance = {
+			base = 5
+			modifier = {
+				trigger = {
+					is_at_war = no
+					fh_reunification_well_staffed_seat = { REGION = STATE_ZHEJIANG }
+				}
+				add = 45
+			}
+			modifier = { trigger = { is_at_war = yes fh_reunification_current_seat_valid = yes } add = -5 }
+		}
+	}
+
+	option = {
+		name = fh_reunification_defer_seat
+		default_option = yes
+		ai_chance = { base = 1 }
+		hidden_effect = { remove_variable = fh_reunification_seat_audience_pending }
+	}
+}
+
+fh_reunification_seats.2 = {
+	type = country_event
+	placement = root
+	title = fh_reunification_seats.2.t
+	desc = fh_reunification_seats.2.d
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	duration = 1
+
+	trigger = {
+		has_variable = fh_reunification_seat_audience_pending
+		fh_reunification_national_seat_open = yes
+	}
+	cancellation_trigger = {
+		OR = {
+			NOT = { has_variable = fh_reunification_seat_audience_pending }
+			fh_reunification_national_seat_open = no
+		}
+	}
+
+	option = {
+		name = fh_reunification_confirm_capital
+		trigger = {
+			fh_reunification_can_confirm_seat = { AUDIENCE = national }
+		}
+		custom_tooltip = fh_reunification_confirm_capital_tt
+		hidden_effect = { fh_reunification_confirm_seat = { AUDIENCE = national } }
+		ai_chance = { base = 75 }
+	}
+
+	option = {
+		name = fh_reunification_move_nanjing
+		trigger = { fh_reunification_can_move_seat = { REGION = STATE_NANJING AUDIENCE = national } }
+		show_as_unavailable = { NOT = { capital.state_region ?= s:STATE_NANJING } }
+		custom_tooltip = fh_reunification_move_capital_tt
+		hidden_effect = { fh_reunification_start_transfer = { REGION = STATE_NANJING AUDIENCE = national } }
+		ai_chance = {
+			base = 5
+			modifier = {
+				trigger = {
+					is_at_war = no
+					fh_reunification_well_staffed_seat = { REGION = STATE_NANJING }
+				}
+				add = 45
+			}
+			modifier = { trigger = { is_at_war = yes fh_reunification_current_seat_valid = yes } add = -5 }
+		}
+	}
+
+	option = {
+		name = fh_reunification_move_beijing
+		trigger = { fh_reunification_can_move_seat = { REGION = STATE_BEIJING AUDIENCE = national } }
+		show_as_unavailable = { NOT = { capital.state_region ?= s:STATE_BEIJING } }
+		custom_tooltip = fh_reunification_move_capital_tt
+		hidden_effect = { fh_reunification_start_transfer = { REGION = STATE_BEIJING AUDIENCE = national } }
+		ai_chance = {
+			base = 5
+			modifier = {
+				trigger = {
+					is_at_war = no
+					fh_reunification_well_staffed_seat = { REGION = STATE_BEIJING }
+				}
+				add = 45
+			}
+			modifier = { trigger = { is_at_war = yes fh_reunification_current_seat_valid = yes } add = -5 }
+		}
+	}
+
+	option = {
+		name = fh_reunification_defer_seat
+		default_option = yes
+		ai_chance = { base = 1 }
+		hidden_effect = { remove_variable = fh_reunification_seat_audience_pending }
+	}
+}
+
+# The saved destination and current map are authoritative at the deadline.
+fh_reunification_seats.3 = {
+	type = country_event
+	hidden = yes
+	trigger = {
+		fh_is_tungning_founder = yes
+		has_variable = fh_reunification_transfer_region
+	}
+	immediate = { fh_reunification_update_seat = yes }
+}
+
+fh_reunification_seats.4 = {
+	type = country_event
+	placement = root
+	title = fh_reunification_seats.4.t
+	desc = fh_reunification_seats.4.d
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	option = {
+		name = fh_reunification_seat_arrived
+		default_option = yes
+		if = {
+			limit = { capital ?= { has_modifier = fh_reunification_arrival_tax } }
+			custom_tooltip = fh_reunification_arrival_reward_tt
+		}
+	}
+}
+
+fh_reunification_seats.5 = {
+	type = country_event
+	placement = root
+	title = fh_reunification_seats.5.t
+	desc = fh_reunification_seats.5.d
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	option = { name = fh_reunification_seat_cancelled default_option = yes }
+}

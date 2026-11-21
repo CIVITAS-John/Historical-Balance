@@ -1,0 +1,13 @@
+﻿fh_reunification_chartered_settlement = {
+	country_prestige_add = 20
+	country_legitimacy_base_add = 10
+}
+
+fh_reunification_direct_settlement = {
+	country_prestige_add = 25
+	country_legitimacy_base_add = 10
+}
+
+fh_provincial_charter_tribute = {
+	country_overlord_income_transfer_mult = -0.5
+}

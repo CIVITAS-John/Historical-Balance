@@ -1,0 +1,155 @@
+﻿fh_update_reunification_settlements = {
+	fh_reunification_update_seat = yes
+	fh_reunification_refresh_policies = yes
+	# The first eligible holding opens the question. Deferred questions stay
+	# available in the journal, then as decisions once it closes.
+	if = {
+		limit = {
+			fh_reunification_policy_available = { POLICY = taiwan }
+			NOT = { has_variable = fh_reunification_taiwan_introduced }
+			NOT = { has_variable = fh_reunification_seat_audience_pending }
+		}
+		fh_reunification_show_policy_audience = { POLICY = taiwan EVENT = fh_reunification_policies.1 }
+	}
+	else_if = {
+		limit = {
+			fh_reunification_policy_available = { POLICY = south }
+			NOT = { has_variable = fh_reunification_south_introduced }
+			NOT = { has_variable = fh_reunification_seat_audience_pending }
+			NOT = { has_variable = fh_reunification_taiwan_audience_pending }
+		}
+		fh_reunification_show_policy_audience = { POLICY = south EVENT = fh_reunification_policies.2 }
+	}
+}
+
+fh_reunification_show_policy_audience = {
+	if = {
+		limit = {
+			fh_reunification_policy_available = { POLICY = $POLICY$ }
+			NOT = { has_variable = fh_reunification_$POLICY$_audience_pending }
+		}
+		set_variable = fh_reunification_$POLICY$_introduced
+		set_variable = { name = fh_reunification_$POLICY$_audience_pending days = 32 }
+		trigger_event = { id = $EVENT$ popup = yes }
+	}
+}
+
+fh_reunification_choose_policy = {
+	if = {
+		limit = {
+			has_variable = fh_reunification_$POLICY$_audience_pending
+			fh_reunification_policy_available = { POLICY = $POLICY$ }
+		}
+		remove_variable = fh_reunification_$POLICY$_audience_pending
+		set_variable = { name = fh_reunification_$POLICY$_policy value = $CHOICE$ }
+		if = {
+			limit = { var:fh_reunification_taiwan_policy ?= 2 NOT = { has_variable = fh_reunification_taiwan_approval_started } }
+			set_variable = fh_reunification_taiwan_approval_started
+			ig:ig_landowners ?= {
+				add_modifier = { name = fh_reunification_taiwan_examiners days = 730 }
+			}
+		}
+		fh_reunification_refresh_policies = yes
+	}
+}
+
+fh_reunification_refresh_policies = {
+	if = {
+		limit = { has_variable = fh_reunification_taiwan_policy }
+		every_scope_state = {
+			limit = { state_region = s:STATE_FORMOSA }
+			fh_reunification_refresh_state_policies = yes
+		}
+	}
+	if = {
+		limit = { has_variable = fh_reunification_south_policy }
+		every_scope_state = {
+			limit = {
+				OR = {
+					fh_reunification_southern_land = yes
+					has_modifier = fh_reunification_south_local
+					has_modifier = fh_reunification_south_central
+				}
+			}
+			fh_reunification_refresh_state_policies = yes
+		}
+		every_subject_or_below = {
+			limit = {
+				OR = {
+					has_modifier = fh_reunification_south_tribute
+					fh_reunification_south_tribute_valid = yes
+				}
+			}
+			fh_reunification_refresh_south_tribute = yes
+		}
+	}
+}
+
+fh_reunification_refresh_south_tribute = {
+	if = {
+		limit = { fh_reunification_south_tribute_valid = yes }
+		if = {
+			limit = { NOT = { has_modifier = fh_reunification_south_tribute } }
+			add_modifier = { name = fh_reunification_south_tribute }
+		}
+	}
+	else_if = {
+		limit = { has_modifier = fh_reunification_south_tribute }
+		remove_modifier = fh_reunification_south_tribute
+	}
+}
+
+# Expiry belongs to the region, so an owner change, split or merge cannot
+# start another term. During the original term recaptured land can resume it.
+fh_reunification_start_local_term = {
+	state_region = {
+		if = {
+			limit = { NOT = { has_variable = fh_reunification_local_term_started } }
+			set_variable = fh_reunification_local_term_started
+			set_variable = { name = fh_reunification_local_term_running days = 730 }
+			save_scope_as = fh_reunification_expiring_policy_region
+			global_var:fh_tungning_founder ?= { trigger_event = { id = fh_reunification_policies.3 days = 730 } }
+		}
+	}
+}
+
+fh_reunification_refresh_state_policies = {
+	fh_reunification_apply_state_policy = { POLICY = taiwan HOLDING = fh_reunification_taiwan_holding }
+	fh_reunification_apply_state_policy = { POLICY = south HOLDING = fh_reunification_southern_holding }
+}
+
+fh_reunification_apply_state_policy = {
+	if = {
+		limit = { $HOLDING$ = yes owner ?= { var:fh_reunification_$POLICY$_policy ?= 1 } }
+		if = {
+			limit = { NOT = { has_modifier = fh_reunification_$POLICY$_local } }
+			add_modifier = { name = fh_reunification_$POLICY$_local }
+		}
+	}
+	else_if = {
+		limit = { has_modifier = fh_reunification_$POLICY$_local }
+		remove_modifier = fh_reunification_$POLICY$_local
+	}
+	if = {
+		limit = { $HOLDING$ = yes owner ?= { var:fh_reunification_$POLICY$_policy ?= 2 } }
+		fh_reunification_start_local_term = yes
+		if = {
+			limit = {
+				state_region = { has_variable = fh_reunification_local_term_running }
+				NOT = { has_modifier = fh_reunification_$POLICY$_central }
+			}
+			add_modifier = { name = fh_reunification_$POLICY$_central }
+		}
+		else_if = {
+			limit = {
+				state_region = { NOT = { has_variable = fh_reunification_local_term_running } }
+				has_modifier = fh_reunification_$POLICY$_central
+			}
+			remove_modifier = fh_reunification_$POLICY$_central
+		}
+	}
+	else_if = {
+		limit = { has_modifier = fh_reunification_$POLICY$_central }
+		remove_modifier = fh_reunification_$POLICY$_central
+	}
+}

@@ -1,0 +1,126 @@
+﻿fh_je_reunification_of_china = {
+	group = je_group_foreign_affairs
+	icon = "gfx/interface/icons/invention_icons/wargaming.dds"
+	transferable = no
+	can_revolution_inherit = no
+
+	scripted_button = fh_reunification_coastal_audience
+	scripted_button = fh_reunification_national_audience
+	scripted_button = fh_reunification_taiwan_audience
+	scripted_button = fh_reunification_south_audience
+	scripted_button = fh_proclaim_reunification
+
+	immediate = {
+		set_variable = fh_reunification_opened
+		fh_open_reunification_seats = yes
+		fh_schedule_reunification_review = yes
+	}
+
+	map_color = {
+		if = {
+			limit = { fh_mainland_core_state = yes }
+			if = {
+				limit = { is_treaty_port = yes }
+				value = { 120 120 120 }
+			}
+			else_if = {
+				limit = { owner ?= { fh_is_tungning_founder = yes } }
+				value = { 54 137 103 }
+			}
+			else_if = {
+				limit = {
+					state_region = { fh_reunification_coastal_region = no }
+					owner ?= { fh_provincial_charter_counts = yes }
+				}
+				value = { 65 121 177 }
+			}
+			else = { value = { 164 79 68 } }
+		}
+	}
+
+	map_color_second = {
+		if = {
+			limit = { fh_reunification_map_occupation = yes }
+			value = { 216 153 66 }
+		}
+	}
+
+	map_tooltip = {
+		if = {
+			limit = { fh_mainland_core_state = yes }
+			custom_tooltip_no_bullet = fh_reunification_map_owner_tt
+			if = {
+				limit = { is_treaty_port = yes }
+				custom_tooltip_no_bullet = fh_reunification_map_port_tt
+			}
+			else = {
+				if = {
+					limit = { fh_reunification_map_region_complete = yes }
+					custom_tooltip_no_bullet = fh_reunification_map_complete_tt
+				}
+				else = { custom_tooltip_no_bullet = fh_reunification_map_incomplete_tt }
+				if = {
+					limit = {
+						state_region = { fh_reunification_coastal_region = yes }
+						NOT = { owner ?= { fh_is_tungning_founder = yes } }
+					}
+					custom_tooltip_no_bullet = fh_reunification_map_coast_tt
+				}
+				else_if = {
+					limit = { owner ?= { fh_provincial_charter_counts = yes } }
+					custom_tooltip_no_bullet = fh_reunification_map_charter_tt
+				}
+				else_if = {
+					limit = {
+						owner ?= {
+							OR = {
+								has_variable = fh_provincial_charter_ratified
+								has_variable = fh_provincial_charter_lapsed
+							}
+						}
+					}
+					custom_tooltip_no_bullet = fh_reunification_map_charter_suspended_tt
+				}
+				else_if = {
+					limit = { owner ?= { fh_provincial_associated = yes } }
+					custom_tooltip_no_bullet = fh_reunification_map_associate_tt
+				}
+				if = {
+					limit = { fh_reunification_map_occupation = yes }
+					custom_tooltip_no_bullet = fh_reunification_map_occupied_tt
+				}
+				fh_mainland_integration_tooltip = yes
+			}
+		}
+	}
+
+	outcome = {
+		header = je_standard_failure_header
+		effect_header = je_standard_on_failure_header
+		conclusion_desc = fh_reunification_abandoned_desc
+		color = "blue_negative"
+		trigger = { has_variable = fh_mainland_claim_abandoned }
+	}
+
+	outcome = {
+		header = fh_reunification_chartered_header
+		effect_header = je_standard_on_completion_header
+		conclusion_desc = fh_reunification_chartered_desc
+		color = "gold_positive"
+		trigger = {
+			has_variable = fh_reunification_proclaimed
+			has_variable = fh_reunification_chartered_union
+		}
+	}
+
+	outcome = {
+		header = fh_reunification_direct_header
+		effect_header = je_standard_on_completion_header
+		conclusion_desc = fh_reunification_direct_desc
+		color = "gold_positive"
+		trigger = {
+			has_variable = fh_reunification_proclaimed
+			NOT = { has_variable = fh_reunification_chartered_union }
+		}
+	}
+}

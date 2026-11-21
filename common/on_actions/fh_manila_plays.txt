@@ -1,0 +1,234 @@
+﻿on_diplomatic_play_started = {
+	on_actions = { fh_manila_track_play }
+}
+
+fh_manila_track_play = {
+	trigger = {
+		scope:initiator ?= { fh_manila_window_open = yes }
+		c:PHI ?= scope:target
+	}
+	effect = {
+		set_variable = { name = fh_manila_play_target value = scope:target }
+		# The native initial demand may be inserted after this callback.
+		if = {
+			limit = {
+				OR = {
+					is_diplomatic_play_type = dp_make_tributary
+					is_diplomatic_play_type = dp_make_protectorate
+					is_diplomatic_play_type = dp_make_dominion
+					is_diplomatic_play_type = dp_restore_union
+					is_diplomatic_play_type = dp_conquer_state
+					is_diplomatic_play_type = dp_return_state
+					is_diplomatic_play_type = dp_annex_war
+					is_diplomatic_play_type = dp_take_treaty_port
+					fh_manila_play_has_demands = yes
+				}
+			}
+			set_variable = fh_manila_play_qualified
+		}
+	}
+}
+
+on_wargoal_added = {
+	on_actions = { fh_manila_track_added_goal }
+}
+
+fh_manila_track_added_goal = {
+	trigger = {
+		has_variable = fh_manila_play_target
+		NOT = { has_variable = fh_manila_play_qualified }
+		scope:actor ?= { fh_manila_window_open = yes }
+		initiator_is = scope:actor
+		fh_manila_play_has_demands = yes
+	}
+	effect = { set_variable = fh_manila_play_qualified }
+}
+
+on_wargoal_enforced_by_timer = {
+	on_actions = { fh_manila_remember_timer_goal }
+}
+
+fh_manila_remember_timer_goal = {
+	trigger = { has_variable = fh_manila_goal_candidate }
+	effect = {
+		if = {
+			limit = {
+				OR = {
+					var:fh_manila_goal_candidate ?= 2
+					var:fh_manila_goal_candidate ?= 3
+				}
+			}
+			# Timed subjugation is reversible, but it must never be
+			# credited as a voluntary agreement while it is in force.
+			set_variable = fh_manila_submission_unqualified
+		}
+		if = {
+			limit = { var:fh_manila_goal_candidate ?= 1 }
+			scope:diplomatic_play ?= { set_variable = fh_manila_territorial_timer_in_play }
+		}
+		scope:war_goal_enforced ?= {
+			set_variable = { name = fh_manila_goal_timer_kind value = root.var:fh_manila_goal_candidate }
+			if = {
+				limit = { exists = scope:diplomatic_play }
+				set_variable = { name = fh_manila_goal_timer_play value = scope:diplomatic_play }
+			}
+		}
+		remove_variable = fh_manila_goal_candidate
+		remove_variable = fh_manila_goal_candidate_play
+	}
+}
+
+on_wargoal_enforced = {
+	on_actions = { fh_manila_confirm_enforced_goal }
+}
+
+fh_manila_confirm_enforced_goal = {
+	trigger = {
+		fh_manila_unresolved = yes
+		OR = {
+			has_variable = fh_manila_goal_candidate
+			scope:war_goal_enforced ?= { has_variable = fh_manila_goal_timer_kind }
+		}
+	}
+	effect = {
+		fh_manila_award_goal_credit = { KIND = 1 FLAG = fh_manila_territory_enforced }
+		fh_manila_award_goal_credit = { KIND = 2 FLAG = fh_manila_submission_enforced }
+		fh_manila_award_goal_credit = { KIND = 3 FLAG = fh_manila_submission_unqualified }
+		remove_variable = fh_manila_goal_candidate
+		remove_variable = fh_manila_goal_candidate_play
+	}
+}
+
+on_become_independent = {
+	on_actions = { fh_manila_reset_military_submission }
+}
+
+on_become_subject = {
+	on_actions = { fh_manila_reset_military_submission }
+}
+
+fh_manila_reset_military_submission = {
+	trigger = {
+		c:PHI ?= this
+		NOT = { is_direct_subject_of = global_var:fh_tungning_founder }
+		global_var:fh_tungning_founder ?= { fh_manila_unresolved = yes }
+	}
+	effect = {
+		global_var:fh_tungning_founder = {
+			remove_variable = fh_manila_submission_enforced
+			remove_variable = fh_manila_submission_unqualified
+		}
+	}
+}
+
+on_diplo_play_back_down = {
+	on_actions = { fh_manila_mark_play_ended }
+}
+
+on_war_end = {
+	on_actions = { fh_manila_mark_play_ended }
+}
+
+fh_manila_mark_play_ended = {
+	trigger = {
+		OR = {
+			has_variable = fh_manila_play_qualified
+			global_var:fh_tungning_founder ?= { var:fh_manila_expedition_play ?= root }
+		}
+	}
+	effect = {
+		set_variable = fh_manila_play_ended
+		global_var:fh_tungning_founder ?= {
+			if = {
+				limit = { var:fh_manila_expedition_play ?= root }
+				fh_manila_stop_expedition_effect = yes
+			}
+			fh_manila_queue_review = yes
+		}
+	}
+}
+
+on_won_war = {
+	on_actions = { fh_manila_mark_war_leaver }
+}
+
+on_lost_war = {
+	on_actions = { fh_manila_mark_war_leaver }
+}
+
+on_inconclusive_war = {
+	on_actions = { fh_manila_mark_war_leaver }
+}
+
+fh_manila_mark_war_leaver = {
+	trigger = {
+		scope:diplomatic_play ?= {
+			has_variable = fh_manila_play_qualified
+			OR = {
+				initiator_is = root
+				var:fh_manila_play_target ?= root
+			}
+		}
+	}
+	effect = {
+		global_var:fh_tungning_founder ?= {
+			if = {
+				limit = { this = root }
+				scope:diplomatic_play = { set_variable = fh_manila_play_ended }
+				if = {
+					limit = { var:fh_manila_expedition_play ?= scope:diplomatic_play }
+					fh_manila_stop_expedition_effect = yes
+				}
+			}
+			fh_manila_queue_review = yes
+		}
+	}
+}
+
+on_diplo_play_join_side = {
+	on_actions = { fh_manila_expedition_check_war_join }
+}
+
+fh_manila_expedition_check_war_join = {
+	trigger = {
+		is_war = yes
+		global_var:fh_tungning_founder ?= { has_modifier = fh_manila_expedition_stores }
+	}
+	effect = { global_var:fh_tungning_founder = { fh_manila_maintain_expedition_effect = yes } }
+}
+
+on_diplo_play_war_start = {
+	on_actions = { fh_manila_expedition_check_second_war }
+}
+
+fh_manila_expedition_check_second_war = {
+	trigger = {
+		global_var:fh_tungning_founder ?= {
+			has_variable = fh_manila_expedition_play
+			NOT = { var:fh_manila_expedition_play ?= root }
+		}
+		OR = {
+			initiator_is = global_var:fh_tungning_founder
+			target_is = global_var:fh_tungning_founder
+			any_scope_initiator_ally = { fh_is_tungning_founder = yes }
+			any_scope_target_ally = { fh_is_tungning_founder = yes }
+		}
+	}
+	effect = { global_var:fh_tungning_founder = { fh_manila_stop_expedition_effect = yes } }
+}
+
+on_monthly_pulse_country = {
+	on_actions = { fh_manila_expedition_monthly_cleanup }
+}
+
+fh_manila_expedition_monthly_cleanup = {
+	trigger = {
+		fh_is_tungning_founder = yes
+		OR = {
+			has_modifier = fh_manila_expedition_stores
+			has_variable = fh_manila_expedition_play
+			has_variable = fh_manila_expedition_timer
+		}
+	}
+	effect = { fh_manila_maintain_expedition_effect = yes }
+}

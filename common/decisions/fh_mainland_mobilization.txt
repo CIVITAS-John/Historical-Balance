@@ -1,9 +1,12 @@
 ﻿fh_press_mainland_claims_decision = {
 	is_shown = { fh_mainland_claims_decision_visible = yes }
 	possible = {
-		NOT = { has_variable = fh_mainland_claims_audience }
 		custom_tooltip = {
-			text = fh_mainland_claim_has_target_tt
+			text = fh_mainland_claim_no_audience_tt
+			NOT = { has_variable = fh_mainland_claims_audience }
+		}
+		trigger_if = {
+			limit = { is_ai = yes }
 			any_country = { fh_mainland_claim_target_ready = yes }
 		}
 	}

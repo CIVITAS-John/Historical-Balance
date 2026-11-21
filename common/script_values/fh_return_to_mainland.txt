@@ -2,3 +2,77 @@
 	value = level
 	multiply = occupancy
 }
+
+fh_mainland_state_progress = {
+	if = {
+		limit = { is_incorporated = yes }
+		value = 100
+	}
+	else = {
+		value = this.incorporation_progress
+		multiply = 100
+	}
+}
+
+fh_foothold_fujian_progress = {
+	value = -1
+	if = {
+		limit = { fh_mainland_foothold_eligible = { REGION = STATE_FUJIAN } }
+		every_scope_state = {
+			limit = { state_region = s:STATE_FUJIAN is_treaty_port = no }
+			min = fh_mainland_state_progress
+		}
+	}
+}
+
+fh_foothold_guangdong_progress = {
+	value = -1
+	if = {
+		limit = { fh_mainland_foothold_eligible = { REGION = STATE_GUANGDONG } }
+		every_scope_state = {
+			limit = { state_region = s:STATE_GUANGDONG is_treaty_port = no }
+			min = fh_mainland_state_progress
+		}
+	}
+}
+
+fh_foothold_zhejiang_progress = {
+	value = -1
+	if = {
+		limit = { fh_mainland_foothold_eligible = { REGION = STATE_ZHEJIANG } }
+		every_scope_state = {
+			limit = { state_region = s:STATE_ZHEJIANG is_treaty_port = no }
+			min = fh_mainland_state_progress
+		}
+	}
+}
+
+fh_mainland_foothold_progress = {
+	value = 0
+	min = fh_foothold_fujian_progress
+	min = fh_foothold_guangdong_progress
+	min = fh_foothold_zhejiang_progress
+}
+
+# First eligible region wins an exact tie, including when no project has started.
+fh_mainland_foothold_leader = {
+	if = {
+		limit = {
+			fh_foothold_fujian_progress >= 0
+			fh_foothold_fujian_progress >= fh_mainland_foothold_progress
+		}
+		value = 1
+	}
+	else_if = {
+		limit = {
+			fh_foothold_guangdong_progress >= 0
+			fh_foothold_guangdong_progress >= fh_mainland_foothold_progress
+		}
+		value = 2
+	}
+	else_if = {
+		limit = { fh_foothold_zhejiang_progress >= 0 }
+		value = 3
+	}
+	else = { value = 0 }
+}

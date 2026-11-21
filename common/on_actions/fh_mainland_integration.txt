@@ -1,0 +1,59 @@
+﻿on_monthly_pulse_country = {
+	on_actions = { fh_mainland_integration_country_pulse }
+}
+
+fh_mainland_integration_country_pulse = {
+	trigger = { fh_is_tungning_founder = yes }
+	effect = {
+		fh_clear_legacy_mainland_registration = yes
+		every_scope_state = {
+			limit = {
+				OR = {
+					fh_mainland_integration_state = yes
+					has_modifier = fh_mainland_integration_speed
+					fh_mainland_integration_has_decree = yes
+				}
+			}
+			fh_mainland_monthly_integration = yes
+		}
+	}
+}
+
+on_state_owner_change = {
+	on_actions = { fh_mainland_integration_state_changed }
+}
+
+on_state_created = {
+	on_actions = { fh_mainland_integration_state_changed }
+}
+
+fh_mainland_integration_state_changed = {
+	trigger = {
+		OR = {
+			fh_mainland_integration_state = yes
+			has_modifier = fh_mainland_integration_speed
+			fh_mainland_integration_has_decree = yes
+		}
+	}
+	effect = {
+		fh_mainland_clear_decrees = yes
+		fh_mainland_refresh_integration_speed = yes
+	}
+}
+
+on_state_incorporation = {
+	on_actions = { fh_mainland_integration_state_incorporated }
+}
+
+fh_mainland_integration_state_incorporated = {
+	trigger = {
+		OR = {
+			has_modifier = fh_mainland_integration_speed
+			fh_mainland_integration_has_decree = yes
+		}
+	}
+	effect = {
+		fh_mainland_clear_decrees = yes
+		fh_mainland_clear_integration_modifier = yes
+	}
+}

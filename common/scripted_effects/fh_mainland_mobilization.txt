@@ -33,18 +33,23 @@
 			}
 			set_variable = fh_mainland_mobilization_taiping
 		}
-		fh_mainland_find_active_war = yes
 		if = {
 			# A peace transfer can fire the ownership check after war resolution.
-			limit = { has_variable = fh_mainland_qing_war_ended_today }
-			set_variable = fh_mainland_mobilization_followed_through
+			limit = {
+				exists = var:fh_mainland_qing_war_ended_today
+				fh_mainland_has_foothold = yes
+			}
+			fh_mainland_record_war = { PLAY = var:fh_mainland_qing_war_ended_today }
 			if = {
-				limit = { has_variable = fh_mainland_qing_war_defeat_today }
+				limit = { var:fh_mainland_qing_war_defeat_today ?= var:fh_mainland_first_war }
 				fh_mainland_record_war_defeat = yes
 			}
 			fh_mainland_finish_mobilization = yes
 		}
-		else = { trigger_event = { id = fh_mainland_mobilization.1 years = 3 } }
+		else = {
+			fh_mainland_find_active_war = yes
+			trigger_event = { id = fh_mainland_mobilization.1 years = 3 }
+		}
 	}
 }
 
@@ -139,26 +144,39 @@ fh_mainland_record_war_defeat = {
 
 fh_mainland_open_claims_audience = {
 	if = {
-		limit = { fh_mainland_claims_decision_visible = yes }
-		ordered_country = {
-			limit = { fh_mainland_claim_target_ready = yes }
-			order_by = army_power_projection
-			position = 0
-			check_range_bounds = no
-			save_scope_as = fh_claims_target
+		limit = {
+			fh_mainland_claims_decision_visible = yes
+			NOT = { has_variable = fh_mainland_claims_audience }
 		}
-		if = {
-			limit = { exists = scope:fh_claims_target }
+		clear_variable_list = fh_mainland_claim_reviewed
+		fh_mainland_show_next_claims_target = yes
+	}
+}
+
+fh_mainland_show_next_claims_target = {
+	ordered_country = {
+		limit = { fh_mainland_claim_target_unreviewed = yes }
+		order_by = fh_mainland_claim_review_priority
+		position = 0
+		check_range_bounds = no
+		save_scope_as = fh_claims_target
+		prev = {
+			add_to_variable_list = { name = fh_mainland_claim_reviewed target = scope:fh_claims_target }
 			if = {
 				limit = { has_variable = fh_mainland_claims_serial }
 				change_variable = { name = fh_mainland_claims_serial add = 1 }
 			}
 			else = { set_variable = { name = fh_mainland_claims_serial value = 1 } }
 			save_scope_value_as = { name = fh_claims_serial value = var:fh_mainland_claims_serial }
-			set_variable = { name = fh_mainland_claims_audience days = 30 }
+			set_variable = { name = fh_mainland_claims_audience days = 31 }
 			trigger_event = { id = fh_mainland_mobilization.4 popup = yes }
 		}
 	}
+}
+
+fh_mainland_close_claims_audience = {
+	remove_variable = fh_mainland_claims_audience
+	clear_variable_list = fh_mainland_claim_reviewed
 }
 
 fh_mainland_launch_claims_play = {
@@ -167,7 +185,7 @@ fh_mainland_launch_claims_play = {
 			fh_mainland_claims_audience_valid = yes
 			scope:fh_claims_target ?= { fh_mainland_claim_target_ready = yes }
 		}
-		remove_variable = fh_mainland_claims_audience
+		fh_mainland_close_claims_audience = yes
 		scope:fh_claims_target = {
 			random_scope_state = {
 				limit = { fh_mainland_claim_target_state = yes }

@@ -1,0 +1,33 @@
+﻿fh_reunification_taiwan_policy_decision = {
+	is_shown = {
+		fh_reunification_policy_available = { POLICY = taiwan }
+		NOT = { has_journal_entry = fh_je_reunification_of_china }
+	}
+	possible = {
+		NOT = { has_variable = fh_reunification_taiwan_audience_pending }
+	}
+	when_taken = {
+		custom_tooltip = fh_reunification_taiwan_open_policy_tt
+		hidden_effect = {
+			fh_reunification_show_policy_audience = { POLICY = taiwan EVENT = fh_reunification_policies.1 }
+		}
+	}
+	ai_chance = { value = 0 }
+}
+
+fh_reunification_south_policy_decision = {
+	is_shown = {
+		fh_reunification_policy_available = { POLICY = south }
+		NOT = { has_journal_entry = fh_je_reunification_of_china }
+	}
+	possible = {
+		NOT = { has_variable = fh_reunification_south_audience_pending }
+	}
+	when_taken = {
+		custom_tooltip = fh_reunification_south_open_policy_tt
+		hidden_effect = {
+			fh_reunification_show_policy_audience = { POLICY = south EVENT = fh_reunification_policies.2 }
+		}
+	}
+	ai_chance = { value = 0 }
+}

@@ -1,0 +1,27 @@
+﻿on_monthly_pulse_country = {
+	on_actions = { fh_reunification_country_pulse fh_provincial_charter_country_cleanup }
+}
+
+fh_reunification_country_pulse = {
+	trigger = { fh_is_tungning_founder = yes }
+	effect = {
+		if = {
+			limit = { has_variable = fh_reunification_opened }
+			fh_schedule_reunification_review = yes
+		}
+	}
+}
+
+# Subject-change hooks remove discounts before a new overlord can benefit.
+on_become_subject = {
+	on_actions = { fh_provincial_charter_country_cleanup }
+}
+
+on_become_independent = {
+	on_actions = { fh_provincial_charter_country_cleanup }
+}
+
+fh_provincial_charter_country_cleanup = {
+	trigger = { has_variable = fh_provincial_charter_ratified }
+	effect = { fh_update_provincial_charter = yes }
+}

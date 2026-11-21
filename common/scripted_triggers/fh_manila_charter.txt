@@ -1,0 +1,148 @@
+﻿# Charter tests run in Tungning's scope unless stated otherwise.
+fh_manila_charter_peace = {
+	is_at_war = no
+	c:PHI ?= {
+		is_at_war = no
+		NOT = { is_diplomatic_play_enemy_of = prev }
+	}
+}
+
+fh_manila_charter_has_indonesia_interest = {
+	has_strategic_region_interest_tier = {
+		strategic_region = sr:region_indonesia
+		value >= interest_tier_effect_can_start_diplomatic_plays_min_tier
+	}
+}
+
+fh_manila_charter_commercial_agreement = {
+	# Drafts are not included in any_scope_treaty.
+	any_scope_treaty = {
+		binds = c:PHI
+		any_scope_article = {
+			OR = {
+				AND = {
+					has_type = trade_privilege
+					source_country = {
+						is_junior_in_customs_union = no
+						country_has_isolationism = no
+					}
+				}
+				has_type = foreign_investment_rights
+			}
+		}
+	}
+}
+
+fh_manila_charter_tributary_legal = {
+	c:PHI ?= {
+		is_subject = no
+		prev = { can_have_as_subject = { who = c:PHI type = subject_type_tributary } }
+	}
+}
+
+fh_manila_charter_protectorate_legal = {
+	c:PHI ?= {
+		is_subject = no
+		prev = { can_have_as_subject = { who = c:PHI type = subject_type_protectorate } }
+	}
+}
+
+fh_manila_charter_eligible = {
+	custom_tooltip = {
+		text = fh_manila_charter_window_tt
+		fh_manila_window_open = yes
+	}
+	custom_tooltip = {
+		text = fh_manila_charter_peace_tt
+		fh_manila_charter_peace = yes
+	}
+	custom_tooltip = {
+		text = fh_manila_charter_interest_tt
+		fh_manila_charter_has_indonesia_interest = yes
+	}
+	custom_tooltip = {
+		text = fh_manila_charter_relations_tt
+		"relations(c:PHI)" >= 30
+	}
+	custom_tooltip = {
+		text = fh_manila_charter_market_tt
+		c:PHI ?= { market.owner ?= this }
+	}
+	custom_tooltip = {
+		text = fh_manila_charter_agreement_tt
+		fh_manila_charter_commercial_agreement = yes
+	}
+	custom_tooltip = {
+		text = fh_manila_charter_subject_tt
+		OR = {
+			fh_manila_charter_tributary_legal = yes
+			fh_manila_charter_protectorate_legal = yes
+		}
+	}
+}
+
+fh_manila_charter_terms_still_legal = {
+	fh_manila_charter_eligible = yes
+	OR = {
+		AND = {
+			var:fh_manila_charter_kind ?= 1
+			fh_manila_charter_tributary_legal = yes
+		}
+		AND = {
+			var:fh_manila_charter_kind ?= 2
+			fh_manila_charter_protectorate_legal = yes
+		}
+	}
+}
+
+# A stronger, friendly third party that can already defend Manila gives it
+# a reason to keep its independence. This test runs in Philippine scope.
+fh_manila_charter_reliable_protector = {
+	save_temporary_scope_as = fh_manila_protected_party
+	any_country = {
+		is_country_alive = yes
+		is_subject = no
+		NOR = {
+			this = $PROPOSER$
+			this = scope:fh_manila_protected_party
+			has_war_with = scope:fh_manila_protected_party
+		}
+		army_power_projection > scope:fh_manila_protected_party.army_power_projection
+		"relations(scope:fh_manila_protected_party)" >= 30
+		save_temporary_scope_as = fh_manila_protecting_party
+		OR = {
+			has_treaty_alliance_with = { TARGET = scope:fh_manila_protected_party }
+			has_treaty_defensive_pact_with = { TARGET = scope:fh_manila_protected_party }
+			scope:fh_manila_protected_party = {
+				has_treaty_guarantee_independence_with = { TARGET = scope:fh_manila_protecting_party }
+			}
+		}
+	}
+}
+
+fh_manila_charter_ai_trade_eligible = {
+	is_player = no
+	fh_manila_window_open = yes
+	NOT = { has_variable = fh_manila_charter_used }
+	fh_manila_charter_peace = yes
+	fh_manila_charter_has_indonesia_interest = yes
+	"relations(c:PHI)" >= 10
+	fh_manila_charter_commercial_agreement = no
+	country_has_isolationism = no
+	is_junior_in_customs_union = no
+	has_technology_researched = international_relations
+	c:PHI ?= {
+		country_has_isolationism = no
+		is_junior_in_customs_union = no
+		has_technology_researched = international_relations
+	}
+	can_create_treaty = {
+		first_country = this
+		second_country = c:PHI
+		is_draft = no
+		binding_period = { years = 2 }
+		articles_to_create = {
+			{ article = trade_privilege source_country = this target_country = c:PHI }
+		}
+	}
+}

@@ -1,0 +1,4 @@
+﻿fh_manila_petition_cash = {
+	value = gold_reserves_limit
+	multiply = 0.02
+}

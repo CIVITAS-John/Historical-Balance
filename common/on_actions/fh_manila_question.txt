@@ -1,0 +1,71 @@
+﻿on_become_independent = {
+	on_actions = { fh_manila_phi_position_changed }
+}
+
+on_become_subject = {
+	on_actions = { fh_manila_phi_position_changed }
+}
+
+on_country_released_as_independent = {
+	on_actions = { fh_manila_phi_released }
+}
+
+on_country_released_as_own_subject = {
+	on_actions = { fh_manila_phi_released }
+}
+
+fh_manila_phi_released = {
+	trigger = { c:PHI ?= scope:target }
+	effect = {
+		global_var:fh_tungning_founder ?= { fh_manila_on_position_changed = yes }
+	}
+}
+
+fh_manila_phi_position_changed = {
+	trigger = {
+		c:PHI ?= this
+		global_var:fh_tungning_founder ?= {
+			fh_is_tungning_founder = yes
+			NOT = { has_variable = fh_manila_question_result }
+		}
+	}
+	effect = {
+		global_var:fh_tungning_founder = {
+			if = {
+				limit = {
+					fh_manila_unresolved = yes
+					has_variable = fh_manila_window_timer
+					fh_manila_direct_subject = yes
+					NOT = { has_variable = fh_manila_charter_ratifying }
+				}
+				set_variable = fh_manila_submission_in_window
+			}
+			else = { remove_variable = fh_manila_submission_in_window }
+			fh_manila_on_position_changed = yes
+		}
+	}
+}
+
+on_state_owner_change = {
+	on_actions = { fh_manila_philippine_state_changed }
+}
+
+on_state_created = {
+	on_actions = { fh_manila_philippine_state_changed }
+}
+
+fh_manila_philippine_state_changed = {
+	trigger = {
+		OR = {
+			state_region = s:STATE_LUZON
+			state_region = s:STATE_VISAYAS
+		}
+		global_var:fh_tungning_founder ?= {
+			fh_is_tungning_founder = yes
+			NOT = { has_variable = fh_manila_question_result }
+		}
+	}
+	effect = {
+		global_var:fh_tungning_founder = { fh_manila_on_position_changed = yes }
+	}
+}

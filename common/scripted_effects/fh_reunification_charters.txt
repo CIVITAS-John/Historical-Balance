@@ -1,0 +1,119 @@
+﻿# Called in the prospective recipient's scope. There is one outstanding
+# offer across all three actions, and an expired reply cannot act on a new one.
+fh_send_provincial_offer = {
+	if = {
+		limit = {
+			$ELIGIBLE$ = yes
+			fh_provincial_can_receive_offer = yes
+		}
+		if = {
+			limit = { NOT = { has_variable = fh_provincial_offer_serial } }
+			set_variable = { name = fh_provincial_offer_serial value = 0 }
+		}
+		change_variable = { name = fh_provincial_offer_serial add = 1 }
+		save_scope_value_as = { name = fh_provincial_offer_ticket value = var:fh_provincial_offer_serial }
+		set_variable = { name = fh_provincial_offer value = $KIND$ days = 180 }
+		if = {
+			limit = { var:fh_provincial_offer = 3 }
+			set_variable = fh_provincial_integration_asked
+		}
+		trigger_event = { id = fh_reunification_events.2 popup = yes }
+	}
+}
+
+fh_resolve_provincial_offer = {
+	if = {
+		limit = { fh_provincial_offer_valid = yes }
+		save_scope_as = fh_provincial_reply_country
+		save_scope_value_as = { name = fh_provincial_reply_kind value = var:fh_provincial_offer }
+		remove_variable = fh_provincial_offer
+		if = {
+			limit = { scope:fh_provincial_reply_kind = 1 }
+			set_variable = { name = fh_provincial_association value = global_var:fh_tungning_founder }
+		}
+		else_if = {
+			limit = { scope:fh_provincial_reply_kind = 2 }
+			if = {
+				limit = { is_subject = no }
+				global_var:fh_tungning_founder ?= {
+					if = {
+						limit = { can_have_as_subject = { who = scope:fh_provincial_reply_country type = subject_type_tributary } }
+						create_diplomatic_pact = { country = scope:fh_provincial_reply_country type = tributary }
+					}
+					else_if = {
+						limit = { can_have_as_subject = { who = scope:fh_provincial_reply_country type = subject_type_protectorate } }
+						create_diplomatic_pact = { country = scope:fh_provincial_reply_country type = protectorate }
+					}
+				}
+			}
+			# A new subject can start at exactly 50 Liberty Desire. Ratify
+			# the agreed terms now; map credit starts only once it is loyal.
+			if = {
+				limit = { is_direct_subject_of = global_var:fh_tungning_founder }
+				set_variable = { name = fh_provincial_charter_holder value = this }
+				set_variable = { name = fh_provincial_charter_ratified value = global_var:fh_tungning_founder }
+				set_variable = { name = fh_provincial_charter_new years = 3 }
+				remove_variable = fh_provincial_charter_lapsed
+				remove_variable = fh_provincial_association
+				fh_update_provincial_charter = yes
+			}
+		}
+		else = {
+			global_var:fh_tungning_founder ?= { annex = scope:fh_provincial_reply_country }
+		}
+	}
+}
+
+fh_decline_provincial_offer = {
+	if = {
+		limit = { fh_provincial_offer_current = yes }
+		save_scope_as = fh_provincial_reply_country
+		remove_variable = fh_provincial_offer
+		set_variable = { name = fh_provincial_offer_cooldown years = 1 }
+		global_var:fh_tungning_founder ?= {
+			trigger_event = { id = fh_reunification_events.3 popup = yes }
+		}
+	}
+}
+
+fh_update_provincial_charter = {
+	if = {
+		limit = { fh_provincial_charter_relationship = yes }
+		if = {
+			limit = {
+				fh_provincial_government = yes
+				NOT = { has_modifier = fh_provincial_charter_tribute }
+			}
+			if = {
+				limit = { has_modifier = fh_reunification_south_tribute }
+				remove_modifier = fh_reunification_south_tribute
+			}
+			add_modifier = { name = fh_provincial_charter_tribute }
+		}
+		else_if = {
+			limit = {
+				fh_provincial_government = no
+				has_modifier = fh_provincial_charter_tribute
+			}
+			remove_modifier = fh_provincial_charter_tribute
+		}
+	}
+	else_if = {
+		limit = { has_variable = fh_provincial_charter_ratified }
+		set_variable = fh_provincial_charter_lapsed
+		remove_variable = fh_provincial_charter_ratified
+		remove_variable = fh_provincial_charter_holder
+		remove_variable = fh_provincial_charter_new
+		if = {
+			limit = { has_modifier = fh_provincial_charter_tribute }
+			remove_modifier = fh_provincial_charter_tribute
+		}
+	}
+}
+
+fh_update_provincial_charters = {
+	every_direct_subject = {
+		limit = { has_variable = fh_provincial_charter_ratified }
+		fh_update_provincial_charter = yes
+	}
+}

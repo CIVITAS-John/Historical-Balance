@@ -71,8 +71,10 @@ fh_mainland_refresh = {
 				remove_variable = fh_mainland_tone_pending
 			}
 			set_variable = fh_taiping_fork_pending
+			fh_mainland_suspend_integration_decrees = yes
 			fh_mainland_show_fork = yes
 		}
+		fh_refresh_reunification_opening = yes
 	}
 }
 
@@ -219,6 +221,7 @@ fh_mainland_reassert = {
 		fh_mainland_add_outstanding_claim = { REGION = STATE_ZHEJIANG }
 		fh_mainland_open_foothold = yes
 		fh_mainland_start_mobilization = yes
+		fh_refresh_reunification_opening = yes
 		fh_mainland_claim_radicals = { VALUE = fh_mainland_remove_large_radicals }
 		if = {
 			limit = { always = $PUBLIC$ }
@@ -248,6 +251,7 @@ fh_mainland_renounce = {
 		if = {
 			limit = { var:fh_mainland_claim_renounced = 3 }
 			set_variable = fh_mainland_claim_abandoned
+			fh_mainland_clear_integration_country = yes
 		}
 		fh_mainland_finish = yes
 		fh_mainland_remove_claim = { REGION = STATE_FUJIAN }

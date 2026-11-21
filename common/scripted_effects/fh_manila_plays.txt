@@ -1,0 +1,147 @@
+﻿fh_manila_record_deadline_conflict_effect = {
+	if = {
+		limit = { fh_manila_expedition_war = yes }
+		fh_manila_find_qualifying_war = yes
+	}
+	else = {
+		random_diplomatic_play = {
+			limit = {
+				is_war = no
+				fh_manila_conflict_is_live = yes
+				fh_manila_play_has_demands = yes
+			}
+			save_temporary_scope_as = fh_manila_conflict
+		}
+	}
+	if = {
+		limit = { exists = scope:fh_manila_conflict }
+		set_variable = { name = fh_manila_deadline_play value = scope:fh_manila_conflict }
+	}
+}
+
+fh_manila_find_qualifying_war = {
+	random_scope_war = {
+		limit = {
+			diplomatic_play ?= {
+				fh_manila_conflict_is_live = yes
+				fh_manila_play_has_demands = yes
+			}
+		}
+		diplomatic_play = { save_temporary_scope_as = fh_manila_conflict }
+	}
+}
+
+fh_manila_provision_expedition_effect = {
+	if = {
+		limit = { fh_manila_expedition_can_fund = yes }
+		fh_manila_find_qualifying_war = yes
+		if = {
+			limit = { exists = scope:fh_manila_conflict }
+			add_treasury = {
+				value = fh_manila_expedition_cost
+				multiply = -1
+			}
+			set_variable = fh_manila_expedition_funded
+			set_variable = { name = fh_manila_expedition_play value = scope:fh_manila_conflict }
+			set_variable = { name = fh_manila_expedition_timer months = 6 }
+			add_modifier = { name = fh_manila_expedition_stores months = 6 }
+		}
+	}
+}
+
+fh_manila_stop_expedition_effect = {
+	if = {
+		limit = {
+			OR = {
+				has_modifier = fh_manila_expedition_stores
+				has_variable = fh_manila_expedition_play
+				has_variable = fh_manila_expedition_timer
+			}
+		}
+		if = {
+			limit = { has_modifier = fh_manila_expedition_stores }
+			remove_modifier = fh_manila_expedition_stores
+		}
+		remove_variable = fh_manila_expedition_play
+		remove_variable = fh_manila_expedition_timer
+	}
+}
+
+fh_manila_maintain_expedition_effect = {
+	if = {
+		limit = {
+			has_variable = fh_manila_expedition_funded
+			NAND = {
+				has_variable = fh_manila_expedition_timer
+				fh_manila_expedition_single_war = yes
+				any_scope_war = {
+					diplomatic_play ?= prev.var:fh_manila_expedition_play
+				}
+			}
+		}
+		fh_manila_stop_expedition_effect = yes
+	}
+}
+
+# Native goal hooks supply the goal's kind and target before the country or
+# play can disappear. Only the permanent enforcement callback awards credit.
+fh_manila_stage_goal = {
+	if = {
+		limit = {
+			fh_manila_unresolved = yes
+			OR = {
+				scope:diplomatic_play.var:fh_manila_play_target ?= scope:target_country
+				c:PHI ?= scope:target_country
+			}
+		}
+		if = {
+			limit = {
+				scope:diplomatic_play ?= { has_variable = fh_manila_play_qualified }
+				trigger_if = {
+					limit = { has_variable = fh_manila_deadline_hold }
+					var:fh_manila_deadline_play ?= scope:diplomatic_play
+				}
+				trigger_else = {
+					OR = {
+						NOT = { has_variable = fh_manila_deadline_checked }
+						has_variable = fh_manila_deadline_today
+					}
+				}
+			}
+			set_variable = { name = fh_manila_goal_candidate value = $KIND$ days = 1 }
+		}
+		else_if = {
+			limit = { always = $SUBJECT$ }
+			set_variable = { name = fh_manila_goal_candidate value = 3 days = 1 }
+		}
+		if = {
+			limit = { has_variable = fh_manila_goal_candidate exists = scope:diplomatic_play }
+			set_variable = { name = fh_manila_goal_candidate_play value = scope:diplomatic_play days = 1 }
+		}
+	}
+}
+
+fh_manila_award_goal_credit = {
+	if = {
+		limit = {
+			OR = {
+				AND = {
+					var:fh_manila_goal_candidate ?= $KIND$
+					OR = {
+						var:fh_manila_goal_candidate_play ?= scope:diplomatic_play
+						NOT = { exists = scope:diplomatic_play }
+					}
+				}
+				scope:war_goal_enforced ?= {
+					var:fh_manila_goal_timer_kind ?= $KIND$
+					trigger_if = {
+						limit = { root = { has_variable = fh_manila_deadline_hold } }
+						var:fh_manila_goal_timer_play ?= root.var:fh_manila_deadline_play
+					}
+				}
+			}
+		}
+		set_variable = $FLAG$
+		fh_manila_queue_review = yes
+	}
+}

@@ -1,0 +1,71 @@
+﻿on_state_owner_change = {
+	on_actions = { fh_reunification_settlements_state_changed }
+}
+
+on_state_created = {
+	on_actions = { fh_reunification_settlements_state_changed }
+}
+
+fh_reunification_settlements_state_changed = {
+	trigger = {
+		OR = {
+			global_var:fh_tungning_founder ?= { has_variable = fh_reunification_opened }
+			has_modifier = fh_reunification_arrival_tax
+			has_modifier = fh_reunification_taiwan_local
+			has_modifier = fh_reunification_taiwan_central
+			has_modifier = fh_reunification_south_local
+			has_modifier = fh_reunification_south_central
+		}
+	}
+	effect = {
+		fh_reunification_clean_arrival_tax = yes
+		global_var:fh_tungning_founder ?= {
+			if = {
+				limit = {
+					OR = {
+						var:fh_reunification_transfer_region ?= root.state_region
+						var:fh_reunification_confirmed_seat.state_region ?= root.state_region
+					}
+				}
+				fh_reunification_update_seat = yes
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					state_region = s:STATE_FORMOSA
+					region = sr:region_indonesia
+					region = sr:region_indochina
+				}
+			}
+			fh_reunification_refresh_state_policies = yes
+		}
+	}
+}
+
+on_become_subject = {
+	on_actions = { fh_reunification_settlements_subject_changed }
+}
+
+on_become_independent = {
+	on_actions = { fh_reunification_settlements_subject_changed }
+}
+
+on_monthly_pulse_country = {
+	on_actions = { fh_reunification_check_south_tribute }
+}
+
+fh_reunification_settlements_subject_changed = {
+	trigger = {
+		OR = {
+			has_modifier = fh_reunification_south_tribute
+			overlord ?= { fh_is_tungning_founder = yes has_variable = fh_reunification_south_policy }
+		}
+	}
+	effect = { fh_reunification_refresh_south_tribute = yes }
+}
+
+fh_reunification_check_south_tribute = {
+	trigger = { has_modifier = fh_reunification_south_tribute }
+	effect = { fh_reunification_refresh_south_tribute = yes }
+}

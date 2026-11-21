@@ -1,65 +1,20 @@
 ﻿namespace = fh_mainland_registration
 
+# Clear an audience already pending in an older save. Registration now uses
+# the native incorporation milestone and cannot happen through this event.
 fh_mainland_registration.1 = {
 	type = country_event
 	placement = root
 	title = fh_mainland_registration.1.t
 	desc = fh_mainland_registration.1.d
-	event_image = { video = "asia_farmers_market" }
 	duration = 1
 
-	trigger = { has_variable = fh_mainland_registration_pending }
+	trigger = { always = no }
 	cancellation_trigger = { NOT = { has_variable = fh_mainland_registration_pending } }
-
-	option = {
-		name = fh_mainland_registration.1.a
-		trigger = { fh_mainland_registration_still_valid = yes }
-		if = {
-			limit = { fh_mainland_registration_still_valid = yes }
-			scope:fh_registration_state = { add_radicals_in_state = { value = -0.05 } }
-			add_modifier = { name = fh_mainland_administration_registers years = 2 }
-			fh_finish_mainland_registration = yes
-		}
-		remove_variable = fh_mainland_registration_pending
-		ai_chance = {
-			base = 100
-			modifier = {
-				trigger = {
-					fh_mainland_registration_still_valid = yes
-					fh_ai_prefers_common_register = yes
-				}
-				factor = 0
-			}
-		}
-	}
-
-	option = {
-		name = fh_mainland_registration.1.b
-		trigger = { fh_mainland_registration_still_valid = yes }
-		if = {
-			limit = { fh_mainland_registration_still_valid = yes }
-			scope:fh_registration_state = { add_radicals_in_state = { value = 0.02 } }
-			every_scope_state = {
-				limit = { NOT = { this = scope:fh_registration_state } }
-				add_radicals_in_state = { value = -0.05 interest_group = root.ig:ig_intelligentsia }
-			}
-			add_modifier = { name = fh_mainland_administration_registers years = 4 }
-			fh_finish_mainland_registration = yes
-		}
-		remove_variable = fh_mainland_registration_pending
-		ai_chance = {
-			base = 0
-			modifier = {
-				trigger = { fh_ai_prefers_common_register = yes }
-				add = 100
-			}
-		}
-	}
 
 	option = {
 		name = fh_mainland_registration.1.defer
 		default_option = yes
-		remove_variable = fh_mainland_registration_pending
-		ai_chance = { base = 0 }
+		fh_clear_legacy_mainland_registration = yes
 	}
 }

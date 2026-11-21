@@ -1,0 +1,175 @@
+﻿fh_associate_government = {
+	groups = { general }
+	texture = "gfx/interface/icons/diplomatic_action_icons/offer_recognition.dds"
+	requires_approval = no
+	can_use_obligations = no
+	show_effect_in_tooltip = yes
+
+	selectable = {
+		fh_reunification_route_open = yes
+		has_journal_entry = fh_je_reunification_of_china
+	}
+	potential = {
+		scope:target_country = {
+			any_scope_state = { is_treaty_port = no fh_mainland_core_state = yes }
+		}
+	}
+	possible = {
+		custom_tooltip = {
+			text = fh_provincial_access_tt
+			fh_reunification_can_negotiate = yes
+		}
+		scope:target_country = {
+			custom_tooltip = {
+				text = fh_provincial_association_eligible_tt
+				fh_provincial_offer_association = yes
+			}
+			custom_tooltip = {
+				text = fh_provincial_no_pending_offer_tt
+				fh_provincial_can_receive_offer = yes
+			}
+		}
+	}
+	accept_effect = {
+		custom_tooltip = fh_associate_government_offer_tt
+		hidden_effect = {
+			scope:target_country = { fh_send_provincial_offer = { KIND = 1 ELIGIBLE = fh_provincial_offer_association } }
+		}
+	}
+	ai = {
+		evaluation_chance = {
+			value = 0
+			if = {
+				limit = { fh_reunification_can_negotiate = yes }
+				add = 0.25
+			}
+		}
+		will_propose = {
+			scope:target_country ?= {
+				fh_provincial_offer_association = yes
+				fh_provincial_can_receive_offer = yes
+			}
+			"relations(scope:target_country)" >= relations_threshold:cordial
+			NOT = { scope:target_country = { has_variable = fh_provincial_charter_ratified } }
+		}
+		propose_score = { value = 5 }
+	}
+}
+
+fh_provincial_charter = {
+	groups = { general }
+	texture = "gfx/interface/icons/diplomatic_action_icons/tributary_15.dds"
+	requires_approval = no
+	can_use_obligations = no
+	show_effect_in_tooltip = yes
+
+	selectable = {
+		fh_reunification_route_open = yes
+		has_journal_entry = fh_je_reunification_of_china
+	}
+	potential = {
+		scope:target_country = {
+			any_scope_state = { is_treaty_port = no fh_mainland_core_state = yes }
+		}
+	}
+	possible = {
+		custom_tooltip = {
+			text = fh_provincial_access_tt
+			fh_reunification_can_negotiate = yes
+		}
+		scope:target_country = {
+			custom_tooltip = {
+				text = fh_provincial_charter_eligible_tt
+				fh_provincial_offer_charter = yes
+			}
+			custom_tooltip = {
+				text = fh_provincial_no_pending_offer_tt
+				fh_provincial_can_receive_offer = yes
+			}
+		}
+	}
+	accept_effect = {
+		custom_tooltip = fh_provincial_charter_offer_tt
+		hidden_effect = {
+			scope:target_country = { fh_send_provincial_offer = { KIND = 2 ELIGIBLE = fh_provincial_offer_charter } }
+		}
+	}
+	ai = {
+		evaluation_chance = {
+			value = 0
+			if = {
+				limit = { fh_reunification_can_negotiate = yes }
+				add = 0.25
+			}
+		}
+		will_propose = {
+			scope:target_country ?= {
+				fh_provincial_offer_charter = yes
+				fh_provincial_can_receive_offer = yes
+			}
+			"relations(scope:target_country)" >= relations_threshold:cordial
+			scope:target_country = {
+				OR = {
+					fh_provincial_associated = yes
+					is_direct_subject_of = global_var:fh_tungning_founder
+					army_power_projection < global_var:fh_tungning_founder.army_power_projection
+				}
+			}
+		}
+		propose_score = { value = 15 }
+	}
+}
+
+fh_integrate_province = {
+	groups = { overlord }
+	texture = "gfx/interface/icons/diplomatic_action_icons/doctrine_of_lapse.dds"
+	requires_approval = no
+	can_use_obligations = no
+	show_effect_in_tooltip = yes
+
+	selectable = {
+		fh_reunification_route_open = yes
+		has_variable = fh_reunification_opened
+	}
+	potential = { scope:target_country = { has_variable = fh_provincial_charter_ratified } }
+	possible = {
+		custom_tooltip = {
+			text = fh_provincial_access_tt
+			fh_reunification_provincial_access = yes
+		}
+		scope:target_country = {
+			custom_tooltip = {
+				text = fh_provincial_integration_eligible_tt
+				fh_provincial_offer_integration = yes
+			}
+			custom_tooltip = {
+				text = fh_provincial_no_pending_offer_tt
+				fh_provincial_can_receive_offer = yes
+			}
+		}
+	}
+	accept_effect = {
+		custom_tooltip = fh_integrate_province_offer_tt
+		hidden_effect = {
+			scope:target_country = { fh_send_provincial_offer = { KIND = 3 ELIGIBLE = fh_provincial_offer_integration } }
+		}
+	}
+	ai = {
+		evaluation_chance = {
+			value = 0
+			if = {
+				limit = { fh_reunification_provincial_access = yes }
+				add = 0.25
+			}
+		}
+		will_propose = {
+			scope:target_country ?= {
+				fh_provincial_offer_integration = yes
+				fh_provincial_can_receive_offer = yes
+			}
+			"relations(scope:target_country)" >= relations_threshold:amicable
+			scope:target_country = { liberty_desire < 25 }
+		}
+		propose_score = { value = 15 }
+	}
+}

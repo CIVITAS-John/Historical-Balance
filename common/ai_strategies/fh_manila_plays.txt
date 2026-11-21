@@ -1,0 +1,103 @@
+﻿# Use the normal diplomacy AI so native play and rank rules stay in force.
+fh_manila_seek_submission_strategy = {
+	icon = "gfx/interface/icons/ai_strategy_icons/territorial_expansion.dds"
+	type = diplomatic
+
+	possible = { fh_manila_window_open = yes }
+	weight = { value = 35 }
+
+	aggression = {
+		value = 0
+		if = {
+			limit = {
+				scope:target_country ?= c:PHI
+				fh_manila_ai_can_seek_play = yes
+				potential_diplomatic_play_power_ratio = {
+					type = dp_conquer_state
+					target = c:PHI
+					state = p:x0D8236.state
+					value >= 1.35
+				}
+			}
+			add = 0.30
+			if = {
+				limit = {
+					ig:ig_armed_forces ?= { is_in_government = yes }
+					fh_mainland_officers_southern = yes
+				}
+				add = 0.45
+			}
+			else_if = {
+				limit = {
+					ig:ig_armed_forces ?= { is_in_government = yes }
+					fh_mainland_officers_mainland = yes
+				}
+				add = -0.25
+			}
+		}
+	}
+
+	secret_goal_scores = {
+		dominate = {
+			trigger = {
+				scope:target_country ?= c:PHI
+				fh_manila_ai_can_seek_play = yes
+				fh_manila_ai_subject_play_safe = yes
+			}
+			score = {
+				value = 50
+				if = {
+					limit = {
+						ig:ig_armed_forces ?= { is_in_government = yes }
+						fh_mainland_officers_southern = yes
+					}
+					add = 80
+				}
+				else_if = {
+					limit = {
+						ig:ig_armed_forces ?= { is_in_government = yes }
+						fh_mainland_officers_mainland = yes
+					}
+					add = -35
+				}
+			}
+		}
+	}
+
+	wargoal_scores = {
+		make_subject = {
+			if = {
+				limit = {
+					scope:target_country ?= c:PHI
+					fh_manila_ai_can_seek_play = yes
+					fh_manila_ai_subject_play_safe = yes
+				}
+				add = 35
+			}
+		}
+		conquer_state = {
+			if = {
+				limit = {
+					scope:target_country ?= c:PHI
+					scope:target_state ?= p:x0D8236.state
+					fh_manila_ai_can_seek_play = yes
+					potential_diplomatic_play_power_ratio = { type = dp_conquer_state target = c:PHI state = p:x0D8236.state value >= 1.35 }
+				}
+				add = 25
+			}
+			else_if = {
+				limit = {
+					scope:target_country ?= c:PHI
+					scope:target_state ?= p:xD2CA4A.state
+					p:xD2CA4A ?= { owner ?= c:PHI }
+					is_target_in_variable_list = { name = fh_manila_starting_provinces target = p:xD2CA4A }
+					scope:diplomatic_play ?= {
+						has_variable = fh_manila_play_qualified
+						initiator_is = root
+					}
+				}
+				add = 20
+			}
+		}
+	}
+}

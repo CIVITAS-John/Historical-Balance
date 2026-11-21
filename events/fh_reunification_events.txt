@@ -1,0 +1,133 @@
+﻿namespace = fh_reunification_events
+
+fh_reunification_events.1 = {
+	type = country_event
+	hidden = yes
+
+	immediate = {
+		remove_variable = fh_reunification_review_scheduled
+		if = {
+			limit = {
+				fh_is_tungning_founder = yes
+				has_variable = fh_reunification_opened
+			}
+			fh_update_provincial_charters = yes
+			fh_update_reunification_settlements = yes
+			fh_schedule_reunification_review = yes
+		}
+	}
+}
+
+fh_reunification_events.2 = {
+	type = country_event
+	title = fh_reunification_events.2.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { var:fh_provincial_offer ?= 1 }
+				desc = fh_reunification_events.2.association
+			}
+			triggered_desc = {
+				trigger = { var:fh_provincial_offer ?= 2 }
+				desc = fh_reunification_events.2.charter
+			}
+			desc = fh_reunification_events.2.integration
+		}
+	}
+	placement = root
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	duration = 3
+	cancellation_trigger = { fh_provincial_offer_current = no }
+
+	option = {
+		name = fh_reunification_events.2.a
+		trigger = { fh_provincial_offer_valid = yes }
+		hidden_effect = { fh_resolve_provincial_offer = yes }
+		ai_chance = {
+			base = 5
+			modifier = {
+				trigger = { "relations(global_var:fh_tungning_founder)" >= relations_threshold:cordial }
+				add = 25
+			}
+			modifier = {
+				trigger = { "relations(global_var:fh_tungning_founder)" >= relations_threshold:amicable }
+				add = 35
+			}
+			modifier = {
+				trigger = { army_power_projection < global_var:fh_tungning_founder.army_power_projection }
+				add = 25
+			}
+			modifier = {
+				trigger = {
+					is_in_power_bloc = yes
+					NOT = { is_in_same_power_bloc = global_var:fh_tungning_founder }
+				}
+				add = -25
+			}
+			modifier = {
+				trigger = { fh_provincial_associated = yes }
+				add = 15
+			}
+			modifier = {
+				trigger = {
+					is_direct_subject_of = global_var:fh_tungning_founder
+					liberty_desire < 25
+				}
+				add = 25
+			}
+		}
+	}
+
+	option = {
+		name = fh_reunification_events.2.b
+		default_option = yes
+		hidden_effect = { fh_decline_provincial_offer = yes }
+		ai_chance = {
+			base = 25
+			modifier = {
+				trigger = { var:fh_provincial_offer ?= 3 }
+				add = 40
+			}
+		}
+	}
+}
+
+fh_reunification_events.3 = {
+	type = country_event
+	title = fh_reunification_events.3.t
+	desc = fh_reunification_events.3.d
+	placement = root
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	option = { name = fh_reunification_events.3.a }
+}
+
+fh_reunification_events.4 = {
+	type = country_event
+	placement = root
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	title = fh_reunification_events.4.t
+	desc = fh_reunification_events.4.d
+	duration = 3
+	cancellation_trigger = { NOT = { has_variable = fh_reunification_proclamation_pending } }
+
+	option = {
+		name = fh_reunification_events.4.a
+		trigger = { fh_reunification_can_proclaim = yes }
+		if = {
+			limit = { fh_reunification_uses_charters = yes }
+			custom_tooltip = fh_reunification_chartered_desc
+		}
+		else = { custom_tooltip = fh_reunification_direct_desc }
+		hidden_effect = {
+			remove_variable = fh_reunification_proclamation_pending
+			fh_proclaim_reunification = yes
+		}
+		ai_chance = { base = 100 }
+	}
+	option = {
+		name = fh_reunification_events.4.b
+		default_option = yes
+		hidden_effect = { remove_variable = fh_reunification_proclamation_pending }
+		ai_chance = { base = 0 }
+	}
+}

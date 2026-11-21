@@ -3,7 +3,6 @@
 	icon = "gfx/interface/icons/event_icons/event_industry.dds"
 	transferable = no
 	can_revolution_inherit = no
-	scripted_button = fh_register_mainland_administration
 
 	is_shown_when_inactive = {
 		fh_is_tungning_founder = yes
@@ -13,20 +12,63 @@
 		}
 	}
 
-	possible = {
-		fh_mainland_registration_available = yes
+	possible = { fh_mainland_registration_available = yes }
+
+	progressbar = yes
+	progress_desc = fh_je_mainland_foothold_progress
+	current_value = fh_mainland_foothold_progress
+	goal_add_value = {
+		value = 50
+		subtract = fh_mainland_foothold_progress
 	}
 
-	on_monthly_pulse = {
-		trigger = { fh_mainland_registration_available = yes }
-		effect = {
-			fh_update_mainland_readiness = { REGION = STATE_FUJIAN STREAK = fh_fujian_readiness }
-			fh_update_mainland_readiness = { REGION = STATE_GUANGDONG STREAK = fh_guangdong_readiness }
-			fh_update_mainland_readiness = { REGION = STATE_ZHEJIANG STREAK = fh_zhejiang_readiness }
+	map_color = {
+		if = {
+			limit = {
+				fh_mainland_coast_state = yes
+				is_treaty_port = no
+			}
+			if = {
+				limit = {
+					owner ?= { fh_is_tungning_founder = yes }
+					fh_mainland_state_unoccupied = yes
+				}
+				value = "russification_blue"
+			}
+			else = { value = "russification_amber" }
 		}
 	}
 
-	# A save from before the claim stage can already have this entry active.
+	map_tooltip = {
+		if = {
+			limit = { fh_mainland_coast_state = yes }
+			if = {
+				limit = { is_treaty_port = yes }
+				custom_tooltip_no_bullet = fh_foothold_map_treaty_port
+			}
+			else_if = {
+				limit = { NOT = { owner ?= { fh_is_tungning_founder = yes } } }
+				custom_tooltip_no_bullet = fh_foothold_map_missing
+			}
+			else = {
+				if = {
+					limit = { fh_mainland_foothold_leader_state = yes }
+					custom_tooltip_no_bullet = fh_foothold_map_leader
+				}
+				if = {
+					limit = { fh_mainland_state_unoccupied = no }
+					custom_tooltip_no_bullet = fh_foothold_map_occupied
+				}
+				else_if = {
+					limit = { is_incorporated = yes }
+					custom_tooltip_no_bullet = fh_foothold_map_incorporated
+				}
+				else = { custom_tooltip_no_bullet = fh_foothold_map_project }
+				fh_mainland_integration_tooltip = yes
+			}
+		}
+	}
+
 	outcome = {
 		header = fh_mainland_claim_abandoned_header
 		effect_header = je_standard_on_failure_header
@@ -40,6 +82,26 @@
 		effect_header = je_standard_on_completion_header
 		conclusion_desc = fh_je_mainland_foothold_completed_desc
 		color = "gold_positive"
-		trigger = { has_variable = fh_return_to_mainland_completed }
+		trigger = {
+			# An older save can already have recorded registration.
+			trigger_if = {
+				limit = { NOT = { has_variable = fh_return_to_mainland_completed } }
+				fh_mainland_registration_available = yes
+				custom_tooltip = {
+					text = fh_mainland_registration_milestone
+					OR = {
+						fh_mainland_region_can_register = { REGION = STATE_FUJIAN }
+						fh_mainland_region_can_register = { REGION = STATE_GUANGDONG }
+						fh_mainland_region_can_register = { REGION = STATE_ZHEJIANG }
+					}
+				}
+			}
+		}
+		effect = {
+			if = {
+				limit = { NOT = { has_variable = fh_return_to_mainland_completed } }
+				fh_finish_mainland_registration = yes
+			}
+		}
 	}
 }

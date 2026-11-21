@@ -1,0 +1,197 @@
+﻿namespace = fh_manila_petitions
+
+fh_manila_petitions.1 = {
+	type = country_event
+	placement = root
+	title = fh_manila_petitions.1.t
+	desc = fh_manila_petitions.1.d
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	duration = 1
+
+	trigger = { fh_manila_petition_warehouses_active = yes }
+	cancellation_trigger = { fh_manila_petition_warehouses_active = no }
+
+	option = {
+		name = fh_manila_petitions.1.a
+		trigger = { gold_reserves >= fh_manila_petition_cash }
+		show_as_unavailable = { always = yes }
+		custom_tooltip = fh_manila_petitions.1.a_tt
+		hidden_effect = {
+			if = {
+				limit = {
+					fh_manila_petition_warehouses_active = yes
+					gold_reserves >= fh_manila_petition_cash
+				}
+				fh_manila_resolve_petition = { PETITION = warehouses }
+				fh_manila_pay_petition = yes
+				scope:fh_manila_petition_taiwan = {
+					add_modifier = { name = fh_manila_bonded_warehouses months = 12 }
+				}
+			}
+		}
+		ai_chance = {
+			base = 30
+			modifier = { trigger = { scaled_gold_reserves >= 0.1 } add = 35 }
+			modifier = { trigger = { ig:ig_industrialists ?= { is_in_government = yes } } add = 25 }
+			modifier = {
+				trigger = {
+					scope:fh_manila_petition_taiwan ?= {
+						any_scope_building = { is_building_type = building_trade_center level >= 3 }
+					}
+				}
+				add = 30
+			}
+		}
+	}
+	option = {
+		name = fh_manila_petitions.1.b
+		custom_tooltip = fh_manila_petitions.1.b_tt
+		hidden_effect = {
+			if = {
+				limit = { fh_manila_petition_warehouses_active = yes }
+				fh_manila_resolve_petition = { PETITION = warehouses }
+				add_treasury = { value = fh_manila_petition_cash }
+				ig:ig_industrialists ?= {
+					add_modifier = { name = fh_manila_warehouse_concession_denied months = 12 }
+				}
+			}
+		}
+		ai_chance = {
+			base = 30
+			modifier = { trigger = { scaled_gold_reserves < 0.05 } add = 75 }
+		}
+	}
+	option = {
+		name = fh_manila_petitions.dismiss
+		default_option = yes
+		ai_chance = { base = 0 }
+		hidden_effect = { fh_manila_clear_pending_petition = { PETITION = warehouses } }
+	}
+}
+
+fh_manila_petitions.2 = {
+	type = country_event
+	placement = root
+	title = fh_manila_petitions.2.t
+	desc = fh_manila_petitions.2.d
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	duration = 1
+
+	trigger = { fh_manila_petition_active = { PETITION = rice } }
+	cancellation_trigger = { NOT = { fh_manila_petition_active = { PETITION = rice } } }
+
+	option = {
+		name = fh_manila_petitions.2.a
+		trigger = { gold_reserves >= fh_manila_petition_cash }
+		show_as_unavailable = { always = yes }
+		custom_tooltip = fh_manila_petitions.2.a_tt
+		hidden_effect = {
+			if = {
+				limit = {
+					fh_manila_petition_active = { PETITION = rice }
+					gold_reserves >= fh_manila_petition_cash
+				}
+				fh_manila_resolve_petition = { PETITION = rice }
+				fh_manila_pay_petition = yes
+				change_relations = { country = c:PHI value = 10 }
+				p:x0D8236.state ?= { add_radicals_in_state = { value = -0.05 } }
+			}
+		}
+		ai_chance = {
+			base = 35
+			modifier = { trigger = { c:PHI ?= { relations:prev >= 20 } } add = 55 }
+		}
+	}
+	option = {
+		name = fh_manila_petitions.2.b
+		trigger = { gold_reserves >= fh_manila_petition_cash }
+		show_as_unavailable = { always = yes }
+		custom_tooltip = fh_manila_petitions.2.b_tt
+		hidden_effect = {
+			if = {
+				limit = {
+					fh_manila_petition_active = { PETITION = rice }
+					gold_reserves >= fh_manila_petition_cash
+				}
+				fh_manila_resolve_petition = { PETITION = rice }
+				fh_manila_pay_petition = yes
+				change_relations = { country = c:PHI value = -5 }
+				scope:fh_manila_petition_taiwan = {
+					add_modifier = { name = fh_manila_rice_purchase months = 6 }
+				}
+			}
+		}
+		ai_chance = { base = 40 }
+	}
+	option = {
+		name = fh_manila_petitions.dismiss
+		default_option = yes
+		ai_chance = {
+			base = 0
+			modifier = { trigger = { scaled_gold_reserves < 0.05 } add = 120 }
+		}
+		hidden_effect = { fh_manila_clear_pending_petition = { PETITION = rice } }
+	}
+}
+
+fh_manila_petitions.3 = {
+	type = country_event
+	placement = root
+	title = fh_manila_petitions.3.t
+	desc = fh_manila_petitions.3.d
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	duration = 1
+
+	trigger = { fh_manila_petition_active = { PETITION = sisters } }
+	cancellation_trigger = { NOT = { fh_manila_petition_active = { PETITION = sisters } } }
+
+	option = {
+		name = fh_manila_petitions.3.a
+		custom_tooltip = fh_manila_petitions.3.a_tt
+		hidden_effect = {
+			if = {
+				limit = { fh_manila_petition_active = { PETITION = sisters } }
+				fh_manila_resolve_petition = { PETITION = sisters }
+				scope:fh_manila_petition_taiwan = {
+					add_modifier = { name = fh_manila_free_hospital years = 2 }
+				}
+				ig:ig_devout ?= { add_modifier = { name = fh_manila_hospital_approval months = 12 } }
+			}
+		}
+		ai_chance = {
+			base = 55
+			modifier = { trigger = { ig:ig_devout ?= { is_in_government = yes } } add = 40 }
+		}
+	}
+	option = {
+		name = fh_manila_petitions.3.b
+		custom_tooltip = fh_manila_petitions.3.b_tt
+		hidden_effect = {
+			if = {
+				limit = { fh_manila_petition_active = { PETITION = sisters } }
+				fh_manila_resolve_petition = { PETITION = sisters }
+				scope:fh_manila_petition_taiwan = {
+					add_modifier = { name = fh_manila_works_yard years = 2 }
+				}
+				ig:ig_devout ?= { add_modifier = { name = fh_manila_hospital_refused months = 12 } }
+			}
+		}
+		ai_chance = {
+			base = 35
+			modifier = {
+				trigger = {
+					scope:fh_manila_petition_taiwan ?= {
+						any_scope_building = { is_under_construction = yes }
+					}
+				}
+				add = 45
+			}
+		}
+	}
+	option = {
+		name = fh_manila_petitions.dismiss
+		default_option = yes
+		ai_chance = { base = 0 }
+		hidden_effect = { fh_manila_clear_pending_petition = { PETITION = sisters } }
+	}
+}

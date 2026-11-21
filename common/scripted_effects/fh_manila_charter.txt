@@ -1,0 +1,139 @@
+﻿fh_manila_send_charter = {
+	if = {
+		limit = {
+			NOT = { has_variable = fh_manila_charter_used }
+			fh_manila_charter_eligible = yes
+		}
+		set_variable = fh_manila_charter_used
+		set_variable = fh_manila_charter_pending
+		set_variable = { name = fh_manila_charter_response_window days = 30 }
+		if = {
+			limit = { fh_manila_charter_tributary_legal = yes }
+			set_variable = { name = fh_manila_charter_kind value = 1 }
+		}
+		else = { set_variable = { name = fh_manila_charter_kind value = 2 } }
+		save_scope_as = fh_manila_charter_proposer
+		trigger_event = { id = fh_manila_charter.2 days = 30 }
+		c:PHI = { trigger_event = { id = fh_manila_charter.1 popup = yes } }
+	}
+}
+
+fh_manila_clear_pending_charter = {
+	remove_variable = fh_manila_charter_pending
+	if = {
+		limit = { has_variable = fh_manila_charter_response_window }
+		remove_variable = fh_manila_charter_response_window
+	}
+}
+
+fh_manila_cancel_charter_effect = {
+	if = {
+		limit = {
+			has_variable = fh_manila_charter_pending
+			NOT = { has_variable = fh_manila_charter_ratifying }
+		}
+		fh_manila_clear_pending_charter = yes
+		set_variable = { name = fh_manila_charter_result value = 6 }
+	}
+}
+
+fh_manila_finish_charter = {
+	if = {
+		limit = { has_variable = fh_manila_charter_pending }
+		fh_manila_clear_pending_charter = yes
+		set_variable = { name = fh_manila_charter_result value = $RESULT$ }
+		if = {
+			limit = { is_player = yes }
+			trigger_event = { id = fh_manila_charter.3 popup = yes }
+		}
+	}
+}
+
+fh_manila_accept_charter = {
+	if = {
+		limit = {
+			has_variable = fh_manila_charter_pending
+			has_variable = fh_manila_charter_response_window
+		}
+		if = {
+			limit = { fh_manila_charter_terms_still_legal = no }
+			fh_manila_finish_charter = { RESULT = 4 }
+		}
+		else_if = {
+			limit = { var:fh_manila_charter_kind ?= 1 }
+			fh_manila_ratify_charter = { PACT = tributary TYPE = subject_type_tributary }
+		}
+		else = {
+			fh_manila_ratify_charter = { PACT = protectorate TYPE = subject_type_protectorate }
+		}
+	}
+}
+
+fh_manila_ratify_charter = {
+	# Distinguish a grant created by this offer from one already in force
+	# through a power bloc, so failed ratification only undoes our changes.
+	save_temporary_scope_as = fh_manila_charter_overlord
+	save_temporary_scope_value_as = { name = fh_manila_charter_prior_relations value = "relations(c:PHI)" }
+	if = {
+		limit = { has_truce_with = c:PHI }
+		save_temporary_scope_value_as = { name = fh_manila_charter_prior_truce value = 1 }
+	}
+	if = {
+		limit = { has_diplomatic_pact = { who = c:PHI type = grant_own_market is_initiator = yes } }
+		save_temporary_scope_value_as = { name = fh_manila_charter_prior_grant value = 1 }
+	}
+
+	set_variable = fh_manila_charter_ratifying
+	create_diplomatic_pact = { country = c:PHI type = $PACT$ }
+	if = {
+		limit = {
+			c:PHI ?= { is_direct_subject_of = scope:fh_manila_charter_overlord }
+			NOT = { has_diplomatic_pact = { who = c:PHI type = grant_own_market is_initiator = yes } }
+		}
+		# As in vanilla subject history, apply the market pact directly after
+		# the subject pact, even if the old market is still cached this tick.
+		create_diplomatic_pact = { country = c:PHI type = grant_own_market }
+	}
+
+	if = {
+		limit = {
+			has_diplomatic_pact = { who = c:PHI type = grant_own_market is_initiator = yes }
+			c:PHI ?= {
+				is_direct_subject_of = scope:fh_manila_charter_overlord
+				is_subject_type = $TYPE$
+				market.owner ?= this
+			}
+		}
+		set_variable = fh_manila_charter_ratified
+		fh_manila_clear_pending_charter = yes
+		set_variable = { name = fh_manila_charter_result value = 1 }
+		remove_variable = fh_manila_charter_ratifying
+		fh_manila_queue_review = yes
+	}
+	else = {
+		if = {
+			limit = {
+				NOT = { exists = scope:fh_manila_charter_prior_grant }
+				has_diplomatic_pact = { who = c:PHI type = grant_own_market is_initiator = yes }
+			}
+			remove_diplomatic_pact = { country = c:PHI type = grant_own_market }
+		}
+		if = {
+			limit = { has_diplomatic_pact = { who = c:PHI type = $PACT$ is_initiator = yes } }
+			remove_diplomatic_pact = { country = c:PHI type = $PACT$ }
+			if = {
+				limit = {
+					NOT = { exists = scope:fh_manila_charter_prior_truce }
+					has_truce_with = c:PHI
+				}
+				end_truce = c:PHI
+			}
+		}
+		if = {
+			limit = { "relations(c:PHI)" != scope:fh_manila_charter_prior_relations }
+			set_relations = { country = c:PHI value = scope:fh_manila_charter_prior_relations }
+		}
+		remove_variable = fh_manila_charter_ratifying
+		fh_manila_finish_charter = { RESULT = 5 }
+	}
+}

@@ -13,29 +13,60 @@ fh_owns_mainland_foothold = {
 	}
 }
 
-fh_mainland_ready_now = {
+fh_mainland_coast_state = {
+	state_region = { fh_reunification_coastal_region = yes }
+}
+
+fh_mainland_state_unoccupied = {
+	NOT = { any_province = { NOT = { controller ?= owner } } }
+}
+
+# Use after the direct ownership check. A foreign treaty port does not block
+# registration or proclamation even if its own provinces are occupied.
+fh_mainland_region_unoccupied = {
+	s:$REGION$ = {
+		NOT = {
+			any_scope_state = {
+				is_treaty_port = no
+				fh_mainland_state_unoccupied = no
+			}
+		}
+	}
+}
+
+fh_mainland_foothold_eligible = {
 	fh_owns_mainland_foothold = { REGION = $REGION$ }
-	any_scope_state = {
-		state_region = s:$REGION$
-		is_treaty_port = no
-		fh_mainland_registration_state_ready = yes
+	fh_mainland_region_unoccupied = { REGION = $REGION$ }
+}
+
+fh_mainland_region_can_register = {
+	fh_mainland_foothold_eligible = { REGION = $REGION$ }
+	s:$REGION$ = {
+		any_scope_state = {
+			is_treaty_port = no
+			OR = {
+				is_incorporated = yes
+				incorporation_progress >= 0.50
+			}
+		}
 	}
 }
 
-fh_mainland_registration_state_ready = {
-	turmoil <= 0.20
-	NOT = {
-		any_province = { NOT = { controller ?= owner } }
+fh_mainland_foothold_leader_state = {
+	OR = {
+		AND = {
+			state_region = s:STATE_FUJIAN
+			owner ?= { fh_mainland_foothold_leader = 1 }
+		}
+		AND = {
+			state_region = s:STATE_GUANGDONG
+			owner ?= { fh_mainland_foothold_leader = 2 }
+		}
+		AND = {
+			state_region = s:STATE_ZHEJIANG
+			owner ?= { fh_mainland_foothold_leader = 3 }
+		}
 	}
-	any_scope_building = {
-		is_building_type = building_government_administration
-		fh_staffed_administration_levels >= 2
-	}
-}
-
-fh_ai_prefers_common_register = {
-	ig:ig_intelligentsia = { is_in_government = yes }
-	scope:fh_registration_state ?= { turmoil <= 0.10 }
 }
 
 fh_mainland_registration_available = {
@@ -45,37 +76,5 @@ fh_mainland_registration_available = {
 		has_variable = fh_return_to_mainland_completed
 		has_variable = fh_mainland_claim_abandoned
 		has_variable = fh_taiping_fork_pending
-	}
-}
-
-fh_mainland_region_can_register = {
-	fh_mainland_registration_available = yes
-	has_variable = $STREAK$
-	var:$STREAK$ >= 3
-	fh_mainland_ready_now = { REGION = $REGION$ }
-}
-
-fh_mainland_registration_still_valid = {
-	has_journal_entry = fh_je_mainland_foothold
-	has_variable = fh_mainland_registration_pending
-	exists = scope:fh_registration_state
-	scope:fh_registration_state ?= {
-		owner = root
-		is_treaty_port = no
-		fh_mainland_registration_state_ready = yes
-	}
-	OR = {
-		AND = {
-			scope:fh_registration_state.state_region ?= s:STATE_FUJIAN
-			fh_mainland_region_can_register = { REGION = STATE_FUJIAN STREAK = fh_fujian_readiness }
-		}
-		AND = {
-			scope:fh_registration_state.state_region ?= s:STATE_GUANGDONG
-			fh_mainland_region_can_register = { REGION = STATE_GUANGDONG STREAK = fh_guangdong_readiness }
-		}
-		AND = {
-			scope:fh_registration_state.state_region ?= s:STATE_ZHEJIANG
-			fh_mainland_region_can_register = { REGION = STATE_ZHEJIANG STREAK = fh_zhejiang_readiness }
-		}
 	}
 }

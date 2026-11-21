@@ -1,0 +1,149 @@
+﻿# A native play is recorded only if Tungning started it against Manila while
+# the window was open. Read demands from the play, and their owner and target
+# from the participant, so a defender's demand does not qualify it.
+fh_manila_play_goal = {
+	trigger_if = {
+		limit = { is_war = yes }
+		war ?= { has_war_goal = $TYPE$ }
+		initiator ?= {
+			war_participant_has_war_goal_of_type_against = { type = $TYPE$ target = prev.var:fh_manila_play_target }
+		}
+	}
+	trigger_else = {
+		has_play_goal = $TYPE$
+		initiator ?= {
+			play_participant_has_war_goal_of_type_against = { type = $TYPE$ target = prev.var:fh_manila_play_target }
+		}
+	}
+}
+
+fh_manila_play_has_demands = {
+	OR = {
+		# An enforced-by-timer goal can be absent from the current goal list.
+		AND = { is_war = yes has_variable = fh_manila_territorial_timer_in_play }
+		fh_manila_play_goal = { TYPE = make_tributary }
+		fh_manila_play_goal = { TYPE = make_protectorate }
+		fh_manila_play_goal = { TYPE = make_dominion }
+		fh_manila_play_goal = { TYPE = restore_union }
+		fh_manila_play_goal = { TYPE = make_chartered_company }
+		fh_manila_play_goal = { TYPE = make_crown_land }
+		fh_manila_play_goal = { TYPE = make_personal_union }
+		fh_manila_play_goal = { TYPE = conquer_state }
+		fh_manila_play_goal = { TYPE = return_state }
+		fh_manila_play_goal = { TYPE = annex_country }
+		fh_manila_play_goal = { TYPE = take_treaty_port }
+		fh_manila_play_goal = { TYPE = unification }
+	}
+}
+
+fh_manila_conflict_is_live = {
+	has_variable = fh_manila_play_qualified
+	NOT = { has_variable = fh_manila_play_ended }
+	trigger_if = {
+		limit = { is_war = yes }
+		war ?= {
+			is_war_participant = global_var:fh_tungning_founder
+			is_war_participant = prev.var:fh_manila_play_target
+		}
+	}
+	trigger_else = {
+		any_diplomatic_play = { this = prev }
+	}
+}
+
+fh_manila_qualifying_conflict_active = {
+	trigger_if = {
+		limit = { has_variable = fh_manila_deadline_hold }
+		var:fh_manila_deadline_play ?= {
+			NOT = { has_variable = fh_manila_play_ended }
+			trigger_if = {
+				limit = { is_war = yes }
+				war ?= { is_war_participant = global_var:fh_tungning_founder }
+			}
+			trigger_else = { any_diplomatic_play = { this = prev } }
+		}
+	}
+	trigger_else = {
+		OR = {
+			fh_manila_expedition_war = yes
+			any_diplomatic_play = {
+				is_war = no
+				fh_manila_conflict_is_live = yes
+				fh_manila_play_has_demands = yes
+			}
+		}
+	}
+}
+
+fh_manila_expedition_war = {
+	any_scope_war = {
+		diplomatic_play ?= {
+			fh_manila_conflict_is_live = yes
+			fh_manila_play_has_demands = yes
+		}
+	}
+}
+
+fh_manila_expedition_single_war = {
+	any_scope_war = {
+		count = 1
+		always = yes
+	}
+}
+
+fh_manila_expedition_can_fund = {
+	fh_manila_window_open = yes
+	NOT = { has_variable = fh_manila_expedition_funded }
+	fh_manila_expedition_war = yes
+	fh_manila_expedition_single_war = yes
+	in_default = no
+	gold_reserves >= fh_manila_expedition_cost
+}
+
+fh_manila_expedition_ai_ready = {
+	fh_manila_expedition_can_fund = yes
+	# Skip the stores if there is a land border or a beachhead already
+	# established in Manila's state.
+	NOT = { is_adjacent_to_country = c:PHI }
+	p:x0D8236.state ?= { controller ?= c:PHI }
+	any_scope_general = {
+		num_mobilized_battalions >= 5
+		commander_military_formation ?= { organization >= 65 }
+	}
+	any_scope_admiral = {
+		num_active_ships >= 3
+		commander_military_formation ?= { organization >= 65 }
+	}
+}
+
+fh_manila_ai_can_seek_play = {
+	fh_manila_window_open = yes
+	in_default = no
+	scaled_debt < 0.5
+	is_at_war = no
+	aggressive_diplomatic_plays_permitted = yes
+	NOT = { has_truce_with = c:PHI }
+	has_strategic_region_interest_tier = {
+		strategic_region = sr:region_indonesia
+		value >= interest_tier_effect_can_start_diplomatic_plays_min_tier
+	}
+	army_power_projection > c:PHI.army_power_projection
+	naval_power_projection > c:PHI.naval_power_projection
+	any_scope_general = { num_battalions >= 5 }
+	any_scope_admiral = { num_active_ships >= 3 }
+	c:PHI ?= {
+		is_at_war = yes
+		NOT = { is_diplomatic_play_enemy_of = prev }
+	}
+}
+
+# Use the game's predicted support rather than comparing only Manila's forces.
+fh_manila_ai_subject_play_safe = {
+	trigger_if = {
+		limit = { is_country_type = unrecognized }
+		potential_diplomatic_play_power_ratio = { type = dp_make_tributary target = c:PHI value >= 1.35 }
+	}
+	trigger_else = {
+		potential_diplomatic_play_power_ratio = { type = dp_make_protectorate target = c:PHI value >= 1.35 }
+	}
+}

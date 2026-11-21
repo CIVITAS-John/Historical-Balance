@@ -1,0 +1,126 @@
+﻿namespace = fh_manila_charter
+
+fh_manila_charter.1 = {
+	type = country_event
+	placement = root
+	title = fh_manila_charter.1.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { scope:fh_manila_charter_proposer.var:fh_manila_charter_kind ?= 1 }
+				desc = fh_manila_charter.1.tributary
+			}
+			desc = fh_manila_charter.1.protectorate
+		}
+	}
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	# The scheduled effect closes this offer at exactly 30 days.
+	duration = 2
+	trigger = {
+		c:PHI ?= this
+		scope:fh_manila_charter_proposer ?= { has_variable = fh_manila_charter_pending }
+	}
+	cancellation_trigger = {
+		NOT = { scope:fh_manila_charter_proposer ?= { has_variable = fh_manila_charter_pending } }
+	}
+
+	option = {
+		name = fh_manila_charter.1.accept
+		custom_tooltip = fh_manila_charter_market_terms_tt
+		if = {
+			limit = {
+				NOT = {
+					scope:fh_manila_charter_proposer ?= { fh_manila_charter_terms_still_legal = yes }
+				}
+			}
+			custom_tooltip = fh_manila_charter_ineligible_reply_tt
+		}
+		hidden_effect = {
+			scope:fh_manila_charter_proposer ?= { fh_manila_accept_charter = yes }
+		}
+		ai_chance = {
+			base = 15
+			modifier = {
+				trigger = {
+					NOT = {
+						scope:fh_manila_charter_proposer ?= { fh_manila_charter_terms_still_legal = yes }
+					}
+				}
+				factor = 0
+			}
+			modifier = {
+				trigger = { "relations(scope:fh_manila_charter_proposer)" >= 50 }
+				add = 25
+			}
+			modifier = {
+				trigger = { "relations(scope:fh_manila_charter_proposer)" >= 70 }
+				add = 25
+			}
+			modifier = {
+				trigger = { army_power_projection < scope:fh_manila_charter_proposer.army_power_projection }
+				add = 20
+			}
+			modifier = {
+				trigger = { p:x0D8236.state ?= { turmoil >= 0.15 } }
+				add = 20
+			}
+		}
+	}
+	option = {
+		name = fh_manila_charter.1.refuse
+		default_option = yes
+		hidden_effect = {
+			scope:fh_manila_charter_proposer ?= {
+				if = {
+					limit = { has_variable = fh_manila_charter_response_window }
+					fh_manila_finish_charter = { RESULT = 2 }
+				}
+				else = { fh_manila_finish_charter = { RESULT = 3 } }
+			}
+		}
+		ai_chance = {
+			base = 40
+			modifier = {
+				trigger = { fh_manila_charter_reliable_protector = { PROPOSER = scope:fh_manila_charter_proposer } }
+				add = 75
+			}
+			modifier = {
+				trigger = {
+					OR = {
+						has_attitude = { who = scope:fh_manila_charter_proposer attitude = antagonistic }
+						has_attitude = { who = scope:fh_manila_charter_proposer attitude = belligerent }
+					}
+				}
+				add = 100
+			}
+		}
+	}
+}
+
+fh_manila_charter.2 = {
+	type = country_event
+	hidden = yes
+	trigger = { has_variable = fh_manila_charter_pending }
+	immediate = { fh_manila_finish_charter = { RESULT = 3 } }
+}
+
+fh_manila_charter.3 = {
+	type = country_event
+	placement = root
+	title = fh_manila_charter.3.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { var:fh_manila_charter_result ?= 2 }
+				desc = fh_manila_charter.3.refused
+			}
+			triggered_desc = {
+				trigger = { var:fh_manila_charter_result ?= 3 }
+				desc = fh_manila_charter.3.expired
+			}
+			desc = fh_manila_charter.3.failed
+		}
+	}
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	option = { name = fh_manila_charter.3.a }
+}

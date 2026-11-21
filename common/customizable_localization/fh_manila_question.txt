@@ -1,0 +1,108 @@
+﻿fh_manila_window_status = {
+	type = country
+	random_valid = no
+
+	text = {
+		trigger = { NOT = { has_variable = fh_manila_question_opened } }
+		localization_key = fh_manila_waiting_for_independence
+	}
+	text = {
+		trigger = {
+			has_variable = fh_manila_deadline_hold
+			fh_manila_phi_independent = no
+		}
+		localization_key = fh_manila_hold_suspended
+	}
+	text = {
+		trigger = { has_variable = fh_manila_deadline_hold }
+		localization_key = fh_manila_hold_status
+	}
+	text = {
+		trigger = { NOT = { has_variable = fh_manila_window_timer } }
+		localization_key = fh_manila_deadline_reached
+	}
+	text = {
+		trigger = { fh_manila_phi_has_manila = no }
+		localization_key = fh_manila_suspended_city
+	}
+	text = {
+		trigger = { fh_manila_phi_independent = no }
+		localization_key = fh_manila_suspended_subject
+	}
+	text = { localization_key = fh_manila_open_status }
+}
+
+fh_manila_submission_status = {
+	type = country
+	random_valid = no
+	text = {
+		trigger = { fh_manila_direct_subject = yes }
+		localization_key = fh_manila_submission_held
+	}
+	text = {
+		trigger = { has_variable = fh_manila_charter_pending }
+		localization_key = fh_manila_submission_pending
+	}
+	text = { localization_key = fh_manila_submission_needed }
+}
+
+fh_manila_conquest_status = {
+	type = country
+	random_valid = no
+	text = {
+		trigger = { has_variable = fh_manila_question_opened }
+		localization_key = fh_manila_conquest_count
+	}
+	text = { localization_key = fh_manila_conquest_unrecorded }
+}
+
+fh_manila_cebu_status = {
+	type = country
+	random_valid = no
+	text = {
+		trigger = {
+			NOT = {
+				any_in_list = {
+					variable = fh_manila_starting_provinces
+					p:xD2CA4A ?= this
+				}
+			}
+		}
+		localization_key = fh_manila_cebu_unrequired
+	}
+	text = {
+		trigger = { fh_manila_controls_cebu_requirement = yes }
+		localization_key = fh_manila_cebu_owned
+	}
+	text = { localization_key = fh_manila_cebu_needed }
+}
+
+fh_manila_city_status = {
+	type = country
+	random_valid = no
+	text = {
+		trigger = { p:x0D8236 ?= { owner ?= prev } }
+		localization_key = fh_manila_city_owned
+	}
+	text = { localization_key = fh_manila_city_needed }
+}
+
+fh_manila_territory_status = {
+	type = country
+	random_valid = no
+	text = {
+		trigger = { has_variable = fh_manila_territory_enforced }
+		localization_key = fh_manila_enforcement_recorded
+	}
+	text = { localization_key = fh_manila_enforcement_needed }
+}
+
+fh_manila_expedition_status = {
+	type = country
+	random_valid = no
+	text = {
+		trigger = { has_variable = fh_manila_expedition_timer }
+		localization_key = fh_manila_expedition_status_active
+	}
+	text = { localization_key = fh_manila_expedition_status_empty }
+}

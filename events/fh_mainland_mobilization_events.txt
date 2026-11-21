@@ -48,6 +48,7 @@ fh_mainland_mobilization.4 = {
 	option = {
 		name = fh_mainland_mobilization.4.press
 		trigger = { scope:fh_claims_target ?= { fh_mainland_claim_target_ready = yes } }
+		show_as_unavailable = { always = yes }
 		ai_chance = { base = 100 }
 		custom_tooltip = fh_mainland_claim_press_play_tt
 		scope:fh_claims_target = {
@@ -59,12 +60,26 @@ fh_mainland_mobilization.4 = {
 		hidden_effect = { fh_mainland_launch_claims_play = yes }
 	}
 	option = {
+		name = fh_mainland_mobilization.4.next
+		trigger = {
+			is_ai = no
+			any_country = { fh_mainland_claim_target_unreviewed = yes }
+		}
+		if = {
+			limit = {
+				fh_mainland_claims_audience_valid = yes
+				any_country = { fh_mainland_claim_target_unreviewed = yes }
+			}
+			fh_mainland_show_next_claims_target = yes
+		}
+	}
+	option = {
 		name = fh_mainland_mobilization.4.wait
 		default_option = yes
 		ai_chance = { base = 0 }
 		if = {
 			limit = { fh_mainland_claims_audience_valid = yes }
-			remove_variable = fh_mainland_claims_audience
+			fh_mainland_close_claims_audience = yes
 		}
 	}
 }

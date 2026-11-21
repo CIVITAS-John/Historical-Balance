@@ -1,0 +1,64 @@
+﻿fh_reunification_route_open = {
+	fh_is_tungning_founder = yes
+	NOR = {
+		has_variable = fh_mainland_claim_abandoned
+		has_variable = fh_taiping_fork_pending
+	}
+}
+
+fh_reunification_provincial_access = {
+	fh_reunification_route_open = yes
+	has_variable = fh_reunification_opened
+	is_subject = no
+	OR = {
+		fh_owns_mainland_foothold = { REGION = STATE_FUJIAN }
+		fh_owns_mainland_foothold = { REGION = STATE_GUANGDONG }
+		fh_owns_mainland_foothold = { REGION = STATE_ZHEJIANG }
+	}
+}
+
+fh_reunification_can_negotiate = {
+	fh_reunification_provincial_access = yes
+	has_journal_entry = fh_je_reunification_of_china
+	NOT = { has_variable = fh_reunification_proclaimed }
+}
+
+fh_reunification_can_proclaim = {
+	fh_reunification_route_open = yes
+	has_journal_entry = fh_je_reunification_of_china
+	NOT = { has_variable = fh_reunification_proclaimed }
+	is_subject = no
+	is_at_war = no
+	custom_tooltip = {
+		text = fh_reunification_coast_tt
+		fh_reunification_direct_region_secure = { REGION = STATE_FUJIAN }
+		fh_reunification_direct_region_secure = { REGION = STATE_GUANGDONG }
+		fh_reunification_direct_region_secure = { REGION = STATE_ZHEJIANG }
+	}
+	custom_tooltip = {
+		text = fh_reunification_seat_tt
+		fh_reunification_secured_inland_seat = yes
+	}
+	custom_tooltip = {
+		text = fh_reunification_core_tt
+		fh_reunification_core_covered = yes
+	}
+	custom_tooltip = {
+		text = fh_reunification_capital_tt
+		fh_reunification_capital_confirmed = yes
+	}
+	custom_tooltip = {
+		text = fh_reunification_policies_tt
+		fh_reunification_policies_settled = yes
+	}
+	custom_tooltip = {
+		text = fh_reunification_taiping_tt
+		NOT = {
+			has_variable = fh_taiping_pact_ratified
+			OR = {
+				fh_mainland_taiping_active = yes
+				has_variable = fh_taiping_cession_pending
+			}
+		}
+	}
+}

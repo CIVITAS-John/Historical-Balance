@@ -1,0 +1,13 @@
+﻿l_english:
+ fh_manila_expedition_stores: "Manila Expedition Stores"
+ fh_manila_provision_expedition: "Provision the Expedition"
+ fh_manila_provision_expedition_desc: "Pay for landing stores once during the war. The army gains #p +20%#! Naval Invasion Efficiency for six months, unless the war ends, Tungning enters another war, or the court suspends or closes this journal."
+ fh_manila_expedition_window_tt: "The Manila opportunity is open and has not reached its deadline."
+ fh_manila_expedition_unused_tt: "Tungning has not already provisioned a Manila expedition."
+ fh_manila_expedition_war_tt: "Tungning is fighting a war from a play it started against independent Manila during the window, demanding land or submission."
+ fh_manila_expedition_one_war_tt: "Tungning is fighting only one war."
+ fh_manila_expedition_cost_tt: "Tungning has at least @money![ROOT.GetCountry.MakeScope.ScriptValue('fh_manila_expedition_cost')|0] in Gold Reserves (5% of reserve capacity)."
+ fh_manila_expedition_effect_tt: "Spend @money![ROOT.GetCountry.MakeScope.ScriptValue('fh_manila_expedition_cost')|0] in Gold Reserves for #p +20%#! Naval Invasion Efficiency for six months."
+ fh_manila_expedition_active_tt: "Expedition stores expire on [TimeKeeper.GetCurrentDateWithDiff( GetVarTimeRemaining( ROOT.GetCountry.MakeScope, 'fh_manila_expedition_timer') )]."
+ fh_manila_seek_submission_strategy: "Press the Manila Claim"
+ fh_manila_seek_submission_strategy_desc: "Use Tungning’s fleet to press demands when Manila is distracted and other powers are unlikely to intervene successfully."

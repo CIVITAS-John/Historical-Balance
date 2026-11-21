@@ -54,22 +54,48 @@ fh_mainland_is_taiping_rival = {
 	}
 }
 
-fh_mainland_claim_target_country = {
+fh_mainland_claim_owner = {
 	NOT = { global_var:fh_tungning_founder ?= this }
 	is_country_alive = yes
-	is_subject = no
-	NOT = { is_country_type = decentralized }
-	OR = {
-		fh_mainland_central_government = yes
-		has_variable = warlord_state
-		fh_mainland_is_taiping_rival = yes
-	}
 	any_scope_state = { fh_mainland_claim_target_state = yes }
-	NAND = {
-		fh_mainland_is_taiping_rival = yes
-		global_var:fh_tungning_founder ?= {
-			has_variable = fh_taiping_pact_ratified
-			fh_mainland_taiping_active = yes
+}
+
+fh_mainland_claim_target_unreviewed = {
+	fh_mainland_claim_owner = yes
+	global_var:fh_tungning_founder = {
+		NOT = { is_target_in_variable_list = { name = fh_mainland_claim_reviewed target = prev } }
+	}
+}
+
+fh_mainland_claim_target_country = {
+	custom_tooltip = {
+		text = fh_mainland_claim_owner_tt
+		fh_mainland_claim_owner = yes
+	}
+	custom_tooltip = {
+		text = fh_mainland_claim_eligible_government_tt
+		NOT = { is_country_type = decentralized }
+		OR = {
+			fh_mainland_central_government = yes
+			has_variable = warlord_state
+			fh_mainland_is_taiping_rival = yes
+		}
+	}
+	custom_tooltip = {
+		text = fh_mainland_claim_independent_target_tt
+		is_subject = no
+	}
+	custom_tooltip = {
+		text = fh_mainland_claim_no_pact_tt
+		NAND = {
+			fh_mainland_is_taiping_rival = yes
+			global_var:fh_tungning_founder ?= {
+				has_variable = fh_taiping_pact_ratified
+				OR = {
+					fh_mainland_taiping_active = yes
+					has_variable = fh_taiping_cession_pending
+				}
+			}
 		}
 	}
 }
@@ -77,41 +103,65 @@ fh_mainland_claim_target_country = {
 # The outer scope is the prospective target. All three objectives share
 # South China, so the founding country can check interest once.
 fh_mainland_claim_diplomacy_legal = {
-	NOT = { has_journal_entry = je_the_first_carlist_war }
-	NOT = {
-		any_scope_treaty = {
-			binds = global_var:fh_tungning_founder
-			any_scope_article = {
-				OR = {
-					has_type = alliance
-					has_type = defensive_pact
-					has_type = guarantee_independence
+	custom_tooltip = {
+		text = fh_mainland_claim_no_protective_treaty_tt
+		NOT = {
+			any_scope_treaty = {
+				binds = global_var:fh_tungning_founder
+				any_scope_article = {
+					OR = {
+						has_type = alliance
+						has_type = defensive_pact
+						has_type = guarantee_independence
+					}
 				}
 			}
 		}
 	}
-	global_var:fh_tungning_founder = {
-		is_subject = no
-		aggressive_diplomatic_plays_permitted = yes
-		has_strategic_region_interest_tier = {
-			strategic_region = sr:region_south_china
-			value >= interest_tier_effect_can_start_diplomatic_plays_min_tier
+	custom_tooltip = {
+		text = fh_mainland_claim_no_carlist_tt
+		NOT = { has_journal_entry = je_the_first_carlist_war }
+	}
+	global_var:fh_tungning_founder ?= {
+		custom_tooltip = {
+			text = fh_mainland_claim_can_initiate_tt
+			is_subject = no
+			aggressive_diplomatic_plays_permitted = yes
+			NOT = { has_journal_entry = je_the_first_carlist_war }
 		}
-		NOR = {
-			has_truce_with = prev
-			has_war_with = prev
-			is_diplomatic_play_participant_with = prev
-			has_journal_entry = je_the_first_carlist_war
-			AND = {
+		custom_tooltip = {
+			text = fh_mainland_claim_interest_tt
+			has_strategic_region_interest_tier = {
+				strategic_region = sr:region_south_china
+				value >= interest_tier_effect_can_start_diplomatic_plays_min_tier
+			}
+		}
+		custom_tooltip = {
+			text = fh_mainland_claim_no_truce_tt
+			NOT = { has_truce_with = prev }
+		}
+		custom_tooltip = {
+			text = fh_mainland_claim_no_conflict_tt
+			NOR = {
+				has_war_with = prev
+				is_diplomatic_play_participant_with = prev
+				any_diplomatic_play = {
+					is_diplomatic_play_type = dp_fh_mainland_claims
+					initiator_is = global_var:fh_tungning_founder
+				}
+			}
+		}
+		custom_tooltip = {
+			text = fh_mainland_claim_bloc_allows_tt
+			NAND = {
 				is_in_same_power_bloc = prev
 				power_bloc ?= { modifier:power_bloc_disallow_war_bool = yes }
 			}
-			any_diplomatic_play = {
-				is_diplomatic_play_type = dp_fh_mainland_claims
-				initiator_is = global_var:fh_tungning_founder
-			}
 		}
-		relations:prev < relations_threshold:cordial
+		custom_tooltip = {
+			text = fh_mainland_claim_relations_tt
+			relations:prev < relations_threshold:cordial
+		}
 	}
 }
 
@@ -189,12 +239,21 @@ fh_mainland_claims_audience_valid = {
 	scope:fh_claims_target ?= { is_country_alive = yes }
 }
 
+fh_mainland_can_track_first_war = {
+	NOT = { has_variable = fh_mainland_first_war }
+	OR = {
+		has_variable = fh_mainland_mobilizing
+		# A peace cession may force reassertion later the same day.
+		fh_mainland_claim_unsettled = yes
+	}
+}
+
 # Use the stored play even when the source country's role or tag changes.
 fh_mainland_matches_or_can_track_war = {
 	OR = {
 		var:fh_mainland_first_war ?= scope:diplomatic_play
 		AND = {
-			NOT = { has_variable = fh_mainland_first_war }
+			fh_mainland_can_track_first_war = yes
 			scope:diplomatic_play ?= { fh_mainland_play_has_opposing_qing = yes }
 		}
 	}

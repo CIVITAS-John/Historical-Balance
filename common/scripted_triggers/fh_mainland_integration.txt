@@ -1,0 +1,52 @@
+﻿# In state scope. The slowdown applies even to a partial region or land
+# acquired before taking a side in the claim debate.
+fh_mainland_integration_state = {
+	fh_mainland_core_state = yes
+	is_treaty_port = no
+	is_incorporated = no
+	owner ?= {
+		fh_is_tungning_founder = yes
+		NOT = { has_variable = fh_mainland_claim_abandoned }
+	}
+}
+
+fh_mainland_integration_decree_country = {
+	fh_is_tungning_founder = yes
+	NOR = {
+		has_variable = fh_mainland_claim_abandoned
+		has_variable = fh_taiping_fork_pending
+	}
+}
+
+fh_mainland_integration_decree_state = {
+	fh_mainland_integration_state = yes
+	owner ?= { fh_mainland_integration_decree_country = yes }
+}
+
+fh_mainland_integration_has_decree = {
+	OR = {
+		has_decree = fh_decree_county_magistrates
+		has_decree = fh_decree_taiwan_commissioners
+		has_decree = fh_decree_public_relief
+	}
+}
+
+fh_mainland_integration_severe = {
+	OR = {
+		fh_mainland_state_unoccupied = no
+		turmoil >= 0.75
+	}
+}
+
+fh_mainland_integration_priority = {
+	OR = {
+		fh_mainland_coast_state = yes
+		state_region = s:STATE_NANJING
+		state_region = s:STATE_BEIJING
+	}
+}
+
+fh_mainland_integration_ai_commissioners = {
+	fh_mainland_staffed_offices >= 8
+	turmoil < 0.25
+}

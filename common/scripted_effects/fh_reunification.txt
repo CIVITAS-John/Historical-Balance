@@ -1,0 +1,39 @@
+﻿fh_refresh_reunification_opening = {
+	if = {
+		limit = {
+			fh_reunification_route_open = yes
+			has_variable = fh_mainland_settled
+			NOT = { has_variable = fh_reunification_opened }
+			fh_reunification_all_coasts_owned = yes
+		}
+		add_journal_entry = { type = fh_je_reunification_of_china }
+	}
+}
+
+fh_proclaim_reunification = {
+	if = {
+		limit = { fh_reunification_can_proclaim = yes }
+		set_variable = fh_reunification_proclaimed
+		if = {
+			limit = { fh_reunification_uses_charters = yes }
+			set_variable = fh_reunification_chartered_union
+			add_modifier = { name = fh_reunification_chartered_settlement years = 5 }
+			fh_constitution_radicals = { IG = ig_landowners VALUE = -0.05 }
+		}
+		else = {
+			add_modifier = { name = fh_reunification_direct_settlement years = 7 }
+			fh_constitution_radicals = { IG = ig_intelligentsia VALUE = -0.05 }
+			fh_constitution_radicals = { IG = ig_landowners VALUE = 0.02 }
+		}
+	}
+}
+
+# Native country pulses are monthly; a queued event keeps local policy
+# and charter cleanup running between them, including after proclamation.
+fh_schedule_reunification_review = {
+	if = {
+		limit = { NOT = { has_variable = fh_reunification_review_scheduled } }
+		set_variable = { name = fh_reunification_review_scheduled days = 8 }
+		trigger_event = { id = fh_reunification_events.1 days = 7 }
+	}
+}

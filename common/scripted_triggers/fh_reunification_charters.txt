@@ -1,0 +1,147 @@
+﻿# Use known Qing splinters as well as the marker vanilla sets when a
+# provincial government forms during the warlord breakup.
+fh_provincial_government = {
+	is_country_alive = yes
+	is_revolutionary = no
+	NOT = { is_country_type = decentralized }
+	NOR = {
+		fh_is_tungning_founder = yes
+		fh_mainland_central_government = yes
+		fh_mainland_is_taiping_rival = yes
+		c:MIG ?= this
+	}
+	OR = {
+		has_variable = warlord_state
+		c:HNA ?= this
+		c:GNG ?= this
+		c:AHU ?= this
+		c:ZHI ?= this
+		c:MCH ?= this
+		c:SHN ?= this
+		c:YUN ?= this
+		c:GUI ?= this
+		c:YUE ?= this
+		c:SIH ?= this
+		c:SHA ?= this
+		c:XIB ?= this
+	}
+	any_scope_state = {
+		is_treaty_port = no
+		fh_mainland_core_state = yes
+	}
+}
+
+fh_provincial_associated = {
+	var:fh_provincial_association ?= global_var:fh_tungning_founder
+	fh_provincial_government = yes
+	is_subject = no
+}
+
+fh_provincial_charter_relationship = {
+	var:fh_provincial_charter_holder ?= this
+	var:fh_provincial_charter_ratified ?= global_var:fh_tungning_founder
+	global_var:fh_tungning_founder ?= { is_country_alive = yes }
+	is_direct_subject_of = global_var:fh_tungning_founder
+}
+
+fh_provincial_subject_loyal = {
+	is_direct_subject_of = global_var:fh_tungning_founder
+	liberty_desire < 50
+	NOR = {
+		play_participant_has_war_goal_of_type_against = {
+			type = independence
+			target = global_var:fh_tungning_founder
+		}
+		war_participant_has_war_goal_of_type_against = {
+			type = independence
+			target = global_var:fh_tungning_founder
+		}
+	}
+}
+
+fh_provincial_charter_counts = {
+	fh_provincial_charter_relationship = yes
+	fh_provincial_government = yes
+	fh_provincial_subject_loyal = yes
+}
+
+fh_provincial_offer_association = {
+	global_var:fh_tungning_founder ?= { fh_reunification_can_negotiate = yes }
+	fh_provincial_government = yes
+	is_subject = no
+	fh_provincial_associated = no
+	NOT = { is_diplomatic_play_enemy_of = global_var:fh_tungning_founder }
+	NOT = { has_war_with = global_var:fh_tungning_founder }
+}
+
+fh_provincial_offer_charter = {
+	global_var:fh_tungning_founder ?= { fh_reunification_can_negotiate = yes }
+	fh_provincial_government = yes
+	fh_provincial_charter_relationship = no
+	OR = {
+		AND = {
+			fh_provincial_subject_loyal = yes
+			NOT = { has_war_with = global_var:fh_tungning_founder }
+		}
+		AND = {
+			is_subject = no
+			is_at_war = no
+			is_diplomatic_play_committed_participant = no
+			global_var:fh_tungning_founder ?= {
+				is_at_war = no
+				is_diplomatic_play_committed_participant = no
+				OR = {
+					can_have_as_subject = { who = prev type = subject_type_tributary }
+					can_have_as_subject = { who = prev type = subject_type_protectorate }
+				}
+			}
+		}
+	}
+}
+
+fh_provincial_integration_ready = {
+	global_var:fh_tungning_founder ?= {
+		fh_reunification_provincial_access = yes
+		is_at_war = no
+		is_diplomatic_play_committed_participant = no
+	}
+	fh_provincial_charter_counts = yes
+	is_at_war = no
+	is_diplomatic_play_committed_participant = no
+	NOT = { has_variable = fh_provincial_charter_new }
+}
+
+fh_provincial_offer_integration = {
+	fh_provincial_integration_ready = yes
+	NOT = { has_variable = fh_provincial_integration_asked }
+}
+
+fh_provincial_offer_current = {
+	has_variable = fh_provincial_offer
+	var:fh_provincial_offer_serial ?= scope:fh_provincial_offer_ticket
+}
+
+fh_provincial_offer_valid = {
+	fh_provincial_offer_current = yes
+	OR = {
+		AND = {
+			var:fh_provincial_offer ?= 1
+			fh_provincial_offer_association = yes
+		}
+		AND = {
+			var:fh_provincial_offer ?= 2
+			fh_provincial_offer_charter = yes
+		}
+		AND = {
+			var:fh_provincial_offer ?= 3
+			fh_provincial_integration_ready = yes
+		}
+	}
+}
+
+fh_provincial_can_receive_offer = {
+	NOR = {
+		has_variable = fh_provincial_offer
+		has_variable = fh_provincial_offer_cooldown
+	}
+}

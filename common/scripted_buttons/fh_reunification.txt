@@ -1,0 +1,26 @@
+﻿fh_proclaim_reunification = {
+	name = fh_proclaim_reunification
+	desc = fh_proclaim_reunification_desc
+	visible = {
+		has_journal_entry = fh_je_reunification_of_china
+		NOT = { has_variable = fh_reunification_proclaimed }
+	}
+	possible = {
+		fh_reunification_can_proclaim = yes
+		NOT = { has_variable = fh_reunification_proclamation_pending }
+	}
+	effect = {
+		custom_tooltip = fh_reunification_outcomes_tt
+		hidden_effect = {
+			if = {
+				limit = {
+					fh_reunification_can_proclaim = yes
+					NOT = { has_variable = fh_reunification_proclamation_pending }
+				}
+				set_variable = { name = fh_reunification_proclamation_pending years = 1 }
+				trigger_event = { id = fh_reunification_events.4 popup = yes }
+			}
+		}
+	}
+	ai_chance = { value = 100 }
+}

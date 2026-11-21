@@ -10,3 +10,12 @@
 	}
 	multiply = 0.75
 }
+
+# Review eligible targets first, then let the player inspect blocked owners.
+fh_mainland_claim_review_priority = {
+	value = 0
+	if = {
+		limit = { fh_mainland_claim_target_ready = yes }
+		add = 1
+	}
+}

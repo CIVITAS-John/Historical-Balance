@@ -1,0 +1,92 @@
+﻿fh_reunification_taiwan_holding = {
+	state_region = s:STATE_FORMOSA
+	is_treaty_port = no
+	owner ?= { fh_is_tungning_founder = yes }
+}
+
+fh_reunification_southern_land = {
+	is_treaty_port = no
+	OR = {
+		region = sr:region_indonesia
+		region = sr:region_indochina
+	}
+}
+
+fh_reunification_philippine_land = {
+	OR = {
+		state_region = s:STATE_LUZON
+		state_region = s:STATE_VISAYAS
+		state_region = s:STATE_MINDANAO
+	}
+}
+
+# The Manila journal can be suspended without closing its window. These
+# markers are its interface to the Compact when that journal is added.
+fh_reunification_manila_unsettled = {
+	global_var:fh_tungning_founder ?= {
+		has_variable = fh_manila_question_opened
+		NOT = { has_variable = fh_manila_question_result }
+	}
+}
+
+fh_reunification_southern_holding = {
+	fh_reunification_southern_land = yes
+	owner ?= { fh_is_tungning_founder = yes }
+	NAND = {
+		fh_southern_passage_borneo_parcel_state = yes
+		owner ?= { fh_southern_passage_open = yes }
+	}
+	NAND = {
+		fh_reunification_philippine_land = yes
+		fh_reunification_manila_unsettled = yes
+	}
+}
+
+fh_reunification_southern_subject = {
+	is_country_alive = yes
+	overlord ?= { fh_is_tungning_founder = yes }
+	any_scope_state = { fh_reunification_southern_land = yes }
+	NAND = {
+		overlord ?= { fh_southern_passage_open = yes }
+		OR = {
+			global_var:fh_tungning_founder.var:fh_southern_passage_opening_stg ?= this
+			global_var:fh_tungning_founder.var:fh_southern_passage_opening_sel ?= this
+			global_var:fh_tungning_founder.var:fh_southern_passage_opening_blg ?= this
+		}
+	}
+	NAND = { c:PHI ?= this fh_reunification_manila_unsettled = yes }
+}
+
+fh_reunification_taiwan_question_available = {
+	any_scope_state = { fh_reunification_taiwan_holding = yes }
+}
+
+fh_reunification_south_question_available = {
+	OR = {
+		any_scope_state = { fh_reunification_southern_holding = yes }
+		any_subject_or_below = { fh_reunification_southern_subject = yes }
+	}
+}
+
+fh_reunification_policy_available = {
+	fh_reunification_settlements_open = yes
+	NOT = { has_variable = fh_reunification_$POLICY$_policy }
+	fh_reunification_$POLICY$_question_available = yes
+}
+
+fh_reunification_policies_settled = {
+	OR = {
+		has_variable = fh_reunification_taiwan_policy
+		fh_reunification_taiwan_question_available = no
+	}
+	OR = {
+		has_variable = fh_reunification_south_policy
+		fh_reunification_south_question_available = no
+	}
+}
+
+fh_reunification_south_tribute_valid = {
+	fh_reunification_southern_subject = yes
+	overlord ?= { var:fh_reunification_south_policy ?= 1 }
+	NOT = { has_modifier = fh_provincial_charter_tribute }
+}

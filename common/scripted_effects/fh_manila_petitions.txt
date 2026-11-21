@@ -1,0 +1,84 @@
+﻿fh_manila_poll_petitions_effect = {
+	if = {
+		limit = {
+			fh_manila_petition_window = yes
+			NOT = { has_variable = fh_manila_petition_cooldown }
+			any_scope_state = { state_region = s:STATE_FORMOSA }
+		}
+		random = {
+			chance = 10
+			random_list = {
+				1 = {
+					trigger = {
+						NOT = { has_variable = fh_manila_petition_warehouses_resolved }
+						fh_manila_petition_warehouses_available = yes
+						any_scope_state = {
+							state_region = s:STATE_FORMOSA
+							fh_manila_petition_trade_center = yes
+						}
+					}
+					fh_manila_open_petition = { PETITION = warehouses EVENT = 1 ANY_TAIWAN_STATE = no }
+				}
+				1 = {
+					trigger = {
+						NOT = { has_variable = fh_manila_petition_rice_resolved }
+						fh_manila_petition_rice_available = yes
+					}
+					fh_manila_open_petition = { PETITION = rice EVENT = 2 ANY_TAIWAN_STATE = yes }
+				}
+				1 = {
+					trigger = {
+						NOT = { has_variable = fh_manila_petition_sisters_resolved }
+						fh_manila_petition_sisters_available = yes
+					}
+					fh_manila_open_petition = { PETITION = sisters EVENT = 3 ANY_TAIWAN_STATE = yes }
+				}
+			}
+		}
+	}
+}
+
+fh_manila_open_petition = {
+	random_scope_state = {
+		limit = {
+			state_region = s:STATE_FORMOSA
+			OR = {
+				always = $ANY_TAIWAN_STATE$
+				fh_manila_petition_trade_center = yes
+			}
+		}
+		save_scope_as = fh_manila_petition_taiwan
+	}
+	set_variable = { name = fh_manila_petition_$PETITION$_pending days = 30 }
+	set_variable = { name = fh_manila_petition_cooldown months = 12 }
+	trigger_event = { id = fh_manila_petitions.$EVENT$ popup = yes }
+}
+
+fh_manila_resolve_petition = {
+	remove_variable = fh_manila_petition_$PETITION$_pending
+	set_variable = fh_manila_petition_$PETITION$_resolved
+}
+
+fh_manila_cancel_petition_effect = {
+	fh_manila_clear_pending_petition = { PETITION = warehouses }
+	fh_manila_clear_pending_petition = { PETITION = rice }
+	fh_manila_clear_pending_petition = { PETITION = sisters }
+}
+
+fh_manila_clear_pending_petition = {
+	if = {
+		limit = { has_variable = fh_manila_petition_$PETITION$_pending }
+		remove_variable = fh_manila_petition_$PETITION$_pending
+	}
+}
+
+fh_manila_pay_petition = {
+	add_treasury = { value = fh_manila_petition_cash multiply = -1 }
+}
+
+fh_manila_clear_petition_state_modifier = {
+	if = {
+		limit = { has_modifier = $MODIFIER$ }
+		remove_modifier = $MODIFIER$
+	}
+}

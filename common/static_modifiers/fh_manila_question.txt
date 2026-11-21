@@ -1,0 +1,11 @@
+﻿fh_manila_settlement_agreement = {
+	country_prestige_add = 15
+}
+
+fh_manila_settlement_enforced = {
+	country_prestige_add = 20
+}
+
+fh_manila_missed_crossing = {
+	country_prestige_add = -10
+}

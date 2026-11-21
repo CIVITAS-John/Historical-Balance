@@ -1,0 +1,15 @@
+﻿fh_manila_provinces_recorded = {
+	value = 0
+	every_in_list = {
+		variable = fh_manila_starting_provinces
+		add = 1
+	}
+}
+
+fh_manila_provinces_held = {
+	value = 0
+	every_in_list = {
+		variable = fh_manila_starting_provinces
+		if = { limit = { owner ?= prev } add = 1 }
+	}
+}

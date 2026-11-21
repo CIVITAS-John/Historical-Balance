@@ -1,0 +1,27 @@
+﻿fh_manila_bonded_warehouses = {
+	state_trade_advantage_mult = 0.15
+}
+
+fh_manila_warehouse_concession_denied = {
+	interest_group_approval_add = -2
+}
+
+fh_manila_rice_purchase = {
+	state_lower_strata_standard_of_living_add = 1
+}
+
+fh_manila_free_hospital = {
+	state_mortality_mult = -0.10
+}
+
+fh_manila_works_yard = {
+	state_construction_mult = 0.10
+}
+
+fh_manila_hospital_approval = {
+	interest_group_approval_add = 2
+}
+
+fh_manila_hospital_refused = {
+	interest_group_approval_add = -2
+}

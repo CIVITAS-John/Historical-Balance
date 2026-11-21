@@ -28,7 +28,7 @@ fh_mainland_track_finished_war = {
 			OR = {
 				var:fh_mainland_first_war ?= root
 				AND = {
-					NOT = { has_variable = fh_mainland_first_war }
+					fh_mainland_can_track_first_war = yes
 					root = { fh_mainland_play_has_opposing_qing = yes }
 				}
 			}
@@ -36,7 +36,7 @@ fh_mainland_track_finished_war = {
 	}
 	effect = {
 		global_var:fh_tungning_founder = {
-			set_variable = { name = fh_mainland_qing_war_ended_today days = 1 }
+			set_variable = { name = fh_mainland_qing_war_ended_today value = root days = 1 }
 			fh_mainland_record_war = { PLAY = root }
 			fh_mainland_finish_mobilization = yes
 		}
@@ -82,7 +82,7 @@ fh_mainland_record_war_end = {
 		fh_mainland_matches_or_can_track_war = yes
 	}
 	effect = {
-		set_variable = { name = fh_mainland_qing_war_ended_today days = 1 }
+		set_variable = { name = fh_mainland_qing_war_ended_today value = scope:diplomatic_play days = 1 }
 		fh_mainland_record_war = { PLAY = scope:diplomatic_play }
 		fh_mainland_finish_mobilization = yes
 	}
@@ -94,8 +94,8 @@ fh_mainland_record_lost_war = {
 		fh_mainland_matches_or_can_track_war = yes
 	}
 	effect = {
-		set_variable = { name = fh_mainland_qing_war_ended_today days = 1 }
-		set_variable = { name = fh_mainland_qing_war_defeat_today days = 1 }
+		set_variable = { name = fh_mainland_qing_war_ended_today value = scope:diplomatic_play days = 1 }
+		set_variable = { name = fh_mainland_qing_war_defeat_today value = scope:diplomatic_play days = 1 }
 		fh_mainland_record_war = { PLAY = scope:diplomatic_play }
 		if = {
 			limit = { var:fh_mainland_first_war ?= scope:diplomatic_play }

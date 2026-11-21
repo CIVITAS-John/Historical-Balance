@@ -1,0 +1,86 @@
+﻿fh_mainland_clear_decrees = {
+	if = {
+		limit = { has_decree = fh_decree_county_magistrates }
+		remove_decree = fh_decree_county_magistrates
+	}
+	if = {
+		limit = { has_decree = fh_decree_taiwan_commissioners }
+		remove_decree = fh_decree_taiwan_commissioners
+	}
+	if = {
+		limit = { has_decree = fh_decree_public_relief }
+		remove_decree = fh_decree_public_relief
+	}
+}
+
+fh_mainland_clear_integration_modifier = {
+	if = {
+		limit = { has_modifier = fh_mainland_integration_speed }
+		remove_modifier = fh_mainland_integration_speed
+	}
+}
+
+fh_mainland_clear_integration_country = {
+	every_scope_state = {
+		limit = {
+			OR = {
+				has_modifier = fh_mainland_integration_speed
+				fh_mainland_integration_has_decree = yes
+			}
+		}
+		fh_mainland_clear_decrees = yes
+		fh_mainland_clear_integration_modifier = yes
+	}
+}
+
+fh_mainland_refresh_integration_speed = {
+	fh_mainland_clear_integration_modifier = yes
+	if = {
+		limit = { fh_mainland_integration_state = yes }
+		add_modifier = {
+			name = fh_mainland_integration_speed
+			multiplier = fh_mainland_integration_penalty
+			days = 35
+		}
+	}
+}
+
+fh_mainland_suspend_integration_decrees = {
+	every_scope_state = {
+		limit = { fh_mainland_integration_state = yes }
+		fh_mainland_clear_decrees = yes
+		fh_mainland_refresh_integration_speed = yes
+	}
+}
+
+fh_mainland_monthly_integration = {
+	if = {
+		limit = { fh_mainland_integration_decree_state = no }
+		fh_mainland_clear_decrees = yes
+	}
+	fh_mainland_refresh_integration_speed = yes
+	if = {
+		limit = {
+			has_decree = fh_decree_public_relief
+			fh_mainland_integration_decree_state = yes
+			fh_mainland_state_unoccupied = yes
+			turmoil >= 0.25
+		}
+		add_radicals_in_state = { value = -0.005 }
+	}
+}
+
+# Optional in journal map tooltips. Uses live staffing/turmoil; the applied
+# modifier in the state panel is refreshed monthly.
+fh_mainland_integration_tooltip = {
+	if = {
+		limit = { fh_mainland_integration_state = yes }
+		if = {
+			limit = { fh_mainland_integration_severe = yes }
+			custom_tooltip_no_bullet = fh_mainland_integration_severe_tt
+		}
+		else = {
+			custom_tooltip_no_bullet = fh_mainland_integration_rates_tt
+		}
+	}
+}

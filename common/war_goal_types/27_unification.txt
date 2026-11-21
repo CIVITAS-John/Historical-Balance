@@ -54,6 +54,7 @@
 	}
 
 	on_enforced = {
+		fh_manila_stage_goal = { KIND = 1 SUBJECT = no }
 		fh_southern_passage_stage_state_goal = yes
 	}
 

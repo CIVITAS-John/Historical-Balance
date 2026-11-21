@@ -1,0 +1,86 @@
+﻿fh_je_manila_question = {
+	group = je_group_foreign_affairs
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	transferable = no
+	can_revolution_inherit = no
+	can_deactivate = yes
+
+	is_shown_when_inactive = {
+		OR = {
+			fh_manila_visible = yes
+			fh_manila_unresolved = yes
+		}
+	}
+
+	possible = {
+		OR = {
+			fh_manila_visible = yes
+			fh_manila_unresolved = yes
+			# Stay active until the results panel records the conclusion.
+			has_variable = fh_manila_question_result
+		}
+	}
+
+	immediate = {
+		c:PHI ?= { save_scope_as = fh_manila_phi }
+		fh_manila_consider_opening = yes
+	}
+	on_weekly_pulse = {
+		effect = { fh_manila_on_position_changed = yes }
+	}
+
+	scripted_button = fh_manila_offer_charter
+	scripted_button = fh_manila_provision_expedition
+
+	outcome = {
+		header = fh_manila_agreement_header
+		effect_header = je_standard_on_completion_header
+		color = "gold_positive"
+		conclusion_desc = fh_manila_agreement_conclusion
+		trigger = {
+			custom_tooltip = {
+				text = fh_manila_agreement_goal
+				var:fh_manila_question_result ?= 1
+			}
+		}
+	}
+
+	outcome = {
+		header = fh_manila_enforced_header
+		effect_header = je_standard_on_completion_header
+		color = "gold_positive"
+		conclusion_desc = fh_manila_enforced_conclusion
+		trigger = {
+			custom_tooltip = {
+				text = fh_manila_enforced_goal
+				var:fh_manila_question_result ?= 2
+			}
+		}
+	}
+
+	outcome = {
+		header = fh_manila_conquest_header
+		effect_header = je_standard_on_completion_header
+		color = "gold_positive"
+		conclusion_desc = fh_manila_conquest_conclusion
+		trigger = {
+			custom_tooltip = {
+				text = fh_manila_conquest_goal
+				var:fh_manila_question_result ?= 3
+			}
+		}
+	}
+
+	outcome = {
+		header = fh_manila_expired_header
+		effect_header = je_standard_on_failure_header
+		color = "blue_negative"
+		conclusion_desc = fh_manila_expired_conclusion
+		trigger = {
+			custom_tooltip = {
+				text = fh_manila_expired_goal
+				var:fh_manila_question_result ?= 4
+			}
+		}
+	}
+}

@@ -1,0 +1,43 @@
+﻿fh_reunification_coastal_audience = {
+	name = fh_reunification_coastal_audience
+	desc = fh_reunification_coastal_audience_desc
+	visible = { NOT = { has_variable = fh_mainland_claim_abandoned } }
+	possible = {
+		custom_tooltip = {
+			text = fh_reunification_needs_seat_audience_tt
+			fh_reunification_coastal_seat_open = yes
+		}
+		NOT = { has_variable = fh_reunification_seat_audience_pending }
+	}
+	effect = {
+		hidden_effect = {
+			if = {
+				limit = { fh_reunification_coastal_seat_open = yes }
+				fh_reunification_show_seat_audience = { EVENT = fh_reunification_seats.1 }
+			}
+		}
+	}
+	ai_chance = { value = 0 }
+}
+
+fh_reunification_national_audience = {
+	name = fh_reunification_national_audience
+	desc = fh_reunification_national_audience_desc
+	visible = { NOT = { has_variable = fh_mainland_claim_abandoned } }
+	possible = {
+		custom_tooltip = {
+			text = fh_reunification_needs_national_audience_tt
+			fh_reunification_national_seat_open = yes
+		}
+		NOT = { has_variable = fh_reunification_seat_audience_pending }
+	}
+	effect = {
+		hidden_effect = {
+			if = {
+				limit = { fh_reunification_national_seat_open = yes }
+				fh_reunification_show_seat_audience = { EVENT = fh_reunification_seats.2 }
+			}
+		}
+	}
+	ai_chance = { value = 0 }
+}
