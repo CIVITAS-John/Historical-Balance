@@ -68,16 +68,16 @@ fh_constitution_ming_mainland_drift = {
 				OR = {
 					fh_owns_mainland_foothold = { REGION = STATE_NANJING }
 					fh_owns_mainland_foothold = { REGION = STATE_BEIJING }
-					any_scope_state = {
+					any_state_region = {
 						count >= 4
-						fh_constitution_owned_inland_state = yes
+						fh_constitution_owned_inland_region = yes
 					}
 				}
 			}
 			add = 3
 		}
 		else_if = {
-			limit = { any_scope_state = { fh_constitution_owned_inland_state = yes } }
+			limit = { any_state_region = { fh_constitution_owned_inland_region = yes } }
 			add = 2
 		}
 		else = { add = 1 }
@@ -175,19 +175,6 @@ fh_constitution_ming_cap = {
 	else_if = {
 		limit = { fh_constitution_ming_unlocked = yes }
 		add = 150
-	}
-}
-
-# A positive balance is a strict majority of the recorded province set.
-fh_constitution_manila_recorded_balance = {
-	value = 0
-	every_in_list = {
-		variable = fh_manila_starting_provinces
-		if = {
-			limit = { owner ?= prev }
-			add = 1
-		}
-		else = { subtract = 1 }
 	}
 }
 

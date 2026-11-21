@@ -114,5 +114,8 @@ fh_zhu_yucheng_magnate = {
 	ideology = ideology_traditionalist
 	home_region = STATE_FORMOSA
 	holding_type = building_manor_house
-	on_created = { set_variable = fh_tungning_ming_claimant }
+	on_created = {
+		set_variable = fh_tungning_ming_claimant
+		set_variable = { name = dynasty_var value = flag:fh_house_zhu }
+	}
 }

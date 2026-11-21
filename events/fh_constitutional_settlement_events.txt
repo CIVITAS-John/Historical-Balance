@@ -194,6 +194,16 @@ fh_constitution.5 = {
 	}
 }
 
+fh_constitution.6 = {
+	type = country_event
+	hidden = yes
+	trigger = { fh_constitution_followup_active = yes }
+	immediate = {
+		remove_variable = fh_constitution_streak_check_queued
+		fh_constitution_check_followup = yes
+	}
+}
+
 fh_constitution.11 = {
 	type = country_event
 	placement = root

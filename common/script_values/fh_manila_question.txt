@@ -13,3 +13,16 @@ fh_manila_provinces_held = {
 		if = { limit = { owner ?= prev } add = 1 }
 	}
 }
+
+# A positive balance is a strict majority of the recorded province set.
+fh_manila_recorded_balance = {
+	value = 0
+	every_in_list = {
+		variable = fh_manila_starting_provinces
+		if = {
+			limit = { owner ?= prev }
+			add = 1
+		}
+		else = { subtract = 1 }
+	}
+}

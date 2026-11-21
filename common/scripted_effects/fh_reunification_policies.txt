@@ -6,7 +6,8 @@
 	if = {
 		limit = {
 			fh_reunification_policy_available = { POLICY = taiwan }
-			NOT = { has_variable = fh_reunification_taiwan_introduced }
+			OR = { is_ai = yes NOT = { has_variable = fh_reunification_taiwan_introduced } }
+			NOT = { has_variable = fh_reunification_taiwan_audience_pending }
 			NOT = { has_variable = fh_reunification_seat_audience_pending }
 		}
 		fh_reunification_show_policy_audience = { POLICY = taiwan EVENT = fh_reunification_policies.1 }
@@ -14,7 +15,8 @@
 	else_if = {
 		limit = {
 			fh_reunification_policy_available = { POLICY = south }
-			NOT = { has_variable = fh_reunification_south_introduced }
+			OR = { is_ai = yes NOT = { has_variable = fh_reunification_south_introduced } }
+			NOT = { has_variable = fh_reunification_south_audience_pending }
 			NOT = { has_variable = fh_reunification_seat_audience_pending }
 			NOT = { has_variable = fh_reunification_taiwan_audience_pending }
 		}

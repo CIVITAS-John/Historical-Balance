@@ -123,6 +123,7 @@ fh_constitution_zheng_heir = {
 }
 
 fh_constitution_zheng_cadet_available = {
+	fh_constitution_followup_active = yes
 	var:fh_constitution_route ?= 3
 	has_law_or_variant = law_type:law_monarchy
 	NOR = {

@@ -2,7 +2,6 @@
 	if = {
 		limit = {
 			fh_reunification_route_open = yes
-			has_variable = fh_mainland_settled
 			NOT = { has_variable = fh_reunification_opened }
 			fh_reunification_all_coasts_owned = yes
 		}

@@ -1,0 +1,50 @@
+﻿fh_reunification_seat_authority = {
+	type = country
+	random_valid = no
+	text = {
+		trigger = { fh_constitution_republic_government = yes }
+		localization_key = fh_reunification_seat_assembly
+	}
+	text = {
+		trigger = {
+			fh_constitution_ming_charter_active = yes
+			fh_constitution_ming_minister_serving = yes
+		}
+		localization_key = fh_reunification_seat_cabinet
+	}
+	text = {
+		trigger = { fh_constitution_ming_charter_active = yes }
+		localization_key = fh_reunification_seat_vacancy
+	}
+	text = {
+		trigger = { fh_constitution_zheng_government = yes }
+		localization_key = fh_reunification_seat_zheng
+	}
+	text = { localization_key = fh_reunification_seat_ministries }
+}
+
+fh_reunification_policy_authority = {
+	type = country
+	random_valid = no
+	text = {
+		trigger = { fh_constitution_republic_government = yes }
+		localization_key = fh_reunification_policy_assembly
+	}
+	text = {
+		trigger = { fh_reunification_ming_cabinet_led_by = { BLOC = ig_industrialists } }
+		localization_key = fh_reunification_policy_houses
+	}
+	text = {
+		trigger = { fh_reunification_ming_cabinet_led_by = { BLOC = ig_landowners } }
+		localization_key = fh_reunification_policy_estates
+	}
+	text = {
+		trigger = { fh_constitution_ming_charter_active = yes }
+		localization_key = fh_reunification_policy_vacancy
+	}
+	text = {
+		trigger = { fh_constitution_zheng_government = yes }
+		localization_key = fh_reunification_policy_zheng
+	}
+	text = { localization_key = fh_reunification_policy_ministries }
+}

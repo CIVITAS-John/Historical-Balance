@@ -11,6 +11,8 @@ fh_provincial_government = {
 		c:MIG ?= this
 	}
 	OR = {
+		# XIN is the Xinjiang Clique only when vanilla marks it as a warlord;
+		# an independently released Uyghuristan can use the same tag.
 		has_variable = warlord_state
 		c:HNA ?= this
 		c:GNG ?= this

@@ -31,7 +31,7 @@ fh_reunification_keep_taiwan = {
 	if = {
 		limit = {
 			has_variable = fh_reunification_seat_audience_pending
-			fh_reunification_can_keep_taiwan = yes
+			fh_reunification_can_keep_taiwan = { AUDIENCE = $AUDIENCE$ }
 		}
 		remove_variable = fh_reunification_seat_audience_pending
 		fh_reunification_record_current_seat = yes

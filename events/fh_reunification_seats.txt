@@ -21,11 +21,12 @@ fh_reunification_seats.1 = {
 
 	option = {
 		name = fh_reunification_keep_taiwan
-		trigger = { fh_reunification_can_keep_taiwan = yes }
+		trigger = { fh_reunification_can_keep_taiwan = { AUDIENCE = coastal } }
 		custom_tooltip = fh_reunification_keep_taiwan_tt
-		hidden_effect = { fh_reunification_keep_taiwan = yes }
+		hidden_effect = { fh_reunification_keep_taiwan = { AUDIENCE = coastal } }
 		ai_chance = {
 			base = 25
+			modifier = { trigger = { fh_constitution_zheng_government = yes } add = 25 }
 			modifier = { trigger = { navy_size >= 10 } add = 100 }
 			modifier = { trigger = { is_at_war = yes } add = 100 }
 		}
@@ -35,7 +36,7 @@ fh_reunification_seats.1 = {
 		name = fh_reunification_confirm_capital
 		trigger = {
 			fh_reunification_can_confirm_seat = { AUDIENCE = coastal }
-			fh_reunification_can_keep_taiwan = no
+			NOT = { fh_reunification_can_keep_taiwan = { AUDIENCE = coastal } }
 		}
 		custom_tooltip = fh_reunification_confirm_capital_tt
 		hidden_effect = { fh_reunification_confirm_seat = { AUDIENCE = coastal } }
@@ -127,9 +128,23 @@ fh_reunification_seats.2 = {
 	}
 
 	option = {
+		name = fh_reunification_keep_taiwan
+		trigger = { fh_reunification_can_keep_taiwan = { AUDIENCE = national } }
+		custom_tooltip = fh_reunification_keep_taiwan_tt
+		hidden_effect = { fh_reunification_keep_taiwan = { AUDIENCE = national } }
+		ai_chance = {
+			base = 25
+			modifier = { trigger = { fh_constitution_zheng_government = yes } add = 25 }
+			modifier = { trigger = { navy_size >= 10 } add = 100 }
+			modifier = { trigger = { is_at_war = yes } add = 100 }
+		}
+	}
+
+	option = {
 		name = fh_reunification_confirm_capital
 		trigger = {
 			fh_reunification_can_confirm_seat = { AUDIENCE = national }
+			NOT = { fh_reunification_can_keep_taiwan = { AUDIENCE = national } }
 		}
 		custom_tooltip = fh_reunification_confirm_capital_tt
 		hidden_effect = { fh_reunification_confirm_seat = { AUDIENCE = national } }

@@ -11,6 +11,7 @@ fh_send_provincial_offer = {
 			set_variable = { name = fh_provincial_offer_serial value = 0 }
 		}
 		change_variable = { name = fh_provincial_offer_serial add = 1 }
+		global_var:fh_tungning_founder = { save_scope_as = fh_provincial_sender }
 		save_scope_value_as = { name = fh_provincial_offer_ticket value = var:fh_provincial_offer_serial }
 		set_variable = { name = fh_provincial_offer value = $KIND$ days = 180 }
 		if = {
@@ -66,7 +67,7 @@ fh_resolve_provincial_offer = {
 
 fh_decline_provincial_offer = {
 	if = {
-		limit = { fh_provincial_offer_current = yes }
+		limit = { fh_provincial_offer_valid = yes }
 		save_scope_as = fh_provincial_reply_country
 		remove_variable = fh_provincial_offer
 		set_variable = { name = fh_provincial_offer_cooldown years = 1 }

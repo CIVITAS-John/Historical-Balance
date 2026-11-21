@@ -20,13 +20,17 @@ fh_reunification_philippine_land = {
 	}
 }
 
-# The Manila journal can be suspended without closing its window. These
-# markers are its interface to the Compact when that journal is added.
+# A suspended Manila window still reserves the Philippine holdings.
 fh_reunification_manila_unsettled = {
-	global_var:fh_tungning_founder ?= {
-		has_variable = fh_manila_question_opened
-		NOT = { has_variable = fh_manila_question_result }
-	}
+	global_var:fh_tungning_founder ?= { fh_manila_unresolved = yes }
+}
+
+# The First Minister speaks for the bloc he actually leads, even after
+# another bloc overtakes it in clout. A vacant cabinet has no casting voice.
+fh_reunification_ming_cabinet_led_by = {
+	fh_constitution_ming_charter_active = yes
+	fh_constitution_ming_minister_serving = yes
+	var:fh_constitution_first_minister_bloc ?= ig:$BLOC$
 }
 
 fh_reunification_southern_holding = {

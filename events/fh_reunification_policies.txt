@@ -26,6 +26,7 @@ fh_reunification_policies.1 = {
 		ai_chance = {
 			base = 50
 			modifier = { trigger = { ig:ig_intelligentsia ?= { is_in_government = yes } } add = 50 }
+			modifier = { trigger = { fh_constitution_republic_government = yes } add = 25 }
 		}
 	}
 	option = {
@@ -35,6 +36,7 @@ fh_reunification_policies.1 = {
 		ai_chance = {
 			base = 50
 			modifier = { trigger = { ig:ig_landowners ?= { is_in_government = yes } } add = 50 }
+			modifier = { trigger = { fh_reunification_ming_cabinet_led_by = { BLOC = ig_landowners } } add = 25 }
 		}
 	}
 	option = {
@@ -71,6 +73,7 @@ fh_reunification_policies.2 = {
 		ai_chance = {
 			base = 50
 			modifier = { trigger = { ig:ig_industrialists ?= { is_in_government = yes } } add = 50 }
+			modifier = { trigger = { fh_reunification_ming_cabinet_led_by = { BLOC = ig_industrialists } } add = 25 }
 		}
 	}
 	option = {
@@ -80,6 +83,7 @@ fh_reunification_policies.2 = {
 		ai_chance = {
 			base = 50
 			modifier = { trigger = { ig:ig_landowners ?= { is_in_government = yes } } add = 50 }
+			modifier = { trigger = { fh_reunification_ming_cabinet_led_by = { BLOC = ig_landowners } } add = 25 }
 		}
 	}
 	option = {

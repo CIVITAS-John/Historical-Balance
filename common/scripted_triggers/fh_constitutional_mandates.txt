@@ -20,14 +20,7 @@ fh_constitution_ming_eligible = {
 }
 
 fh_constitution_holds_taiwan = {
-	fh_owns_mainland_foothold = { REGION = STATE_FORMOSA }
-	NOT = {
-		any_scope_state = {
-			state_region = s:STATE_FORMOSA
-			is_treaty_port = no
-			any_province = { NOT = { controller ?= owner } }
-		}
-	}
+	fh_mainland_foothold_eligible = { REGION = STATE_FORMOSA }
 }
 
 fh_constitution_taiwan_lost_or_under_enemy_control = {
@@ -60,52 +53,11 @@ fh_constitution_voting_law = {
 	}
 }
 
-# State region scope. The reunification core minus the three strait coast regions.
-fh_constitution_inland_core_region = {
-	OR = {
-		this = s:STATE_SUZHOU
-		this = s:STATE_NANJING
-		this = s:STATE_JIANGSU
-		this = s:STATE_NORTHERN_ANHUI
-		this = s:STATE_SOUTHERN_ANHUI
-		this = s:STATE_JIANGXI
-		this = s:STATE_HUNAN
-		this = s:STATE_EASTERN_HUBEI
-		this = s:STATE_WESTERN_HUBEI
-		this = s:STATE_GUANGXI
-		this = s:STATE_SHAOZHOU
-		this = s:STATE_GUIZHOU
-		this = s:STATE_YUNNAN
-		this = s:STATE_SICHUAN
-		this = s:STATE_CHONGQING
-		this = s:STATE_BEIJING
-		this = s:STATE_ZHILI
-		this = s:STATE_SHANDONG
-		this = s:STATE_HENAN
-		this = s:STATE_SHANXI
-		this = s:STATE_XIAN
-		this = s:STATE_NINGXIA
-		this = s:STATE_GANSU
-		this = s:STATE_SHENGJING
-		this = s:STATE_SOUTHERN_MANCHURIA
-		this = s:STATE_NORTHERN_MANCHURIA
-	}
-}
-
-# State scope: an ordinary holding counts once only if no other country holds
-# ordinary land in its region. The owner's subjects are other owners here.
-fh_constitution_owned_inland_state = {
-	is_treaty_port = no
-	save_temporary_scope_as = fh_constitution_inland_holding
-	state_region = {
-		fh_constitution_inland_core_region = yes
-		NOT = {
-			any_scope_state = {
-				is_treaty_port = no
-				NOT = { owner = scope:fh_constitution_inland_holding.owner }
-			}
-		}
-	}
+# The Ming court counts JE07's inland core, but never its chartered subjects.
+fh_constitution_owned_inland_region = {
+	fh_mainland_core_region = yes
+	fh_reunification_coastal_region = no
+	fh_mainland_region_directly_owned_by = { OWNER = global_var:fh_tungning_founder }
 }
 
 # The faith journal assigns the Devout profiles. Older campaigns already
@@ -162,11 +114,7 @@ fh_constitution_keeps_passage_province = {
 
 fh_constitution_philippine_rule = {
 	OR = {
-		c:PHI ?= {
-			is_country_alive = yes
-			overlord ?= prev
-			p:x0D8236 ?= { owner ?= c:PHI }
-		}
+		fh_manila_direct_subject = yes
 		AND = {
 			p:x0D8236 ?= { owner ?= prev }
 			fh_constitution_manila_conquest_holdings = yes
@@ -179,16 +127,7 @@ fh_constitution_manila_conquest_holdings = {
 	# A snapshot stays authoritative after the journal closes.
 	trigger_if = {
 		limit = { has_variable_list = fh_manila_starting_provinces }
-		fh_constitution_manila_recorded_balance > 0
-		OR = {
-			p:xD2CA4A ?= { owner ?= prev }
-			NOT = {
-				any_in_list = {
-					variable = fh_manila_starting_provinces
-					p:xD2CA4A ?= this
-				}
-			}
-		}
+		fh_manila_recorded_conquest_holdings = yes
 	}
 	trigger_else = {
 		p:xD2CA4A ?= { owner ?= prev }

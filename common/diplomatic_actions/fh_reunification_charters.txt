@@ -116,7 +116,13 @@ fh_provincial_charter = {
 				}
 			}
 		}
-		propose_score = { value = 15 }
+		propose_score = {
+			value = 15
+			if = {
+				limit = { ig:ig_landowners ?= { is_in_government = yes } }
+				add = 5
+			}
+		}
 	}
 }
 
@@ -170,6 +176,16 @@ fh_integrate_province = {
 			"relations(scope:target_country)" >= relations_threshold:amicable
 			scope:target_country = { liberty_desire < 25 }
 		}
-		propose_score = { value = 15 }
+		propose_score = {
+			value = 15
+			if = {
+				limit = { ig:ig_intelligentsia ?= { is_in_government = yes } }
+				add = 5
+			}
+			if = {
+				limit = { ig:ig_landowners ?= { is_in_government = yes } }
+				subtract = 5
+			}
+		}
 	}
 }

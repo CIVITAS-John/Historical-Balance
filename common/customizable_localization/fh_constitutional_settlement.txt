@@ -12,3 +12,33 @@
 	}
 	text = { localization_key = fh_constitution_ming_has_no_cap }
 }
+
+fh_constitution_missing_independence = {
+	type = country
+	random_valid = no
+	text = {
+		trigger = { is_subject = yes }
+		localization_key = fh_constitution_need_independence
+	}
+	text = { localization_key = fh_constitution_no_missing_term }
+}
+
+fh_constitution_missing_taiwan = {
+	type = country
+	random_valid = no
+	text = {
+		trigger = { fh_constitution_holds_taiwan = no }
+		localization_key = fh_constitution_need_taiwan
+	}
+	text = { localization_key = fh_constitution_no_missing_term }
+}
+
+fh_constitution_missing_coast = {
+	type = country
+	random_valid = no
+	text = {
+		trigger = { fh_mainland_has_foothold = no }
+		localization_key = fh_constitution_need_coast
+	}
+	text = { localization_key = fh_constitution_no_missing_term }
+}

@@ -163,6 +163,5 @@ fh_manila_close = {
 		fh_southern_passage_southern_radicals = { CHANGE = fh_southern_passage_remove_medium_radicals }
 		fh_southern_passage_maritime_radicals = { CHANGE = small_radicals }
 	}
-	fh_constitution_refresh_mandates = yes
 	fh_reunification_refresh_policies = yes
 }

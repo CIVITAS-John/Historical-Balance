@@ -2,13 +2,16 @@
 # enclaves are exempt; ordinary territory and subject holdings are not.
 fh_owns_mainland_foothold = {
 	save_temporary_scope_as = fh_foothold_owner
-	s:$REGION$ = {
-		any_scope_state = { owner = scope:fh_foothold_owner is_treaty_port = no }
-		NOT = {
-			any_scope_state = {
-				is_treaty_port = no
-				NOT = { owner = scope:fh_foothold_owner }
-			}
+	s:$REGION$ = { fh_mainland_region_directly_owned_by = { OWNER = scope:fh_foothold_owner } }
+}
+
+# State region scope. Check ordinary fragments, including those held by a subject.
+fh_mainland_region_directly_owned_by = {
+	any_scope_state = { is_treaty_port = no owner = $OWNER$ }
+	NOT = {
+		any_scope_state = {
+			is_treaty_port = no
+			NOT = { owner = $OWNER$ }
 		}
 	}
 }

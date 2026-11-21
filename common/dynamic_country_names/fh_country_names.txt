@@ -10,24 +10,13 @@
 		name = dyn_c_fh_kingdom_of_tungning
 		is_main_tag_only = yes
 		priority = 10
-		trigger = {
-			scope:actor ?= {
-				var:fh_constitution_route ?= 3
-				has_variable = fh_constitution_followup_complete
-				has_law_or_variant = law_type:law_monarchy
-			}
-		}
+		trigger = { scope:actor ?= { fh_constitution_zheng_government = yes } }
 	}
 	dynamic_country_name = {
 		name = dyn_c_fh_republic_of_tungning
 		is_main_tag_only = yes
 		priority = 10
-		trigger = {
-			scope:actor ?= {
-				var:fh_constitution_route ?= 1
-				fh_has_civic_republic = yes
-			}
-		}
+		trigger = { scope:actor ?= { fh_constitution_republic_government = yes } }
 	}
 }
 

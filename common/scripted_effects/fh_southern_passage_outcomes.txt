@@ -70,11 +70,6 @@ fh_southern_passage_resolve = {
 		remove_variable = fh_southern_passage_month_due
 		remove_variable = fh_southern_passage_irreversible_goal
 		fh_southern_passage_clear_goal_candidate = yes
-
-		if = {
-			limit = { has_variable = fh_southern_passage_secured }
-			fh_constitution_refresh_mandates = yes
-		}
 	}
 }
 

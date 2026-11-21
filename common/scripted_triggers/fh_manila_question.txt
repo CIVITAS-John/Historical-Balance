@@ -48,6 +48,11 @@ fh_manila_controls_cebu_requirement = {
 fh_manila_conquest = {
 	has_variable = fh_manila_territory_enforced
 	p:x0D8236 ?= { owner ?= prev }
+	fh_manila_recorded_conquest_holdings = yes
+}
+
+# The Zheng mandate uses these ownership terms even after the Manila window.
+fh_manila_recorded_conquest_holdings = {
 	fh_manila_controls_cebu_requirement = yes
-	fh_constitution_manila_recorded_balance > 0
+	fh_manila_recorded_balance > 0
 }

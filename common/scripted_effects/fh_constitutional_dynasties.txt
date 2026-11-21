@@ -106,7 +106,6 @@ fh_constitution_install_ming = {
 				}
 				set_variable = { name = fh_constitution_founding_bloc value = var:fh_constitution_first_minister_bloc }
 				set_variable = fh_constitution_ming_installed
-				fh_restore_southern_ming_citizenship = yes
 				remove_variable = fh_constitution_outgoing_ruler
 				remove_variable = fh_constitution_outgoing_heir
 				remove_variable = fh_constitution_prepared_zhu_heir

@@ -61,6 +61,13 @@
 				else = { custom_tooltip_no_bullet = fh_reunification_map_incomplete_tt }
 				if = {
 					limit = {
+						state_region = { fh_reunification_inland_seat_region = yes }
+						global_var:fh_tungning_founder ?= { fh_reunification_secured_inland_seat = no }
+					}
+					custom_tooltip_no_bullet = fh_reunification_map_need_inland_seat_tt
+				}
+				if = {
+					limit = {
 						state_region = { fh_reunification_coastal_region = yes }
 						NOT = { owner ?= { fh_is_tungning_founder = yes } }
 					}

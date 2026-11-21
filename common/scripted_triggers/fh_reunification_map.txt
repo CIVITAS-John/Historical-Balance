@@ -51,6 +51,13 @@ fh_reunification_all_coasts_owned = {
 	fh_owns_mainland_foothold = { REGION = STATE_ZHEJIANG }
 }
 
+fh_reunification_inland_seat_region = {
+	OR = {
+		this = s:STATE_NANJING
+		this = s:STATE_BEIJING
+	}
+}
+
 fh_reunification_direct_region_secure = {
 	fh_owns_mainland_foothold = { REGION = $REGION$ }
 	fh_mainland_region_unoccupied = { REGION = $REGION$ }
@@ -107,16 +114,7 @@ fh_reunification_map_region_complete = {
 	state_region = {
 		trigger_if = {
 			limit = { fh_reunification_coastal_region = yes }
-			any_scope_state = {
-				is_treaty_port = no
-				owner ?= { fh_is_tungning_founder = yes }
-			}
-			NOT = {
-				any_scope_state = {
-					is_treaty_port = no
-					NOT = { owner ?= { fh_is_tungning_founder = yes } }
-				}
-			}
+			fh_mainland_region_directly_owned_by = { OWNER = global_var:fh_tungning_founder }
 		}
 		trigger_else = { fh_reunification_region_complete = yes }
 	}
@@ -127,8 +125,7 @@ fh_reunification_map_occupation = {
 	state_region = {
 		OR = {
 			fh_reunification_coastal_region = yes
-			this = s:STATE_NANJING
-			this = s:STATE_BEIJING
+			fh_reunification_inland_seat_region = yes
 		}
 	}
 	fh_mainland_state_unoccupied = no

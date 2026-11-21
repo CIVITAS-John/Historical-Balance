@@ -40,6 +40,8 @@ The Ming Estates favor charters and keeping county magistrates. The School of Pr
 
 **A Court on Two Shores** opens with this journal. Keep Taiwan if eligible, plan a move to a coastal foothold, or defer. If you already moved the capital through ordinary play, confirm its current seat if eligible, with no reward.
 
+Read the [constitutional settlement](05-constitutional-settlement.md) when each audience meets. A republic puts the seat to its assembly. Under an active Southern Ming charter the Zheng First Minister presents the move under the Zhu seal; the sitting ministers can still act during a vacancy. A confirmed Zheng crown gives extra weight to keeping its fleet headquarters in Taiwan. If none of these governments is in force, the ministries hear the same choices. Ratification and enthronement do not move the seat.
+
 | Choice | What happens |
 | --- | --- |
 | **Keep Taiwan** | On confirmation, Tungning gets +5% Ship Power Projection for two years, so fleets on Project Power missions generate more Involvement. |
@@ -60,6 +62,8 @@ Choose Taiwan’s policy while Tungning holds it and the Southern Compact while 
 | **The Southern Compact** | The Maritime Houses back local courts and councils. Direct subjects (Sintang, Selangor, Bulungan, or a subject Philippines, for example) keep their governments and pay **half the usual tribute** where applicable. Eligible directly owned states, such as Lanfang’s West Borneo holdings, get **+5% Trade Advantage** for better trade prices and **−10% Taxation Capacity** while eligible. | Direct subjects keep their terms and normal tribute. For **two years** after appointing officials in directly owned states, those states get **+10% Taxation Capacity** and political movements there generate **15% more radicals**. |
 
 Holdings covered by [The Southern Passage](03-dutch-east-indies.md) or [The Manila Question](04-philippines.md) wait for those journals to end. If none qualify, wait to offer the choice. Timed effects start when you choose the policy for holdings that already qualify, or when a later holding first comes under it. Remove effects from any holding that stops qualifying; recovery does not restart its timer. These policies do not change ownership, subject restrictions, older treaties, or the mainland checklist. In a split state, apply effects to eligible parcels or once to Tungning’s owned state containing them if individual parcels cannot be targeted.
+
+In a republic the AI is more likely to grant Taiwan an assembly. Under Southern Ming, a serving First Minister from the Estates favors appointed officials; one from the Maritime Houses favors the Southern Compact’s local courts. Use the minister’s actual bloc, even if the other has since gained clout. Either policy remains available. A new ministry does not reopen a settled charter.
 
 ## Proclaim the settlement
 
@@ -84,6 +88,7 @@ Both grant [The Reunification Settlement](outcome-modifiers.md#reunification). T
 - Trace intact and fragmented Qing, rival Taiping, split states, ordinary foreign holdings, and treaty ports. Check that a charter cannot substitute for direct ownership of the coast or at least one inland seat. A disloyal subject or one that changes overlord stops contributing, but loyal chartered land can finish the rest of the core without annexation.
 - Proclaim from Taiwan with the entire core accounted for and the mainland still incorporating. Block proclamation if a required directly held region is occupied or an inland seat is missing. Verify that incorporation and decrees continue after proclamation.
 - Trace capital preview, confirmation, successful transfer, and cancellation on loss or occupation. Check manual confirmation without reward, no repeated reward on reselection, and no move at Ming enthronement. Check political and market capitals separately.
+- Open the seat, policy and proclamation audiences before ratification, under a republic, under both Ming cabinet blocs, during a vacancy or suspended charter, and under a Zheng crown. Check that the current government speaks but neither the map nor the reward changes.
 - Trace Taiwan and southern holdings lost, recovered, newly eligible after proclamation, and pending another journal. Check effects apply once per eligible state or subject, end on loss, and cannot restart a timed term on recovery.
 - Keep the result tied to the founding country through native tag changes. Vanilla China formation and unification plays do not grant this settlement.
 - The Manila policy pause reads `fh_manila_question_opened` without `fh_manila_question_result`. Proclamation reads `fh_taiping_pact_ratified` with an active rebellion or `fh_taiping_cession_pending`. The Taiping pact and cession flags are the interface for JE 08.

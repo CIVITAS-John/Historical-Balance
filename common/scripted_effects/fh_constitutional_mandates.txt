@@ -1,8 +1,8 @@
 ﻿fh_constitution_monthly_drift = {
+	fh_constitution_clamp_mandates = yes
 	change_variable = { name = fh_constitution_republic add = fh_constitution_republic_drift }
 	change_variable = { name = fh_constitution_ming add = fh_constitution_ming_drift }
 	change_variable = { name = fh_constitution_zheng add = fh_constitution_zheng_drift }
-	fh_constitution_clamp_mandates = yes
 }
 
 fh_constitution_clamp_mandates = {

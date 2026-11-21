@@ -118,7 +118,8 @@ fh_reunification_transfer_valid = {
 }
 
 fh_reunification_can_keep_taiwan = {
-	fh_reunification_coastal_seat_open = yes
+	fh_reunification_$AUDIENCE$_seat_open = yes
+	fh_reunification_capital_confirmed = no
 	fh_reunification_current_seat_valid = yes
 	capital.state_region ?= s:STATE_FORMOSA
 	var:fh_reunification_opening_capital ?= capital

@@ -16,6 +16,28 @@ fh_has_southern_ming_charter = {
 	fh_constitution_ming_charter_active = yes
 }
 
+# Read the ratified settlement and the offices in force today. These tests
+# serve both country names and the reunification audiences after a tag change.
+fh_constitution_republic_government = {
+	fh_is_tungning_founder = yes
+	var:fh_constitution_route ?= 1
+	fh_has_civic_republic = yes
+}
+
+fh_constitution_zheng_government = {
+	fh_is_tungning_founder = yes
+	var:fh_constitution_route ?= 3
+	has_variable = fh_constitution_followup_complete
+	OR = {
+		fh_constitution_zheng_crown = yes
+		AND = {
+			has_law_or_variant = law_type:law_monarchy
+			has_gov_regency = yes
+			fh_constitution_zheng_heir = yes
+		}
+	}
+}
+
 fh_has_great_ming_court = {
 	country_has_monarchy_law = yes
 	owns_entire_state_region = STATE_BEIJING

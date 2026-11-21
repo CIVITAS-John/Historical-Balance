@@ -10,11 +10,7 @@ fh_reunification_provincial_access = {
 	fh_reunification_route_open = yes
 	has_variable = fh_reunification_opened
 	is_subject = no
-	OR = {
-		fh_owns_mainland_foothold = { REGION = STATE_FUJIAN }
-		fh_owns_mainland_foothold = { REGION = STATE_GUANGDONG }
-		fh_owns_mainland_foothold = { REGION = STATE_ZHEJIANG }
-	}
+	fh_mainland_has_foothold = yes
 }
 
 fh_reunification_can_negotiate = {
@@ -53,12 +49,12 @@ fh_reunification_can_proclaim = {
 	}
 	custom_tooltip = {
 		text = fh_reunification_taiping_tt
-		NOT = {
-			has_variable = fh_taiping_pact_ratified
-			OR = {
+		NOR = {
+			AND = {
+				has_variable = fh_taiping_pact_ratified
 				fh_mainland_taiping_active = yes
-				has_variable = fh_taiping_cession_pending
 			}
+			has_variable = fh_taiping_cession_pending
 		}
 	}
 }

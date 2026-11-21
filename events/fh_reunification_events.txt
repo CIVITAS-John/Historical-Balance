@@ -80,6 +80,7 @@ fh_reunification_events.2 = {
 
 	option = {
 		name = fh_reunification_events.2.b
+		trigger = { fh_provincial_offer_valid = yes }
 		default_option = yes
 		hidden_effect = { fh_decline_provincial_offer = yes }
 		ai_chance = {
@@ -87,6 +88,16 @@ fh_reunification_events.2 = {
 			modifier = {
 				trigger = { var:fh_provincial_offer ?= 3 }
 				add = 40
+			}
+		}
+	}
+	option = {
+		name = fh_reunification_events.2.c
+		trigger = { fh_provincial_offer_valid = no }
+		hidden_effect = {
+			if = {
+				limit = { fh_provincial_offer_current = yes }
+				remove_variable = fh_provincial_offer
 			}
 		}
 	}
@@ -106,7 +117,27 @@ fh_reunification_events.4 = {
 	placement = root
 	icon = "gfx/interface/icons/event_icons/event_scales.dds"
 	title = fh_reunification_events.4.t
-	desc = fh_reunification_events.4.d
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { fh_constitution_ming_charter_active = yes fh_constitution_ming_minister_serving = yes }
+				desc = fh_reunification_events.4.ming_cabinet
+			}
+			triggered_desc = {
+				trigger = { fh_constitution_ming_charter_active = yes }
+				desc = fh_reunification_events.4.ming_vacancy
+			}
+			triggered_desc = {
+				trigger = { fh_constitution_republic_government = yes }
+				desc = fh_reunification_events.4.republic
+			}
+			triggered_desc = {
+				trigger = { fh_constitution_zheng_government = yes }
+				desc = fh_reunification_events.4.zheng
+			}
+			desc = fh_reunification_events.4.d
+		}
+	}
 	duration = 3
 	cancellation_trigger = { NOT = { has_variable = fh_reunification_proclamation_pending } }
 

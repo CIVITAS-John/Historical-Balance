@@ -50,6 +50,7 @@ fh_constitution_endorse = {
 		}
 		set_variable = { name = fh_constitution_endorsement_cooldown months = 6 }
 		set_variable = { name = fh_constitution_last_endorsement value = $ROUTE$ }
+		fh_constitution_clamp_mandates = yes
 		change_variable = { name = $MANDATE$ add = 12 }
 		change_variable = { name = $RIVAL_1$ subtract = 5 }
 		change_variable = { name = $RIVAL_2$ subtract = 5 }
@@ -116,6 +117,7 @@ fh_constitution_answer_petition = {
 	if = {
 		limit = { fh_constitution_petition_valid = { PETITION = $PETITION$ ELIGIBLE = $ELIGIBLE$ } }
 		remove_variable = fh_constitution_petition
+		fh_constitution_clamp_mandates = yes
 		change_variable = { name = $MANDATE$ add = $DELTA$ }
 		ig:$IG$ ?= { add_modifier = { name = $APPROVAL$ months = 6 } }
 		fh_constitution_refresh_mandates = yes
@@ -218,7 +220,8 @@ fh_constitution_ai_ratify = {
 }
 
 # A timed marker measures six elapsed months, including when the court ratifies
-# between monthly pulses. Check prerequisites on weekly pulses and relevant changes.
+# between monthly pulses. While the clock runs, check daily: occupation,
+# administration levels and legitimacy can change between weekly journal pulses.
 fh_constitution_check_followup = {
 	if = {
 		limit = { fh_constitution_followup_active = yes }
@@ -230,10 +233,7 @@ fh_constitution_check_followup = {
 				set_variable = { name = fh_constitution_streak_timer months = 6 }
 			}
 			else_if = {
-				limit = {
-					NOT = { has_variable = fh_constitution_streak_timer }
-					fh_constitution_followup_conditions = yes
-				}
+				limit = { NOT = { has_variable = fh_constitution_streak_timer } }
 				fh_constitution_finish_followup = yes
 			}
 		}
@@ -241,6 +241,14 @@ fh_constitution_check_followup = {
 			limit = { has_variable = fh_constitution_streak }
 			remove_variable = fh_constitution_streak
 			remove_variable = fh_constitution_streak_timer
+		}
+		if = {
+			limit = {
+				has_variable = fh_constitution_streak
+				NOT = { has_variable = fh_constitution_streak_check_queued }
+			}
+			set_variable = { name = fh_constitution_streak_check_queued days = 2 }
+			trigger_event = { id = fh_constitution.6 days = 1 }
 		}
 	}
 }
@@ -274,6 +282,8 @@ fh_constitution_finish_followup = {
 		}
 		else_if = {
 			limit = { var:fh_constitution_route = 2 }
+			# The charter is final before its citizenship consequences can change legitimacy.
+			fh_restore_southern_ming_citizenship = yes
 			add_modifier = { name = fh_constitution_southern_court_reborn years = 5 }
 			fh_constitution_radicals = { IG = ig_landowners VALUE = fh_constitution_remove_medium_radicals }
 			if = {
@@ -287,6 +297,12 @@ fh_constitution_finish_followup = {
 			fh_constitution_radicals = { IG = ig_armed_forces VALUE = fh_constitution_remove_medium_radicals }
 			fh_constitution_radicals = { IG = ig_intelligentsia VALUE = small_radicals }
 		}
+	}
+	else_if = {
+		# The new ruler or IG leader can change the coalition during handover.
+		limit = { fh_constitution_followup_conditions = no }
+		remove_variable = fh_constitution_streak
+		remove_variable = fh_constitution_streak_timer
 	}
 }
 
