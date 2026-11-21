@@ -93,7 +93,7 @@ For these reactions, use the School of Practical Learning for the Republic, the 
 
 ## [Return to the Mainland](06-mainland-reconquest.md#consolidate-the-foothold)
 
-The first registration records the foothold, ends the Port and Village Registers’ conscription bonus, and opens reunification. The Registers keep their homeland acceptance bonus if still in force. There is no timed country modifier or immediate radical change. [State decrees](06-mainland-reconquest.md#state-decrees) have their own local effects while assigned.
+At 50% incorporation in one secure coastal region, this entry records the first foothold administration. If the Port and Village Registers are still in force, they lose their extra conscription and keep their homeland acceptance bonus. There is no timed country modifier or immediate radical change. [State decrees](06-mainland-reconquest.md#state-decrees) have their own local effects while assigned.
 
 ## [Reunification](07-reunification-of-china.md#proclaim-the-settlement)
 

@@ -1,10 +1,12 @@
 # The Reunification of China
 
-**Proposed design.** [The Return to the Mainland](06-mainland-reconquest.md#consolidate-the-foothold) registers your first foothold automatically at 50% incorporation and opens this journal. Bring the Chinese core under Tungning or its chartered governments, and finish incorporating the coast and one inland seat. The political capital can stay in Taiwan.
+**Proposed design.** Once Tungning owns **Fujian, Guangdong, and Zhejiang**, it can seek a national settlement. Bring the Chinese core under direct rule or bring regional governments into the union under provincial charters. Decide where the court will sit and what terms to offer Taiwan and the southern holdings.
 
 ## Opening and progress
 
-A tributary can use the map and incorporate land. Tungning needs independence and a current coastal foothold to make provincial offers, hold the national seat audience, or proclaim reunification. [Press the Mainland Claims](06-mainland-reconquest.md#decision-press-the-mainland-claims) follows its own rules.
+**Opens once Tungning directly owns all ordinary land in all three coastal regions.** Actual treaty-port enclaves can remain in foreign hands. Occupying someone else’s land, holding a treaty port alone, or owning land through a subject does not count. Enemy occupation of Tungning’s own land can block proclamation, but it does not delay opening. Neither [foothold registration](06-mainland-reconquest.md#consolidate-the-foothold) nor incorporation progress is required. Both journals can be active at once. If the Taiping choice is pending, wait for reassertion; permanent abandonment closes the route.
+
+The journal stays open if coastal land is lost and shows what must be recovered. A tributary can consult the map. Tungning must be independent and still directly own at least one complete coastal region to make provincial offers or hold the national seat audience. [Press the Mainland Claims](06-mainland-reconquest.md#decision-press-the-mainland-claims) follows its own rules.
 
 **Map checklist.** Directly own all ordinary land in Fujian, Guangdong, Zhejiang, and either Nanjing or Beijing. The rest of the core, including the other inland seat, can be held directly or through loyal direct subjects with ratified provincial charters. Check each owner in a split region. Ignore current treaty-port enclaves; ordinary foreign holdings still count as missing. Occupation, alliances, and informal pledges give no ownership credit.
 
@@ -18,7 +20,7 @@ A tributary can use the map and incorporate land. Tungning needs independence an
 
 Taiwan, Southeast Asia, Busan, Mongolia and the other northern steppe regions, Xinjiang, Tibet, and Outer Manchuria are outside the core. The journal grants no claims there. Qing or Taiping can remain independent outside the core; moving or renaming their governments does not check off land.
 
-**Incorporation bar.** Average [incorporation progress](06-mainland-reconquest.md#mainland-integration) across Fujian, Guangdong, Zhejiang, and one inland seat. Use Nanjing or Beijing, whichever has more qualifying progress. If either is the confirmed capital, use that one. A region contributes zero while any ordinary land there is missing or occupied; this does not undo incorporation. If your Fujian foothold registers at 50% and the other three slots contribute nothing, this bar starts at 12.5%. At 100%, all four regions are fully incorporated. Check the map separately for missing land or charter problems.
+Show which regions are complete, who holds outstanding land, and which charters have stopped counting. Flag any enemy occupation in the three coastal regions, Nanjing, and Beijing so the player can see whether proclamation is blocked. [Mainland incorporation](06-mainland-reconquest.md#mainland-integration) continues state by state; a seat must be incorporated if the court is to move there.
 
 ## A place for the provincial governments
 
@@ -36,7 +38,7 @@ The Ming Estates favor charters and keeping county magistrates. The School of Pr
 
 ## Where the government sits
 
-**A Court on Two Shores** opens after registration. Keep Taiwan if eligible, plan a move to a coastal foothold, or defer. If you already moved the capital through ordinary play, confirm its current seat if eligible, with no reward.
+**A Court on Two Shores** opens with this journal. Keep Taiwan if eligible, plan a move to a coastal foothold, or defer. If you already moved the capital through ordinary play, confirm its current seat if eligible, with no reward.
 
 | Choice | What happens |
 | --- | --- |
@@ -63,11 +65,11 @@ Holdings covered by [The Southern Passage](03-dutch-east-indies.md) or [The Mani
 
 **Proclaim the Reunification** requires all of the following:
 
-- Tungning is independent and at peace, the map checklist is complete, and all four regions on the incorporation bar are directly held, unoccupied, and fully incorporated.
+- Tungning is independent and at peace, the map checklist is complete, and Fujian, Guangdong, Zhejiang, and at least one of Nanjing or Beijing are directly held and free of enemy occupation.
 - An eligible political capital is confirmed and no transfer is underway. Taiwan can remain the capital.
 - All available Taiwan and southern policies have been chosen. A question waiting on another journal can be answered later. A Taiping pact still awaiting the end of the war or a cession reply blocks proclamation.
 
-Show which requirements are still missing on the button, and recheck them on confirmation. Other mainland states can keep incorporating after proclamation and use the same decrees until they finish.
+Show which requirements are still missing on the button, and recheck them on confirmation. If the court stays in Taiwan, none of the mainland regions needs to finish incorporating for proclamation. Mainland states can keep incorporating afterward and use the same decrees until they finish.
 
 | Settlement | National reward | Immediate reaction |
 | --- | --- | --- |
@@ -78,9 +80,9 @@ Both grant [The Reunification Settlement](outcome-modifiers.md#reunification). T
 
 ## Static checks
 
-- Use journal key `fh_je_reunification_of_china` and open it once.
-- Trace intact and fragmented Qing, rival Taiping, split states, ordinary foreign holdings, and treaty ports. Check that a charter cannot substitute for any of the four directly owned regions, stops contributing on disloyalty or loss of the direct subject relationship, and can otherwise finish the core without annexation.
-- Trace the bar with a missing, occupied, or unincorporated region; a confirmed Nanjing or Beijing seat; and a confirmed Taiwan seat with either eligible inland seat. Verify that 100% does not bypass missing core land, and that inland incorporation and decrees continue after proclamation.
+- Use journal key `fh_je_reunification_of_china` and open it once on the full-coast ownership check. Trace two coasts and a partial third, a subject holding the third, all three before incorporation, enemy occupation of an owned coast, loss and recovery, the pending Taiping fork, and permanent abandonment. Check that completing the foothold journal alone does not open this one.
+- Trace intact and fragmented Qing, rival Taiping, split states, ordinary foreign holdings, and treaty ports. Check that a charter cannot substitute for direct ownership of the coast or at least one inland seat. A disloyal subject or one that changes overlord stops contributing, but loyal chartered land can finish the rest of the core without annexation.
+- Proclaim from Taiwan with the entire core accounted for and the mainland still incorporating. Block proclamation if a required directly held region is occupied or an inland seat is missing. Verify that incorporation and decrees continue after proclamation.
 - Trace capital preview, confirmation, successful transfer, and cancellation on loss or occupation. Check manual confirmation without reward, no repeated reward on reselection, and no move at Ming enthronement. Check political and market capitals separately.
 - Trace Taiwan and southern holdings lost, recovered, newly eligible after proclamation, and pending another journal. Check effects apply once per eligible state or subject, end on loss, and cannot restart a timed term on recovery.
 - Keep the result tied to the founding country through native tag changes. Vanilla China formation and unification plays do not grant this settlement.
