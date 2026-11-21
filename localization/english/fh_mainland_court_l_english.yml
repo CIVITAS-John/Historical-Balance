@@ -2,7 +2,7 @@
  fh_mainland_claim_balance: "The Court Balance"
  fh_mainland_claim_reassert_side: "Reassert the Ming Claim"
  fh_mainland_claim_renounce_side: "Renounce the Claim"
- fh_mainland_drift_embargo: "Qing Embargoes Tungning"
+ fh_mainland_drift_embargo: "Qing’s Embargo"
  fh_mainland_drift_cordial: "Cordial Relations with Qing or Better"
  fh_mainland_drift_debt: "At Least 75% of Credit in Use"
  fh_mainland_drift_other_war: "At War but Not with Qing"
@@ -14,7 +14,7 @@
  fh_mainland_drift_cold: "Cold Relations with Qing or Worse"
 
  fh_read_ming_memorials: "Read the Ming Memorials"
- fh_read_ming_memorials_desc: "Hear the old memorials in open court and ask what Tungning still owes the mainland."
+ fh_read_ming_memorials_desc: "Hear the old memorials read in open court, and ask what the court still owes the mainland."
  fh_hear_strait_merchants: "Hear the Strait Merchants"
  fh_hear_strait_merchants_desc: "Ask the merchants what the island stands to gain by settling with Qing."
  fh_mainland_court_action_open_tt: "No court action awaits a reply, and six months have passed since the last confirmed action."
@@ -23,12 +23,12 @@
  fh_mainland_court.cancel: "Leave the matter for another day."
 
  fh_mainland_court.1.t: "Read the Ming Memorials"
- fh_mainland_court.1.d: "A clerk unties the bundle with his penknife, and the hall smells of camphor and old rain. The memorials came over with the first exiles; their descendants have read them at home, in low voices, for a hundred years. Nobody in the hall has heard them aloud. The reader clears his throat."
+ fh_mainland_court.1.d: "A clerk unties the bundle with his penknife, and the hall smells of camphor and old rain. The memorials came over with the first exiles; their descendants have read them at home, in low voices, for four generations. Nobody in the hall has heard them aloud. The reader asks leave, then breaks the first seal."
  fh_mainland_court.1.confirm: "Read them into the record."
  fh_mainland_court.1.confirm_tt: "#P +12#! toward reassertion. For six months: #P +2#! sponsor Approval, #N −2#! Maritime Houses Approval, and #bold Memorial Preparations#! (#N +5%#! Military Goods Cost)."
 
  fh_mainland_court.2.t: "Hear the Strait Merchants"
- fh_mainland_court.2.d: "The merchant spreads the invoices flat and weights one corner with a warehouse key. Every sheet lists goods that once went across the strait: sugar, rattan, a hundred bolts of cloth. The place for the buyer’s seal is still blank. ‘The rent falls due on the eighth,’ he says, ‘and the warehouse has not cleared a floor since spring.’"
+ fh_mainland_court.2.d: "The merchant spreads the invoices flat and sets a warehouse key on one corner. Every sheet lists goods that once crossed the strait: sugar, rattan, a hundred bolts of cloth. The space for the buyer’s seal is still blank. ‘The rent falls due on the eighth,’ he says, ‘and not one floor of the warehouse has cleared since spring.’"
  fh_mainland_court.2.confirm: "Give them a hearing."
  fh_mainland_court.2.confirm_tt: "#N −12#! toward renunciation. For six months: #P +2#! sponsor Approval and Taiwan’s #bold The Merchants’ Hearing#! (#P +10%#! Trade Advantage). Ming Estates: #N −2#! Approval unless they sponsored."
 
@@ -36,23 +36,23 @@
  fh_mainland_petition_minus_tt: "Move the court balance #N −5#! toward renunciation. Another petition cannot arrive for 12 months."
 
  fh_mainland_court.11.t: "A Favor from Canton"
- fh_mainland_court.11.d: "The Canton man sets a jar of tea on the table and lays a broker’s chit beside it. The hold had been sweating; the brokers found buyers in three days. Now he asks that the court remember who found them. A collector reaches for the court seal. A shipowner puts his hand flat on the paper and says a merchant’s favor can be repaid without one."
+ fh_mainland_court.11.d: "The Canton man sets a jar of tea on the table and lays a broker’s chit beside it. The hold had been sweating, he says; the brokers found buyers in three days. Now he asks the court to remember who found them. A collector reaches for the court seal. A shipowner lays his hand flat on the paper and says a merchant’s favor can be repaid without one."
  fh_mainland_court.11.mainland: "Keep the brokers in the court’s confidence."
  fh_mainland_court.11.accommodate: "Let the merchants repay a merchant’s favor."
 
  fh_mainland_court.12.t: "A Letter from Fujian"
- fh_mainland_court.12.d: "The letter comes from a county yamen in Fujian, on official paper and stamped with a magistrate’s plain seal. It lists the graves by village and the families who may come as private persons. No one bearing the court’s commission will be admitted, it says, not for a single day. A minister reads it twice before he sets it down."
+ fh_mainland_court.12.d: "The letter arrives on official paper, closed with a magistrate’s plain seal and nothing more. It lists the graves by village, and the families who may come as private persons to tend them. No one bearing the court’s commission will be admitted, it says, not for a single day. A minister reads it twice, then lays it where the others can see the seal."
  fh_mainland_court.12.mainland: "Send word that we will receive the officials ourselves."
  fh_mainland_court.12.accommodate: "Let the families make the crossing."
 
  fh_mainland_court.13.t: "A Petition from the Island Ports"
- fh_mainland_court.13.d: "The shipowners’ petition comes with a subscription list and the names of nine hulls. The arsenals answer with an estimate for the same nine, fitted to carry stores to the coast instead of crates of camphor. A shipwright at the back has worked on all of them; he keeps looking from one list to the other and says nothing."
+ fh_mainland_court.13.d: "The shipowners’ petition comes with a subscription list and the names of nine hulls. The arsenals answer on the same day with an estimate for those nine, fitted to carry stores to the coast instead of crates of camphor. A shipwright at the back has worked on every hull on both lists. He looks from one to the other and keeps his opinion."
  fh_mainland_court.13.mainland: "Have the arsenals present their plans."
  fh_mainland_court.13.accommodate: "Leave the ships in the carrying trade."
 
  fh_mainland_court.14.t: "The Young Officers’ Petition"
- fh_mainland_court.14.d_mainland: "The junior officers unroll the chart on the floor and set the corners down with inkstones. Their commander kneels at the edge and traces the Fujian coast with one finger, stopping at a river mouth. ‘The landing is not the difficulty,’ he says. ‘Choosing it before Qing does is.’ A lieutenant beside him has already written the request on the back of the chart."
- fh_mainland_court.14.d_southern: "A stores return lies open on the table, three southern anchorages marked short of powder, one of rice. Their captain has written the request in the margin. ‘We can hold the south,’ he tells the court, ‘if nobody sends us north to hold nothing.’ A purser behind him nods at every figure."
+ fh_mainland_court.14.d_mainland: "The junior officers unroll the chart on the floor and hold the corners down with inkstones. Their commander kneels at the edge and draws one finger down the Fujian coast, stopping at a river mouth. ‘The landing is not the difficulty,’ he says. ‘Choosing it before Qing does is.’ A lieutenant has already written the request on the back of the chart, in a hand practiced at copying orders."
+ fh_mainland_court.14.d_southern: "A stores return lies open on the table, three southern anchorages marked short of powder, one of rice. Their captain has written the request in the margin. ‘We can hold the south,’ he tells the court, ‘if no one sends us north to hold nothing.’ A purser behind him nods at every figure."
  fh_mainland_court.14.d_neutral: "The new commander returns the officers’ petition without reading it aloud. He folds it in half, then in quarters, and puts it inside his coat. The lieutenant who drew the chart rolls it up slowly, watching the court. ‘The squadron keeps to standing orders,’ the commander says. The lieutenant does not move."
  fh_mainland_court.14.back: "Back the officers in open court."
  fh_mainland_court.14.back_tt: "Remove #P 2%#! Radicals among Army and Fleet supporters. #bold Officers at the Ready#! (1 year): #P +10%#! Naval Power Projection, #N +5%#! Military Goods Cost."
@@ -60,12 +60,12 @@
  fh_mainland_court.14.refuse_tt: "The Army and Fleet receive #N −2#! Approval for six months."
 
  fh_mainland_court.15.t: "The Families Who Crossed"
- fh_mainland_court.15.d: "The families crowd the lower end of the hall, still carrying what came off the boat: a bedroll, a rice pot, a sewing frame. One man reads a list of eleven names left behind and asks for a ship. A woman behind him says she has no one left to send for, and asks only for a piece of ground and work for her sons."
+ fh_mainland_court.15.d: "The families are kept at the lower end of the hall, with what came off the boat still in their arms: a bedroll, a rice pot, a sewing frame. One man reads out eleven names left behind and asks for a ship. A woman behind him says she has no one left to send for. She asks for ground and work for her sons, and for nothing else."
  fh_mainland_court.15.mainland: "Hear those who still hope to go home."
  fh_mainland_court.15.accommodate: "Help them make a home here."
 
  fh_mainland_court.16.t: "A Petition from the Zhu Household"
- fh_mainland_court.16.d: "The chamberlain sets two cards on the tray: one gives the Zhu household an audience under its old titles, the other invites them as private guests. The old retainer who carries the clan register has dust on his sleeves from the road. He waits beside the tray without touching either card, and asks which door the family should come to."
+ fh_mainland_court.16.d: "The chamberlain sets two cards on the tray: one receives the Zhu household under its old titles, the other invites them as private guests. The old retainer who carries the clan register has road dust on his sleeves. He waits beside the tray and touches neither card. ‘Which door,’ he asks, ‘is the family to come to?’"
  fh_mainland_court.16.mainland: "Receive them under their old titles."
  fh_mainland_court.16.accommodate: "Invite them as private guests."
 

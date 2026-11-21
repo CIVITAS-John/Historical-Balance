@@ -1,6 +1,6 @@
 # The Southern Passage
 
-Dutch merchants and naval stations threaten Tungning’s route to West Borneo and its southern tributaries. The Maritime Houses want cheap passage and open markets. Southern-expedition officers want the squadron to break Dutch pressure; mainland-first officers want those ships available across the strait. The court can buy time for the fleet, show it can keep the route open, or win a demand through ordinary diplomacy and war.
+In the ports of the southern seas, the Zheng trade under the name Tungning. Dutch merchants and naval stations threaten that traffic and the sea route to West Borneo and the tributary courts. The Maritime Houses ask for cheap passage and open markets. Southern-expedition officers want the squadron sent south; mainland-first officers want those ships available across the strait. The court can buy time, show that its fleet can keep the route open, or press a demand through diplomacy and war.
 
 The entry runs alongside the mainland claim and the court faith debate. A victory can strengthen the Zheng mandate if Tungning keeps a grant it defended. A setback costs prestige and can cost the disputed Borneo parcels.
 

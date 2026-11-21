@@ -1,11 +1,11 @@
 ﻿l_english:
  fh_je_mainland_foothold: "The Return to the Mainland"
- fh_je_mainland_foothold_reason: "Secure all ordinary land in Fujian, Guangdong, or Zhejiang, with two staffed levels of Government Administration, no occupation, and at most 20% Turmoil at three consecutive monthly checks."
+ fh_je_mainland_foothold_reason: "A county does not enter the court’s books when its yamen falls, but when its rolls can be read.\n\nDirectly hold all ordinary land in one of Fujian, Guangdong, or Zhejiang. For three consecutive monthly checks, that region needs two staffed levels of Government Administration, no occupation, and at most 20% Turmoil. Then select Register the Mainland Administration."
  fh_je_mainland_foothold_completed_desc: "The court has registered its first mainland administration, and the Port and Village Registers no longer raise extra levies."
  fh_je_mainland_foothold_abandoned_desc: "The court has set aside its plans for an administration on the mainland."
  fh_register_mainland_administration: "Register the Mainland Administration"
  fh_register_mainland_administration_desc: "Confirm how the first coastal administration is recorded. Completing the registration ends the extra levies raised under the Port and Village Registers."
- fh_port_and_village_levies_end_tt: "The Port and Village Registers lose their #v +25%#! conscription bonus."
+ fh_port_and_village_levies_end_tt: "The Port and Village Registers lose their #v +50%#! conscription bonus."
  fh_mainland_registration_ready_tt: "At least one mainland region has met the registration requirements at three consecutive monthly checks."
  fh_mainland_registration.1.t: "Register the Mainland Administration"
  fh_mainland_registration.1.d: "The yard outside the yamen is crowded with people who have carried their deeds in split bamboo tubes. A widow gives the registrar her husband’s name and the four bounds of a paddy; the old roll still lists a brother who went south and never wrote. The clerk copies what she says, then sets down his brush. A printed form has come down from the commission, ruled into columns the village has never used, and he does not know which book the court wants."

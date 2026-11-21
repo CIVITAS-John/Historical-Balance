@@ -1,6 +1,6 @@
 # The Claim Across the Strait
 
-The court must decide whether Tungning still speaks for the Ming cause. In 1836, Qing claims Taiwan, starts at −35 relations with Tungning, and embargoes it.
+The memorials laid before Zheng Wenhai still speak in the name of Great Ming. The merchants bring a different account: Qing patrols keep their cargo from the mainland ports, even where families still cross in fishing boats. The court must choose whether to renew the claim or set it aside and seek a reopening of trade. In 1836, Qing claims Taiwan, starts at −35 relations with Tungning, and embargoes it.
 
 ## Opening effects
 

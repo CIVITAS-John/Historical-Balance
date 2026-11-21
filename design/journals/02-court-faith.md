@@ -1,6 +1,6 @@
 # The Faith of the Court
 
-The Zheng court embraced Catholicism to secure Manila’s help. Zheng Kezang invoked a promise made in the name of the Southern Ming’s Yongli court while the Zhu princes kept their ancestral rites. In 1836 Tungning is still officially Catholic. Its **Yongli Articles of Conscience** preserve the protections once sought for Catholics and extend them to other congregations. The court must decide both which faith to profess and which protections to keep.
+When Zheng Kezang embraced Catholicism to secure Manila’s help, he called it the keeping of a promise made in the name of Yongli’s court. The Zhu princes continued to tend their ancestral tablets. In 1836 the Zheng court still professes Catholicism, and the **Yongli Articles of Conscience** extend to other congregations the protections once sought for Catholics. The court must decide which faith it will profess and which protections it will keep.
 
 The opening audience introduces Xu Wenjing, a Catholic scholar of the Confucian classics; Father Luo Jingde, who leads the Catholic Missions (Devout); and Samuel Talavan, who speaks for Sinkan’s Protestant congregations. Luo wants the missions to bring in Western textbooks and doctors; Xu wants their teachers and translations available to students beyond the mission schools. Estate tutors defend the old examinations.
 

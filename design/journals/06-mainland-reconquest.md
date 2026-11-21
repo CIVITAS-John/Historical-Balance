@@ -1,5 +1,7 @@
 # The Return to the Mainland
 
+A fleet can take a port. To govern the counties behind it, the court needs clerks who know whose names have gone missing from the rolls, who still holds the deeds, and which fields can pay the tax. The first mainland administration begins with those registers.
+
 **Proposed design.** This journal is about establishing a mainland administration. Directly own all land except treaty-port enclaves in **one** of Fujian, Guangdong, or Zhejiang, clear any enemy occupation, and use **Incorporate State**. At **50% incorporation**, the foothold registers automatically. [The Reunification of China](07-reunification-of-china.md#opening-and-progress) opens separately when Tungning directly owns **all three** coastal regions.
 
 ## Opening
