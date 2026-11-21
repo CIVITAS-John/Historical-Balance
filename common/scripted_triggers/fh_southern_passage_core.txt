@@ -1,4 +1,4 @@
-fh_southern_passage_open = {
+﻿fh_southern_passage_open = {
 	fh_is_tungning_founder = yes
 	has_journal_entry = fh_je_southern_passage
 	NOT = { has_variable = fh_southern_passage_result }
@@ -12,8 +12,7 @@ fh_southern_passage_active = {
 }
 
 fh_southern_passage_keep_subject = {
-	has_variable = fh_southern_passage_opening_$KEY$
-	c:$TAG$ ?= {
+	var:fh_southern_passage_opening_$KEY$ ?= {
 		is_country_alive = yes
 		overlord ?= prev
 	}
@@ -26,9 +25,9 @@ fh_southern_passage_keep_parcel = {
 
 fh_southern_passage_has_grant = {
 	OR = {
-		fh_southern_passage_keep_subject = { TAG = STG KEY = stg }
-		fh_southern_passage_keep_subject = { TAG = SEL KEY = sel }
-		fh_southern_passage_keep_subject = { TAG = BLG KEY = blg }
+		fh_southern_passage_keep_subject = { KEY = stg }
+		fh_southern_passage_keep_subject = { KEY = sel }
+		fh_southern_passage_keep_subject = { KEY = blg }
 		fh_southern_passage_has_parcel = yes
 	}
 }

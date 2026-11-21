@@ -1,4 +1,4 @@
-namespace = fh_southern_passage_system
+﻿namespace = fh_southern_passage_system
 
 # Let any same-day native monthly progress and peace effects land first.
 fh_southern_passage_system.1 = {
@@ -6,8 +6,11 @@ fh_southern_passage_system.1 = {
 	hidden = yes
 	trigger = { fh_southern_passage_open = yes }
 	immediate = {
-		set_variable = fh_southern_passage_deadline_expired
-		fh_southern_passage_queue_reconcile = yes
+		if = {
+			limit = { NOT = { has_variable = fh_southern_passage_held } }
+			fh_southern_passage_mark_due = yes
+			fh_southern_passage_queue_reconcile = yes
+		}
 	}
 }
 
@@ -27,6 +30,7 @@ fh_southern_passage_system.2 = {
 fh_southern_passage_system.50 = {
 	type = country_event
 	placement = root
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
 	title = fh_southern_passage_system.50.t
 	desc = fh_southern_passage_system.50.d
 	option = { name = fh_southern_passage_system.acknowledge default_option = yes }
@@ -35,6 +39,7 @@ fh_southern_passage_system.50 = {
 fh_southern_passage_system.75 = {
 	type = country_event
 	placement = root
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
 	title = fh_southern_passage_system.75.t
 	desc = fh_southern_passage_system.75.d
 	option = { name = fh_southern_passage_system.acknowledge default_option = yes }
@@ -43,6 +48,7 @@ fh_southern_passage_system.75 = {
 fh_southern_passage_system.101 = {
 	type = country_event
 	placement = root
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
 	title = fh_southern_passage_system.101.t
 	desc = {
 		first_valid = {
@@ -59,6 +65,7 @@ fh_southern_passage_system.101 = {
 fh_southern_passage_system.102 = {
 	type = country_event
 	placement = root
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
 	title = fh_southern_passage_system.102.t
 	desc = fh_southern_passage_system.102.d
 	option = { name = fh_southern_passage_system.acknowledge default_option = yes }
@@ -67,6 +74,7 @@ fh_southern_passage_system.102 = {
 fh_southern_passage_system.103 = {
 	type = country_event
 	placement = root
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
 	title = fh_southern_passage_system.103.t
 	desc = fh_southern_passage_system.103.d
 	option = { name = fh_southern_passage_system.acknowledge default_option = yes }
@@ -75,6 +83,7 @@ fh_southern_passage_system.103 = {
 fh_southern_passage_system.104 = {
 	type = country_event
 	placement = root
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
 	title = fh_southern_passage_system.104.t
 	desc = {
 		first_valid = {
@@ -91,6 +100,7 @@ fh_southern_passage_system.104 = {
 fh_southern_passage_system.105 = {
 	type = country_event
 	placement = root
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
 	title = fh_southern_passage_system.105.t
 	desc = {
 		first_valid = {

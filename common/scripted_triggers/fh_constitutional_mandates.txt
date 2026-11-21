@@ -139,9 +139,9 @@ fh_constitution_catholic_missions = {
 fh_constitution_southern_passage = {
 	has_variable = fh_southern_passage_secured
 	OR = {
-		fh_constitution_keeps_passage_subject = { TAG = STG GRANT = fh_southern_passage_secured_stg }
-		fh_constitution_keeps_passage_subject = { TAG = SEL GRANT = fh_southern_passage_secured_sel }
-		fh_constitution_keeps_passage_subject = { TAG = BLG GRANT = fh_southern_passage_secured_blg }
+		fh_constitution_keeps_passage_subject = { GRANT = fh_southern_passage_secured_stg }
+		fh_constitution_keeps_passage_subject = { GRANT = fh_southern_passage_secured_sel }
+		fh_constitution_keeps_passage_subject = { GRANT = fh_southern_passage_secured_blg }
 		fh_constitution_keeps_passage_province = { PROVINCE = x1C7417 GRANT = fh_southern_passage_secured_x1c7417 }
 		fh_constitution_keeps_passage_province = { PROVINCE = x2A3D46 GRANT = fh_southern_passage_secured_x2a3d46 }
 		fh_constitution_keeps_passage_province = { PROVINCE = xE02CB6 GRANT = fh_southern_passage_secured_xe02cb6 }
@@ -149,8 +149,7 @@ fh_constitution_southern_passage = {
 }
 
 fh_constitution_keeps_passage_subject = {
-	has_variable = $GRANT$
-	c:$TAG$ ?= {
+	var:$GRANT$ ?= {
 		is_country_alive = yes
 		overlord ?= prev
 	}

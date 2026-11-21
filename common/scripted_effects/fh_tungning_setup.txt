@@ -119,6 +119,7 @@ fh_tungning_country_setup = {
 	}
 	set_variable = fh_tungning_bootstrapped
 	set_global_variable = { name = fh_tungning_founder value = this }
+	fh_southern_passage_begin_play_tracking = yes
 	fh_tungning_grant_registers = yes
 	# Convert after starting jobs are assigned, before the court faith setup recalculates Pop support.
 	s:STATE_FORMOSA.region_state:TWG ?= { fh_tungning_formosa_faith_setup = yes }

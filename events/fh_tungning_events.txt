@@ -92,13 +92,15 @@ fh_tungning.3 = {
 	hidden = yes
 
 	trigger = {
-		c:TWG ?= this
-		is_country_alive = yes
+		fh_is_tungning_founder = yes
 		has_variable = fh_tungning_diplomacy_initialized
 	}
 
 	immediate = {
-		fh_tungning_diplomacy_retry = yes
+		if = {
+			limit = { c:TWG ?= this }
+			fh_tungning_diplomacy_retry = yes
+		}
 		fh_start_southern_passage = yes
 	}
 }

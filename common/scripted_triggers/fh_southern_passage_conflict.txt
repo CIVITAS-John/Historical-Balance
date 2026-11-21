@@ -1,4 +1,4 @@
-# A rival must be on the other side of this play itself. Its overlord's
+﻿# A rival must be on the other side of this play itself. Its overlord's
 # participation alone does not create a hold.
 fh_southern_passage_opposed_in_play = {
 	OR = {
@@ -39,9 +39,23 @@ fh_southern_passage_hold_active = {
 		global_var:fh_tungning_founder.var:fh_southern_passage_rival ?= this
 	}
 	fh_southern_passage_rival_valid = yes
-	any_diplomatic_play = {
-		global_var:fh_tungning_founder.var:fh_southern_passage_hold_play ?= this
-		fh_southern_passage_opposed_in_play = { RIVAL = global_var:fh_tungning_founder.var:fh_southern_passage_hold_rival }
+	fh_southern_passage_play_is_current = {
+		PLAY = global_var:fh_tungning_founder.var:fh_southern_passage_hold_play
+		RIVAL = global_var:fh_tungning_founder.var:fh_southern_passage_hold_rival
+	}
+}
+
+fh_southern_passage_play_is_current = {
+	$PLAY$ ?= {
+		fh_southern_passage_opposed_in_play = { RIVAL = $RIVAL$ }
+		trigger_if = {
+			limit = { is_war = yes }
+			war ?= {
+				is_war_participant = global_var:fh_tungning_founder
+				is_war_participant = $RIVAL$
+			}
+		}
+		trigger_else = { any_diplomatic_play = { this = $PLAY$ } }
 	}
 }
 
@@ -60,16 +74,24 @@ fh_southern_passage_relevant_enforcement = {
 fh_southern_passage_staged_goal = {
 	has_variable = fh_southern_passage_goal_candidate
 	OR = {
+		var:fh_southern_passage_rival ?= scope:target
+		NOT = { exists = scope:target }
+	}
+	OR = {
 		var:fh_southern_passage_goal_candidate_play ?= scope:diplomatic_play
-		NOR = {
-			has_variable = fh_southern_passage_goal_candidate_play
-			exists = scope:diplomatic_play
-		}
+		# Annexation can invalidate the play while applying the goal.
+		NOT = { exists = scope:diplomatic_play }
 	}
 }
 
 fh_southern_passage_recorded_timer_goal = {
 	exists = scope:war_goal_enforced
+	trigger_if = {
+		limit = { has_variable = fh_southern_passage_held }
+		var:fh_southern_passage_hold_play ?= scope:diplomatic_play
+	}
+	# The ID was recorded against the current rival before any annexation
+	# could invalidate the callback's target scope. A fallback clears it.
 	any_in_list = {
 		variable = fh_southern_passage_timer_goals
 		this = scope:war_goal_enforced
@@ -80,6 +102,43 @@ fh_southern_passage_humiliation_rival = {
 	OR = {
 		global_var:fh_tungning_founder.var:fh_southern_passage_rival ?= this
 		c:NET ?= this
+		AND = {
+			c:DEI ?= this
+			global_var:fh_tungning_founder ?= {
+				NOT = { has_variable = fh_southern_passage_opening_checked }
+			}
+		}
 	}
 	any_scope_state = { fh_southern_passage_indonesia_state = yes }
+}
+
+# A reversible goal may temporarily remove the last West Java state that
+# qualifies the rival. Preserve the old rival until that play's goals settle.
+fh_southern_passage_pending_rival_transfer = {
+	fh_southern_passage_open = yes
+	fh_southern_passage_has_grant = yes
+	fh_southern_passage_rival_valid = no
+	any_in_list = {
+		variable = fh_southern_passage_timer_plays
+		OR = {
+			NOT = { global_var:fh_tungning_founder = { has_variable = fh_southern_passage_held } }
+			global_var:fh_tungning_founder.var:fh_southern_passage_hold_play ?= this
+		}
+		is_war = yes
+		exists = war
+	}
+}
+
+# When an endpoint and the native monthly pulse share a date, count that
+# pulse before resolving. The extra day to batch settlement adds no check.
+fh_southern_passage_month_allowed = {
+	OR = {
+		NOT = { has_variable = fh_southern_passage_concessions_due }
+		has_variable = fh_southern_passage_due_today
+	}
+}
+
+fh_southern_passage_pressure_can_drift = {
+	fh_southern_passage_active = yes
+	fh_southern_passage_month_allowed = yes
 }

@@ -1,12 +1,18 @@
-on_diplomatic_play_started = {
+﻿on_diplomatic_play_started = {
 	on_actions = { fh_southern_passage_on_new_play }
 }
 
 fh_southern_passage_on_new_play = {
 	trigger = {
 		global_var:fh_tungning_founder ?= {
-			fh_southern_passage_open = yes
-			NOT = { has_variable = fh_southern_passage_held }
+			fh_is_tungning_founder = yes
+			OR = {
+				NOT = { has_variable = fh_southern_passage_opening_checked }
+				AND = {
+					fh_southern_passage_open = yes
+					NOT = { has_variable = fh_southern_passage_concessions_due }
+				}
+			}
 		}
 	}
 	effect = {
@@ -43,7 +49,12 @@ on_wargoal_enforced_by_timer = {
 
 fh_southern_passage_confirm_permanent_goal = {
 	trigger = {
-		fh_southern_passage_relevant_enforcement = { RIVAL = scope:target PLAY = scope:diplomatic_play }
+		fh_southern_passage_open = yes
+		OR = {
+			fh_southern_passage_staged_goal = yes
+			fh_southern_passage_recorded_timer_goal = yes
+			fh_southern_passage_relevant_enforcement = { RIVAL = scope:target PLAY = scope:diplomatic_play }
+		}
 	}
 	effect = {
 		if = {
@@ -69,6 +80,14 @@ fh_southern_passage_record_timer_goal = {
 		if = {
 			limit = { exists = scope:war_goal_enforced }
 			add_to_variable_list = { name = fh_southern_passage_timer_goals target = scope:war_goal_enforced }
+			if = {
+				limit = {
+					var:fh_southern_passage_goal_candidate ?= 1
+					fh_southern_passage_rival_valid = no
+					exists = scope:diplomatic_play
+				}
+				add_to_variable_list = { name = fh_southern_passage_timer_plays target = scope:diplomatic_play }
+			}
 		}
 		fh_southern_passage_clear_goal_candidate = yes
 	}
@@ -94,7 +113,12 @@ fh_southern_passage_on_conflict_end = {
 				fh_southern_passage_queue_reconcile = yes
 			}
 			if = {
-				limit = { has_variable_list = fh_southern_passage_play_order }
+				limit = { is_target_in_variable_list = { name = fh_southern_passage_timer_plays target = root } }
+				remove_list_variable = { name = fh_southern_passage_timer_plays target = root }
+				fh_southern_passage_queue_reconcile = yes
+			}
+			if = {
+				limit = { is_target_in_variable_list = { name = fh_southern_passage_play_order target = root } }
 				remove_list_variable = { name = fh_southern_passage_play_order target = root }
 			}
 		}
@@ -106,6 +130,14 @@ on_diplo_play_abandon_side = {
 }
 
 on_diplo_play_switch_sides = {
+	on_actions = { fh_southern_passage_on_conflict_membership }
+}
+
+on_diplo_play_declare_neutrality = {
+	on_actions = { fh_southern_passage_on_conflict_membership }
+}
+
+on_diplo_play_subject_backstab_overlord = {
 	on_actions = { fh_southern_passage_on_conflict_membership }
 }
 
@@ -164,7 +196,18 @@ on_become_independent = {
 }
 
 fh_southern_passage_on_subject_change = {
-	trigger = { global_var:fh_tungning_founder ?= { fh_southern_passage_open = yes } }
+	trigger = {
+		global_var:fh_tungning_founder ?= {
+			fh_southern_passage_open = yes
+			OR = {
+				this = root
+				var:fh_southern_passage_rival ?= root
+				var:fh_southern_passage_opening_stg ?= root
+				var:fh_southern_passage_opening_sel ?= root
+				var:fh_southern_passage_opening_blg ?= root
+			}
+		}
+	}
 	effect = {
 		global_var:fh_tungning_founder = {
 			fh_southern_passage_reconcile_grants = yes
@@ -173,7 +216,10 @@ fh_southern_passage_on_subject_change = {
 					OR = {
 						fh_southern_passage_has_grant = no
 						fh_southern_passage_rival_valid = no
-						fh_southern_passage_hold_active = no
+						AND = {
+							has_variable = fh_southern_passage_held
+							fh_southern_passage_hold_active = no
+						}
 					}
 				}
 				fh_southern_passage_queue_reconcile = yes
@@ -194,4 +240,54 @@ fh_southern_passage_on_aftermath_pulse = {
 		has_variable = fh_southern_passage_aftermath_state
 	}
 	effect = { fh_southern_passage_refresh_aftermath = yes }
+}
+
+on_won_war = {
+	on_actions = { fh_southern_passage_on_country_leaves_war }
+}
+
+on_lost_war = {
+	on_actions = { fh_southern_passage_on_country_leaves_war }
+}
+
+on_inconclusive_war = {
+	on_actions = { fh_southern_passage_on_country_leaves_war }
+}
+
+# A participant can capitulate while the rest of its side keeps fighting.
+fh_southern_passage_on_country_leaves_war = {
+	trigger = {
+		global_var:fh_tungning_founder ?= {
+			fh_southern_passage_open = yes
+			var:fh_southern_passage_hold_play ?= scope:diplomatic_play
+			OR = {
+				this = root
+				var:fh_southern_passage_hold_rival ?= root
+			}
+		}
+	}
+	effect = {
+		global_var:fh_tungning_founder = {
+			set_variable = fh_southern_passage_hold_ended
+			fh_southern_passage_queue_reconcile = yes
+		}
+	}
+}
+
+on_capitulation = {
+	on_actions = { fh_southern_passage_check_capitulation }
+}
+
+fh_southern_passage_check_capitulation = {
+	trigger = {
+		global_var:fh_tungning_founder ?= {
+			fh_southern_passage_open = yes
+			has_variable = fh_southern_passage_held
+			OR = {
+				this = root
+				var:fh_southern_passage_hold_rival ?= root
+			}
+		}
+	}
+	effect = { global_var:fh_tungning_founder = { fh_southern_passage_queue_reconcile = yes } }
 }

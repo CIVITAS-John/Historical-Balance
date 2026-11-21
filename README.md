@@ -14,6 +14,8 @@ Qing begins with an embargo on Tungning and a small Catholic minority in Fujian.
 
 **The Claim Across the Strait** opens in 1836. The council can hear the Ming memorials or the Strait merchants, and each hearing opens an event for the court to answer. Reasserting the claim opens the mainland campaign. Renouncing it first tests whether Qing will accept a tributary and trade settlement; if the Taiping Rebellion starts while the claim is unsettled, the court faces a different choice.
 
+**The Southern Passage** opens after the first week if Tungning still holds an opening grant and has a Dutch rival. The court can lower export tariffs to buy time, sustain a naval demonstration, or enforce a qualifying demand in Indonesia. If the dispute ends in concessions, only the tracked West Borneo parcels can change hands.
+
 **Who Shall Rule the Eastern Sea?** opens after final renunciation or the end of mainland mobilization. Build support for a republic, a Zhu monarchy with a Zheng cabinet, or a Zheng monarchy. Ratification opens a follow-up that requires six months of stable government under the chosen settlement.
 
 **Ming** is available under Nation Formation to independent countries with Han, Hakka, Min, or Yue as a primary culture and at least 60% of the 26 eligible mainland regions. Tungning cannot form it after permanently renouncing the Ming claim. A monarchy becomes Great Ming when it holds Beijing, or Restored Ming when it holds Nanjing without Beijing. The Republic of Ming and People's Republic of Ming have their own flags. Tungning has separate flags for its Catholic kingdom and its republic.

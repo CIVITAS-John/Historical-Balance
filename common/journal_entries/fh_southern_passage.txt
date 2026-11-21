@@ -1,4 +1,4 @@
-fh_je_southern_passage = {
+﻿fh_je_southern_passage = {
 	group = je_group_foreign_affairs
 	icon = "gfx/interface/icons/event_icons/event_scales.dds"
 	transferable = no
@@ -15,8 +15,16 @@ fh_je_southern_passage = {
 	status_desc = {
 		first_valid = {
 			triggered_desc = {
+				trigger = { fh_southern_passage_pending_rival_transfer = yes }
+				desc = fh_southern_passage_occupation_status
+			}
+			triggered_desc = {
 				trigger = { has_variable = fh_southern_passage_held }
 				desc = fh_southern_passage_hold_status
+			}
+			triggered_desc = {
+				trigger = { has_variable = fh_southern_passage_concessions_due }
+				desc = fh_southern_passage_due_status
 			}
 			triggered_desc = {
 				trigger = {

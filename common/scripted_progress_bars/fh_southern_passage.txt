@@ -1,4 +1,4 @@
-fh_southern_passage_pressure = {
+﻿fh_southern_passage_pressure = {
 	name = fh_southern_passage_pressure
 	desc = fh_southern_passage_pressure
 	second_desc = fh_southern_passage_concession_limit
@@ -10,19 +10,19 @@ fh_southern_passage_pressure = {
 
 	monthly_progress = {
 		progress_condition = {
-			limit = { fh_southern_passage_active = yes }
+			limit = { fh_southern_passage_pressure_can_drift = yes }
 			add = { desc = fh_southern_passage_drift_pressure value = 1 }
 		}
 		progress_condition = {
 			limit = {
-				fh_southern_passage_active = yes
+				fh_southern_passage_pressure_can_drift = yes
 				fh_southern_passage_dutch_navy > fh_southern_passage_own_navy
 			}
 			add = { desc = fh_southern_passage_drift_navy value = 1 }
 		}
 		progress_condition = {
 			limit = {
-				fh_southern_passage_active = yes
+				fh_southern_passage_pressure_can_drift = yes
 				OR = {
 					in_default = yes
 					scaled_debt >= 0.75
@@ -32,35 +32,35 @@ fh_southern_passage_pressure = {
 		}
 		progress_condition = {
 			limit = {
-				fh_southern_passage_active = yes
+				fh_southern_passage_pressure_can_drift = yes
 				fh_southern_passage_rival_embargo = yes
 			}
 			add = { desc = fh_southern_passage_drift_embargo value = 1 }
 		}
 		progress_condition = {
 			limit = {
-				fh_southern_passage_active = yes
+				fh_southern_passage_pressure_can_drift = yes
 				fh_southern_passage_cordial_rival = yes
 			}
 			add = { desc = fh_southern_passage_drift_relations value = -1 }
 		}
 		progress_condition = {
 			limit = {
-				fh_southern_passage_active = yes
+				fh_southern_passage_pressure_can_drift = yes
 				fh_southern_passage_rival_other_war = yes
 			}
 			add = { desc = fh_southern_passage_drift_other_war value = -1 }
 		}
 		progress_condition = {
 			limit = {
-				fh_southern_passage_active = yes
+				fh_southern_passage_pressure_can_drift = yes
 				fh_southern_passage_larger_trade_center = yes
 			}
 			add = { desc = fh_southern_passage_drift_trade_center value = -1 }
 		}
 		progress_condition = {
 			limit = {
-				fh_southern_passage_active = yes
+				fh_southern_passage_pressure_can_drift = yes
 				fh_southern_passage_protected = yes
 			}
 			add = { desc = fh_southern_passage_drift_guarantee value = -1 }

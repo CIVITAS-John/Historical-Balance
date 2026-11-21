@@ -1,4 +1,4 @@
-fh_southern_passage_own_navy = {
+﻿fh_southern_passage_own_navy = {
 	value = naval_power_projection
 }
 

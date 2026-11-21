@@ -1,4 +1,4 @@
-# 1 permanent goal; 2 no grants; 3 no rival; 4 demonstration; 5 concessions.
+﻿# 1 permanent goal; 2 no grants; 3 no rival; 4 demonstration; 5 concessions.
 fh_southern_passage_resolve = {
 	if = {
 		limit = { fh_southern_passage_open = yes }
@@ -57,12 +57,16 @@ fh_southern_passage_resolve = {
 		clear_variable_list = fh_southern_passage_play_order
 		clear_variable_list = fh_southern_passage_humiliation_plays
 		clear_variable_list = fh_southern_passage_timer_goals
+		clear_variable_list = fh_southern_passage_timer_plays
 		remove_variable = fh_southern_passage_held
 		remove_variable = fh_southern_passage_hold_play
 		remove_variable = fh_southern_passage_hold_rival
 		remove_variable = fh_southern_passage_hold_ended
 		remove_variable = fh_southern_passage_deadline
-		remove_variable = fh_southern_passage_deadline_expired
+		remove_variable = fh_southern_passage_concessions_due
+		remove_variable = fh_southern_passage_due_today
+		remove_variable = fh_southern_passage_due_play
+		remove_variable = fh_southern_passage_due_fallback_play
 		remove_variable = fh_southern_passage_month_due
 		remove_variable = fh_southern_passage_irreversible_goal
 		fh_southern_passage_clear_goal_candidate = yes
@@ -76,9 +80,9 @@ fh_southern_passage_resolve = {
 
 fh_southern_passage_record_secured_grants = {
 	set_variable = fh_southern_passage_secured
-	fh_southern_passage_record_secured_subject = { TAG = STG KEY = stg }
-	fh_southern_passage_record_secured_subject = { TAG = SEL KEY = sel }
-	fh_southern_passage_record_secured_subject = { TAG = BLG KEY = blg }
+	fh_southern_passage_record_secured_subject = { KEY = stg }
+	fh_southern_passage_record_secured_subject = { KEY = sel }
+	fh_southern_passage_record_secured_subject = { KEY = blg }
 	fh_southern_passage_record_secured_parcel = { PROVINCE = x1C7417 KEY = x1c7417 }
 	fh_southern_passage_record_secured_parcel = { PROVINCE = x2A3D46 KEY = x2a3d46 }
 	fh_southern_passage_record_secured_parcel = { PROVINCE = xE02CB6 KEY = xe02cb6 }
@@ -86,8 +90,11 @@ fh_southern_passage_record_secured_grants = {
 
 fh_southern_passage_record_secured_subject = {
 	if = {
-		limit = { fh_southern_passage_keep_subject = { TAG = $TAG$ KEY = $KEY$ } }
-		set_variable = fh_southern_passage_secured_$KEY$
+		limit = { fh_southern_passage_keep_subject = { KEY = $KEY$ } }
+		set_variable = {
+			name = fh_southern_passage_secured_$KEY$
+			value = var:fh_southern_passage_opening_$KEY$
+		}
 	}
 }
 

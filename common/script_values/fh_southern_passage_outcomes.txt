@@ -1,4 +1,12 @@
-fh_southern_passage_remove_medium_radicals = {
+﻿fh_southern_passage_remove_medium_radicals = {
 	value = medium_radicals
 	multiply = -1
+}
+
+fh_southern_passage_streak = {
+	value = var:fh_southern_passage_demonstration_streak
+}
+
+fh_southern_passage_ceded_count = {
+	value = var:fh_southern_passage_ceded_parcels
 }

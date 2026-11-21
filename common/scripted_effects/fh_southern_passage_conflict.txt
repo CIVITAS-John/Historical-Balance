@@ -1,33 +1,73 @@
-fh_southern_passage_begin_play_tracking = {
-	# The new-play callback appends in chronological order after opening.
+﻿fh_southern_passage_begin_play_tracking = {
+	# Seed plays already present at bootstrap; the callback appends new ones.
 	every_diplomatic_play = {
-		limit = {
-			fh_southern_passage_opposed_in_play = { RIVAL = global_var:fh_tungning_founder.var:fh_southern_passage_rival }
-		}
 		global_var:fh_tungning_founder = {
 			add_to_variable_list = { name = fh_southern_passage_play_order target = prev }
 		}
 	}
 }
 
-fh_southern_passage_start_hold = {
-	# The list is chronological even when a country joins a play after it starts.
+# Freeze the set of eligible opponents when concessions first fall due.
+# Reconciliation waits for same-day peace effects, so it must not pick up a
+# play that began in the meantime.
+fh_southern_passage_mark_due = {
+	if = {
+		limit = {
+			fh_southern_passage_open = yes
+			NOT = { has_variable = fh_southern_passage_concessions_due }
+		}
+		set_variable = fh_southern_passage_concessions_due
+		set_variable = { name = fh_southern_passage_due_today days = 1 }
+		fh_southern_passage_find_hold = {
+			RIVAL = global_var:fh_tungning_founder.var:fh_southern_passage_rival
+			SLOT = fh_southern_passage_due_play
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = fh_southern_passage_dutch_fallback }
+				c:NET ?= { fh_southern_passage_has_west_java = yes }
+			}
+			fh_southern_passage_find_hold = {
+				RIVAL = c:NET
+				SLOT = fh_southern_passage_due_fallback_play
+			}
+		}
+	}
+}
+
+fh_southern_passage_find_hold = {
+	# The list is chronological even if a country joined after a play started.
 	every_in_list = {
 		variable = fh_southern_passage_play_order
 		limit = {
-			NOT = { global_var:fh_tungning_founder = { has_variable = fh_southern_passage_held } }
-			fh_southern_passage_opposed_in_play = { RIVAL = global_var:fh_tungning_founder.var:fh_southern_passage_rival }
 			save_temporary_scope_as = fh_southern_passage_possible_hold
-			any_diplomatic_play = { this = scope:fh_southern_passage_possible_hold }
+			fh_southern_passage_play_is_current = { PLAY = scope:fh_southern_passage_possible_hold RIVAL = $RIVAL$ }
 		}
 		global_var:fh_tungning_founder = {
 			if = {
-				limit = { NOT = { has_variable = fh_southern_passage_held } }
-				set_variable = fh_southern_passage_held
-				set_variable = { name = fh_southern_passage_hold_play value = prev }
-				set_variable = { name = fh_southern_passage_hold_rival value = var:fh_southern_passage_rival }
-				fh_southern_passage_suspend_preparations = yes
+				limit = { NOT = { has_variable = $SLOT$ } }
+				set_variable = { name = $SLOT$ value = prev }
 			}
+		}
+	}
+}
+
+fh_southern_passage_start_hold = {
+	if = {
+		limit = { exists = var:fh_southern_passage_due_fallback_play }
+		if = {
+			limit = { has_variable = fh_southern_passage_dutch_fallback }
+			set_variable = { name = fh_southern_passage_due_play value = var:fh_southern_passage_due_fallback_play }
+		}
+	}
+	if = {
+		limit = { exists = var:fh_southern_passage_due_play }
+		set_variable = { name = fh_southern_passage_hold_play value = var:fh_southern_passage_due_play }
+		set_variable = { name = fh_southern_passage_hold_rival value = var:fh_southern_passage_rival }
+		if = {
+			limit = { fh_southern_passage_hold_active = yes }
+			set_variable = fh_southern_passage_held
+			fh_southern_passage_suspend_preparations = yes
 		}
 	}
 }
@@ -43,7 +83,7 @@ fh_southern_passage_stage_state_goal = {
 				owner = scope:target_country
 			}
 		}
-		fh_southern_passage_stage_goal = yes
+		fh_southern_passage_stage_goal = { TERRITORIAL = 1 }
 	}
 }
 
@@ -53,7 +93,7 @@ fh_southern_passage_stage_annexation = {
 			fh_southern_passage_relevant_enforcement = { RIVAL = scope:target_country PLAY = scope:diplomatic_play }
 			scope:target_country ?= { any_scope_state = { fh_southern_passage_indonesia_state = yes } }
 		}
-		fh_southern_passage_stage_goal = yes
+		fh_southern_passage_stage_goal = { TERRITORIAL = 1 }
 	}
 }
 
@@ -69,12 +109,12 @@ fh_southern_passage_stage_humiliation = {
 				this = scope:diplomatic_play
 			}
 		}
-		fh_southern_passage_stage_goal = yes
+		fh_southern_passage_stage_goal = { TERRITORIAL = 0 }
 	}
 }
 
 fh_southern_passage_stage_goal = {
-	set_variable = { name = fh_southern_passage_goal_candidate days = 1 }
+	set_variable = { name = fh_southern_passage_goal_candidate value = $TERRITORIAL$ days = 1 }
 	if = {
 		limit = { exists = scope:diplomatic_play }
 		set_variable = { name = fh_southern_passage_goal_candidate_play value = scope:diplomatic_play days = 1 }
@@ -102,8 +142,32 @@ fh_southern_passage_queue_reconcile = {
 fh_southern_passage_monthly = {
 	if = {
 		limit = { fh_southern_passage_open = yes }
-		set_variable = fh_southern_passage_month_due
-		fh_southern_passage_reconcile = yes
+		if = {
+			limit = {
+				fh_southern_passage_active = yes
+				fh_southern_passage_month_allowed = yes
+			}
+			fh_southern_passage_reconcile_grants = yes
+			fh_southern_passage_check_demonstration = yes
+			set_variable = fh_southern_passage_month_due
+		}
+		if = {
+			limit = {
+				NOR = {
+					has_variable = fh_southern_passage_held
+					has_variable = fh_southern_passage_concessions_due
+				}
+				je:fh_je_southern_passage ?= { "scripted_bar_progress(fh_southern_passage_pressure)" >= 100 }
+			}
+			fh_southern_passage_mark_due = yes
+			fh_southern_passage_queue_reconcile = yes
+		}
+		else_if = {
+			# The fleet qualified now; only the award awaits any same-day peace.
+			limit = { var:fh_southern_passage_demonstration_streak >= 24 }
+			fh_southern_passage_queue_reconcile = yes
+		}
+		else = { fh_southern_passage_reconcile = yes }
 	}
 }
 
@@ -125,7 +189,12 @@ fh_southern_passage_reconcile = {
 			fh_southern_passage_resolve = { RESULT = 1 }
 		}
 		else_if = {
-			limit = { has_variable = fh_southern_passage_held fh_southern_passage_hold_active = yes }
+			limit = {
+				OR = {
+					AND = { has_variable = fh_southern_passage_held fh_southern_passage_hold_active = yes }
+					fh_southern_passage_pending_rival_transfer = yes
+				}
+			}
 			remove_variable = fh_southern_passage_month_due
 		}
 		else_if = {
@@ -143,10 +212,6 @@ fh_southern_passage_reconcile = {
 				fh_southern_passage_resolve = { RESULT = 5 }
 			}
 			else = {
-				if = {
-					limit = { has_variable = fh_southern_passage_month_due }
-					fh_southern_passage_check_demonstration = yes
-				}
 				fh_southern_passage_pressure_warnings = yes
 				if = {
 					limit = { var:fh_southern_passage_demonstration_streak >= 24 }
@@ -155,10 +220,11 @@ fh_southern_passage_reconcile = {
 				else_if = {
 					limit = {
 						OR = {
-							has_variable = fh_southern_passage_deadline_expired
+							has_variable = fh_southern_passage_concessions_due
 							je:fh_je_southern_passage ?= { "scripted_bar_progress(fh_southern_passage_pressure)" >= 100 }
 						}
 					}
+					fh_southern_passage_mark_due = yes
 					fh_southern_passage_start_hold = yes
 					if = {
 						limit = { NOT = { has_variable = fh_southern_passage_held } }
