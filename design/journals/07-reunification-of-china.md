@@ -1,14 +1,12 @@
 # The Reunification of China
 
-Once Tungning can govern a foothold, the question becomes who can govern China. A surviving Qing may still be the main rival. If it fragments, some successors will bargain for a place in the new order and others will defend their own mandate.
+**Proposed design.** [The Return to the Mainland](06-mainland-reconquest.md#consolidate-the-foothold) registers your first foothold automatically at 50% incorporation and opens this journal. Bring the Chinese core under Tungning or its chartered governments, and finish incorporating the coast and one inland seat. The political capital can stay in Taiwan.
 
 ## Opening and progress
 
-- **Entry:** `fh_je_reunification_of_china`. Open once when [The Return to the Mainland](06-mainland-reconquest.md#consolidate-the-foothold) completes. Any tributary can see the map and prepare its administration; provincial offers, the national seat audience, and proclamation require independence and a current foothold. The separate coastal recovery action remains available when vanilla rules allow it.
-- **Coast:** Recover Fujian, Guangdong, and Zhejiang under the original [direct ownership rule](01-mainland-claim.md#mainland-foothold). They cannot be delegated to a governorate for this objective.
-- **Core:** Use the fixed list below. Every ordinary province must be directly owned by Tungning or held by a loyal direct subject with a ratified provincial charter. Skip actual treaty-port enclaves, as on the coast; ordinary foreign holdings still count as outstanding. Use current owners across split states. Occupation, an alliance, or an informal pledge never counts.
-- **Rival seats:** Directly own Nanjing or Beijing under the same ownership rule. The capital can remain elsewhere. Qing and Taiping cannot count as chartered subjects while either still contests the national mandate; an independent remnant outside the core is no blocker.
-- **Integration:** The bar averages [incorporation progress](06-mainland-reconquest.md#mainland-integration) across four equal slots: all three coastal regions and one national seat. A slot gives zero if Tungning lacks any ordinary territory there or any of it is occupied. Use the better of Nanjing and Beijing unless one is the confirmed political seat, in which case use that one. Only show 100% once all four regions are fully incorporated. The separate map checklist shows missing core land and any charter problems.
+A tributary can use the map and incorporate land. Tungning needs independence and a current coastal foothold to make provincial offers, hold the national seat audience, or proclaim reunification. [Press the Mainland Claims](06-mainland-reconquest.md#decision-press-the-mainland-claims) follows its own rules.
+
+**Map checklist.** Directly own all ordinary land in Fujian, Guangdong, Zhejiang, and either Nanjing or Beijing. The rest of the core, including the other inland seat, can be held directly or through loyal direct subjects with ratified provincial charters. Check each owner in a split region. Ignore current treaty-port enclaves; ordinary foreign holdings still count as missing. Occupation, alliances, and informal pledges give no ownership credit.
 
 | Core district | State regions |
 | --- | --- |
@@ -18,54 +16,72 @@ Once Tungning can govern a foothold, the question becomes who can govern China. 
 | North China | Beijing, Zhili, Shandong, Henan, Shanxi, Xi'an, Ningxia, Gansu |
 | Manchuria | Shengjing, Southern Manchuria, Northern Manchuria |
 
-Taiwan is the home settlement, outside the mainland checklist. Southeast Asia, Busan, Mongolia and the other northern steppe regions, Xinjiang, Tibet, and Outer Manchuria are separate questions. They are neither prerequisites nor free claims.
+Taiwan, Southeast Asia, Busan, Mongolia and the other northern steppe regions, Xinjiang, Tibet, and Outer Manchuria are outside the core. The journal grants no claims there. Qing or Taiping can remain independent outside the core; moving or renaming their governments does not check off land.
+
+**Incorporation bar.** Average [incorporation progress](06-mainland-reconquest.md#mainland-integration) across Fujian, Guangdong, Zhejiang, and one inland seat. Use Nanjing or Beijing, whichever has more qualifying progress. If either is the confirmed capital, use that one. A region contributes zero while any ordinary land there is missing or occupied; this does not undo incorporation. If your Fujian foothold registers at 50% and the other three slots contribute nothing, this bar starts at 12.5%. At 100%, all four regions are fully incorporated. Check the map separately for missing land or charter problems.
 
 ## A place for the provincial governments
 
-Base the offers on who holds the listed land, without waiting for `china_shatters`. Eligible mainland successors are the regional Chinese governments formed from Qing or the vanilla Chinese splinters holding ordinary core land. Exclude unrelated foreign powers, their subjects, and rival national claimants (including Qing or Taiping while they still contest the mandate). Show their status and why an offer is unavailable. Qing losing its tag or moving its capital does not settle any objective.
+Offer terms to regional Chinese governments formed from Qing or existing Chinese splinters that hold ordinary core land. Use current owners without waiting for Qing to fracture. Exclude unrelated foreign powers, their subjects, and all rival national claimants, including Qing and Taiping while they contest the mandate. Show why an offer is blocked.
 
-| Approach | What Tungning gains | What the provinces keep |
-| --- | --- | --- |
-| **Associate government** | Mutual recognition and a route toward a charter; creates no subject and earns no map progress | The government stays independent. Both sides can walk away. |
-| **Provincial charter** | Core holdings count once the government accepts a legal direct subject relationship and remains loyal | Local civil offices, revenue and garrisons. Use a legal vanilla subject type, with half the normal tribute where tribute applies. |
-| **Direct administration** | Taxes, institutions, and recruitment under the usual incorporation rules | Tungning pays for its own administration. Direct holdings can use [state integration decrees](06-mainland-reconquest.md#state-decrees). |
+| Approach | What it does |
+| --- | --- |
+| **Associate government** | Both sides recognize each other and can work toward a charter. Neither is bound to continue; the government stays independent and its land does not count. |
+| **Provincial charter** | A direct subject keeps its offices, revenue, and garrisons and pays half its usual tribute where applicable. Its eligible core land counts while it has below 50 Liberty Desire and no active independence play. You can finish without annexing it. |
+| **Direct administration** | You own the land and pay to incorporate it under the usual rules for taxes, institutions, and recruitment. Use [state integration decrees](06-mainland-reconquest.md#state-decrees) where eligible. |
 
-Offer one agreement per current government at a time. Let a player refuse; the AI weighs relations, relative strength, its liberty desire where applicable, and its other patrons. Ratify the charter only with a legal existing or newly accepted direct relationship. A subject counts as loyal below 50 liberty desire and without an active independence play; recheck this along with its ownership and overlord. After three years of chartered rule, Tungning can ask once to integrate that government if both sides are at peace and it is loyal. Refusal leaves the charter intact. Any transfer uses normal annexation rules; declining a charter leaves diplomacy and ordinary war goals available.
+Offer one agreement at a time per government. It can refuse; the AI weighs relations, relative strength, Liberty Desire where relevant, and other patrons. A charter requires a legal, existing or newly accepted direct subject relationship. Recheck land ownership, the direct overlord, and loyalty. After three years under the charter, ask once to integrate a loyal subject while both sides are at peace. Refusal keeps the charter in force. Transfers use normal annexation and incorporation rules. Ordinary diplomacy and war goals remain available.
 
-The charter approach draws on [Kaiserreich’s associated governorates](https://www.reddit.com/r/Kaiserreich/comments/10i7796/progress_report_134_chinese_mechanical_overhaul/). A lasting federation is a valid finish here: there is no requirement to annex every chartered governorate.
-
-The Ming Estates back provincial charters and bargains that keep the county magistrates. The School of Practical Learning makes the case for trained commissioners and common accounts. Neither group decides the terms alone. Annexed charter holdings use the same incorporation rules as all other acquisitions; a charter itself requires no incorporation by Tungning.
+The Ming Estates favor charters and keeping county magistrates. The School of Practical Learning favors trained commissioners and common accounts. Neither decides the terms alone. The charter design draws on [Kaiserreich’s associated governorates](https://www.reddit.com/r/Kaiserreich/comments/10i7796/progress_report_134_chinese_mechanical_overhaul/).
 
 ## Where the government sits
 
-1. **A Court on Two Shores.** After registration, choose to keep the political capital in Taiwan if it is still held, designate a secure coastal foothold for the move, or defer. If the capital already moved through normal play, show the actual seat and let the court confirm it if eligible. Keeping Taiwan favors naval continuity and gives +5% naval power projection for two years; moving favors mainland administration and gives the new seat +10% tax capacity for two years.
-2. **The Transfer of the Offices.** A move takes six months and costs 5% available bureaucracy during preparation. The destination must be directly held under the ownership rule, incorporated, and free of occupation. Show a prospective seat as unavailable while it is incorporating. Recheck before moving. If it stops qualifying, cancel the transfer, clear the cost, and let the player select again. Move the political capital alone.
-3. **The National Seat.** Once the coast and either Nanjing or Beijing are secured, offer a second audience to confirm the existing eligible seat or prepare a move to a qualifying Nanjing or Beijing. It is optional, uses the same transfer rules, and does not repeat the initial reward. If a transfer is underway, finish or cancel it before proclamation.
+**A Court on Two Shores** opens after registration. Keep Taiwan if eligible, plan a move to a coastal foothold, or defer. If you already moved the capital through ordinary play, confirm its current seat if eligible, with no reward.
 
-A capital decision may be confirmed through either audience. If the seat is lost, occupied, or moved manually, clear the confirmation and reopen the choice once a lawful seat is available, without repeating its reward. If Taiwan has been lost, remove the option to keep or move back there. Never script a move into a subject state, a treaty port, or an occupied destination. The AI weighs administrative staffing and occupation risk against its need to keep a strong fleet.
+| Choice | What happens |
+| --- | --- |
+| **Keep Taiwan** | On confirmation, Tungning gets +5% Ship Power Projection for two years, so fleets on Project Power missions generate more Involvement. |
+| **Move the court** | −5% national Bureaucracy output during six months of preparation. On arrival the seat gets +10% Taxation Capacity for two years, helping collect existing taxes where capacity is short. The market capital stays put. |
+| **Defer** | Choose later at no cost. |
+
+Start **The Transfer of the Offices** only after confirming a directly owned, fully incorporated, unoccupied destination under the map rule. A treaty port cannot be the seat. Preview incomplete destinations and show what is missing without charging Bureaucracy. If a confirmed destination stops qualifying, cancel the transfer, remove the penalty, and let the player choose again. No arrival bonus applies.
+
+**The National Seat** is an optional second audience for an independent Tungning that has secured the coast and either Nanjing or Beijing. Confirm the eligible capital or move to a qualifying Nanjing or Beijing under the same rules. Across both audiences, only the first completed choice to keep Taiwan or move the court earns a reward. If the seat is lost, occupied, or moved manually, choose again when a seat qualifies. Losing Taiwan removes it as an option. The AI weighs staffing and occupation risk against fleet needs.
 
 ## The home and southern settlements
 
-Offer each question when its holdings make it relevant. Record a durable policy; do not recreate a lost holding. Give a newly eligible holding the current policy once its own journal resolves.
+Choose Taiwan’s policy while Tungning holds it and the Southern Compact while it has an eligible direct subject or owned holding there.
 
 | Question | Local settlement | Central direction |
 | --- | --- | --- |
-| **Taiwan’s charter** | The School of Practical Learning backs a local assembly and Siraya and settler school petitions. Taiwan stays in Tungning and gets +5 percentage points of education access and −10% tax capacity; the navy retains its existing bases. | Apply the mainland system of appointments. Taiwan keeps normal tax capacity; give the Ming Estates +2 approval and apply +15% radicals from political movements in Taiwan for two years. |
-| **The Southern Compact** | The Maritime Houses back a compact that keeps ports and courts on familiar terms. Existing direct courts (such as Sintang, Selangor, Bulungan, or a subject Philippines) keep their tags and use half the normal tribute where it applies. Direct holdings such as Lanfang's West Borneo parcels or conquests in the Philippines keep elected or merchant councils: +5% trade advantage and −10% tax capacity in the eligible Tungning states. | Keep existing direct relationships and normal tribute. Bring direct holdings under appointed officials: +10% tax capacity and +15% radicals from political movements there for two years. |
+| **Taiwan’s charter** | The School of Practical Learning backs a local assembly and Siraya and settler school petitions. While eligible, Taiwan gets **+5 percentage points of Education Access** so literacy can rise over time, and **−10% Taxation Capacity**. Taiwan stays in Tungning and the navy keeps its bases. | Appoint officials as on the mainland. For **two years**, the Ming Estates gain **+2 approval** and political movements in Taiwan generate **15% more radicals**. Taxation Capacity stays unchanged. |
+| **The Southern Compact** | The Maritime Houses back local courts and councils. Direct subjects (Sintang, Selangor, Bulungan, or a subject Philippines, for example) keep their governments and pay **half the usual tribute** where applicable. Eligible directly owned states, such as Lanfang’s West Borneo holdings, get **+5% Trade Advantage** for better trade prices and **−10% Taxation Capacity** while eligible. | Direct subjects keep their terms and normal tribute. For **two years** after appointing officials in directly owned states, those states get **+10% Taxation Capacity** and political movements there generate **15% more radicals**. |
 
-Defer the southern choice for holdings still governed by [The Southern Passage](03-dutch-east-indies.md) or [The Manila Question](04-philippines.md). If they are the only eligible holdings, hide the choice until one is settled. Apply no bonus or tax cost to another country’s land; if the game cannot scope an effect to eligible parcels in a split state, apply it only to Tungning's state containing them, once per state. Neither choice transfers land, removes subject restrictions, overrides an older treaty, or alters the mainland map objective.
+Holdings covered by [The Southern Passage](03-dutch-east-indies.md) or [The Manila Question](04-philippines.md) wait for those journals to end. If none qualify, wait to offer the choice. Timed effects start when you choose the policy for holdings that already qualify, or when a later holding first comes under it. Remove effects from any holding that stops qualifying; recovery does not restart its timer. These policies do not change ownership, subject restrictions, older treaties, or the mainland checklist. In a split state, apply effects to eligible parcels or once to Tungning’s owned state containing them if individual parcels cannot be targeted.
 
 ## Proclaim the settlement
 
-Enable **Proclaim the Reunification** once Tungning is independent and at peace, the coast and core are satisfied, an eligible political seat has been confirmed, no capital move is in progress, and the currently applicable Taiwan and southern settlements have been chosen. Require all four regions on the integration bar to be directly held, unoccupied, and fully incorporated. Taiwan may remain the political capital. Other core states can still be incorporating at proclamation; their decrees remain available until they finish. A question still blocked by a separate journal does not block proclamation; make it available when that journal ends. An unsettled Taiping pact blocks proclamation while the war or a cession response is outstanding.
+**Proclaim the Reunification** requires all of the following:
 
-Recheck the map, owners, subjects, and seat on confirmation. Record a chartered union if any required core province counts through a charter; otherwise record a directly administered union. Apply the corresponding [reunification aftermath](outcome-modifiers.md#reunification). Preserve the constitutional outcome and country identity. The proclamation grants no new territory. Keep later frontier disputes and the Taiping succession rivalry for future content.
+- Tungning is independent and at peace, the map checklist is complete, and all four regions on the incorporation bar are directly held, unoccupied, and fully incorporated.
+- An eligible political capital is confirmed and no transfer is underway. Taiwan can remain the capital.
+- All available Taiwan and southern policies have been chosen. A question waiting on another journal can be answered later. A Taiping pact still awaiting the end of the war or a cession reply blocks proclamation.
+
+Show which requirements are still missing on the button, and recheck them on confirmation. Other mainland states can keep incorporating after proclamation and use the same decrees until they finish.
+
+| Settlement | National reward | Immediate reaction |
+| --- | --- | --- |
+| **Chartered union:** At least one required province counts through a charter. | **+20 Prestige and +10 base Legitimacy** for **5 years**. | Reduce radicals among Ming Estates supporters once (5%). |
+| **Directly administered union:** Tungning owns all required land directly. | **+25 Prestige and +10 base Legitimacy** for **7 years**. | Reduce radicals among School of Practical Learning supporters once (5%) and increase radicals among Ming Estates supporters once (2%). |
+
+Both grant [The Reunification Settlement](outcome-modifiers.md#reunification). These are one-time changes to radicals; the Taiwan and southern penalties instead change how many new radicals political movements generate while active. Proclamation grants no territory and preserves Tungning’s country identity and constitutional settlement. Frontier disputes and any future conflict with Taiping remain separate.
 
 ## Static checks
 
-- Trace intact Qing, fragmented Qing with a relocated or retagged imperial rump, split states, Taiping as a rival, ordinary foreign holdings, and treaty ports. A successor that changes owner or breaks its direct relationship must update immediately.
-- Trace the bar and proclamation with each unincorporated coastal region, an occupied or unincorporated selected national seat, and a confirmed Taiwan seat with either qualifying national seat. Verify inland incorporation and decrees can continue after proclamation, and that a full bar cannot bypass a missing core holding or an ineligible charter.
-- Verify charters can complete the core without annexation, cannot count on the three coastal states, and stop contributing when disloyal. Track the mod's founding identity through any native tag change; vanilla China formation or a unification play does not confer this journal's result.
-- Verify each seat option, cancellation on occupation or loss, neutral confirmation of a valid manual move, and no automatic move at Ming enthronement. Check political and market capitals separately.
-- Trace Taiwan or a southern holding lost, recovered, inherited after proclamation, or pending another journal. Keep granted effects scoped to current holdings or subjects and remove them when eligibility ends.
-- Vanilla references: `common/strategic_regions/east_asia_strategic_regions.txt`, `common/journal_entries/00_reunify_china.txt`, `events/warlord_china_events.txt`, `common/country_formation/00_formable_countries.txt`, and `events/meiji_restoration.txt` (capital movement).
+- Use journal key `fh_je_reunification_of_china` and open it once.
+- Trace intact and fragmented Qing, rival Taiping, split states, ordinary foreign holdings, and treaty ports. Check that a charter cannot substitute for any of the four directly owned regions, stops contributing on disloyalty or loss of the direct subject relationship, and can otherwise finish the core without annexation.
+- Trace the bar with a missing, occupied, or unincorporated region; a confirmed Nanjing or Beijing seat; and a confirmed Taiwan seat with either eligible inland seat. Verify that 100% does not bypass missing core land, and that inland incorporation and decrees continue after proclamation.
+- Trace capital preview, confirmation, successful transfer, and cancellation on loss or occupation. Check manual confirmation without reward, no repeated reward on reselection, and no move at Ming enthronement. Check political and market capitals separately.
+- Trace Taiwan and southern holdings lost, recovered, newly eligible after proclamation, and pending another journal. Check effects apply once per eligible state or subject, end on loss, and cannot restart a timed term on recovery.
+- Keep the result tied to the founding country through native tag changes. Vanilla China formation and unification plays do not grant this settlement.
+- Vanilla references: `common/strategic_regions/east_asia_strategic_regions.txt`, `common/journal_entries/00_reunify_china.txt`, `events/warlord_china_events.txt`, `common/country_formation/00_formable_countries.txt`, `common/laws/00_navy_model.txt` (ship power projection), and `events/meiji_restoration.txt` (capital movement).
