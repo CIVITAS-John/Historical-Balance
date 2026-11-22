@@ -1,0 +1,49 @@
+﻿# Root is the entry that just activated. Keep vanilla's journal notification.
+on_journal_entry_activated = {
+	on_actions = { fh_journal_opening }
+}
+
+fh_journal_opening = {
+	trigger = { owner ?= { is_player = yes fh_is_tungning_founder = yes } }
+	effect = {
+		owner = {
+			if = {
+				limit = { je:fh_je_court_faith ?= root }
+				fh_queue_journal_opening = { ENTRY = fh_je_court_faith EVENT = fh_journal_opening.1 DAYS = 1 }
+			}
+			else_if = {
+				limit = { je:fh_je_mainland_claim ?= root }
+				fh_queue_journal_opening = { ENTRY = fh_je_mainland_claim EVENT = fh_journal_opening.2 DAYS = 2 }
+			}
+			else_if = {
+				limit = { je:fh_je_southern_passage ?= root }
+				fh_queue_journal_opening = { ENTRY = fh_je_southern_passage EVENT = fh_journal_opening.3 DAYS = 1 }
+			}
+			else_if = {
+				limit = { je:fh_je_manila_question ?= root }
+				fh_queue_journal_opening = { ENTRY = fh_je_manila_question EVENT = fh_journal_opening.4 DAYS = 1 }
+			}
+			else_if = {
+				limit = { je:fh_je_mainland_foothold ?= root }
+				fh_queue_journal_opening = { ENTRY = fh_je_mainland_foothold EVENT = fh_journal_opening.5 DAYS = 1 }
+			}
+			else_if = {
+				limit = { je:fh_je_constitutional_settlement ?= root }
+				fh_queue_journal_opening = { ENTRY = fh_je_constitutional_settlement EVENT = fh_journal_opening.6 DAYS = 1 }
+			}
+			else_if = {
+				limit = { je:fh_je_taiwan_convention ?= root }
+				fh_queue_journal_opening = { ENTRY = fh_je_taiwan_convention EVENT = fh_journal_opening.7 DAYS = 1 }
+			}
+			else_if = {
+				limit = { je:fh_je_southern_court_reborn ?= root }
+				fh_queue_journal_opening = { ENTRY = fh_je_southern_court_reborn EVENT = fh_journal_opening.8 DAYS = 1 }
+			}
+			else_if = {
+				limit = { je:fh_je_mandate_of_our_own ?= root }
+				fh_queue_journal_opening = { ENTRY = fh_je_mandate_of_our_own EVENT = fh_journal_opening.9 DAYS = 1 }
+			}
+			# Reunification and Taiping already open with their own audiences.
+		}
+	}
+}

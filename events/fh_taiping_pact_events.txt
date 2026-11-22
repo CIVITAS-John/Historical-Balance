@@ -26,6 +26,7 @@ fh_taiping_pact.1 = {
 		}
 	}
 	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	flavor = fh_taiping_pact.1.f
 	trigger = { fh_taiping_can_prepare = yes }
 	option = { name = fh_taiping_pact.1.a }
 }

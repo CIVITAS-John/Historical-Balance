@@ -1,0 +1,12 @@
+﻿# Check once per country so reactivated or recovered entries do not repeat the notice.
+fh_queue_journal_opening = {
+	if = {
+		limit = {
+			is_player = yes
+			has_journal_entry = $ENTRY$
+			NOT = { has_variable = fh_opening_$ENTRY$ }
+		}
+		set_variable = fh_opening_$ENTRY$
+		trigger_event = { id = $EVENT$ days = $DAYS$ popup = yes }
+	}
+}

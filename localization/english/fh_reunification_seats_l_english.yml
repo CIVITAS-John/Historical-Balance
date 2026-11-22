@@ -9,7 +9,7 @@
  fh_reunification_destination_incorporated_tt: "The ordinary state must be fully incorporated."
  fh_reunification_destination_occupation_tt: "The ordinary state must be free of enemy occupation."
  fh_reunification_seats.1.t: "A Court on Two Shores"
- fh_reunification_seats.1.d: "Clerks on both shores have begun asking where their orders should come from. Taiwan commands the Strait; Fujian, Guangdong and Zhejiang are closer to the new counties.\n\n[ROOT.GetCountry.GetCustom('fh_reunification_seat_authority')]"
+ fh_reunification_seats.1.d: "Three packets of county returns arrive from Fujian, Guangdong and Zhejiang. A clerk ties them together and asks whether next month’s bundle should come to the same address. The admiral says the court can still command the strait from Taiwan. The new magistrates ask how long they should wait for an answer from across it.\n\n[ROOT.GetCountry.GetCustom('fh_reunification_seat_authority')]"
  fh_reunification_seats.2.t: "The National Seat"
  fh_reunification_seats.2.d: "The old capitals are on the agenda. The government may confirm its present seat or prepare to move the offices to Nanjing or Beijing.\n\n[ROOT.GetCountry.GetCustom('fh_reunification_seat_authority')]"
  fh_reunification_seat_assembly: "The speaker calls the assembly to order. Wherever the deputies meet, the provincial offices must be able to send their accounts there."

@@ -57,6 +57,7 @@
  fh_taiping_break_pact: "Repudiate the Pact"
  fh_taiping_break_pact_desc: "End outstanding deliveries and cessions. This counts as a breach and costs 10% Influence for three years."
  fh_taiping_pact.1.t: "An Envoy to the Heavenly Kingdom"
+ fh_taiping_pact.1.f: "The envoy packs an account book beside his letter of introduction. His clerk asks whether they expect to buy anything. ‘No,’ he says. ‘But I mean to have them write down what they promise.’"
  fh_taiping_pact.1.protestant: "The delegation can speak to Hong’s court in familiar terms, though his theology is his own. Our official faith adds 3 willingness. Choose the terms and commitments in the journal."
  fh_taiping_pact.1.catholic: "The delegates propose an appeal to our shared Christian heritage. The Missions warn against endorsing Hong’s religious claims. Our official faith adds 2 willingness. Choose the terms and commitments in the journal."
  fh_taiping_pact.1.buddhist: "The merchants will carry our offer and promise to protect local worship in our territory. Our official faith adds 1 willingness. Choose the terms and commitments in the journal."

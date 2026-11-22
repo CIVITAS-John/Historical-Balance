@@ -62,6 +62,12 @@ fh_tungning.2 = {
 		has_variable = fh_tungning_bootstrapped
 	}
 
+	immediate = {
+		# These entries can activate before we know who is playing Tungning.
+		fh_queue_journal_opening = { ENTRY = fh_je_court_faith EVENT = fh_journal_opening.1 DAYS = 1 }
+		fh_queue_journal_opening = { ENTRY = fh_je_mainland_claim EVENT = fh_journal_opening.2 DAYS = 2 }
+	}
+
 	option = {
 		name = fh_tungning.2.a
 		default_option = yes

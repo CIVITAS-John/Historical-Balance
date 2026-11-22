@@ -1,0 +1,107 @@
+﻿namespace = fh_journal_opening
+
+# The Faith of the Court
+fh_journal_opening.1 = {
+	type = country_event
+	placement = root
+	title = fh_journal_opening.1.t
+	desc = fh_journal_opening.1.d
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	option = { name = fh_journal_opening.1.a }
+}
+
+# The Claim Across the Strait
+fh_journal_opening.2 = {
+	type = country_event
+	placement = root
+	title = fh_journal_opening.2.t
+	desc = fh_journal_opening.2.d
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	option = { name = fh_journal_opening.2.a }
+}
+
+# The Southern Passage
+fh_journal_opening.3 = {
+	type = country_event
+	placement = root
+	title = fh_journal_opening.3.t
+	desc = fh_journal_opening.3.d
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	option = { name = fh_journal_opening.3.a }
+}
+
+# The Manila Question
+fh_journal_opening.4 = {
+	type = country_event
+	placement = root
+	title = fh_journal_opening.4.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { fh_manila_phi_independent = yes }
+				desc = fh_journal_opening.4.independent
+			}
+			desc = fh_journal_opening.4.d
+		}
+	}
+	icon = "gfx/interface/icons/event_icons/event_trade.dds"
+	option = { name = fh_journal_opening.4.a }
+}
+
+# The Return to the Mainland
+fh_journal_opening.5 = {
+	type = country_event
+	placement = root
+	title = fh_journal_opening.5.t
+	desc = fh_journal_opening.5.d
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	option = { name = fh_journal_opening.5.a }
+}
+
+# Who Shall Rule the Eastern Sea?
+fh_journal_opening.6 = {
+	type = country_event
+	placement = root
+	title = fh_journal_opening.6.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { fh_constitution_ming_unlocked = yes }
+				desc = fh_journal_opening.6.ming
+			}
+			desc = fh_journal_opening.6.d
+		}
+	}
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	option = { name = fh_journal_opening.6.a }
+}
+
+# The Taiwan Convention
+fh_journal_opening.7 = {
+	type = country_event
+	placement = root
+	title = fh_journal_opening.7.t
+	desc = fh_journal_opening.7.d
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	option = { name = fh_journal_opening.7.a }
+}
+
+# The Southern Court Reborn
+fh_journal_opening.8 = {
+	type = country_event
+	placement = root
+	title = fh_journal_opening.8.t
+	desc = fh_journal_opening.8.d
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	option = { name = fh_journal_opening.8.a }
+}
+
+# A Mandate of Our Own
+fh_journal_opening.9 = {
+	type = country_event
+	placement = root
+	title = fh_journal_opening.9.t
+	desc = fh_journal_opening.9.d
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	option = { name = fh_journal_opening.9.a }
+}
