@@ -28,19 +28,7 @@ fh_mainland_refresh = {
 			fh_is_tungning_founder = yes
 			NOT = { has_variable = fh_strait_ratification_in_progress }
 		}
-		if = {
-			limit = { NOT = { has_variable = fh_mainland_taiping_launched } }
-			random_diplomatic_play = {
-				limit = { fh_mainland_taiping_rebellion = yes }
-				save_temporary_scope_as = fh_caught_up_taiping_play
-				prev = {
-					set_variable = fh_mainland_taiping_launched
-					set_variable = { name = fh_mainland_taiping_play value = scope:fh_caught_up_taiping_play }
-					set_variable = { name = fh_mainland_qing value = c:CHI }
-					set_variable = { name = fh_mainland_taiping value = c:TPG }
-				}
-			}
-		}
+		fh_taiping_catch_up_conflict = yes
 		if = {
 			limit = {
 				NOR = {
@@ -71,6 +59,7 @@ fh_mainland_refresh = {
 				remove_variable = fh_mainland_tone_pending
 			}
 			set_variable = fh_taiping_fork_pending
+			fh_taiping_open_journal = yes
 			fh_mainland_suspend_integration_decrees = yes
 			fh_mainland_show_fork = yes
 		}
@@ -276,12 +265,9 @@ fh_mainland_renounce = {
 		else_if = {
 			limit = { has_variable = fh_mainland_claim_abandoned }
 			add_modifier = { name = fh_mainland_island_first years = 2 }
-			add_modifier = { name = fh_mainland_squadrons_stand_down years = 2 }
 			fh_mainland_claim_radicals = { VALUE = small_radicals }
-			if = {
-				limit = { exists = ig:ig_industrialists }
-				add_radicals = { interest_group = ig:ig_industrialists value = fh_mainland_remove_small_radicals }
-			}
+			fh_taiping_open_journal = yes
+			fh_taiping_close = yes
 		}
 		else = {
 			add_modifier = { name = fh_mainland_unanswered_accord years = 2 }
@@ -328,11 +314,12 @@ fh_mainland_answer_fork_reassert = {
 	if = {
 		limit = { fh_mainland_fork_open = yes }
 		set_variable = fh_mainland_from_taiping
-		if = {
-			limit = { fh_mainland_taiping_active = yes }
-			set_variable = fh_mainland_taiping_wants_audience
-		}
-		else = { set_variable = fh_mainland_taiping_no_bargain }
+		fh_taiping_open_journal = yes
 		fh_mainland_reassert = { PUBLIC = $PUBLIC$ }
+		if = {
+			limit = { fh_taiping_conflict_active = yes }
+			fh_taiping_request_audience = yes
+		}
+		else = { fh_taiping_close = yes }
 	}
 }

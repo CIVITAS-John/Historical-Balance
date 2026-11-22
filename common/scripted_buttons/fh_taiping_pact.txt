@@ -1,0 +1,137 @@
+﻿fh_taiping_add_arms = {
+	name = fh_taiping_add_arms
+	desc = fh_taiping_add_arms_desc
+	visible = { fh_taiping_can_prepare = yes NOT = { has_variable = fh_taiping_pledge_arms } }
+	possible = {
+		custom_tooltip = {
+			text = fh_taiping_add_arms_ready_tt
+			fh_taiping_arms_credible = yes
+		}
+	}
+	ai_chance = { value = 0 }
+	effect = { fh_taiping_toggle_term = { TERM = fh_taiping_pledge_arms } }
+}
+
+fh_taiping_drop_arms = {
+	name = fh_taiping_drop_arms
+	desc = fh_taiping_drop_arms_desc
+	visible = { fh_taiping_can_prepare = yes has_variable = fh_taiping_pledge_arms }
+	ai_chance = { value = 0 }
+	effect = { fh_taiping_toggle_term = { TERM = fh_taiping_pledge_arms } }
+}
+
+fh_taiping_add_fleet = {
+	name = fh_taiping_add_fleet
+	desc = fh_taiping_add_fleet_desc
+	visible = { fh_taiping_can_prepare = yes NOT = { has_variable = fh_taiping_pledge_fleet } }
+	possible = {
+		custom_tooltip = {
+			text = fh_taiping_add_fleet_ready_tt
+			fh_taiping_fleet_credible = yes
+		}
+	}
+	ai_chance = { value = 0 }
+	effect = { fh_taiping_toggle_term = { TERM = fh_taiping_pledge_fleet } }
+}
+
+fh_taiping_drop_fleet = {
+	name = fh_taiping_drop_fleet
+	desc = fh_taiping_drop_fleet_desc
+	visible = { fh_taiping_can_prepare = yes has_variable = fh_taiping_pledge_fleet }
+	ai_chance = { value = 0 }
+	effect = { fh_taiping_toggle_term = { TERM = fh_taiping_pledge_fleet } }
+}
+
+fh_taiping_add_front = {
+	name = fh_taiping_add_front
+	desc = fh_taiping_add_front_desc
+	visible = { fh_taiping_can_prepare = yes NOT = { has_variable = fh_taiping_pledge_front } }
+	possible = {
+		custom_tooltip = {
+			text = fh_taiping_add_front_ready_tt
+			fh_taiping_front_credible = yes
+		}
+	}
+	ai_chance = { value = 0 }
+	effect = { fh_taiping_toggle_term = { TERM = fh_taiping_pledge_front } }
+}
+
+fh_taiping_drop_front = {
+	name = fh_taiping_drop_front
+	desc = fh_taiping_drop_front_desc
+	visible = { fh_taiping_can_prepare = yes has_variable = fh_taiping_pledge_front }
+	ai_chance = { value = 0 }
+	effect = { fh_taiping_toggle_term = { TERM = fh_taiping_pledge_front } }
+}
+
+fh_taiping_add_recognition = {
+	name = fh_taiping_add_recognition
+	desc = fh_taiping_add_recognition_desc
+	visible = { fh_taiping_can_prepare = yes NOT = { has_variable = fh_taiping_recognition_offer } }
+	ai_chance = { value = 0 }
+	effect = { fh_taiping_toggle_term = { TERM = fh_taiping_recognition_offer } }
+}
+
+fh_taiping_drop_recognition = {
+	name = fh_taiping_drop_recognition
+	desc = fh_taiping_drop_recognition_desc
+	visible = { fh_taiping_can_prepare = yes has_variable = fh_taiping_recognition_offer }
+	ai_chance = { value = 0 }
+	effect = { fh_taiping_toggle_term = { TERM = fh_taiping_recognition_offer } }
+}
+
+fh_taiping_offer_coast = {
+	name = fh_taiping_offer_coast
+	desc = fh_taiping_offer_coast_desc
+	visible = { fh_taiping_can_prepare = yes }
+	possible = {
+		custom_tooltip = {
+			text = fh_taiping_offer_coast_ready_tt
+			fh_taiping_ordinary_commitments_credible = yes
+		}
+	}
+	ai_chance = { value = 0 }
+	effect = {
+		fh_taiping_preview_schedule = { EXPANDED = no RECORDED = no }
+		hidden_effect = { fh_taiping_send_offer = { EXPANDED = no RECOGNITION_ONLY = no } }
+	}
+}
+
+fh_taiping_offer_south = {
+	name = fh_taiping_offer_south
+	desc = fh_taiping_offer_south_desc
+	visible = { fh_taiping_can_prepare = yes fh_reunification_all_coasts_owned = yes NOT = { fh_taiping_recognition_only_available = yes } }
+	possible = {
+		custom_tooltip = {
+			text = fh_taiping_offer_south_ready_tt
+			fh_taiping_expanded_offer_available = yes
+		}
+	}
+	ai_chance = { value = 0 }
+	effect = {
+		fh_taiping_preview_schedule = { EXPANDED = yes RECORDED = no }
+		hidden_effect = { fh_taiping_send_offer = { EXPANDED = yes RECOGNITION_ONLY = no } }
+	}
+}
+
+fh_taiping_offer_recognition_only = {
+	name = fh_taiping_offer_recognition_only
+	desc = fh_taiping_offer_recognition_only_desc
+	visible = { fh_taiping_can_prepare = yes fh_taiping_recognition_only_available = yes }
+	possible = {
+		custom_tooltip = {
+			text = fh_taiping_offer_recognition_only_ready_tt
+			fh_taiping_recognition_only_available = yes
+		}
+	}
+	ai_chance = { value = 0 }
+	effect = { hidden_effect = { fh_taiping_send_offer = { EXPANDED = no RECOGNITION_ONLY = yes } } }
+}
+
+fh_taiping_break_pact = {
+	name = fh_taiping_break_pact
+	desc = fh_taiping_break_pact_desc
+	visible = { fh_taiping_can_repudiate = yes }
+	ai_chance = { value = 0 }
+	effect = { trigger_event = { id = fh_taiping_pact.5 popup = yes } }
+}

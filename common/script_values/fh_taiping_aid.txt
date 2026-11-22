@@ -1,0 +1,22 @@
+﻿fh_taiping_exportable_arms = {
+	value = market.mg:small_arms.market_export_cap
+	subtract = market.mg:small_arms.treaty_exports
+}
+
+fh_taiping_procurement_cost = {
+	value = gold_reserves_limit
+	multiply = 0.05
+}
+
+fh_taiping_heavy_procurement_cost = {
+	value = gold_reserves_limit
+	multiply = 0.10
+}
+
+fh_taiping_arms_weekly_quantity = {
+	value = 10
+	if = {
+		limit = { has_variable = fh_taiping_expanded }
+		multiply = 2
+	}
+}

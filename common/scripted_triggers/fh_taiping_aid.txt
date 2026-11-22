@@ -1,0 +1,429 @@
+﻿# Treaty and route checks use the recorded countries, including after a tag change.
+fh_taiping_aid_diplomacy = {
+	fh_taiping_conflict_active = yes
+	var:fh_mainland_taiping ?= { is_country_alive = yes }
+	NOT = { is_diplomatic_play_enemy_of = var:fh_mainland_taiping }
+	NOT = { has_war_with = var:fh_mainland_taiping }
+	OR = {
+		is_subject = no
+		top_overlord ?= {
+			NOT = { is_diplomatic_play_enemy_of = prev.var:fh_mainland_taiping }
+			NOT = { has_war_with = prev.var:fh_mainland_taiping }
+		}
+	}
+}
+
+fh_taiping_arms_route = {
+	fh_taiping_aid_diplomacy = yes
+	in_default = no
+	market.owner ?= this
+	var:fh_mainland_taiping ?= {
+		is_country_alive = yes
+		NOT = { market ?= prev.market }
+		NOT = { has_diplomatic_pact = { who = prev type = embargo is_initiator = yes } }
+	}
+	NOT = { has_diplomatic_pact = { who = var:fh_mainland_taiping type = embargo is_initiator = yes } }
+	is_market_reachable_for_trade = var:fh_mainland_taiping.market
+	OR = {
+		market = { is_adjacent_to_market = prev.var:fh_mainland_taiping.market }
+		AND = {
+			has_port_country = yes
+			var:fh_mainland_taiping ?= { has_port_country = yes }
+			supply_network_strength >= 0.75
+		}
+	}
+}
+
+fh_taiping_native_arms_possible = {
+	fh_taiping_arms_route = yes
+	fh_taiping_exportable_arms >= $QUANTITY$
+	has_technology_researched = international_trade
+	is_junior_in_customs_union = no
+	var:fh_mainland_taiping ?= { is_junior_in_customs_union = no }
+	NOT = {
+		any_scope_treaty = {
+			binds = prev.var:fh_mainland_taiping
+			any_scope_article = {
+				has_type = goods_transfer
+				source_country = global_var:fh_tungning_founder
+				target_country = global_var:fh_tungning_founder.var:fh_mainland_taiping
+				input_goods = g:small_arms
+			}
+		}
+	}
+	can_create_treaty = {
+		first_country = this
+		second_country = var:fh_mainland_taiping
+		is_draft = no
+		binding_period = { months = 6 }
+		articles_to_create = {
+			{
+				article = goods_transfer
+				source_country = this
+				target_country = var:fh_mainland_taiping
+				inputs = { { goods = g:small_arms } { quantity = $QUANTITY$ } }
+			}
+		}
+	}
+}
+
+fh_taiping_arms_credible = {
+	fh_taiping_arms_route = yes
+	fh_taiping_exportable_arms >= 10
+	OR = {
+		fh_taiping_native_arms_possible = { QUANTITY = 10 }
+		gold_reserves >= fh_taiping_procurement_cost
+	}
+}
+
+fh_taiping_heavy_arms_credible = {
+	fh_taiping_arms_route = yes
+	fh_taiping_exportable_arms >= 20
+	OR = {
+		fh_taiping_native_arms_possible = { QUANTITY = 20 }
+		gold_reserves >= fh_taiping_heavy_procurement_cost
+	}
+}
+
+fh_taiping_fighting_original_war = {
+	var:fh_mainland_taiping_play ?= {
+		is_war = yes
+		war ?= {
+			is_war_participant = global_var:fh_tungning_founder
+			is_war_participant = global_var:fh_tungning_founder.var:fh_mainland_taiping
+			is_war_participant = global_var:fh_tungning_founder.var:fh_mainland_qing
+		}
+	}
+	has_war_with = var:fh_mainland_qing
+	NOT = { has_war_with = var:fh_mainland_taiping }
+}
+
+fh_taiping_fleet_route = {
+	fh_taiping_aid_diplomacy = yes
+	any_scope_state = {
+		has_port_state = yes
+		blockade_level < 0.5
+		fh_mainland_state_unoccupied = yes
+	}
+	# The theater is the East China Sea and lower Yangtze. Taiping can
+	# participate from inland; the route is measured to an actual coastal state.
+	OR = {
+		AND = {
+			p:xB01101.state ?= { is_treaty_port = no }
+			has_military_reach = { target = p:xB01101.state min_reach = 0.2 }
+		}
+		AND = {
+			p:x301080.state ?= {
+				state_region = s:STATE_ZHEJIANG
+				is_treaty_port = no
+			}
+			has_military_reach = { target = p:x301080.state min_reach = 0.2 }
+		}
+	}
+}
+
+fh_taiping_combat_ship = {
+	hit_points > 0
+	NOT = { ship_group ?= ship_group:ship_group_supply_ships }
+}
+
+fh_taiping_fleet_viable = {
+	has_ship_outside_max_port_distance = no
+	has_naval_mission_with_invalid_area = no
+	any_scope_ship = {
+		count >= $SHIPS$
+		fh_taiping_combat_ship = yes
+	}
+}
+
+fh_taiping_fleet_in_theater = {
+	any_scope_ship = {
+		count >= $SHIPS$
+		fh_taiping_combat_ship = yes
+		is_in_port = no
+	}
+	OR = {
+		has_naval_mission_in_region = { type = naval_mission_type_protect_supply region = sr:region_east_china_sea }
+		has_naval_mission_in_region = { type = naval_mission_type_raid_supply region = sr:region_east_china_sea }
+		has_naval_mission_in_region = { type = naval_mission_type_blockade region = sr:region_east_china_sea }
+		has_naval_mission_in_region = { type = naval_mission_type_intercept region = sr:region_east_china_sea }
+	}
+}
+
+fh_taiping_fleet_in_reserve = {
+	# A ship already at sea cannot also be part of the off-map reserve.
+	any_scope_ship = {
+		count = all
+		OR = {
+			hit_points <= 0
+			AND = { is_in_port = yes is_in_battle = no }
+		}
+	}
+}
+
+fh_taiping_squadron_available = {
+	fh_taiping_fleet_route = yes
+	any_scope_fleet = {
+		fh_taiping_fleet_viable = { SHIPS = $SHIPS$ }
+		OR = {
+			fh_taiping_fleet_in_reserve = yes
+			AND = {
+				prev = { fh_taiping_fighting_original_war = yes }
+				fh_taiping_fleet_in_theater = { SHIPS = $SHIPS$ }
+			}
+		}
+	}
+}
+
+fh_taiping_eligible_donation = {
+	fh_taiping_combat_ship = yes
+	is_in_battle = no
+}
+
+fh_taiping_donation_credible = {
+	fh_taiping_fleet_route = yes
+	has_dlc_feature = ep2_content
+	is_revolutionary = no
+	var:fh_mainland_taiping ?= {
+		is_revolutionary = no
+		any_scope_state = {
+			has_port_state = yes
+			blockade_level < 0.5
+			fh_mainland_state_unoccupied = yes
+		}
+	}
+	any_scope_ship = { fh_taiping_eligible_donation = yes }
+}
+
+fh_taiping_fleet_credible = {
+	OR = {
+		fh_taiping_squadron_available = { SHIPS = 3 }
+		fh_taiping_donation_credible = yes
+	}
+}
+
+fh_taiping_can_back_rebellion = {
+	fh_taiping_aid_diplomacy = yes
+	is_subject = no
+	aggressive_diplomatic_plays_permitted = yes
+	NOT = { has_war_with = var:fh_mainland_qing }
+	NOT = { has_truce_with = var:fh_mainland_qing }
+	OR = {
+		has_interest_marker_in_region = var:fh_mainland_qing.capital.region
+		is_home_country_for = var:fh_mainland_qing
+	}
+	var:fh_mainland_taiping_play ?= {
+		is_war = no
+		escalation >= 21
+		escalation < 80
+		# Restrict the shortcut to already involved, undecided countries.
+		any_scope_play_involved = { this = global_var:fh_tungning_founder }
+		NOT = { any_scope_initiator_ally = { this = global_var:fh_tungning_founder } }
+		NOT = { any_scope_target_ally = { this = global_var:fh_tungning_founder } }
+	}
+}
+
+fh_taiping_front_already_committed = {
+	OR = {
+		has_war_with = var:fh_mainland_qing
+		var:fh_mainland_taiping_play ?= {
+			is_war = no
+			any_scope_initiator_ally = { this = global_var:fh_tungning_founder }
+		}
+	}
+}
+
+fh_taiping_front_credible = {
+	fh_taiping_aid_diplomacy = yes
+	OR = {
+		fh_taiping_front_already_committed = yes
+		fh_taiping_can_back_rebellion = yes
+	}
+}
+
+fh_taiping_ai_can_back_rebellion = {
+	fh_taiping_can_back_rebellion = yes
+	fh_mainland_officers_mainland = yes
+	scaled_debt < 0.5
+	in_default = no
+	army_power_projection > 0
+}
+
+fh_taiping_ai_front_credible = {
+	fh_taiping_aid_diplomacy = yes
+	OR = {
+		fh_taiping_front_already_committed = yes
+		fh_taiping_ai_can_back_rebellion = yes
+	}
+}
+
+fh_taiping_heavy_credible = {
+	fh_taiping_heavy_arms_credible = yes
+	fh_taiping_squadron_available = { SHIPS = 6 }
+}
+
+fh_taiping_aid_pact_live = {
+	fh_taiping_pact_unsettled = yes
+	NOR = {
+		has_variable = fh_taiping_aid_stopped
+		has_variable = fh_taiping_war_ending
+	}
+	fh_taiping_aid_diplomacy = yes
+}
+
+fh_taiping_can_join_signed_pact = {
+	fh_taiping_aid_pact_live = yes
+	fh_taiping_can_back_rebellion = yes
+}
+
+fh_taiping_wartime_pact = {
+	fh_taiping_aid_pact_live = yes
+	var:fh_mainland_taiping_play ?= { is_war = yes }
+}
+
+fh_taiping_arms_can_send = {
+	fh_taiping_wartime_pact = yes
+	has_variable = fh_taiping_pledge_arms
+	NOT = { has_variable = fh_taiping_arms_cooldown }
+	NOT = { has_variable = fh_taiping_arms_treaty }
+	trigger_if = {
+		limit = { has_variable = fh_taiping_expanded }
+		has_variable = fh_taiping_authorization
+		NOT = { var:fh_taiping_arms_attempts ?= 2 }
+		trigger_if = {
+			limit = { has_variable = fh_taiping_procurement_method }
+			fh_taiping_arms_route = yes
+			fh_taiping_exportable_arms >= 20
+			gold_reserves >= fh_taiping_heavy_procurement_cost
+		}
+		trigger_else = {
+			NOT = { has_variable = fh_taiping_native_arms_started }
+			fh_taiping_heavy_arms_credible = yes
+		}
+	}
+	trigger_else = {
+		NOT = { var:fh_taiping_arms_attempts ?= 3 }
+		fh_taiping_arms_credible = yes
+	}
+}
+
+fh_taiping_fleet_can_send = {
+	fh_taiping_wartime_pact = yes
+	has_variable = fh_taiping_pledge_fleet
+	NOT = { has_variable = fh_taiping_fleet_pending }
+	NOT = { has_variable = fh_taiping_fleet_window }
+	NOT = { has_variable = fh_taiping_donation_service }
+	trigger_if = {
+		limit = { has_variable = fh_taiping_expanded }
+		has_variable = fh_taiping_authorization
+		NOT = { has_variable = fh_taiping_heavy_fleet_started }
+		fh_taiping_squadron_available = { SHIPS = 6 }
+	}
+	trigger_else = { fh_taiping_squadron_available = { SHIPS = 3 } }
+}
+
+fh_taiping_donation_can_send = {
+	fh_taiping_wartime_pact = yes
+	has_variable = fh_taiping_pledge_fleet
+	NOT = { has_variable = fh_taiping_expanded }
+	NOT = { has_variable = fh_taiping_fleet_pending }
+	NOT = { has_variable = fh_taiping_fleet_window }
+	NOT = { has_variable = fh_taiping_donation_service }
+	NOT = { has_variable = fh_taiping_ship_donated }
+	fh_taiping_donation_credible = yes
+}
+
+fh_taiping_shanghai_qing_side = {
+	save_temporary_scope_as = fh_taiping_city_country
+	OR = {
+		this = global_var:fh_tungning_founder.var:fh_mainland_qing
+		global_var:fh_tungning_founder.var:fh_mainland_taiping_play ?= {
+			any_scope_target_ally = { this = scope:fh_taiping_city_country }
+		}
+	}
+}
+
+fh_taiping_shanghai_opportunity = {
+	fh_taiping_wartime_pact = yes
+	has_variable = fh_taiping_arms_delivered
+	OR = {
+		has_variable = fh_taiping_fleet_service
+		has_variable = fh_taiping_donation_service
+	}
+	OR = {
+		fh_taiping_native_arms_running = yes
+		has_variable = fh_taiping_procurement_recent
+	}
+	p:xB01101 ?= {
+		state = { is_treaty_port = no }
+		owner = { fh_taiping_shanghai_qing_side = yes }
+		controller = { fh_taiping_shanghai_qing_side = yes }
+	}
+	var:fh_mainland_taiping ?= {
+		has_military_reach = { target = p:xB01101.state min_reach = 0.2 }
+		any_scope_war = {
+			count = 1
+			always = yes
+		}
+		any_scope_state = {
+			is_treaty_port = no
+			fh_mainland_state_unoccupied = yes
+			OR = {
+				state_region = s:STATE_NANJING
+				state_region = s:STATE_SOUTHERN_ANHUI
+				state_region = s:STATE_JIANGXI
+				state_region = s:STATE_JIANGSU
+				state_region = s:STATE_ZHEJIANG
+				state_region = s:STATE_SUZHOU
+			}
+		}
+	}
+	fh_taiping_fleet_route = yes
+}
+
+# The native weekly fulfillment check freezes an article after repeated
+# contraventions. Requiring zero from either party excludes frozen articles
+# and avoids crediting a shipment that is already failing.
+fh_taiping_native_arms_running = {
+	fh_taiping_wartime_pact = yes
+	fh_taiping_arms_route = yes
+	is_junior_in_customs_union = no
+	var:fh_mainland_taiping ?= { is_junior_in_customs_union = no }
+	fh_taiping_exportable_arms >= 0
+	any_scope_treaty = {
+		this = prev.var:fh_taiping_arms_treaty
+		binds = prev.var:fh_mainland_taiping
+		any_scope_article = {
+			has_type = goods_transfer
+			source_country = global_var:fh_tungning_founder
+			target_country = global_var:fh_tungning_founder.var:fh_mainland_taiping
+			input_goods = g:small_arms
+			input_quantity >= global_var:fh_tungning_founder.fh_taiping_arms_weekly_quantity
+			num_contraventions = { target = global_var:fh_tungning_founder value = 0 }
+			num_contraventions = { target = global_var:fh_tungning_founder.var:fh_mainland_taiping value = 0 }
+		}
+	}
+}
+
+fh_taiping_reserved_fleet_qualifies = {
+	owner ?= prev
+	fh_taiping_fleet_viable = { SHIPS = $SHIPS$ }
+	trigger_if = {
+		limit = { prev = { has_variable = fh_taiping_native_deployment } }
+		prev = { fh_taiping_fighting_original_war = yes }
+		fh_taiping_fleet_in_theater = { SHIPS = $SHIPS$ }
+	}
+	trigger_else = { fh_taiping_fleet_in_reserve = yes }
+}
+
+fh_taiping_reserved_squadron_ready = {
+	fh_taiping_wartime_pact = yes
+	fh_taiping_fleet_route = yes
+	var:fh_taiping_reserved_squadron ?= {
+		trigger_if = {
+			limit = { prev = { has_variable = fh_taiping_expanded } }
+			fh_taiping_reserved_fleet_qualifies = { SHIPS = 6 }
+		}
+		trigger_else = { fh_taiping_reserved_fleet_qualifies = { SHIPS = 3 } }
+	}
+}

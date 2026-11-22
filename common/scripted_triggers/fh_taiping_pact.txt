@@ -1,0 +1,146 @@
+﻿fh_taiping_conflict_active = {
+	var:fh_mainland_taiping ?= { is_country_alive = yes }
+	var:fh_mainland_qing ?= { is_country_alive = yes }
+	fh_mainland_taiping_active = yes
+}
+
+fh_taiping_can_open_audience = {
+	fh_is_tungning_founder = yes
+	has_variable = fh_mainland_claim_reasserted
+	NOT = { has_variable = fh_taiping_opened }
+	fh_taiping_conflict_active = yes
+	fh_taiping_settlement_partners_at_peace = yes
+}
+
+fh_taiping_ai_has_viable_bid = {
+	fh_taiping_conflict_active = yes
+	fh_taiping_settlement_partners_at_peace = yes
+	OR = {
+		fh_taiping_recognition_only_available = yes
+		AND = {
+			OR = {
+				fh_taiping_arms_credible = yes
+				fh_taiping_fleet_credible = yes
+				fh_taiping_ai_front_credible = yes
+			}
+			fh_taiping_best_ordinary_willingness >= 4
+		}
+	}
+}
+
+fh_taiping_can_prepare = {
+	fh_is_tungning_founder = yes
+	has_variable = fh_taiping_opened
+	has_variable = fh_mainland_claim_reasserted
+	NOR = {
+		has_variable = fh_taiping_offer_pending
+		has_variable = fh_taiping_pact_ratified
+		has_variable = fh_taiping_closed
+		var:fh_taiping_offers_sent ?= 2
+	}
+	fh_taiping_conflict_active = yes
+	fh_taiping_settlement_partners_at_peace = yes
+}
+
+fh_taiping_ordinary_commitments_credible = {
+	OR = {
+		has_variable = fh_taiping_pledge_arms
+		has_variable = fh_taiping_pledge_fleet
+		has_variable = fh_taiping_pledge_front
+	}
+	OR = {
+		NOT = { has_variable = fh_taiping_pledge_arms }
+		fh_taiping_arms_credible = yes
+	}
+	OR = {
+		NOT = { has_variable = fh_taiping_pledge_fleet }
+		fh_taiping_fleet_credible = yes
+	}
+	OR = {
+		NOT = { has_variable = fh_taiping_pledge_front }
+		fh_taiping_front_credible = yes
+	}
+}
+
+fh_taiping_expanded_commitments_credible = {
+	has_variable = fh_mainland_taiping_snapshot
+	fh_reunification_all_coasts_owned = yes
+	fh_taiping_heavy_credible = yes
+}
+
+fh_taiping_expanded_offer_available = {
+	fh_taiping_expanded_commitments_credible = yes
+	fh_taiping_expanded_schedule_available = yes
+}
+
+fh_taiping_recognition_only_available = {
+	has_variable = fh_mainland_taiping_snapshot
+	fh_reunification_all_coasts_owned = yes
+	fh_taiping_expanded_schedule_available = no
+}
+
+# Recipient scope. Scope data ties delayed responses to one exact offer.
+fh_taiping_offer_current = {
+	scope:fh_taiping_sender ?= {
+		fh_is_tungning_founder = yes
+		var:fh_mainland_taiping ?= prev
+		has_variable = fh_taiping_offer_pending
+		has_variable = fh_taiping_offer_window
+		var:fh_taiping_offers_sent ?= scope:fh_taiping_offer_ticket
+		fh_taiping_conflict_active = yes
+		fh_taiping_settlement_partners_at_peace = yes
+	}
+}
+
+fh_taiping_offer_can_ratify = {
+	fh_taiping_offer_current = yes
+	scope:fh_taiping_sender ?= {
+		fh_taiping_coastal_position >= var:fh_taiping_offered_position
+		fh_taiping_schedule_still_valid = yes
+		OR = {
+			AND = {
+				has_variable = fh_taiping_expanded
+				fh_taiping_expanded_commitments_credible = yes
+			}
+			AND = {
+				has_variable = fh_taiping_recognition_only
+				fh_taiping_recognition_only_available = yes
+			}
+			AND = {
+				NOR = {
+					has_variable = fh_taiping_expanded
+					has_variable = fh_taiping_recognition_only
+				}
+				fh_taiping_ordinary_commitments_credible = yes
+			}
+		}
+	}
+}
+
+fh_taiping_recipient_willing = {
+	scope:fh_taiping_sender ?= {
+		OR = {
+			AND = {
+				has_variable = fh_taiping_expanded
+				fh_taiping_willingness >= 8
+			}
+			AND = {
+				NOT = { has_variable = fh_taiping_expanded }
+				fh_taiping_willingness >= 4
+			}
+		}
+	}
+}
+
+fh_taiping_pact_unsettled = {
+	has_variable = fh_taiping_pact_ratified
+	NOR = {
+		has_variable = fh_taiping_closed
+		has_variable = fh_taiping_repudiated
+	}
+}
+
+fh_taiping_can_repudiate = {
+	fh_is_tungning_founder = yes
+	fh_taiping_pact_unsettled = yes
+}

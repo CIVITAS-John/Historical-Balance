@@ -49,12 +49,6 @@ fh_reunification_can_proclaim = {
 	}
 	custom_tooltip = {
 		text = fh_reunification_taiping_tt
-		NOR = {
-			AND = {
-				has_variable = fh_taiping_pact_ratified
-				fh_mainland_taiping_active = yes
-			}
-			has_variable = fh_taiping_cession_pending
-		}
+		fh_taiping_pact_unsettled = no
 	}
 }

@@ -29,11 +29,6 @@ fh_mainland_island_first = {
 	state_trade_advantage_mult = 0.10
 }
 
-fh_mainland_squadrons_stand_down = {
-	icon = "gfx/interface/icons/timed_modifier_icons/modifier_rifle_positive.dds"
-	country_military_goods_cost_mult = -0.10
-}
-
 fh_mainland_renunciation_approval = {
 	icon = "gfx/interface/icons/timed_modifier_icons/modifier_fist_positive.dds"
 	interest_group_approval_add = 2

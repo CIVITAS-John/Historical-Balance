@@ -1,0 +1,22 @@
+﻿fh_taiping_provinces_promised = {
+	value = 0
+	every_in_list = { variable = fh_taiping_signed_provinces add = 1 }
+}
+
+fh_taiping_provinces_unfulfilled = {
+	value = 0
+	every_in_list = {
+		variable = fh_taiping_signed_provinces
+		if = {
+			limit = {
+				NOT = {
+					AND = {
+						owner ?= global_var:fh_tungning_founder
+						state ?= { is_treaty_port = no }
+					}
+				}
+			}
+			add = 1
+		}
+	}
+}

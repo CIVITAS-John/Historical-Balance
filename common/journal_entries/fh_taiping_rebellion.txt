@@ -1,0 +1,130 @@
+﻿fh_je_taiping_rebellion = {
+	group = je_group_foreign_affairs
+	icon = "gfx/interface/icons/event_icons/event_revolutionary_flag.dds"
+	transferable = no
+	can_revolution_inherit = no
+	should_be_pinned_by_default_uninvolved_or_context = yes
+
+	on_weekly_pulse = { effect = { fh_taiping_review = yes } }
+	on_monthly_pulse = {
+		effect = {
+			if = {
+				limit = {
+					fh_taiping_can_repudiate = yes
+					fh_taiping_conflict_active = yes
+				}
+				fh_taiping_aid_monthly = yes
+			}
+			else_if = {
+				limit = { is_ai = yes fh_taiping_can_prepare = yes }
+				fh_taiping_ai_offer = yes
+			}
+			fh_taiping_review = yes
+		}
+	}
+
+	scripted_button = fh_reopen_taiping_fork
+	scripted_button = fh_taiping_add_arms
+	scripted_button = fh_taiping_drop_arms
+	scripted_button = fh_taiping_add_fleet
+	scripted_button = fh_taiping_drop_fleet
+	scripted_button = fh_taiping_add_front
+	scripted_button = fh_taiping_drop_front
+	scripted_button = fh_taiping_add_recognition
+	scripted_button = fh_taiping_drop_recognition
+	scripted_button = fh_taiping_offer_coast
+	scripted_button = fh_taiping_offer_south
+	scripted_button = fh_taiping_offer_recognition_only
+	scripted_button = fh_taiping_supply_arsenals
+	scripted_button = fh_taiping_commit_squadron
+	scripted_button = fh_taiping_donate_ship
+	scripted_button = fh_taiping_back_rebellion
+	scripted_button = fh_taiping_shanghai_roads
+	scripted_button = fh_taiping_break_pact
+
+	status_desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { has_variable = fh_taiping_fork_pending }
+				desc = fh_taiping_status_fork
+			}
+			triggered_desc = {
+				trigger = { has_variable = fh_taiping_cession_pending }
+				desc = fh_taiping_status_cession
+			}
+			triggered_desc = {
+				trigger = { has_variable = fh_taiping_pact_ratified }
+				desc = fh_taiping_status_ratified
+			}
+			triggered_desc = {
+				trigger = { has_variable = fh_taiping_offer_pending }
+				desc = fh_taiping_status_pending
+			}
+			triggered_desc = {
+				trigger = { var:fh_taiping_offers_sent ?= 2 }
+				desc = fh_taiping_status_exhausted
+			}
+			triggered_desc = {
+				trigger = { var:fh_taiping_offers_sent ?= 1 }
+				desc = fh_taiping_status_revision
+			}
+			desc = fh_taiping_status_draft
+		}
+	}
+
+	outcome = {
+		header = fh_taiping_result_abandon
+		effect_header = je_standard_on_completion_header
+		color = "gold_positive"
+		conclusion_desc = fh_taiping_result_abandon_desc
+		trigger = { var:fh_taiping_result ?= 1 }
+	}
+
+	outcome = {
+		header = fh_taiping_result_broken
+		effect_header = je_standard_on_failure_header
+		color = "blue_negative"
+		conclusion_desc = fh_taiping_result_broken_desc
+		trigger = { var:fh_taiping_result ?= 2 }
+	}
+
+	outcome = {
+		header = fh_taiping_result_expanded
+		effect_header = je_standard_on_completion_header
+		color = "gold_positive"
+		conclusion_desc = fh_taiping_result_expanded_desc
+		trigger = { var:fh_taiping_result ?= 3 }
+	}
+
+	outcome = {
+		header = fh_taiping_result_fulfilled
+		effect_header = je_standard_on_completion_header
+		color = "gold_positive"
+		conclusion_desc = fh_taiping_result_fulfilled_desc
+		trigger = { var:fh_taiping_result ?= 4 }
+	}
+
+	outcome = {
+		header = fh_taiping_result_partial
+		effect_header = je_standard_on_completion_header
+		color = "gold_positive"
+		conclusion_desc = fh_taiping_result_partial_desc
+		trigger = { var:fh_taiping_result ?= 5 }
+	}
+
+	outcome = {
+		header = fh_taiping_result_no_return
+		effect_header = je_standard_on_failure_header
+		color = "blue_negative"
+		conclusion_desc = fh_taiping_result_no_return_desc
+		trigger = { var:fh_taiping_result ?= 6 }
+	}
+
+	outcome = {
+		header = fh_taiping_result_no_bargain
+		effect_header = je_standard_on_failure_header
+		color = "blue_negative"
+		conclusion_desc = fh_taiping_result_no_bargain_desc
+		trigger = { var:fh_taiping_result ?= 7 }
+	}
+}

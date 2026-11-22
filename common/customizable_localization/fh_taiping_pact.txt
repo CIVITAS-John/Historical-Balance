@@ -1,0 +1,133 @@
+﻿fh_taiping_terms_kind = {
+	type = country
+	random_valid = no
+	text = {
+		trigger = { has_variable = fh_taiping_expanded }
+		localization_key = fh_taiping_terms_south
+	}
+	text = {
+		trigger = { has_variable = fh_taiping_recognition_only }
+		localization_key = fh_taiping_terms_recognition_only
+	}
+	text = {
+		localization_key = fh_taiping_terms_coast
+	}
+}
+
+fh_taiping_terms_arms = {
+	type = country
+	random_valid = no
+	text = {
+		trigger = { has_variable = fh_taiping_expanded }
+		localization_key = fh_taiping_terms_depots
+	}
+	text = {
+		trigger = { has_variable = fh_taiping_pledge_arms }
+		localization_key = fh_taiping_terms_arsenals
+	}
+	text = { localization_key = fh_taiping_empty }
+}
+
+fh_taiping_terms_fleet = {
+	type = country
+	random_valid = no
+	text = {
+		trigger = { has_variable = fh_taiping_expanded }
+		localization_key = fh_taiping_terms_river
+	}
+	text = {
+		trigger = { has_variable = fh_taiping_pledge_fleet }
+		localization_key = fh_taiping_terms_squadron
+	}
+	text = { localization_key = fh_taiping_empty }
+}
+
+fh_taiping_terms_front = {
+	type = country
+	random_valid = no
+	text = {
+		trigger = { has_variable = fh_taiping_pledge_front }
+		localization_key = fh_taiping_terms_front_pledged
+	}
+	text = { localization_key = fh_taiping_empty }
+}
+
+fh_taiping_terms_recognition = {
+	type = country
+	random_valid = no
+	text = {
+		trigger = { has_variable = fh_taiping_recognition_offer }
+		localization_key = fh_taiping_terms_recognition_pledged
+	}
+	text = { localization_key = fh_taiping_empty }
+}
+
+fh_taiping_offer_reply = {
+	type = country
+	random_valid = no
+	text = {
+		trigger = { var:fh_taiping_offer_result ?= 1 }
+		localization_key = fh_taiping_offer_refused
+	}
+	text = {
+		trigger = { var:fh_taiping_offer_result ?= 3 }
+		localization_key = fh_taiping_offer_invalid
+	}
+	text = { localization_key = fh_taiping_offer_expired }
+}
+
+fh_taiping_trade_status = {
+	type = country
+	random_valid = no
+	text = {
+		trigger = { fh_taiping_trade_fulfilled = yes }
+		localization_key = fh_taiping_trade_status_delivered
+	}
+	text = {
+		trigger = { has_variable = fh_taiping_trade_activated }
+		localization_key = fh_taiping_trade_status_canceled
+	}
+	text = {
+		trigger = {
+			OR = { has_variable = fh_taiping_trade_at_signing has_variable = fh_taiping_aid_delivered }
+		}
+		localization_key = fh_taiping_trade_status_blocked
+	}
+	text = { localization_key = fh_taiping_trade_status_waiting }
+}
+
+fh_taiping_aid_status = {
+	type = country
+	random_valid = no
+	text = {
+		trigger = { has_variable = fh_taiping_heavy_earned }
+		localization_key = fh_taiping_aid_status_heavy_earned
+	}
+	text = {
+		trigger = { has_variable = fh_taiping_expanded }
+		localization_key = fh_taiping_aid_status_heavy_pending
+	}
+	text = {
+		trigger = { has_variable = fh_taiping_aid_delivered }
+		localization_key = fh_taiping_aid_status_delivered
+	}
+	text = {
+		trigger = { has_variable = fh_taiping_recognition_only }
+		localization_key = fh_taiping_empty
+	}
+	text = { localization_key = fh_taiping_aid_status_waiting }
+}
+
+fh_taiping_naval_service_status = {
+	type = country
+	random_valid = no
+	text = {
+		trigger = { has_variable = fh_taiping_fleet_six_months }
+		localization_key = fh_taiping_service_complete
+	}
+	text = {
+		trigger = { has_variable = fh_taiping_fleet_service }
+		localization_key = fh_taiping_service_active
+	}
+	text = { localization_key = fh_taiping_service_inactive }
+}

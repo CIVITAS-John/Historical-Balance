@@ -1,0 +1,80 @@
+﻿fh_taiping_supply_arsenals = {
+	name = fh_taiping_supply_arsenals
+	desc = fh_taiping_supply_arsenals_desc
+	visible = { has_variable = fh_taiping_pact_ratified has_variable = fh_taiping_pledge_arms }
+	possible = {
+		custom_tooltip = {
+			text = fh_taiping_supply_arsenals_ready
+			fh_taiping_arms_can_send = yes
+		}
+	}
+	effect = { hidden_effect = { fh_taiping_send_arms = yes } }
+	ai_chance = { value = 0 }
+}
+
+fh_taiping_commit_squadron = {
+	name = fh_taiping_commit_squadron
+	desc = fh_taiping_commit_squadron_desc
+	visible = { has_variable = fh_taiping_pact_ratified has_variable = fh_taiping_pledge_fleet }
+	possible = {
+		custom_tooltip = {
+			text = fh_taiping_commit_squadron_ready
+			fh_taiping_fleet_can_send = yes
+		}
+	}
+	effect = { hidden_effect = { fh_taiping_send_squadron = yes } }
+	ai_chance = { value = 0 }
+}
+
+fh_taiping_donate_ship = {
+	name = fh_taiping_donate_ship
+	desc = fh_taiping_donate_ship_desc
+	visible = {
+		has_variable = fh_taiping_pact_ratified
+		has_variable = fh_taiping_pledge_fleet
+		NOT = { has_variable = fh_taiping_expanded }
+		has_dlc_feature = ep2_content
+	}
+	possible = {
+		custom_tooltip = {
+			text = fh_taiping_donate_ship_ready
+			fh_taiping_donation_can_send = yes
+		}
+	}
+	effect = { hidden_effect = { fh_taiping_donate_combat_ship = yes } }
+	ai_chance = { value = 0 }
+}
+
+fh_taiping_back_rebellion = {
+	name = fh_taiping_back_rebellion
+	desc = fh_taiping_back_rebellion_desc
+	visible = {
+		fh_taiping_aid_pact_live = yes
+		var:fh_mainland_taiping_play ?= { is_war = no }
+	}
+	possible = {
+		custom_tooltip = {
+			text = fh_taiping_back_rebellion_ready
+			fh_taiping_can_join_signed_pact = yes
+		}
+	}
+	effect = { hidden_effect = { fh_taiping_back_original_play = yes } }
+	ai_chance = { value = 0 }
+}
+
+fh_taiping_shanghai_roads = {
+	name = fh_taiping_shanghai_roads
+	desc = fh_taiping_shanghai_roads_desc
+	visible = {
+		has_variable = fh_taiping_pact_ratified
+		NOT = { has_variable = fh_taiping_shanghai_offered }
+	}
+	possible = {
+		custom_tooltip = {
+			text = fh_taiping_shanghai_roads_ready
+			fh_taiping_shanghai_opportunity = yes
+		}
+	}
+	effect = { hidden_effect = { fh_taiping_offer_shanghai = yes } }
+	ai_chance = { value = 0 }
+}

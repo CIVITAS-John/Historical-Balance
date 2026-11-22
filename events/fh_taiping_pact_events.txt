@@ -1,0 +1,131 @@
+﻿namespace = fh_taiping_pact
+
+fh_taiping_pact.1 = {
+	type = country_event
+	placement = root
+	title = fh_taiping_pact.1.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { country_has_state_religion = rel:protestant }
+				desc = fh_taiping_pact.1.protestant
+			}
+			triggered_desc = {
+				trigger = { country_has_state_religion = rel:catholic }
+				desc = fh_taiping_pact.1.catholic
+			}
+			triggered_desc = {
+				trigger = { country_has_state_religion = rel:mahayana }
+				desc = fh_taiping_pact.1.buddhist
+			}
+			triggered_desc = {
+				trigger = { country_has_state_religion = rel:confucian }
+				desc = fh_taiping_pact.1.confucian
+			}
+			desc = fh_taiping_pact.1.secular
+		}
+	}
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	trigger = { fh_taiping_can_prepare = yes }
+	option = { name = fh_taiping_pact.1.a }
+}
+
+# Only players receive the popup. Both AI and player acceptance use the same
+# live legal and territorial checks, and no delayed reply can ratify a revision.
+fh_taiping_pact.2 = {
+	type = country_event
+	placement = root
+	title = fh_taiping_pact.2.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { scope:fh_taiping_sender ?= { has_variable = fh_taiping_expanded } }
+				desc = fh_taiping_pact.2.south
+			}
+			desc = fh_taiping_pact.2.coast
+		}
+	}
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	# UI duration is in months; the explicit 90-day deadline closes it.
+	duration = 4
+	trigger = { fh_taiping_offer_current = yes }
+	cancellation_trigger = { fh_taiping_offer_current = no }
+
+	option = {
+		name = fh_taiping_pact.2.a
+		trigger = { fh_taiping_offer_can_ratify = yes }
+		scope:fh_taiping_sender ?= {
+			if = {
+				limit = { has_variable = fh_taiping_expanded }
+				fh_taiping_preview_schedule = { EXPANDED = yes RECORDED = yes }
+			}
+			else_if = {
+				limit = { NOT = { has_variable = fh_taiping_recognition_only } }
+				fh_taiping_preview_schedule = { EXPANDED = no RECORDED = yes }
+			}
+		}
+		hidden_effect = {
+			if = {
+				limit = { fh_taiping_offer_can_ratify = yes }
+				scope:fh_taiping_sender = { fh_taiping_ratify = yes }
+			}
+		}
+	}
+	option = {
+		name = fh_taiping_pact.2.b
+		trigger = { fh_taiping_offer_can_ratify = yes }
+		hidden_effect = {
+			if = {
+				limit = { fh_taiping_offer_current = yes }
+				scope:fh_taiping_sender = { fh_taiping_end_offer = { RESULT = 1 } }
+			}
+		}
+	}
+	option = {
+		name = fh_taiping_pact.2.c
+		trigger = { fh_taiping_offer_can_ratify = no }
+		hidden_effect = {
+			if = {
+				limit = { fh_taiping_offer_current = yes }
+				scope:fh_taiping_sender = { fh_taiping_end_offer = { RESULT = 3 } }
+			}
+		}
+	}
+	option = { name = fh_taiping_pact.2.d default_option = yes }
+}
+
+fh_taiping_pact.3 = {
+	type = country_event
+	hidden = yes
+	immediate = {
+		if = {
+			limit = {
+				has_variable = fh_taiping_offer_pending
+				var:fh_taiping_offers_sent ?= scope:fh_taiping_offer_ticket
+			}
+			fh_taiping_end_offer = { RESULT = 2 }
+		}
+	}
+}
+
+fh_taiping_pact.4 = {
+	type = country_event
+	hidden = yes
+	immediate = { fh_taiping_review = yes }
+}
+
+fh_taiping_pact.5 = {
+	type = country_event
+	placement = root
+	title = fh_taiping_pact.5.t
+	desc = fh_taiping_pact.5.d
+	icon = "gfx/interface/icons/event_icons/event_scales.dds"
+	trigger = { fh_taiping_can_repudiate = yes }
+	cancellation_trigger = { fh_taiping_can_repudiate = no }
+
+	option = {
+		name = fh_taiping_break_pact
+		hidden_effect = { fh_taiping_repudiate = yes }
+	}
+	option = { name = fh_taiping_pact.5.b default_option = yes }
+}

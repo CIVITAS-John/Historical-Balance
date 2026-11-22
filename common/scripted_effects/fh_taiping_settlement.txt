@@ -1,0 +1,423 @@
+﻿# Call at offer submission, once per draft. The accepted offer keeps this
+# ceiling, even if the rebellion acquires new territory after signing.
+fh_taiping_prepare_schedule = {
+	clear_variable_list = fh_taiping_signed_provinces
+	if = {
+		limit = { always = $EXPANDED$ has_variable = fh_mainland_taiping_snapshot }
+		fh_taiping_record_region = { REGION = STATE_SOUTHERN_ANHUI EXCLUDE_LAUNCH = yes }
+		fh_taiping_record_region = { REGION = STATE_JIANGXI EXCLUDE_LAUNCH = yes }
+		fh_taiping_record_region = { REGION = STATE_HUNAN EXCLUDE_LAUNCH = yes }
+		fh_taiping_record_region = { REGION = STATE_SHAOZHOU EXCLUDE_LAUNCH = yes }
+		fh_taiping_record_region = { REGION = STATE_GUANGXI EXCLUDE_LAUNCH = yes }
+		fh_taiping_record_region = { REGION = STATE_GUIZHOU EXCLUDE_LAUNCH = yes }
+		fh_taiping_record_region = { REGION = STATE_YUNNAN EXCLUDE_LAUNCH = yes }
+	}
+	else_if = {
+		limit = { NOT = { always = $EXPANDED$ } }
+		fh_taiping_record_region = { REGION = STATE_FUJIAN EXCLUDE_LAUNCH = no }
+		fh_taiping_record_region = { REGION = STATE_GUANGDONG EXCLUDE_LAUNCH = no }
+		fh_taiping_record_region = { REGION = STATE_ZHEJIANG EXCLUDE_LAUNCH = no }
+	}
+}
+
+fh_taiping_record_region = {
+	if = {
+		limit = {
+			OR = {
+				NOT = { always = $EXCLUDE_LAUNCH$ }
+				s:$REGION$ = { fh_taiping_schedule_region_candidate = yes }
+			}
+		}
+		s:$REGION$ = {
+			every_scope_state = {
+				limit = { fh_taiping_schedule_state_candidate = yes }
+				save_temporary_scope_as = fh_taiping_scheduled_state
+				every_province = {
+					limit = { state ?= scope:fh_taiping_scheduled_state }
+					global_var:fh_tungning_founder = {
+						add_to_variable_list = { name = fh_taiping_signed_provinces target = prev }
+					}
+				}
+			}
+		}
+	}
+}
+
+fh_taiping_sign_terms = {
+	if = {
+		limit = { fh_taiping_coastal_position >= 3 }
+		set_variable = fh_taiping_trade_at_signing
+	}
+	if = {
+		limit = { fh_taiping_coastal_position >= 2 }
+		fh_taiping_receive_recognition = yes
+	}
+}
+
+fh_taiping_receive_recognition = {
+	if = {
+		limit = { NOT = { has_variable = fh_taiping_received_recognition } }
+		set_variable = fh_taiping_received_recognition
+		fh_taiping_record_recognized_coast = { REGION = STATE_FUJIAN }
+		fh_taiping_record_recognized_coast = { REGION = STATE_GUANGDONG }
+		fh_taiping_record_recognized_coast = { REGION = STATE_ZHEJIANG }
+	}
+}
+
+fh_taiping_record_recognized_coast = {
+	s:$REGION$ = {
+		every_scope_state = {
+			limit = { owner = global_var:fh_tungning_founder is_treaty_port = no }
+			every_province = {
+				limit = { owner ?= global_var:fh_tungning_founder }
+				global_var:fh_tungning_founder = {
+					add_to_variable_list = { name = fh_taiping_recognized_holdings target = prev }
+				}
+			}
+		}
+		# A vanilla claim covers the entire region. Do not remove it on a
+		# partial coast, where it also covers still-disputed land.
+		if = {
+			limit = {
+				fh_mainland_region_directly_owned_by = { OWNER = global_var:fh_tungning_founder }
+				any_scope_state = { has_claim_by = global_var:fh_tungning_founder.var:fh_mainland_taiping }
+			}
+			remove_claim = global_var:fh_tungning_founder.var:fh_mainland_taiping
+		}
+	}
+}
+
+fh_taiping_activate_trade = {
+	if = {
+		limit = {
+			has_variable = fh_taiping_pact_ratified
+			NOR = { has_variable = fh_taiping_repudiated has_variable = fh_taiping_closed }
+			fh_taiping_settlement_partners_at_peace = yes
+		}
+		if = {
+			limit = { has_variable = fh_taiping_aid_delivered }
+			fh_taiping_receive_recognition = yes
+		}
+		if = {
+			limit = {
+				NOT = { has_variable = fh_taiping_trade_activated }
+				OR = { has_variable = fh_taiping_trade_at_signing has_variable = fh_taiping_aid_delivered }
+				fh_taiping_trade_conditions = yes
+			}
+			if = {
+				limit = { any_scope_treaty = { fh_taiping_is_trade_treaty = yes } }
+				fh_taiping_record_trade = yes
+			}
+			else_if = {
+				limit = {
+					has_technology_researched = international_relations
+					var:fh_mainland_taiping ?= { has_technology_researched = international_relations }
+					can_create_treaty = {
+						first_country = var:fh_mainland_taiping
+						second_country = this
+						is_draft = no
+						binding_period = { years = 5 }
+						articles_to_create = {
+							{ article = trade_privilege source_country = var:fh_mainland_taiping target_country = this }
+						}
+					}
+				}
+				create_treaty = {
+					name = fh_taiping_trade_treaty_name
+					first_country = var:fh_mainland_taiping
+					second_country = this
+					is_draft = no
+					binding_period = { years = 5 }
+					articles_to_create = {
+						{ article = trade_privilege source_country = var:fh_mainland_taiping target_country = this }
+					}
+				}
+				fh_taiping_record_trade = yes
+				if = {
+					limit = { has_variable = fh_taiping_trade_activated }
+					trigger_event = { id = fh_taiping_settlement.3 years = 5 }
+				}
+			}
+		}
+	}
+}
+
+fh_taiping_record_trade = {
+	random_scope_treaty = {
+		limit = { fh_taiping_is_trade_treaty = yes }
+		prev = {
+			set_variable = fh_taiping_trade_activated
+			set_variable = { name = fh_taiping_trade_treaty value = prev }
+		}
+	}
+}
+
+fh_taiping_end_trade_term = {
+	if = {
+		limit = { fh_taiping_trade_in_force = yes }
+		set_variable = fh_taiping_trade_completed
+	}
+	var:fh_taiping_trade_treaty ?= {
+		# An independent renegotiation that adds other terms is outside the
+		# journal. Do not tear up unrelated articles to end this one.
+		if = {
+			limit = {
+				fh_taiping_is_trade_treaty = yes
+				any_scope_article = { count = 1 always = yes }
+			}
+			withdraw = { country = global_var:fh_tungning_founder apply_break_penalties = no }
+		}
+	}
+	remove_variable = fh_taiping_trade_treaty
+}
+
+fh_taiping_resolve_peace = {
+	if = {
+		limit = {
+			NOR = {
+				has_variable = fh_taiping_closed
+				has_variable = fh_taiping_war_ending
+				has_variable = fh_taiping_cession_processing
+				has_variable = fh_taiping_fork_pending
+			}
+			fh_taiping_conflict_active = no
+		}
+		fh_taiping_activate_trade = yes
+		if = {
+			limit = { has_variable = fh_taiping_cession_pending }
+			if = {
+				limit = { fh_taiping_settlement_partners_at_peace = no }
+				fh_taiping_finish_cession = { HONOR = no }
+			}
+			else_if = {
+				limit = { NOT = { has_variable = fh_taiping_cession_reply_open } }
+				fh_taiping_finish_cession = { HONOR = no }
+			}
+		}
+		else_if = {
+			limit = {
+				has_variable = fh_taiping_pact_ratified
+				NOT = { has_variable = fh_taiping_repudiated }
+				fh_taiping_qing_defeated = yes
+				fh_taiping_settlement_earned = yes
+				fh_taiping_any_legal_cession = yes
+			}
+			set_variable = fh_taiping_cession_pending
+			set_variable = { name = fh_taiping_cession_reply_open days = 90 }
+			trigger_event = { id = fh_taiping_settlement.2 days = 90 }
+			var:fh_mainland_taiping = { trigger_event = { id = fh_taiping_settlement.1 popup = yes } }
+		}
+		else = { fh_taiping_close = yes }
+	}
+}
+
+fh_taiping_finish_cession = {
+	if = {
+		limit = {
+			has_variable = fh_taiping_cession_pending
+			NOR = { has_variable = fh_taiping_closed has_variable = fh_taiping_cession_processing }
+		}
+		set_variable = fh_taiping_cession_processing
+		if = {
+			limit = {
+				always = $HONOR$
+				has_variable = fh_taiping_cession_reply_open
+				fh_taiping_any_legal_cession = yes
+			}
+			fh_taiping_cede_scheduled_states = yes
+		}
+		else_if = {
+			limit = { fh_taiping_any_legal_cession = yes }
+			set_variable = fh_taiping_earned_cession_refused
+		}
+		fh_taiping_activate_trade = yes
+		remove_variable = fh_taiping_cession_reply_open
+		remove_variable = fh_taiping_cession_pending
+		remove_variable = fh_taiping_cession_processing
+		fh_taiping_close = yes
+	}
+}
+
+fh_taiping_cede_scheduled_states = {
+	set_variable = { name = fh_taiping_cession_recheck value = 1 }
+	# A transfer can create a land border to another promised state. Repeat
+	# the fixed order only after a pass successfully ceded something.
+	while = {
+		limit = { var:fh_taiping_cession_recheck = 1 }
+		set_variable = { name = fh_taiping_cession_recheck value = 0 }
+		if = {
+			limit = { has_variable = fh_taiping_expanded }
+			fh_taiping_cede_scheduled_region = { REGION = STATE_SOUTHERN_ANHUI }
+			fh_taiping_cede_scheduled_region = { REGION = STATE_JIANGXI }
+			fh_taiping_cede_scheduled_region = { REGION = STATE_HUNAN }
+			fh_taiping_cede_scheduled_region = { REGION = STATE_SHAOZHOU }
+			fh_taiping_cede_scheduled_region = { REGION = STATE_GUANGXI }
+			fh_taiping_cede_scheduled_region = { REGION = STATE_GUIZHOU }
+			fh_taiping_cede_scheduled_region = { REGION = STATE_YUNNAN }
+		}
+		else = {
+			fh_taiping_cede_scheduled_region = { REGION = STATE_FUJIAN }
+			fh_taiping_cede_scheduled_region = { REGION = STATE_GUANGDONG }
+			fh_taiping_cede_scheduled_region = { REGION = STATE_ZHEJIANG }
+		}
+	}
+	remove_variable = fh_taiping_cession_recheck
+}
+
+fh_taiping_cede_scheduled_region = {
+	if = {
+		limit = { var:fh_mainland_taiping ?= { num_states >= 2 } }
+		s:$REGION$ = {
+			# One state per owner per state region. Recheck each fragment live
+			# instead of passing speculative inputs to the treaty effect.
+			random_scope_state = {
+				limit = { fh_taiping_state_can_be_ceded = yes }
+				save_temporary_scope_as = fh_taiping_cession_to_transfer
+				global_var:fh_tungning_founder = {
+					set_variable = { name = fh_taiping_unfulfilled_before value = fh_taiping_provinces_unfulfilled }
+					create_treaty = {
+						name = fh_taiping_cession_treaty_name
+						first_country = var:fh_mainland_taiping
+						second_country = this
+						is_draft = no
+						articles_to_create = {
+							{
+								article = state_transfer
+								source_country = var:fh_mainland_taiping
+								target_country = this
+								inputs = { { state = scope:fh_taiping_cession_to_transfer } }
+							}
+						}
+					}
+					if = {
+						limit = { fh_taiping_provinces_unfulfilled < var:fh_taiping_unfulfilled_before }
+						set_variable = fh_taiping_cession_delivered
+						add_to_variable_list = { name = fh_taiping_transferred_regions target = s:$REGION$ }
+						set_variable = { name = fh_taiping_cession_recheck value = 1 }
+					}
+					remove_variable = fh_taiping_unfulfilled_before
+				}
+			}
+		}
+	}
+}
+
+fh_taiping_preview_cessions = {
+	fh_taiping_preview_cession_region = { REGION = STATE_FUJIAN }
+	fh_taiping_preview_cession_region = { REGION = STATE_GUANGDONG }
+	fh_taiping_preview_cession_region = { REGION = STATE_ZHEJIANG }
+	fh_taiping_preview_cession_region = { REGION = STATE_SOUTHERN_ANHUI }
+	fh_taiping_preview_cession_region = { REGION = STATE_JIANGXI }
+	fh_taiping_preview_cession_region = { REGION = STATE_HUNAN }
+	fh_taiping_preview_cession_region = { REGION = STATE_SHAOZHOU }
+	fh_taiping_preview_cession_region = { REGION = STATE_GUANGXI }
+	fh_taiping_preview_cession_region = { REGION = STATE_GUIZHOU }
+	fh_taiping_preview_cession_region = { REGION = STATE_YUNNAN }
+}
+
+fh_taiping_preview_cession_region = {
+	if = {
+		limit = {
+			any_in_list = {
+				variable = fh_taiping_signed_provinces
+				state.state_region ?= s:$REGION$
+				NOT = { owner ?= global_var:fh_tungning_founder }
+			}
+		}
+		if = {
+			limit = { s:$REGION$ = { any_scope_state = { fh_taiping_state_can_be_ceded = yes } } }
+			custom_tooltip = fh_taiping_cession_$REGION$_legal_tt
+		}
+		else = { custom_tooltip = fh_taiping_cession_$REGION$_blocked_tt }
+	}
+}
+
+fh_taiping_apply_aftermath = {
+	if = {
+		limit = { NOT = { has_variable = fh_taiping_result } }
+		if = {
+			limit = { has_variable = fh_mainland_claim_abandoned }
+			set_variable = { name = fh_taiping_result value = 1 }
+			add_modifier = { name = fh_mainland_squadrons_stand_down years = 2 }
+			fh_taiping_maritime_radicals = { CHANGE = -0.02 }
+		}
+		else_if = {
+			limit = {
+				has_variable = fh_taiping_pact_ratified
+				OR = { has_variable = fh_taiping_repudiated has_variable = fh_taiping_earned_cession_refused }
+			}
+			set_variable = { name = fh_taiping_result value = 2 }
+			add_modifier = { name = fh_taiping_promises_broken years = 3 }
+			fh_taiping_officer_radicals = { CHANGE = 0.05 }
+		}
+		else_if = {
+			limit = {
+				fh_taiping_commitments_completed = yes
+				has_variable = fh_taiping_received_recognition
+				fh_taiping_trade_fulfilled = yes
+				fh_taiping_has_unfulfilled_cession = no
+			}
+			if = {
+				limit = { has_variable = fh_taiping_expanded has_variable = fh_taiping_cession_delivered }
+				set_variable = { name = fh_taiping_result value = 3 }
+				add_modifier = { name = fh_taiping_expanded_bargain_honored years = 5 }
+				fh_taiping_officer_radicals = { CHANGE = -0.10 }
+				fh_taiping_maritime_radicals = { CHANGE = 0.02 }
+			}
+			else = {
+				set_variable = { name = fh_taiping_result value = 4 }
+				add_modifier = { name = fh_taiping_bargain_honored years = 3 }
+				fh_taiping_maritime_radicals = { CHANGE = -0.05 }
+			}
+		}
+		else_if = {
+			limit = {
+				has_variable = fh_taiping_aid_delivered
+				OR = {
+					has_variable = fh_taiping_received_recognition
+					has_variable = fh_taiping_cession_delivered
+					fh_taiping_trade_fulfilled = yes
+				}
+			}
+			set_variable = { name = fh_taiping_result value = 5 }
+			add_modifier = { name = fh_taiping_bargain_in_part years = 2 }
+			fh_taiping_officer_radicals = { CHANGE = 0.02 }
+		}
+		else_if = {
+			limit = { has_variable = fh_taiping_aid_delivered }
+			set_variable = { name = fh_taiping_result value = 6 }
+			add_modifier = { name = fh_taiping_cost_of_intervention years = 2 }
+			fh_taiping_maritime_radicals = { CHANGE = 0.05 }
+		}
+		else = {
+			set_variable = { name = fh_taiping_result value = 7 }
+			add_modifier = { name = fh_taiping_opening_lost years = 1 }
+			fh_taiping_officer_radicals = { CHANGE = 0.02 }
+		}
+		if = {
+			limit = {
+				has_variable = fh_taiping_pact_ratified
+				var:fh_mainland_taiping ?= { is_country_alive = yes }
+				NOT = { var:fh_mainland_qing ?= { is_country_alive = yes } }
+			}
+			set_variable = fh_taiping_rivalry
+			trigger_event = { id = fh_taiping_settlement.4 popup = yes }
+		}
+	}
+}
+
+fh_taiping_maritime_radicals = {
+	if = { limit = { exists = ig:ig_industrialists } add_radicals = { interest_group = ig:ig_industrialists value = $CHANGE$ } }
+}
+
+fh_taiping_officer_radicals = {
+	if = { limit = { fh_mainland_officers_mainland = yes } add_radicals = { interest_group = ig:ig_armed_forces value = $CHANGE$ } }
+}
+
+fh_taiping_note_qing_capitulation = {
+	set_variable = { name = fh_taiping_qing_capitulation_window days = 2 }
+	if = {
+		limit = { has_variable = fh_taiping_qing_enforcement_window }
+		set_variable = fh_taiping_qing_capitulated
+	}
+}

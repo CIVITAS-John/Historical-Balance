@@ -1,0 +1,483 @@
+﻿fh_taiping_record_arms_delivery = {
+	set_variable = fh_taiping_arms_delivered
+	set_variable = fh_taiping_aid_delivered
+	if = {
+		limit = { has_variable = fh_taiping_expanded }
+		if = {
+			limit = { NOT = { has_variable = fh_taiping_depots_supplied } }
+			set_variable = { name = fh_taiping_depots_supplied value = 0 }
+		}
+		change_variable = { name = fh_taiping_depots_supplied add = 1 }
+	}
+	fh_taiping_check_heavy_earned = yes
+	fh_taiping_activate_trade = yes
+}
+
+fh_taiping_check_heavy_earned = {
+	if = {
+		limit = {
+			has_variable = fh_taiping_expanded
+			var:fh_taiping_depots_supplied ?= 2
+			has_variable = fh_taiping_fleet_six_months
+		}
+		set_variable = fh_taiping_heavy_earned
+	}
+}
+
+fh_taiping_start_native_arms = {
+	create_treaty = {
+		name = fh_taiping_arms_agreement
+		first_country = this
+		second_country = var:fh_mainland_taiping
+		is_draft = no
+		binding_period = { months = 6 }
+		articles_to_create = {
+			{
+				article = goods_transfer
+				source_country = this
+				target_country = var:fh_mainland_taiping
+				inputs = { { goods = g:small_arms } { quantity = $QUANTITY$ } }
+			}
+		}
+	}
+	# Authorization checks exclude pre-existing articles in this direction.
+	random_scope_treaty = {
+		limit = {
+			binds = prev.var:fh_mainland_taiping
+			any_scope_article = {
+				has_type = goods_transfer
+				source_country = global_var:fh_tungning_founder
+				target_country = global_var:fh_tungning_founder.var:fh_mainland_taiping
+				input_goods = g:small_arms
+				input_quantity = $QUANTITY$
+			}
+		}
+		save_temporary_scope_as = fh_new_arms_treaty
+	}
+	if = {
+		limit = { exists = scope:fh_new_arms_treaty }
+		set_variable = { name = fh_taiping_arms_treaty value = scope:fh_new_arms_treaty }
+		scope:fh_new_arms_treaty = { save_scope_as = fh_taiping_dispatch }
+		fh_taiping_count_dispatch = { DAYS = 182 }
+		if = {
+			limit = { has_variable = fh_taiping_expanded }
+			set_variable = fh_taiping_native_arms_started
+			trigger_event = { id = fh_taiping_aid.2 days = 90 }
+		}
+		else = { trigger_event = { id = fh_taiping_aid.1 days = 8 } }
+		trigger_event = { id = fh_taiping_aid.3 days = 182 }
+	}
+}
+
+fh_taiping_count_dispatch = {
+	if = {
+		limit = { NOT = { has_variable = fh_taiping_arms_attempts } }
+		set_variable = { name = fh_taiping_arms_attempts value = 0 }
+	}
+	change_variable = { name = fh_taiping_arms_attempts add = 1 }
+	set_variable = { name = fh_taiping_arms_cooldown value = yes days = $DAYS$ }
+}
+
+fh_taiping_fund_arms = {
+	add_treasury = { value = $COST$ multiply = -1 }
+	fh_taiping_count_dispatch = { DAYS = $DAYS$ }
+	set_variable = { name = fh_taiping_procurement_recent value = yes days = 182 }
+	fh_taiping_record_arms_delivery = yes
+	fh_taiping_refresh_combat_aid = yes
+}
+
+fh_taiping_send_arms = {
+	if = {
+		limit = { fh_taiping_arms_can_send = yes }
+		if = {
+			limit = { has_variable = fh_taiping_expanded }
+			if = {
+				limit = {
+					NOT = { has_variable = fh_taiping_procurement_method }
+					fh_taiping_native_arms_possible = { QUANTITY = 20 }
+				}
+				fh_taiping_start_native_arms = { QUANTITY = 20 }
+			}
+			else = {
+				set_variable = fh_taiping_procurement_method
+				fh_taiping_fund_arms = { COST = fh_taiping_heavy_procurement_cost DAYS = 92 }
+			}
+		}
+		else_if = {
+			limit = { fh_taiping_native_arms_possible = { QUANTITY = 10 } }
+			fh_taiping_start_native_arms = { QUANTITY = 10 }
+		}
+		else = {
+			fh_taiping_fund_arms = { COST = fh_taiping_procurement_cost DAYS = 182 }
+		}
+	}
+}
+
+fh_taiping_stop_native_arms = {
+	if = {
+		limit = { has_variable = fh_taiping_arms_treaty }
+		# Binding period is a minimum commitment, not automatic expiry.
+		# Withdraw only from the tracked single-article aid arrangement.
+		# Never break other articles if the parties later amend it.
+		random_scope_treaty = {
+			limit = {
+				this = prev.var:fh_taiping_arms_treaty
+				binds = prev.var:fh_mainland_taiping
+				any_scope_article = { count = 1 always = yes }
+				any_scope_article = {
+					has_type = goods_transfer
+					source_country = global_var:fh_tungning_founder
+					target_country = global_var:fh_tungning_founder.var:fh_mainland_taiping
+					input_goods = g:small_arms
+				}
+			}
+			withdraw = { country = prev apply_break_penalties = no }
+		}
+		remove_variable = fh_taiping_arms_treaty
+	}
+}
+
+fh_taiping_choose_squadron = {
+	# Prefer a navy already doing the work without the off-map penalty.
+	if = {
+		limit = { fh_taiping_fighting_original_war = yes }
+		random_scope_fleet = {
+			limit = {
+				fh_taiping_fleet_viable = { SHIPS = $SHIPS$ }
+				fh_taiping_fleet_in_theater = { SHIPS = $SHIPS$ }
+			}
+			save_temporary_scope_as = fh_taiping_chosen_fleet
+			prev = { set_variable = fh_taiping_native_deployment }
+		}
+	}
+	if = {
+		limit = { NOT = { exists = scope:fh_taiping_chosen_fleet } }
+		random_scope_fleet = {
+			limit = {
+				fh_taiping_fleet_viable = { SHIPS = $SHIPS$ }
+				fh_taiping_fleet_in_reserve = yes
+			}
+			save_temporary_scope_as = fh_taiping_chosen_fleet
+		}
+	}
+	if = {
+		limit = { exists = scope:fh_taiping_chosen_fleet }
+		set_variable = { name = fh_taiping_reserved_squadron value = scope:fh_taiping_chosen_fleet }
+		set_variable = fh_taiping_fleet_pending
+		trigger_event = { id = fh_taiping_aid.4 days = 7 }
+	}
+}
+
+fh_taiping_send_squadron = {
+	if = {
+		limit = { fh_taiping_fleet_can_send = yes }
+		if = {
+			limit = { has_variable = fh_taiping_expanded }
+			fh_taiping_choose_squadron = { SHIPS = 6 }
+		}
+		else = { fh_taiping_choose_squadron = { SHIPS = 3 } }
+	}
+}
+
+fh_taiping_squadron_arrives = {
+	remove_variable = fh_taiping_fleet_pending
+	if = {
+		limit = { fh_taiping_reserved_squadron_ready = yes }
+		if = {
+			limit = { has_variable = fh_taiping_expanded }
+			set_variable = fh_taiping_heavy_fleet_started
+			set_variable = { name = fh_taiping_fleet_window value = yes days = 365 }
+		}
+		else = { set_variable = { name = fh_taiping_fleet_window value = yes days = 182 } }
+		fh_taiping_refresh_squadron = yes
+	}
+	else = { fh_taiping_clear_squadron = yes }
+}
+
+fh_taiping_refresh_squadron = {
+	if = {
+		limit = {
+			has_variable = fh_taiping_fleet_window
+			fh_taiping_reserved_squadron_ready = yes
+		}
+		if = {
+			limit = { NOT = { has_variable = fh_taiping_fleet_service } }
+			set_variable = fh_taiping_fleet_service
+			set_variable = fh_taiping_fleet_delivered
+			set_variable = fh_taiping_aid_delivered
+			fh_taiping_activate_trade = yes
+			if = {
+				limit = { has_variable = fh_taiping_expanded }
+				fh_taiping_start_fleet_streak = yes
+				if = {
+					limit = { NOT = { has_variable = fh_taiping_native_deployment } }
+					add_modifier = { name = fh_taiping_heavy_convoys days = 365 }
+				}
+				var:fh_mainland_taiping = { add_modifier = { name = fh_taiping_heavy_supply days = 365 } }
+			}
+			else = {
+				if = {
+					limit = { NOT = { has_variable = fh_taiping_native_deployment } }
+					add_modifier = { name = fh_taiping_escort_detachment days = 182 }
+				}
+				var:fh_mainland_taiping = { add_modifier = { name = fh_taiping_escort_supply days = 182 } }
+			}
+		}
+		else_if = {
+			limit = {
+				has_variable = fh_taiping_expanded
+				NOT = { has_variable = fh_taiping_fleet_streak }
+				NOT = { has_variable = fh_taiping_fleet_six_months }
+			}
+			fh_taiping_record_fleet_streak = yes
+		}
+	}
+	else = {
+		fh_taiping_stop_squadron_service = yes
+		# A paused heavy service may resume with the same squadron during
+		# the original window. Ordinary escorts return immediately.
+		if = {
+			limit = {
+				NOT = { has_variable = fh_taiping_fleet_pending }
+				NAND = {
+					has_variable = fh_taiping_expanded
+					has_variable = fh_taiping_fleet_window
+				}
+			}
+			fh_taiping_clear_squadron = yes
+		}
+	}
+}
+
+fh_taiping_start_fleet_streak = {
+	if = {
+		limit = { NOT = { has_variable = fh_taiping_fleet_six_months } }
+		set_variable = { name = fh_taiping_fleet_streak value = yes days = 182 }
+		if = {
+			limit = { NOT = { has_variable = fh_taiping_streak_attempt } }
+			set_variable = { name = fh_taiping_streak_attempt value = 0 }
+		}
+		change_variable = { name = fh_taiping_streak_attempt add = 1 }
+		save_scope_value_as = { name = fh_taiping_streak_ticket value = var:fh_taiping_streak_attempt }
+		trigger_event = { id = fh_taiping_aid.6 days = 182 }
+	}
+}
+
+fh_taiping_record_fleet_streak = {
+	set_variable = fh_taiping_fleet_six_months
+	fh_taiping_check_heavy_earned = yes
+}
+
+fh_taiping_stop_squadron_service = {
+	if = {
+		limit = { has_variable = fh_taiping_fleet_service }
+		remove_variable = fh_taiping_fleet_service
+		remove_variable = fh_taiping_fleet_streak
+		if = {
+			limit = { has_modifier = fh_taiping_escort_detachment }
+			remove_modifier = fh_taiping_escort_detachment
+		}
+		if = {
+			limit = { has_modifier = fh_taiping_heavy_convoys }
+			remove_modifier = fh_taiping_heavy_convoys
+		}
+		var:fh_mainland_taiping ?= {
+			if = {
+				limit = { has_modifier = fh_taiping_escort_supply }
+				remove_modifier = fh_taiping_escort_supply
+			}
+			if = {
+				limit = { has_modifier = fh_taiping_heavy_supply }
+				remove_modifier = fh_taiping_heavy_supply
+			}
+		}
+	}
+}
+
+fh_taiping_clear_squadron = {
+	fh_taiping_stop_squadron_service = yes
+	remove_variable = fh_taiping_fleet_pending
+	remove_variable = fh_taiping_reserved_squadron
+	remove_variable = fh_taiping_fleet_window
+	remove_variable = fh_taiping_native_deployment
+}
+
+fh_taiping_donate_combat_ship = {
+	if = {
+		limit = { fh_taiping_donation_can_send = yes }
+		random_scope_ship = {
+			limit = { fh_taiping_eligible_donation = yes }
+			save_temporary_scope_as = fh_taiping_export_ship
+		}
+		if = {
+			limit = { exists = scope:fh_taiping_export_ship }
+			# Ship inputs are not exposed by scripted create_treaty. Use the
+			# same native transfer effect as ship_transfer's entry into force.
+			var:fh_mainland_taiping = { clear_ownership_transfer_fleet = yes }
+			scope:fh_taiping_export_ship = { set_ship_owner_multiple = prev.var:fh_mainland_taiping }
+			var:fh_mainland_taiping = { clear_ownership_transfer_fleet = yes }
+			if = {
+				limit = { scope:fh_taiping_export_ship.owner ?= var:fh_mainland_taiping }
+				set_variable = fh_taiping_ship_donated
+				set_variable = { name = fh_taiping_donation_service value = yes days = 182 }
+				set_variable = fh_taiping_fleet_delivered
+				set_variable = fh_taiping_aid_delivered
+				fh_taiping_activate_trade = yes
+			}
+		}
+	}
+}
+
+fh_taiping_back_original_play = {
+	if = {
+		limit = { fh_taiping_can_join_signed_pact = yes }
+		var:fh_mainland_taiping_play = { add_initiator_backers = { prev } }
+	}
+}
+
+fh_taiping_refresh_combat_aid = {
+	if = {
+		limit = {
+			has_variable = fh_taiping_shanghai_started
+			NAND = {
+				has_variable = fh_taiping_shanghai_window
+				fh_taiping_shanghai_opportunity = yes
+			}
+		}
+		remove_variable = fh_taiping_shanghai_started
+		remove_variable = fh_taiping_shanghai_window
+		var:fh_mainland_taiping ?= {
+			if = {
+				limit = { has_modifier = fh_taiping_shanghai_offensive }
+				remove_modifier = fh_taiping_shanghai_offensive
+			}
+		}
+	}
+	if = {
+		limit = {
+			fh_taiping_wartime_pact = yes
+			has_variable = fh_taiping_procurement_recent
+			NOT = { has_variable = fh_taiping_shanghai_started }
+		}
+		var:fh_mainland_taiping ?= {
+			if = {
+				limit = { NOT = { has_modifier = fh_taiping_procurement_bonus } }
+				add_modifier = { name = fh_taiping_procurement_bonus days = 182 }
+			}
+		}
+	}
+	else = {
+		var:fh_mainland_taiping ?= {
+			if = {
+				limit = { has_modifier = fh_taiping_procurement_bonus }
+				remove_modifier = fh_taiping_procurement_bonus
+			}
+		}
+	}
+}
+
+fh_taiping_aid_refresh = {
+	if = {
+		limit = { fh_taiping_pact_unsettled = yes }
+		if = {
+			limit = {
+				has_variable = fh_taiping_arms_treaty
+				fh_taiping_native_arms_running = no
+			}
+			fh_taiping_stop_native_arms = yes
+		}
+		if = {
+			limit = {
+				fh_taiping_aid_pact_live = yes
+				has_variable = fh_taiping_pledge_front
+				NOT = { has_variable = fh_taiping_front_delivered }
+				has_war_with = var:fh_mainland_qing
+			}
+			set_variable = fh_taiping_front_delivered
+			set_variable = fh_taiping_aid_delivered
+			fh_taiping_activate_trade = yes
+		}
+		if = {
+			limit = { has_variable = fh_taiping_reserved_squadron }
+			fh_taiping_refresh_squadron = yes
+		}
+		fh_taiping_refresh_combat_aid = yes
+	}
+}
+
+fh_taiping_aid_monthly = {
+	fh_taiping_aid_refresh = yes
+	# AI uses the same authorization and delivery checks as the buttons.
+	if = {
+		limit = { is_ai = yes has_variable = fh_taiping_pact_ratified in_default = no }
+		fh_taiping_send_arms = yes
+		if = {
+			limit = {
+				OR = {
+					has_variable = fh_taiping_expanded
+					fh_mainland_officers_southern = no
+					NOT = { has_variable = fh_taiping_aid_delivered }
+				}
+			}
+			fh_taiping_send_squadron = yes
+			if = {
+				limit = {
+					NOT = { has_variable = fh_taiping_fleet_delivered }
+					num_non_destroyed_ships_not_in_battle >= 3
+				}
+				fh_taiping_donate_combat_ship = yes
+			}
+		}
+		fh_taiping_offer_shanghai = yes
+		if = {
+			limit = {
+				has_variable = fh_taiping_pledge_front
+				fh_taiping_ai_can_back_rebellion = yes
+			}
+			fh_taiping_back_original_play = yes
+		}
+	}
+}
+
+fh_taiping_aid_cleanup = {
+	fh_taiping_stop_native_arms = yes
+	fh_taiping_clear_squadron = yes
+	remove_variable = fh_taiping_donation_service
+	remove_variable = fh_taiping_procurement_recent
+	remove_variable = fh_taiping_shanghai_window
+	remove_variable = fh_taiping_shanghai_pending
+	fh_taiping_refresh_combat_aid = yes
+}
+
+fh_taiping_offer_shanghai = {
+	if = {
+		limit = {
+			NOT = { has_variable = fh_taiping_shanghai_offered }
+			fh_taiping_shanghai_opportunity = yes
+		}
+		set_variable = fh_taiping_shanghai_offered
+		set_variable = { name = fh_taiping_shanghai_pending value = yes days = 30 }
+		save_scope_as = fh_shanghai_sender
+		var:fh_mainland_taiping = { trigger_event = { id = fh_taiping_aid.5 popup = yes } }
+	}
+}
+
+# Recipient-side fallback when the founder's journal cannot pulse.
+fh_taiping_clear_recipient_aid = {
+	if = {
+		limit = { has_modifier = fh_taiping_escort_supply }
+		remove_modifier = fh_taiping_escort_supply
+	}
+	if = {
+		limit = { has_modifier = fh_taiping_heavy_supply }
+		remove_modifier = fh_taiping_heavy_supply
+	}
+	if = {
+		limit = { has_modifier = fh_taiping_procurement_bonus }
+		remove_modifier = fh_taiping_procurement_bonus
+	}
+	if = {
+		limit = { has_modifier = fh_taiping_shanghai_offensive }
+		remove_modifier = fh_taiping_shanghai_offensive
+	}
+}

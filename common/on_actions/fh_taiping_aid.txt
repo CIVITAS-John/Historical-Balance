@@ -1,0 +1,22 @@
+﻿on_monthly_pulse_country = {
+	on_actions = { fh_taiping_recipient_check_aid }
+}
+
+fh_taiping_recipient_check_aid = {
+	trigger = {
+		OR = {
+			has_modifier = fh_taiping_escort_supply
+			has_modifier = fh_taiping_heavy_supply
+			has_modifier = fh_taiping_procurement_bonus
+			has_modifier = fh_taiping_shanghai_offensive
+		}
+		NOT = {
+			global_var:fh_tungning_founder ?= {
+				is_country_alive = yes
+				var:fh_mainland_taiping ?= prev
+				fh_taiping_wartime_pact = yes
+			}
+		}
+	}
+	effect = { fh_taiping_clear_recipient_aid = yes }
+}

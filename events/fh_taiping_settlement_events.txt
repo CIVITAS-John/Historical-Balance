@@ -1,0 +1,69 @@
+﻿namespace = fh_taiping_settlement
+
+fh_taiping_settlement.1 = {
+	type = country_event
+	placement = root
+	title = fh_taiping_settlement.1.t
+	desc = fh_taiping_settlement.1.d
+	icon = "gfx/interface/icons/event_icons/event_map.dds"
+	# UI duration is in months; the explicit 90-day deadline closes it.
+	duration = 4
+	trigger = {
+		global_var:fh_tungning_founder ?= {
+			var:fh_mainland_taiping ?= root
+			has_variable = fh_taiping_cession_pending
+			has_variable = fh_taiping_cession_reply_open
+		}
+	}
+	cancellation_trigger = {
+		NOT = {
+			global_var:fh_tungning_founder ?= {
+				var:fh_mainland_taiping ?= root
+				has_variable = fh_taiping_cession_pending
+				has_variable = fh_taiping_cession_reply_open
+			}
+		}
+	}
+	immediate = {
+		global_var:fh_tungning_founder ?= { save_scope_as = fh_taiping_cession_recipient }
+	}
+	option = {
+		name = fh_taiping_settlement.1.a
+		trigger = { global_var:fh_tungning_founder ?= { fh_taiping_any_legal_cession = yes } }
+		ai_chance = { base = 100 }
+		custom_tooltip = fh_taiping_cession_honor_tt
+		global_var:fh_tungning_founder ?= { fh_taiping_preview_cessions = yes }
+		hidden_effect = { global_var:fh_tungning_founder ?= { fh_taiping_finish_cession = { HONOR = yes } } }
+	}
+	option = {
+		name = fh_taiping_settlement.1.b
+		default_option = yes
+		ai_chance = { base = 1 }
+		custom_tooltip = fh_taiping_cession_refuse_tt
+		hidden_effect = { global_var:fh_tungning_founder ?= { fh_taiping_finish_cession = { HONOR = no } } }
+	}
+}
+
+fh_taiping_settlement.2 = {
+	type = country_event
+	hidden = yes
+	trigger = { has_variable = fh_taiping_cession_pending }
+	immediate = { fh_taiping_finish_cession = { HONOR = no } }
+}
+
+fh_taiping_settlement.3 = {
+	type = country_event
+	hidden = yes
+	trigger = { has_variable = fh_taiping_trade_activated }
+	immediate = { fh_taiping_end_trade_term = yes }
+}
+
+fh_taiping_settlement.4 = {
+	type = country_event
+	placement = root
+	title = fh_taiping_settlement.4.t
+	desc = fh_taiping_settlement.4.d
+	icon = "gfx/interface/icons/event_icons/event_revolutionary_flag.dds"
+	trigger = { has_variable = fh_taiping_rivalry }
+	option = { name = fh_taiping_settlement.4.a default_option = yes }
+}

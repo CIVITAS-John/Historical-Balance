@@ -1,0 +1,343 @@
+﻿fh_taiping_open_journal = {
+	if = {
+		limit = {
+			fh_is_tungning_founder = yes
+			NOT = { has_variable = fh_taiping_opened }
+		}
+		set_variable = fh_taiping_opened
+		set_variable = { name = fh_taiping_offers_sent value = 0 }
+		add_journal_entry = { type = fh_je_taiping_rebellion }
+	}
+}
+
+fh_taiping_request_audience = {
+	fh_taiping_open_journal = yes
+	if = {
+		limit = { fh_taiping_can_prepare = yes }
+		if = {
+			limit = { is_ai = yes }
+			fh_taiping_ai_offer = yes
+		}
+		else = { trigger_event = { id = fh_taiping_pact.1 popup = yes } }
+	}
+}
+
+fh_taiping_toggle_term = {
+	if = {
+		limit = { has_variable = $TERM$ }
+		remove_variable = $TERM$
+	}
+	else = { set_variable = $TERM$ }
+}
+
+fh_taiping_send_offer = {
+	if = {
+		limit = {
+			fh_taiping_can_prepare = yes
+			trigger_if = {
+				limit = { always = $EXPANDED$ }
+				fh_taiping_expanded_offer_available = yes
+			}
+			trigger_else_if = {
+				limit = { always = $RECOGNITION_ONLY$ }
+				fh_taiping_recognition_only_available = yes
+			}
+			trigger_else = { fh_taiping_ordinary_commitments_credible = yes }
+		}
+		if = {
+			limit = { always = $EXPANDED$ }
+			set_variable = fh_taiping_expanded
+			set_variable = fh_taiping_pledge_arms
+			set_variable = fh_taiping_pledge_fleet
+			remove_variable = fh_taiping_pledge_front
+		}
+		else_if = {
+			limit = { always = $RECOGNITION_ONLY$ }
+			set_variable = fh_taiping_recognition_only
+			remove_variable = fh_taiping_pledge_arms
+			remove_variable = fh_taiping_pledge_fleet
+			remove_variable = fh_taiping_pledge_front
+		}
+		if = {
+			limit = {
+				OR = {
+					always = $EXPANDED$
+					always = $RECOGNITION_ONLY$
+				}
+			}
+			fh_taiping_prepare_schedule = { EXPANDED = yes }
+		}
+		else = { fh_taiping_prepare_schedule = { EXPANDED = no } }
+		change_variable = { name = fh_taiping_offers_sent add = 1 }
+		set_variable = { name = fh_taiping_offered_position value = fh_taiping_coastal_position }
+		set_variable = fh_taiping_offer_pending
+		set_variable = { name = fh_taiping_offer_window days = 90 }
+		remove_variable = fh_taiping_offer_result
+		save_scope_as = fh_taiping_sender
+		save_scope_value_as = { name = fh_taiping_offer_ticket value = var:fh_taiping_offers_sent }
+		var:fh_mainland_taiping ?= {
+			if = {
+				limit = { is_player = yes }
+				trigger_event = { id = fh_taiping_pact.2 popup = yes }
+			}
+			else_if = {
+				limit = {
+					fh_taiping_offer_can_ratify = yes
+					fh_taiping_recipient_willing = yes
+				}
+				scope:fh_taiping_sender = { fh_taiping_ratify = yes }
+			}
+			else = { scope:fh_taiping_sender = { fh_taiping_end_offer = { RESULT = 1 } } }
+		}
+		if = {
+			limit = { has_variable = fh_taiping_offer_pending }
+			trigger_event = { id = fh_taiping_pact.3 days = 90 }
+		}
+	}
+}
+
+# 1 refused, 2 expired, 3 no longer legal. Once two offers have been sent
+# the journal waits for the end of this rebellion; it cannot open a third.
+fh_taiping_end_offer = {
+	if = {
+		limit = { has_variable = fh_taiping_offer_pending }
+		remove_variable = fh_taiping_offer_pending
+		remove_variable = fh_taiping_offer_window
+		remove_variable = fh_taiping_expanded
+		remove_variable = fh_taiping_recognition_only
+		set_variable = { name = fh_taiping_offer_result value = $RESULT$ }
+	}
+}
+
+fh_taiping_ratify = {
+	remove_variable = fh_taiping_offer_pending
+	remove_variable = fh_taiping_offer_window
+	set_variable = fh_taiping_pact_ratified
+	set_variable = { name = fh_taiping_authorization days = 365 }
+	if = {
+		limit = { has_variable = fh_taiping_recognition_offer }
+		set_variable = fh_taiping_recognized_by_us
+		add_modifier = { name = fh_taiping_recognition_legitimacy years = 1 }
+		ig:ig_devout ?= { add_modifier = { name = fh_taiping_recognition_dissent years = 1 } }
+		ig:ig_landowners ?= { add_modifier = { name = fh_taiping_recognition_dissent years = 1 } }
+	}
+	fh_taiping_sign_terms = yes
+}
+
+fh_taiping_ai_offer = {
+	if = {
+		limit = { fh_taiping_can_prepare = yes }
+		remove_variable = fh_taiping_pledge_arms
+		remove_variable = fh_taiping_pledge_fleet
+		remove_variable = fh_taiping_pledge_front
+		remove_variable = fh_taiping_recognition_offer
+		if = {
+			limit = { fh_taiping_ai_front_credible = yes }
+			set_variable = fh_taiping_pledge_front
+		}
+		if = {
+			limit = { fh_taiping_arms_credible = yes scaled_debt < 0.75 }
+			set_variable = fh_taiping_pledge_arms
+		}
+		if = {
+			limit = {
+				fh_taiping_fleet_credible = yes
+				OR = {
+					fh_mainland_officers_mainland = yes
+					NOR = {
+						has_variable = fh_taiping_pledge_front
+						has_variable = fh_taiping_pledge_arms
+					}
+					fh_taiping_willingness < 2
+				}
+			}
+			set_variable = fh_taiping_pledge_fleet
+		}
+		if = {
+			limit = {
+				fh_mainland_officers_mainland = yes
+				scaled_debt < 0.50
+				fh_taiping_expanded_commitments_credible = yes
+				fh_taiping_expanded_schedule_available = yes
+			}
+			if = {
+				limit = { fh_taiping_expanded_willingness < 8 }
+				set_variable = fh_taiping_recognition_offer
+			}
+			fh_taiping_send_offer = { EXPANDED = yes RECOGNITION_ONLY = no }
+		}
+		else_if = {
+			limit = { fh_taiping_recognition_only_available = yes }
+			fh_taiping_send_offer = { EXPANDED = no RECOGNITION_ONLY = yes }
+		}
+		else_if = {
+			limit = { fh_taiping_ordinary_commitments_credible = yes }
+			if = {
+				limit = { fh_taiping_willingness < 4 }
+				set_variable = fh_taiping_recognition_offer
+			}
+			if = {
+				limit = { fh_taiping_willingness >= 4 }
+				fh_taiping_send_offer = { EXPANDED = no RECOGNITION_ONLY = no }
+			}
+		}
+	}
+}
+
+fh_taiping_close = {
+	if = {
+		limit = {
+			has_variable = fh_taiping_opened
+			NOT = { has_variable = fh_taiping_closed }
+		}
+		set_variable = fh_taiping_closed
+		fh_taiping_end_offer = { RESULT = 2 }
+		remove_variable = fh_taiping_cession_pending
+		fh_taiping_stop_aid = yes
+		fh_taiping_apply_aftermath = yes
+	}
+}
+
+fh_taiping_stop_aid = {
+	if = {
+		limit = {
+			has_variable = fh_taiping_pact_ratified
+			NOT = { has_variable = fh_taiping_aid_stopped }
+		}
+		set_variable = fh_taiping_aid_stopped
+		fh_taiping_aid_cleanup = yes
+	}
+}
+
+fh_taiping_repudiate = {
+	if = {
+		limit = { fh_taiping_can_repudiate = yes }
+		set_variable = fh_taiping_repudiated
+		fh_taiping_close = yes
+	}
+}
+
+fh_taiping_review = {
+	if = {
+		limit = {
+			has_variable = fh_taiping_opened
+			NOT = { has_variable = fh_taiping_closed }
+		}
+		if = {
+			limit = {
+				has_variable = fh_taiping_offer_pending
+				OR = {
+					NOT = { has_variable = fh_taiping_offer_window }
+					fh_taiping_conflict_active = no
+					fh_taiping_settlement_partners_at_peace = no
+				}
+			}
+			fh_taiping_end_offer = { RESULT = 2 }
+		}
+		if = {
+			limit = {
+				fh_taiping_conflict_active = no
+				NOR = {
+					has_variable = fh_taiping_fork_pending
+					has_variable = fh_taiping_war_ending
+				}
+			}
+			if = {
+				limit = { has_variable = fh_taiping_pact_ratified }
+				fh_taiping_stop_aid = yes
+				fh_taiping_resolve_peace = yes
+			}
+			else = { fh_taiping_close = yes }
+		}
+		else_if = {
+			limit = {
+				has_variable = fh_taiping_pact_ratified
+				fh_taiping_conflict_active = yes
+			}
+			fh_taiping_aid_refresh = yes
+			fh_taiping_activate_trade = yes
+		}
+	}
+}
+
+# An existing save can recover the parties and conflict from an active play
+# or war, but only the launch hook can record the initial home regions.
+fh_taiping_catch_up_conflict = {
+	if = {
+		limit = { NOT = { has_variable = fh_mainland_taiping_launched } }
+		random_diplomatic_play = {
+			limit = {
+				fh_mainland_taiping_rebellion = yes
+				is_war = no
+			}
+			save_temporary_scope_as = fh_caught_up_taiping_play
+		}
+		if = {
+			limit = { NOT = { exists = scope:fh_caught_up_taiping_play } }
+			c:TPG ?= {
+				random_scope_war = {
+					limit = { diplomatic_play ?= { fh_mainland_taiping_rebellion = yes } }
+					diplomatic_play = { save_temporary_scope_as = fh_caught_up_taiping_play }
+				}
+			}
+		}
+		if = {
+			limit = { exists = scope:fh_caught_up_taiping_play }
+			set_variable = fh_mainland_taiping_launched
+			set_variable = { name = fh_mainland_taiping_play value = scope:fh_caught_up_taiping_play }
+			set_variable = { name = fh_mainland_qing value = c:CHI }
+			set_variable = { name = fh_mainland_taiping value = c:TPG }
+		}
+	}
+}
+
+# Non-mutating preview shared by the founder's offer buttons and Taiping's
+# reply. After submission, use the recorded ceiling instead of live candidates.
+fh_taiping_preview_region = {
+	if = {
+		limit = {
+			trigger_if = {
+				limit = { always = $RECORDED$ }
+				any_in_list = {
+					variable = fh_taiping_signed_provinces
+					state ?= { state_region = s:$REGION$ }
+				}
+			}
+			trigger_else_if = {
+				limit = { always = $EXPANDED$ }
+				s:$REGION$ = { fh_taiping_schedule_region_candidate = yes }
+			}
+			trigger_else = {
+				s:$REGION$ = { any_scope_state = { fh_taiping_schedule_state_candidate = yes } }
+			}
+		}
+		custom_tooltip = $REGION$
+	}
+}
+
+fh_taiping_preview_schedule = {
+	if = {
+		limit = { always = $EXPANDED$ }
+		custom_tooltip = fh_taiping_expanded_cost_preview
+		fh_taiping_preview_region = { REGION = STATE_SOUTHERN_ANHUI EXPANDED = yes RECORDED = $RECORDED$ }
+		fh_taiping_preview_region = { REGION = STATE_JIANGXI EXPANDED = yes RECORDED = $RECORDED$ }
+		fh_taiping_preview_region = { REGION = STATE_HUNAN EXPANDED = yes RECORDED = $RECORDED$ }
+		fh_taiping_preview_region = { REGION = STATE_SHAOZHOU EXPANDED = yes RECORDED = $RECORDED$ }
+		fh_taiping_preview_region = { REGION = STATE_GUANGXI EXPANDED = yes RECORDED = $RECORDED$ }
+		fh_taiping_preview_region = { REGION = STATE_GUIZHOU EXPANDED = yes RECORDED = $RECORDED$ }
+		fh_taiping_preview_region = { REGION = STATE_YUNNAN EXPANDED = yes RECORDED = $RECORDED$ }
+	}
+	else = {
+		if = {
+			limit = { has_variable = fh_taiping_pledge_arms }
+			custom_tooltip = fh_taiping_ordinary_arms_preview
+		}
+		if = {
+			limit = { has_variable = fh_taiping_pledge_fleet }
+			custom_tooltip = fh_taiping_ordinary_fleet_preview
+		}
+		fh_taiping_preview_region = { REGION = STATE_FUJIAN EXPANDED = no RECORDED = $RECORDED$ }
+		fh_taiping_preview_region = { REGION = STATE_GUANGDONG EXPANDED = no RECORDED = $RECORDED$ }
+		fh_taiping_preview_region = { REGION = STATE_ZHEJIANG EXPANDED = no RECORDED = $RECORDED$ }
+	}
+}

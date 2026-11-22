@@ -24,6 +24,10 @@ fh_mainland_claim_country_update = {
 			fh_start_mainland_claim = yes
 		}
 		else = { fh_mainland_refresh = yes }
+		if = {
+			limit = { fh_mainland_fork_open = yes }
+			fh_taiping_open_journal = yes
+		}
 		fh_strait_check_discount = yes
 	}
 }
@@ -65,7 +69,11 @@ fh_mainland_record_taiping_launch = {
 		fh_mainland_taiping_rebellion = yes
 		global_var:fh_tungning_founder ?= {
 			is_country_alive = yes
-			NOT = { has_variable = fh_mainland_taiping_launched }
+			NOT = { has_variable = fh_mainland_taiping_snapshot }
+			OR = {
+				NOT = { has_variable = fh_mainland_taiping_launched }
+				var:fh_mainland_taiping_play ?= root
+			}
 		}
 	}
 	effect = {

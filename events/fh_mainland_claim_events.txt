@@ -102,8 +102,8 @@ fh_mainland_claim.2 = {
 					OR = {
 						scaled_debt >= 0.75
 						in_default = yes
-						is_subject = yes
-						fh_mainland_taiping_active = no
+						fh_taiping_conflict_active = no
+						fh_taiping_ai_has_viable_bid = no
 					}
 				}
 				add = 200

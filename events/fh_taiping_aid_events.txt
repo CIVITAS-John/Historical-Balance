@@ -1,0 +1,127 @@
+﻿namespace = fh_taiping_aid
+
+# Credit an ordinary shipment only after the first native weekly delivery.
+fh_taiping_aid.1 = {
+	type = country_event
+	hidden = yes
+	trigger = {
+		fh_is_tungning_founder = yes
+		var:fh_taiping_arms_treaty ?= scope:fh_taiping_dispatch
+		fh_taiping_native_arms_running = yes
+	}
+	immediate = { fh_taiping_record_arms_delivery = yes }
+}
+
+fh_taiping_aid.2 = {
+	type = country_event
+	hidden = yes
+	trigger = {
+		fh_is_tungning_founder = yes
+		var:fh_taiping_arms_treaty ?= scope:fh_taiping_dispatch
+		fh_taiping_native_arms_running = yes
+	}
+	immediate = { fh_taiping_record_arms_delivery = yes }
+}
+
+fh_taiping_aid.3 = {
+	type = country_event
+	hidden = yes
+	trigger = {
+		fh_is_tungning_founder = yes
+		var:fh_taiping_arms_treaty ?= scope:fh_taiping_dispatch
+	}
+	immediate = {
+		if = {
+			limit = {
+				has_variable = fh_taiping_expanded
+				var:fh_taiping_depots_supplied ?= 1
+				fh_taiping_native_arms_running = yes
+			}
+			fh_taiping_record_arms_delivery = yes
+		}
+		fh_taiping_stop_native_arms = yes
+	}
+}
+
+fh_taiping_aid.4 = {
+	type = country_event
+	hidden = yes
+	trigger = {
+		fh_is_tungning_founder = yes
+		has_variable = fh_taiping_fleet_pending
+	}
+	immediate = { fh_taiping_squadron_arrives = yes }
+}
+
+fh_taiping_aid.5 = {
+	type = country_event
+	placement = root
+	title = fh_taiping_aid.5.t
+	desc = fh_taiping_aid.5.d
+	icon = "gfx/interface/icons/event_icons/event_military.dds"
+	duration = 1
+
+	trigger = {
+		scope:fh_shanghai_sender ?= {
+			fh_is_tungning_founder = yes
+			var:fh_mainland_taiping ?= root
+			has_variable = fh_taiping_shanghai_pending
+			fh_taiping_shanghai_opportunity = yes
+		}
+	}
+	cancellation_trigger = {
+		NOT = {
+			scope:fh_shanghai_sender ?= {
+				has_variable = fh_taiping_shanghai_pending
+				fh_taiping_shanghai_opportunity = yes
+			}
+		}
+	}
+
+	option = {
+		name = fh_taiping_aid.5.agree
+		custom_tooltip = fh_taiping_shanghai_guarantees_tt
+		ai_chance = { base = 85 }
+		hidden_effect = {
+			scope:fh_shanghai_sender ?= {
+				if = {
+					limit = {
+						has_variable = fh_taiping_shanghai_pending
+						fh_taiping_shanghai_opportunity = yes
+					}
+					remove_variable = fh_taiping_shanghai_pending
+					set_variable = fh_taiping_shanghai_started
+					set_variable = { name = fh_taiping_shanghai_window value = yes days = 182 }
+					fh_taiping_refresh_combat_aid = yes
+					var:fh_mainland_taiping = {
+						add_modifier = { name = fh_taiping_shanghai_offensive days = 182 }
+					}
+				}
+			}
+		}
+	}
+
+	option = {
+		name = fh_taiping_aid.5.decline
+		default_option = yes
+		ai_chance = { base = 15 }
+		hidden_effect = {
+			scope:fh_shanghai_sender ?= { remove_variable = fh_taiping_shanghai_pending }
+		}
+	}
+}
+
+# Verify at the full six-month mark, even between journal pulses.
+fh_taiping_aid.6 = {
+	type = country_event
+	hidden = yes
+	trigger = {
+		fh_is_tungning_founder = yes
+		var:fh_taiping_streak_attempt ?= scope:fh_taiping_streak_ticket
+		has_variable = fh_taiping_fleet_window
+		has_variable = fh_taiping_fleet_service
+		NOT = { has_variable = fh_taiping_fleet_six_months }
+		fh_taiping_reserved_squadron_ready = yes
+	}
+	immediate = { fh_taiping_record_fleet_streak = yes }
+}

@@ -89,13 +89,7 @@ fh_mainland_claim_target_country = {
 		text = fh_mainland_claim_no_pact_tt
 		NAND = {
 			fh_mainland_is_taiping_rival = yes
-			global_var:fh_tungning_founder ?= {
-				has_variable = fh_taiping_pact_ratified
-				OR = {
-					fh_mainland_taiping_active = yes
-					has_variable = fh_taiping_cession_pending
-				}
-			}
+			global_var:fh_tungning_founder ?= { fh_taiping_pact_unsettled = yes }
 		}
 	}
 }

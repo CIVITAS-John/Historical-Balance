@@ -1,0 +1,7 @@
+﻿fh_mainland_squadrons_stand_down = { country_military_goods_cost_mult = -0.10 }
+fh_taiping_promises_broken = { country_influence_mult = -0.10 }
+fh_taiping_expanded_bargain_honored = { country_prestige_add = 20 }
+fh_taiping_bargain_honored = { country_prestige_add = 10 }
+fh_taiping_bargain_in_part = { country_prestige_add = 5 }
+fh_taiping_cost_of_intervention = { country_prestige_add = -10 }
+fh_taiping_opening_lost = { country_influence_mult = -0.05 }

@@ -1,0 +1,91 @@
+﻿# Wait for all native peace/ownership callbacks before inspecting cessions.
+on_war_end = { on_actions = { fh_taiping_record_war_end } }
+on_diplo_play_back_down = { on_actions = { fh_taiping_record_backdown } }
+on_capitulation = { on_actions = { fh_taiping_record_qing_capitulation } }
+on_enemy_capitulated_notification = { on_actions = { fh_taiping_record_qing_enemy_capitulation } }
+on_wargoal_enforced = { on_actions = { fh_taiping_record_qing_enforcement } }
+
+fh_taiping_record_war_end = {
+	trigger = {
+		global_var:fh_tungning_founder ?= { var:fh_mainland_taiping_play ?= root }
+	}
+	effect = {
+		global_var:fh_tungning_founder = {
+			set_variable = { name = fh_taiping_war_ending days = 2 }
+		}
+	}
+}
+
+fh_taiping_record_backdown = {
+	trigger = {
+		global_var:fh_tungning_founder ?= { var:fh_mainland_taiping_play ?= root }
+	}
+	effect = {
+		global_var:fh_tungning_founder = {
+			set_variable = { name = fh_taiping_war_ending days = 2 }
+			if = {
+				limit = {
+					# 1.15.2 00_code_on_actions uses actor for the country
+					# that backed down; Tiger's older scope table omits it.
+					# tiger-ignore(key=strict-scopes)
+					scope:actor ?= { this = global_var:fh_tungning_founder.var:fh_mainland_qing }
+				}
+				set_variable = fh_taiping_qing_backed_down
+			}
+		}
+	}
+}
+
+# The capitulation action has no documented war scope. Use it only if Qing
+# has exactly one war, which belongs to the recorded play.
+fh_taiping_record_qing_capitulation = {
+	trigger = {
+		global_var:fh_tungning_founder ?= { var:fh_mainland_qing ?= root }
+		any_scope_war = { count = 1 always = yes }
+		any_scope_war = {
+			diplomatic_play ?= global_var:fh_tungning_founder.var:fh_mainland_taiping_play
+		}
+	}
+	effect = { global_var:fh_tungning_founder = { fh_taiping_note_qing_capitulation = yes } }
+}
+
+# Taiping's enemy notification identifies Qing even if Qing is fighting
+# unrelated wars. If these two governments share another current war,
+# the notification alone cannot identify which one caused capitulation.
+fh_taiping_record_qing_enemy_capitulation = {
+	trigger = {
+		global_var:fh_tungning_founder ?= { var:fh_mainland_taiping ?= root }
+		# The 1.15.2 notification_enemy_capitulated_desc reads target.
+		# tiger-ignore(key=strict-scopes)
+		scope:target ?= { this = global_var:fh_tungning_founder.var:fh_mainland_qing }
+		NOT = {
+			any_scope_war = {
+				is_war_participant = global_var:fh_tungning_founder.var:fh_mainland_qing
+				NOT = { diplomatic_play ?= global_var:fh_tungning_founder.var:fh_mainland_taiping_play }
+			}
+		}
+	}
+	effect = { global_var:fh_tungning_founder = { fh_taiping_note_qing_capitulation = yes } }
+}
+
+# Demand actual enforcement by Taiping in this exact play. Pair it with
+# capitulation evidence in either callback order, so an enforced secondary
+# term in otherwise negotiated peace does not unlock cessions.
+fh_taiping_record_qing_enforcement = {
+	trigger = {
+		global_var:fh_tungning_founder ?= {
+			var:fh_mainland_taiping_play ?= scope:diplomatic_play
+			var:fh_mainland_taiping ?= root
+			var:fh_mainland_qing ?= scope:target
+		}
+	}
+	effect = {
+		global_var:fh_tungning_founder = {
+			set_variable = { name = fh_taiping_qing_enforcement_window days = 2 }
+			if = {
+				limit = { has_variable = fh_taiping_qing_capitulation_window }
+				set_variable = fh_taiping_qing_capitulated
+			}
+		}
+	}
+}

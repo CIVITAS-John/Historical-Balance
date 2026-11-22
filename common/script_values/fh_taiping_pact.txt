@@ -1,0 +1,134 @@
+﻿fh_taiping_owned_coasts = {
+	value = 0
+	if = {
+		limit = { fh_owns_mainland_foothold = { REGION = STATE_FUJIAN } }
+		add = 1
+	}
+	if = {
+		limit = { fh_owns_mainland_foothold = { REGION = STATE_GUANGDONG } }
+		add = 1
+	}
+	if = {
+		limit = { fh_owns_mainland_foothold = { REGION = STATE_ZHEJIANG } }
+		add = 1
+	}
+}
+
+fh_taiping_coastal_position = {
+	value = 0
+	if = {
+		limit = { fh_reunification_all_coasts_owned = yes }
+		add = 4
+	}
+	else_if = {
+		limit = {
+			OR = {
+				fh_taiping_owned_coasts >= 2
+				fh_mainland_region_can_register = { REGION = STATE_FUJIAN }
+				fh_mainland_region_can_register = { REGION = STATE_GUANGDONG }
+				fh_mainland_region_can_register = { REGION = STATE_ZHEJIANG }
+			}
+		}
+		add = 3
+	}
+	else_if = {
+		limit = { fh_mainland_has_foothold = yes }
+		add = 2
+	}
+	else_if = {
+		limit = { any_scope_state = { is_treaty_port = no fh_mainland_coast_state = yes } }
+		add = 1
+	}
+}
+
+fh_taiping_base_willingness = {
+	value = fh_taiping_coastal_position
+	if = {
+		limit = { country_has_state_religion = rel:protestant }
+		add = 3
+	}
+	else_if = {
+		limit = { country_has_state_religion = rel:catholic }
+		add = 2
+	}
+	else_if = {
+		limit = { NOT = { country_has_state_religion = rel:confucian } }
+		add = 1
+	}
+	if = {
+		limit = { var:fh_mainland_taiping ?= { relations:prev >= 20 } }
+		add = 1
+	}
+}
+
+fh_taiping_willingness = {
+	value = fh_taiping_base_willingness
+	if = {
+		limit = {
+			OR = {
+				has_variable = fh_taiping_expanded
+				has_variable = fh_taiping_pledge_arms
+			}
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			OR = {
+				has_variable = fh_taiping_expanded
+				has_variable = fh_taiping_pledge_fleet
+			}
+		}
+		add = 1
+	}
+	if = {
+		limit = { has_variable = fh_taiping_recognition_offer }
+		add = 2
+	}
+}
+
+# Used before a draft exists, including for AI choices at the mainland fork.
+fh_taiping_best_ordinary_willingness = {
+	value = fh_taiping_base_willingness
+	add = 2
+	if = {
+		limit = { fh_taiping_arms_credible = yes scaled_debt < 0.75 }
+		add = 1
+	}
+	if = {
+		limit = { fh_taiping_fleet_credible = yes }
+		add = 1
+	}
+}
+
+# The table of drafts shows the expanded score before its mandatory pledges
+# are written. Ordinary draft toggles must not double-count either one.
+fh_taiping_expanded_willingness = {
+	value = fh_taiping_willingness
+	if = {
+		limit = {
+			NOR = {
+				has_variable = fh_taiping_expanded
+				has_variable = fh_taiping_pledge_arms
+			}
+		}
+		add = 1
+	}
+	if = {
+		limit = {
+			NOR = {
+				has_variable = fh_taiping_expanded
+				has_variable = fh_taiping_pledge_fleet
+			}
+		}
+		add = 1
+	}
+}
+
+fh_taiping_depot_progress = {
+	value = 0
+	if = {
+		limit = { has_variable = fh_taiping_depots_supplied }
+		add = var:fh_taiping_depots_supplied
+	}
+}

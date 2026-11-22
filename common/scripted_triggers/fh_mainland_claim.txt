@@ -42,7 +42,12 @@ fh_mainland_taiping_rebellion = {
 
 fh_mainland_taiping_active = {
 	var:fh_mainland_taiping_play ?= { save_temporary_scope_as = fh_recorded_taiping_play }
-	any_diplomatic_play = { this = scope:fh_recorded_taiping_play }
+	OR = {
+		any_diplomatic_play = { this = scope:fh_recorded_taiping_play is_war = no }
+		var:fh_mainland_taiping ?= {
+			any_scope_war = { diplomatic_play ?= scope:fh_recorded_taiping_play }
+		}
+	}
 }
 
 fh_mainland_fork_open = {

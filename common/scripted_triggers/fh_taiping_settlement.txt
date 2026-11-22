@@ -1,0 +1,202 @@
+﻿# The signed list is a province ceiling. Province scopes survive native state
+# mergers, splits and owner changes; a state scope recorded at signing may not.
+fh_taiping_schedule_region_candidate = {
+	save_temporary_scope_as = fh_taiping_candidate_region
+	NOT = {
+		global_var:fh_tungning_founder ?= {
+			any_in_list = { variable = fh_taiping_opening_regions this = scope:fh_taiping_candidate_region }
+		}
+	}
+	any_scope_state = { fh_taiping_schedule_state_candidate = yes }
+}
+
+fh_taiping_schedule_state_candidate = {
+	is_treaty_port = no
+	owner ?= {
+		NOT = { this = global_var:fh_tungning_founder }
+		fh_taiping_scheduled_owner = yes
+	}
+}
+
+fh_taiping_scheduled_owner = {
+	save_temporary_scope_as = fh_taiping_candidate_owner
+	global_var:fh_tungning_founder ?= {
+		OR = {
+			var:fh_mainland_taiping ?= scope:fh_taiping_candidate_owner
+			var:fh_mainland_qing ?= scope:fh_taiping_candidate_owner
+			var:fh_mainland_taiping_play ?= {
+				any_scope_target_ally = { this = scope:fh_taiping_candidate_owner }
+			}
+		}
+	}
+}
+
+fh_taiping_expanded_schedule_available = {
+	has_variable = fh_mainland_taiping_snapshot
+	OR = {
+		s:STATE_SOUTHERN_ANHUI = { fh_taiping_schedule_region_candidate = yes }
+		s:STATE_JIANGXI = { fh_taiping_schedule_region_candidate = yes }
+		s:STATE_HUNAN = { fh_taiping_schedule_region_candidate = yes }
+		s:STATE_SHAOZHOU = { fh_taiping_schedule_region_candidate = yes }
+		s:STATE_GUANGXI = { fh_taiping_schedule_region_candidate = yes }
+		s:STATE_GUIZHOU = { fh_taiping_schedule_region_candidate = yes }
+		s:STATE_YUNNAN = { fh_taiping_schedule_region_candidate = yes }
+	}
+}
+
+fh_taiping_schedule_still_valid = {
+	NOT = {
+		any_in_list = {
+			variable = fh_taiping_signed_provinces
+			NOT = {
+				state ?= {
+					is_treaty_port = no
+					owner ?= {
+						OR = {
+							this = global_var:fh_tungning_founder
+							fh_taiping_scheduled_owner = yes
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+fh_taiping_settlement_partners_at_peace = {
+	is_country_alive = yes
+	var:fh_mainland_taiping ?= {
+		is_country_alive = yes
+		NOT = { this = prev }
+		NOT = { has_war_with = prev }
+		NOT = { is_diplomatic_play_enemy_of = prev }
+	}
+}
+
+fh_taiping_trade_conditions = {
+	fh_taiping_settlement_partners_at_peace = yes
+	country_has_isolationism = no
+	is_junior_in_customs_union = no
+	NOT = { market ?= var:fh_mainland_taiping.market }
+	NOT = { has_diplomatic_pact = { who = var:fh_mainland_taiping type = embargo is_initiator = yes } }
+	var:fh_mainland_taiping ?= {
+		country_has_isolationism = no
+		is_junior_in_customs_union = no
+		NOT = { has_diplomatic_pact = { who = prev type = embargo is_initiator = yes } }
+	}
+}
+
+# A matching article is directed from Taiping to Tungning. A reverse grant
+# or another agreement in the same treaty is not evidence of delivery.
+fh_taiping_is_trade_treaty = {
+	binds = global_var:fh_tungning_founder
+	binds = global_var:fh_tungning_founder.var:fh_mainland_taiping
+	any_scope_article = {
+		has_type = trade_privilege
+		source_country = global_var:fh_tungning_founder.var:fh_mainland_taiping
+		target_country = global_var:fh_tungning_founder
+	}
+}
+
+fh_taiping_trade_in_force = {
+	fh_taiping_trade_conditions = yes
+	var:fh_taiping_trade_treaty ?= { fh_taiping_is_trade_treaty = yes }
+}
+
+fh_taiping_trade_fulfilled = {
+	OR = {
+		has_variable = fh_taiping_trade_completed
+		fh_taiping_trade_in_force = yes
+	}
+}
+
+fh_taiping_settlement_earned = {
+	OR = {
+		AND = {
+			has_variable = fh_taiping_expanded
+			has_variable = fh_taiping_heavy_earned
+		}
+		AND = {
+			NOT = { has_variable = fh_taiping_expanded }
+			has_variable = fh_taiping_aid_delivered
+		}
+	}
+}
+
+fh_taiping_commitments_completed = {
+	OR = {
+		has_variable = fh_taiping_recognition_only
+		fh_taiping_settlement_earned = yes
+	}
+	trigger_if = {
+		limit = { NOT = { has_variable = fh_taiping_expanded } }
+		trigger_if = { limit = { has_variable = fh_taiping_pledge_arms } has_variable = fh_taiping_arms_delivered }
+		trigger_if = { limit = { has_variable = fh_taiping_pledge_fleet } has_variable = fh_taiping_fleet_delivered }
+		trigger_if = { limit = { has_variable = fh_taiping_pledge_front } has_variable = fh_taiping_front_delivered }
+	}
+}
+
+fh_taiping_has_unfulfilled_cession = {
+	fh_taiping_provinces_unfulfilled > 0
+}
+
+fh_taiping_qing_defeated = {
+	var:fh_mainland_taiping ?= { is_country_alive = yes }
+	OR = {
+		has_variable = fh_taiping_qing_backed_down
+		has_variable = fh_taiping_qing_capitulated
+		AND = {
+			has_variable = fh_mainland_taiping_launched
+			NOT = { var:fh_mainland_qing ?= { is_country_alive = yes } }
+		}
+	}
+}
+
+# Taiping state scope. Do not transfer a treaty port or an enlarged state
+# that now contains any province outside the signed schedule.
+fh_taiping_state_can_be_ceded = {
+	is_treaty_port = no
+	is_capital = no
+	is_under_colonization = no
+	owner = global_var:fh_tungning_founder.var:fh_mainland_taiping
+	save_temporary_scope_as = fh_taiping_cession_state
+	any_province = { owner = global_var:fh_tungning_founder.var:fh_mainland_taiping }
+	NOT = {
+		any_province = {
+			save_temporary_scope_as = fh_taiping_cession_province
+			NOT = {
+				global_var:fh_tungning_founder ?= {
+					any_in_list = { variable = fh_taiping_signed_provinces this = scope:fh_taiping_cession_province }
+				}
+			}
+		}
+	}
+	OR = {
+		global_var:fh_tungning_founder ?= { is_adjacent_to_state = scope:fh_taiping_cession_state }
+		AND = {
+			is_coastal = yes
+			global_var:fh_tungning_founder ?= { has_port_country = yes }
+		}
+	}
+	can_create_treaty = {
+		first_country = global_var:fh_tungning_founder.var:fh_mainland_taiping
+		second_country = global_var:fh_tungning_founder
+		is_draft = no
+		articles_to_create = {
+			{
+				article = state_transfer
+				source_country = global_var:fh_tungning_founder.var:fh_mainland_taiping
+				target_country = global_var:fh_tungning_founder
+				inputs = { { state = scope:fh_taiping_cession_state } }
+			}
+		}
+	}
+}
+
+fh_taiping_any_legal_cession = {
+	fh_taiping_settlement_partners_at_peace = yes
+	var:fh_mainland_taiping ?= {
+		num_states >= 2
+		any_scope_state = { fh_taiping_state_can_be_ceded = yes }
+	}
+}

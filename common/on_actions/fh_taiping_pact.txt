@@ -1,0 +1,24 @@
+﻿on_war_end = {
+	on_actions = { fh_taiping_queue_peace_review }
+}
+
+on_diplo_play_back_down = {
+	on_actions = { fh_taiping_queue_peace_review }
+}
+
+# Wait for native outcomes and land transfers before opening a cession reply.
+fh_taiping_queue_peace_review = {
+	trigger = {
+		global_var:fh_tungning_founder ?= {
+			var:fh_mainland_taiping_play ?= root
+			has_variable = fh_taiping_opened
+			NOT = { has_variable = fh_taiping_closed }
+		}
+	}
+	effect = {
+		global_var:fh_tungning_founder ?= {
+			fh_taiping_stop_aid = yes
+			trigger_event = { id = fh_taiping_pact.4 days = 3 }
+		}
+	}
+}

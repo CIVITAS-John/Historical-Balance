@@ -1,0 +1,33 @@
+﻿fh_taiping_request_audience_decision = {
+	is_shown = { fh_taiping_can_open_audience = yes }
+	possible = { fh_taiping_can_open_audience = yes }
+	when_taken = { fh_taiping_request_audience = yes }
+	ai_chance = {
+		value = 0
+		if = {
+			limit = {
+				fh_taiping_ai_has_viable_bid = yes
+				scaled_debt < 0.75
+				in_default = no
+			}
+			add = 1
+		}
+	}
+}
+
+fh_taiping_repudiate_as_recipient = {
+	is_shown = {
+		global_var:fh_tungning_founder ?= {
+			var:fh_mainland_taiping ?= prev
+			fh_taiping_can_repudiate = yes
+		}
+	}
+	possible = {
+		global_var:fh_tungning_founder ?= {
+			var:fh_mainland_taiping ?= prev
+			fh_taiping_can_repudiate = yes
+		}
+	}
+	when_taken = { global_var:fh_tungning_founder ?= { fh_taiping_repudiate = yes } }
+	ai_chance = { value = 0 }
+}
