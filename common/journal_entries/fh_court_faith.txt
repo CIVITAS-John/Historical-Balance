@@ -4,6 +4,7 @@
 	scripted_progress_bar = fh_court_faith_balance
 	transferable = no
 	can_revolution_inherit = no
+	should_be_pinned_by_default_uninvolved_or_context = yes
 
 	scripted_button = fh_court_faith_nominate_catholic
 	scripted_button = fh_court_faith_nominate_protestant

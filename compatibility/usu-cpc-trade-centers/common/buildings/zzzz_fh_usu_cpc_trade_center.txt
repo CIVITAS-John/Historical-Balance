@@ -1,0 +1,4 @@
+﻿# CPC replaces the building after USU and omits its port status group.
+INJECT:building_trade_center = {
+	production_method_groups = { pmg_trade_center_port_status }
+}

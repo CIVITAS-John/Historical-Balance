@@ -1,14 +1,18 @@
-﻿TRY_REPLACE:pm_trade_center_port = {
-	texture = "gfx/interface/icons/production_method_icons/anchorage.dds"
-	is_hidden_when_unavailable = yes
-	unlocking_production_methods = {
-		pm_trade_center_port
-	}
+﻿# Optional port cost rebalance. Leave the full replacement disabled to keep Grey's original modifiers.
+# TRY_REPLACE:pm_trade_center_port = {
+# 	texture = "gfx/interface/icons/production_method_icons/anchorage.dds"
+# 	is_hidden_when_unavailable = yes
+# 	unlocking_production_methods = {
+# 		pm_trade_center_port
+# 	}
+#
+# 	building_modifiers = {
+# 		unscaled = {
+# 			goods_input_merchant_marine_mult = 2
+# 			goods_input_usu_logistics_mult = -0.4
+# 		}
+# 	}
+# }
 
-	building_modifiers = {
-		unscaled = {
-			goods_input_merchant_marine_mult = 2
-			goods_input_usu_logistics_mult = -0.4
-		}
-	}
-}
+# Keep this after the optional replacement so history has a valid key without USU.
+INJECT_OR_CREATE:pm_trade_center_port = {}

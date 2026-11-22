@@ -187,6 +187,14 @@ fh_tungning_formosa_setup = {
 		reserves = 1
 		activate_production_methods = { "pm_trade_center" "pm_trade_center_trade_quantity_normal" }
 	}
+	# Grey's history pass can run before Tungning creates its trade center.
+	if = {
+		limit = { Grey_USU_is_active = yes has_building = building_port }
+		activate_production_method = {
+			building_type = building_trade_center
+			production_method = pm_trade_center_port
+		}
+	}
 
 	# Give the established missions clergy before hiring splits them across buildings.
 	create_pop = { culture = min religion = catholic pop_type = clergymen size = 800 }

@@ -1,0 +1,12 @@
+{
+  "name": "Tungning: USU and CPC Trade Centers",
+  "id": "",
+  "version": "0.1.0",
+  "supported_game_version": "1.15.*",
+  "short_description": "Restores port trade with Grey's Urban Synergy Unleashed and Controllable Private Construction enabled together.",
+  "tags": [],
+  "relationships": [],
+  "game_custom_data": {
+    "multiplayer_synchronized": true
+  }
+}

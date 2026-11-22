@@ -1,0 +1,4 @@
+﻿# Grey's USU replaces this default when it is enabled.
+Grey_USU_is_active = {
+	always = no
+}
