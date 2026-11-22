@@ -138,27 +138,9 @@ fh_taiping_stop_native_arms = {
 }
 
 fh_taiping_choose_squadron = {
-	# Prefer a navy already doing the work without the off-map penalty.
-	if = {
-		limit = { fh_taiping_fighting_original_war = yes }
-		random_scope_fleet = {
-			limit = {
-				fh_taiping_fleet_viable = { SHIPS = $SHIPS$ }
-				fh_taiping_fleet_in_theater = { SHIPS = $SHIPS$ }
-			}
-			save_temporary_scope_as = fh_taiping_chosen_fleet
-			prev = { set_variable = fh_taiping_native_deployment }
-		}
-	}
-	if = {
-		limit = { NOT = { exists = scope:fh_taiping_chosen_fleet } }
-		random_scope_fleet = {
-			limit = {
-				fh_taiping_fleet_viable = { SHIPS = $SHIPS$ }
-				fh_taiping_fleet_in_reserve = yes
-			}
-			save_temporary_scope_as = fh_taiping_chosen_fleet
-		}
+	random_scope_fleet = {
+		limit = { fh_taiping_fleet_can_detach = { SHIPS = $SHIPS$ } }
+		save_temporary_scope_as = fh_taiping_chosen_fleet
 	}
 	if = {
 		limit = { exists = scope:fh_taiping_chosen_fleet }
@@ -209,17 +191,11 @@ fh_taiping_refresh_squadron = {
 			if = {
 				limit = { has_variable = fh_taiping_expanded }
 				fh_taiping_start_fleet_streak = yes
-				if = {
-					limit = { NOT = { has_variable = fh_taiping_native_deployment } }
-					add_modifier = { name = fh_taiping_heavy_convoys days = 365 }
-				}
+				add_modifier = { name = fh_taiping_heavy_convoys days = 365 }
 				var:fh_mainland_taiping = { add_modifier = { name = fh_taiping_heavy_supply days = 365 } }
 			}
 			else = {
-				if = {
-					limit = { NOT = { has_variable = fh_taiping_native_deployment } }
-					add_modifier = { name = fh_taiping_escort_detachment days = 182 }
-				}
+				add_modifier = { name = fh_taiping_escort_detachment days = 182 }
 				var:fh_mainland_taiping = { add_modifier = { name = fh_taiping_escort_supply days = 182 } }
 			}
 		}
@@ -299,7 +275,6 @@ fh_taiping_clear_squadron = {
 	remove_variable = fh_taiping_fleet_pending
 	remove_variable = fh_taiping_reserved_squadron
 	remove_variable = fh_taiping_fleet_window
-	remove_variable = fh_taiping_native_deployment
 }
 
 fh_taiping_donate_combat_ship = {

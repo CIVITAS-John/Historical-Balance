@@ -23,7 +23,13 @@ fh_taiping_ai_has_viable_bid = {
 				fh_taiping_fleet_credible = yes
 				fh_taiping_ai_front_credible = yes
 			}
-			fh_taiping_best_ordinary_willingness >= 4
+			OR = {
+				fh_taiping_best_ordinary_willingness_without_fleet >= 4
+				AND = {
+					fh_taiping_fleet_credible = yes
+					fh_taiping_best_ordinary_willingness_without_fleet >= 3
+				}
+			}
 		}
 	}
 }

@@ -61,7 +61,7 @@ fh_taiping_native_arms_possible = {
 				article = goods_transfer
 				source_country = this
 				target_country = var:fh_mainland_taiping
-				inputs = { { goods = g:small_arms } { quantity = $QUANTITY$ } }
+				inputs = { { good = g:small_arms } { quantity = $QUANTITY$ } }
 			}
 		}
 	}
@@ -83,19 +83,6 @@ fh_taiping_heavy_arms_credible = {
 		fh_taiping_native_arms_possible = { QUANTITY = 20 }
 		gold_reserves >= fh_taiping_heavy_procurement_cost
 	}
-}
-
-fh_taiping_fighting_original_war = {
-	var:fh_mainland_taiping_play ?= {
-		is_war = yes
-		war ?= {
-			is_war_participant = global_var:fh_tungning_founder
-			is_war_participant = global_var:fh_tungning_founder.var:fh_mainland_taiping
-			is_war_participant = global_var:fh_tungning_founder.var:fh_mainland_qing
-		}
-	}
-	has_war_with = var:fh_mainland_qing
-	NOT = { has_war_with = var:fh_mainland_taiping }
 }
 
 fh_taiping_fleet_route = {
@@ -127,30 +114,15 @@ fh_taiping_combat_ship = {
 	NOT = { ship_group ?= ship_group:ship_group_supply_ships }
 }
 
-fh_taiping_fleet_viable = {
+# In 1.15.2 the naval mission type lookup can crash during script loading.
+# Detach escorts from port until the engine can safely check active missions.
+fh_taiping_fleet_can_detach = {
 	has_ship_outside_max_port_distance = no
 	has_naval_mission_with_invalid_area = no
 	any_scope_ship = {
 		count >= $SHIPS$
 		fh_taiping_combat_ship = yes
 	}
-}
-
-fh_taiping_fleet_in_theater = {
-	any_scope_ship = {
-		count >= $SHIPS$
-		fh_taiping_combat_ship = yes
-		is_in_port = no
-	}
-	OR = {
-		has_naval_mission_in_region = { type = naval_mission_type_protect_supply region = sr:region_east_china_sea }
-		has_naval_mission_in_region = { type = naval_mission_type_raid_supply region = sr:region_east_china_sea }
-		has_naval_mission_in_region = { type = naval_mission_type_blockade region = sr:region_east_china_sea }
-		has_naval_mission_in_region = { type = naval_mission_type_intercept region = sr:region_east_china_sea }
-	}
-}
-
-fh_taiping_fleet_in_reserve = {
 	# A ship already at sea cannot also be part of the off-map reserve.
 	any_scope_ship = {
 		count = all
@@ -164,14 +136,7 @@ fh_taiping_fleet_in_reserve = {
 fh_taiping_squadron_available = {
 	fh_taiping_fleet_route = yes
 	any_scope_fleet = {
-		fh_taiping_fleet_viable = { SHIPS = $SHIPS$ }
-		OR = {
-			fh_taiping_fleet_in_reserve = yes
-			AND = {
-				prev = { fh_taiping_fighting_original_war = yes }
-				fh_taiping_fleet_in_theater = { SHIPS = $SHIPS$ }
-			}
-		}
+		fh_taiping_fleet_can_detach = { SHIPS = $SHIPS$ }
 	}
 }
 
@@ -405,25 +370,15 @@ fh_taiping_native_arms_running = {
 	}
 }
 
-fh_taiping_reserved_fleet_qualifies = {
-	owner ?= prev
-	fh_taiping_fleet_viable = { SHIPS = $SHIPS$ }
-	trigger_if = {
-		limit = { prev = { has_variable = fh_taiping_native_deployment } }
-		prev = { fh_taiping_fighting_original_war = yes }
-		fh_taiping_fleet_in_theater = { SHIPS = $SHIPS$ }
-	}
-	trigger_else = { fh_taiping_fleet_in_reserve = yes }
-}
-
 fh_taiping_reserved_squadron_ready = {
 	fh_taiping_wartime_pact = yes
 	fh_taiping_fleet_route = yes
 	var:fh_taiping_reserved_squadron ?= {
+		owner ?= prev
 		trigger_if = {
 			limit = { prev = { has_variable = fh_taiping_expanded } }
-			fh_taiping_reserved_fleet_qualifies = { SHIPS = 6 }
+			fh_taiping_fleet_can_detach = { SHIPS = 6 }
 		}
-		trigger_else = { fh_taiping_reserved_fleet_qualifies = { SHIPS = 3 } }
+		trigger_else = { fh_taiping_fleet_can_detach = { SHIPS = 3 } }
 	}
 }

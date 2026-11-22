@@ -87,16 +87,12 @@ fh_taiping_willingness = {
 	}
 }
 
-# Used before a draft exists, including for AI choices at the mainland fork.
-fh_taiping_best_ordinary_willingness = {
+# Script values load before naval mission types. Add fleet willingness in the bid trigger.
+fh_taiping_best_ordinary_willingness_without_fleet = {
 	value = fh_taiping_base_willingness
 	add = 2
 	if = {
 		limit = { fh_taiping_arms_credible = yes scaled_debt < 0.75 }
-		add = 1
-	}
-	if = {
-		limit = { fh_taiping_fleet_credible = yes }
 		add = 1
 	}
 }

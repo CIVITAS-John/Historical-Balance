@@ -102,6 +102,6 @@
  fh_taiping_service_complete: "Six consecutive months of naval service are complete."
  fh_taiping_service_active: "The squadron is on station. It must serve for six consecutive months."
  fh_taiping_service_inactive: "No qualifying squadron is on station."
- fh_taiping_expanded_cost_preview: "Southern aid: 20 Small Arms weekly for six months, or two funded shipments each costing 10% of gold reserve capacity. Commit at least six combat ships for up to a year. An off-map squadron costs 25% Naval Power Projection; qualified ships already operating with Taiping avoid that penalty. The regions below contain the ordinary provinces on the proposed cession schedule."
+ fh_taiping_expanded_cost_preview: "Southern aid: 20 Small Arms weekly for six months, or two funded shipments each costing 10% of gold reserve capacity. Detach at least six combat ships from port for up to a year at a cost of 25% Naval Power Projection. The regions below contain the ordinary provinces on the proposed cession schedule."
  fh_taiping_ordinary_arms_preview: "An arms shipment uses a six-month Small Arms article or costs 5% of gold reserve capacity if the article is unavailable."
  fh_taiping_ordinary_fleet_preview: "An off-map escort needs three combat ships and costs 15% Naval Power Projection for six months. A legal donation permanently transfers one combat ship."
