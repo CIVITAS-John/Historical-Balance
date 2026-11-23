@@ -15,7 +15,7 @@
  fh_taiping_shanghai_roads_desc: "Ask the Heavenly Kingdom to guarantee the existing foreign concessions as its army approaches Shanghai. It can gain +25% Army Offense for up to six months while these conditions hold, replacing the ordinary procurement bonus."
  fh_taiping_shanghai_roads_ready: "Arms have arrived and naval help is active. The Heavenly Kingdom must have a lower Yangtze foothold, fight no other war, and face Qing control of ordinary Shanghai."
  fh_taiping_aid.5.t: "The Shanghai Roads"
- fh_taiping_aid.5.d: "The Zheng court offers to keep its naval assistance on the Shanghai approaches if we guarantee the foreign concessions. Qing still controls the Chinese city. We would have to win it ourselves."
+ fh_taiping_aid.5.d: "The Zheng court offers to keep its naval assistance on the Shanghai approaches if we guarantee the foreign concessions. Qing still holds the Chinese city inside the settlements, and the river mouths are thick with its junks. We would have to win the city ourselves, with the foreigners watching from their godowns."
  fh_taiping_aid.5.agree: "Give the settlements a written guarantee."
  fh_taiping_aid.5.decline: "Keep the fleet clear."
  fh_taiping_shanghai_guarantees_tt: "The Heavenly Kingdom gains +25% Army Offense for up to six months while the Shanghai opportunity remains open. This replaces any ordinary procurement bonus."

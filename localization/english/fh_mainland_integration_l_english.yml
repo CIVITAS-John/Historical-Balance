@@ -1,10 +1,10 @@
 ﻿l_english:
  fh_decree_county_magistrates: "Keep the County Magistrates"
- fh_decree_county_magistrates_desc: "Keep local officials and their registers. Adds 15 percentage points to the base incorporation rate before Turmoil. The mainland journal map previews the rate."
+ fh_decree_county_magistrates_desc: "Leave the county magistrates in their yamens with their clerks, their seals and their rolls, and let them learn to write the new dynasty’s date. Adds 15 percentage points to the base incorporation rate before Turmoil. The mainland journal map previews the rate."
  fh_decree_taiwan_commissioners: "Send Taiwan Commissioners"
- fh_decree_taiwan_commissioners_desc: "Send commissioners to work with staffed Government Administration. Adds 2 percentage points to the base incorporation rate per staffed level, up to ten levels, before Turmoil. The mainland journal map previews the rate."
+ fh_decree_taiwan_commissioners_desc: "Send commissioners from Taiwan to sit beside each staffed Government Administration and carry the court’s authority into the district’s own offices. Adds 2 percentage points to the base incorporation rate per staffed level, up to ten levels, before Turmoil. The mainland journal map previews the rate."
  fh_decree_public_relief: "Open Public Relief Offices"
- fh_decree_public_relief_desc: "Remove a small number of radicals each month while the state is unoccupied and has at least 25% Turmoil. There is no direct change to incorporation speed."
+ fh_decree_public_relief_desc: "Open relief offices and put grain on the steps of the granary. A small number of radicals leave the rolls each month while the state is unoccupied and has at least 25% Turmoil. There is no direct change to incorporation speed."
  fh_mainland_integration_speed: "Mainland Incorporation"
  fh_mainland_integration_severe_tt: "Occupation or at least #v 75%#! Turmoil imposes a #v −125%#! incorporation speed modifier at the monthly refresh. The state panel shows the applied rate."
  fh_mainland_integration_rates_tt: "Staffed Government Administration: #v [THIS.ScriptValue('fh_mainland_staffed_offices')|1]#! levels (maximum 10). Actual Turmoil: #v [THIS.GetState.CalcTurmoil|%1]#!.\nIncorporation before other modifiers: #v [THIS.ScriptValue('fh_mainland_rate_no_decree')|%0]#! with no decree or with relief, #v [THIS.ScriptValue('fh_mainland_rate_magistrates')|%0]#! with magistrates, #v [THIS.ScriptValue('fh_mainland_rate_commissioners')|%0]#! with commissioners. The state panel shows the applied rate, refreshed monthly."

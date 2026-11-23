@@ -10,4 +10,4 @@
  fh_manila_expedition_effect_tt: "Spend @money![ROOT.GetCountry.MakeScope.ScriptValue('fh_manila_expedition_cost')|0] in Gold Reserves for #p +20%#! Naval Invasion Efficiency for six months."
  fh_manila_expedition_active_tt: "Expedition stores expire on [TimeKeeper.GetCurrentDateWithDiff( GetVarTimeRemaining( ROOT.GetCountry.MakeScope, 'fh_manila_expedition_timer') )]."
  fh_manila_seek_submission_strategy: "Press the Manila Claim"
- fh_manila_seek_submission_strategy_desc: "Use Tungning’s fleet to press demands when Manila is distracted and other powers are unlikely to intervene successfully."
+ fh_manila_seek_submission_strategy_desc: "Use Tungning’s fleet to press demands when Manila is distracted and the other powers are too far away, or too busy, to intervene with any hope of success. A squadron in the roads settles more than a stack of memorials."
